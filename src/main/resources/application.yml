@@ -1,0 +1,18 @@
+spring.datasource:
+  driver-class-name: org.mariadb.jdbc.Driver
+  url: jdbc:mariadb://dz-final-project.ccrjzyvy5ih8.ap-northeast-2.rds.amazonaws.com:3306/dz2th_final_project
+  username: admindz
+  password: 1234
+
+mybatis:
+  type-aliases-package: com.example.final_project.model
+  configuration:
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-executor-type: reuse
+
+jwt :
+  secret : douzoneFinalTeam1SecretMessageForJWT
+  token.validation :
+    access : 86400
+    refresh : 1296000
