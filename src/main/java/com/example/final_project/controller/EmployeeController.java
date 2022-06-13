@@ -1,6 +1,7 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.dto.LoginDto;
+import com.example.final_project.dto.LoginRequestDto;
+import com.example.final_project.dto.LoginResponseDto;
 import com.example.final_project.dto.TokenDto;
 import com.example.final_project.jwt.JwtTokenProvider;
 import com.example.final_project.mapper.EmployeeMapper;
@@ -49,24 +50,23 @@ public class EmployeeController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) throws JsonProcessingException {
-        Employee employee = employeeMapper.findByUserId(loginDto.getEmpno())
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) throws JsonProcessingException {
+        Employee employee = employeeMapper.findByUserId(loginRequestDto.getEmpno())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사번 입니다."));
-        if (!passwordEncoder.matches(loginDto.getPassword(), employee.getPassword())) {
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), employee.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
         TokenDto tokenDto = jwtTokenProvider.createAccessToken(employee.getUsername(), employee.getRole());
         jwtService.login(tokenDto);
 
         Cookie cookie = new Cookie("refresh_token", tokenDto.getRefreshToken());
-        //cookie.setDomain("localhost:3000");
         cookie.setPath("/login");
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
 
-        return new ResponseEntity<>(tokenDto.getAccessToken(), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponseDto(tokenDto.getAccessToken(), employee), HttpStatus.OK);
     }
 
     //Token test
