@@ -14,8 +14,8 @@ function Login() {
 
     const { register, setValue, formState: { errors }, handleSubmit } = useForm();
 
-    const onValid = async ({ user_id, password }) => {
-        const response = await loginUser({ user_id, password });
+    const onValid = async ({ empno, password }) => {
+        const response = await loginUser({ empno, password });
 
         if (response.status) {
             // Cookie에 Refresh Token, store에 Access Token 저장
@@ -30,7 +30,7 @@ function Login() {
             alert('사번과 비밀번호를 다시 한번 확인하세요.')
             console.log(response.text);
         }
-        setValue("user_id", "");
+        setValue("empno", "");
         setValue("password", "");
     };
 
@@ -40,7 +40,7 @@ function Login() {
                 <Fade bottom>
                     <Form onSubmit={handleSubmit(onValid)}>
                         <Logo />
-                        <Input {...register("user_id")} type="text" placeholder="사 번" />
+                        <Input {...register("empno")} type="text" placeholder="사 번" />
                         <Input {...register("password")} type="password" placeholder="비밀번호" />
                         <Button className="btn-login" type="submit">LOGIN</Button>
                     </Form>
