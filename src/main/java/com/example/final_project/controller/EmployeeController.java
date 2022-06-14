@@ -50,7 +50,12 @@ public class EmployeeController {
 
         response.addCookie(cookie);
 
-        return new ResponseEntity<>(new LoginResponseDto(tokenDto.getAccessToken(), employee), HttpStatus.OK);
+        return new ResponseEntity<>(LoginResponseDto.builder()
+                .accessToken(tokenDto.getAccessToken())
+                .name(employee.getName())
+                .profile(employee.getProfile())
+                .role(employee.getRole())
+                .build(), HttpStatus.OK);
     }
 
     //Token test
