@@ -63,14 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()  // 요청에 대한 사용권한 체크
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/test").authenticated() //TEST용
                 .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/manager/**").hasRole("MANAGER")
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/**").permitAll()  // 그외 나머지 경로 요청은 누구나 접근 가능함
 
                 .and()
-                .addFilter(corsFilter)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 }
