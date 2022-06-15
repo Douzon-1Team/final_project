@@ -20,4 +20,7 @@ public interface EmployeeMapper {
     @Select("SELECT * FROM employee WHERE empno=#{user_id}")
     Optional<Employee> findByUserId(@Param("user_id") String userId);
 
+    @Delete("DELETE FROM employee WHERE empno=#{empno}")
+    int remove(String empno);
+
 }
