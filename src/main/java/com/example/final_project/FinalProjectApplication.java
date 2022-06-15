@@ -2,7 +2,9 @@ package com.example.final_project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.mybatis.spring.annotation.MapperScan;
 
+@MapperScan(value={"com.example.final_project.mapper"})
 @SpringBootApplication
 public class FinalProjectApplication {
 
