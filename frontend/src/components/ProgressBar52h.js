@@ -3,9 +3,9 @@ import Card from '@mui/material/Card';
 import {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue} from "../styles/main2";
 import {Grid} from "@mui/material";
 
-function ProgressBar52h({ CumulativeTime = 10, AnnualLeave = 0, Overtime = 0}) {
+export default function ProgressBar52h({ CumulativeTime, AnnualLeave, Overtime}) {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 500 }}>
             <CardContainer>
                 <PbContainer>
                     <Grid container spacing={1}>
@@ -30,5 +30,3 @@ function ProgressBar52h({ CumulativeTime = 10, AnnualLeave = 0, Overtime = 0}) {
         </Card>
     );
 }
-
-export default ProgressBar52h

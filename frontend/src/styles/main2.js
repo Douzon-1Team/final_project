@@ -20,8 +20,8 @@ const PbContainer = styled.div`
 `
 const TextContainer = styled.div`
     margin-left: 5%;
-    margin-bottom: 1%;
-    margin-top: 1%;
+    margin-bottom: 3%;
+    margin-top: 3%;
 `
 const CardContainer = styled.div`
     padding-top: 4%;
@@ -35,5 +35,11 @@ const progressValue = styled.div`
     position: relative;
     margin-top: 3%;
 `
+const TitleContainer = styled.div`
+    font-size: 20px;
+    margin-top: 4%;
+    text-align: center;
+`
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue};
+
+export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer};
