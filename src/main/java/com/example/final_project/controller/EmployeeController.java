@@ -11,7 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,12 +52,18 @@ public class EmployeeController {
 
         response.addCookie(cookie);
 
-        return new ResponseEntity<>(LoginResponseDto.builder()
+        LoginResponseDto dto = LoginResponseDto.builder()
                 .accessToken(tokenDto.getAccessToken())
                 .name(employee.getName())
                 .profile(employee.getProfile())
                 .role(employee.getRole())
-                .build(), HttpStatus.OK);
+                .empno(employee.getEmpno())
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return ResponseEntity.ok().headers(headers).body(dto);
     }
 
     //Token test
