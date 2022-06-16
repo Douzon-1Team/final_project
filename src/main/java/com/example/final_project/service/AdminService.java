@@ -27,25 +27,12 @@ public class AdminService {
 
         String deptNo = empInfoCompMapper.findByDeptName(reg.getDeptName());
         String empno = createEmpNo(deptNo);
+        String pwd = passwordEncoder.encode("dz"+empno);
         String qr = qrService.createQR(empno);
+        String email = empno+"@douzone.net";
 
-        employeeMapper.save(Employee.builder()
-                .name(reg.getName())
-                .profile(reg.getProfile())
-                .role(reg.getRole())
-                .password(passwordEncoder.encode("dz"+empno))
-                .empno(empno)
-                .qr(qr)
-                .build());
-
-        empInfoCompMapper.save(EmpInfoComp.builder()
-                .empno(empno)
-                .deptno(deptNo)
-                .email(empno+"@douzone.net")
-                .rank(reg.getRank())
-                .hireDate(reg.getHireDate())
-                .extensionNUm(reg.getExtensionNum())
-                .build());
+        employeeMapper.save(EmpInfoDto.toEmployee(reg, empno, pwd, qr));
+        empInfoCompMapper.save(EmpInfoDto.toEmpInfoComp(reg, empno, deptNo, email));
     }
 
     public String createEmpNo(String deptno){

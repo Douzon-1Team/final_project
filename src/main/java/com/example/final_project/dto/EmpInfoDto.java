@@ -1,5 +1,7 @@
 package com.example.final_project.dto;
 
+import com.example.final_project.model.EmpInfoComp;
+import com.example.final_project.model.Employee;
 import com.example.final_project.model.Rank;
 import com.example.final_project.model.Role;
 import lombok.AllArgsConstructor;
@@ -11,7 +13,6 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Builder
 public class EmpInfoDto {
     private String deptName;
@@ -21,4 +22,26 @@ public class EmpInfoDto {
     private Role role;
     private Rank rank;
     private Date hireDate;
+
+    public static Employee toEmployee(EmpInfoDto emp, String empno, String pwd, String qr){
+       return  Employee.builder()
+                .name(emp.getName())
+                .profile(emp.getProfile())
+                .role(emp.getRole())
+                .password(pwd)
+                .empno(empno)
+                .qr(qr)
+                .build();
+    }
+
+    public static EmpInfoComp toEmpInfoComp(EmpInfoDto emp, String empno, String deptNo, String email){
+        return EmpInfoComp.builder()
+                .empno(empno)
+                .deptno(deptNo)
+                .email(email)
+                .rank(emp.getRank())
+                .hireDate(emp.getHireDate())
+                .extensionNUm(emp.getExtensionNum())
+                .build();
+    }
 }
