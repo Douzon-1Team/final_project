@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCookieToken, removeCookieToken } from '../auth/Cookie';
-import { DELETE_TOKEN } from '../auth/Auth';
-import { logoutUser } from '../auth/Users';
-
+import { DELETE_TOKEN } from '../store/modules/Reducer/TokenAuth';
+import { logoutUser } from '../apis/Users';
 
 function Logout(){
     const ACCESS_TOKEN = useSelector((state) => { return state })
