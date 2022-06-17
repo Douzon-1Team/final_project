@@ -11,7 +11,7 @@ public class SqlProvider {
         if(emp.getName() != null) sql.SET("emp_name = #{name}");
         if(emp.getProfile() != null) sql.SET("emp_profile = #{profile}");
         if(emp.getRole() != null) sql.SET("role=#{role}");
-        if(emp.getPassword() != null) sql.SET("password=#{pwd}");
+        if(emp.getPassword() != null) sql.SET("emp_pwd=#{password}");
         if(emp.isResigned()) sql.SET("resigned=true");
         sql.WHERE("empno=#{empno}");
 
@@ -20,12 +20,12 @@ public class SqlProvider {
 
     public String updateEmpInfoComp(EmpInfoComp emp){
         SQL sql = new SQL();
-        sql.UPDATE("employee_info_comp");
+        sql.UPDATE("emp_info_comp");
         if(emp.getDeptNo() != null) sql.SET("dept_no = #{deptNo}");
         if(emp.getRank() != null) sql.SET("rank = #{rank}");
         if(emp.getExtensionNum() != null) sql.SET("extension_num = #{extensionNum}");
         if(emp.getRank() != null) sql.SET("rank=#{rank}");
-        sql.WHERE("empnp=#{empno}");
+        sql.WHERE("empno=#{empno}");
         return sql.toString();
     }
 }

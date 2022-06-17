@@ -43,20 +43,20 @@ public class AdminService {
 
         int year = Calendar.getInstance().get(Calendar.YEAR)%100;
         String unique = String.format("%02d", empInfoCompMapper.countByDeptNo(deptNo, year)+1);
-        System.out.println("))))))))))"+empInfoCompMapper.countByDeptNo(deptNo, year));
 
         return year+deptNo+unique;
     }
 
     @Transactional
     public Code update(EmpUpdateDto updateDto){
-        Code error = validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
-        if(error != null) return error;
-
+        if(updateDto.getPwd() != null) {
+            Code error = validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
+            if (error != null) return error;
+        }
         String pwd = updateDto.getNewPwd();
         String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
 
-        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, pwd));
+        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(pwd)));
         empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
 
         return null;
@@ -68,7 +68,7 @@ public class AdminService {
 
         if(!passwordEncoder.matches(pwd, originPwd))
             return Code.WRONG_PASSWORD;
-        if(newPwd.equals(chkPwd))
+        if(!newPwd.equals(chkPwd))
             return Code.MISMATCH_PASSWORD;
         if(pwd.equals(newPwd))
             return Code.SAME_PASSWORD;

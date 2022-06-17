@@ -20,7 +20,7 @@ public interface EmployeeMapper {
     @Select("SELECT * FROM employee WHERE empno=#{user_id}")
     Optional<Employee> findByUserId(@Param("user_id") String userId);
 
-    @Select("SELECT password FROM employee WHERE empno=#{empno")
+    @Select("SELECT emp_pwd FROM employee WHERE empno=#{empno}")
     Optional<String> findPasswordByEmpno(String empno);
 
     @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
