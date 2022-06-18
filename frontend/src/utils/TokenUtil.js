@@ -10,7 +10,7 @@ export function CheckToken(key) {
 
     useEffect(() => {
         const checkAuthToken = async () => {
-            console.log("empno : "+token.EMP_INFO.empno);
+            console.log("empInfo : "+token.EMP_INFO.empno);
             if(token.EMP_INFO.empno === false) {
                 setIsAuth('Failed');
             }

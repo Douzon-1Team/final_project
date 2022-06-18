@@ -12,6 +12,7 @@ export const LogoImgbox = styled.div`
   float: left;
   background-image: url(${LogoImg});
   background-size: cover;
+  &:hover { cursor: pointer; }
 `;
 
 export const Profilefrom = styled.div`

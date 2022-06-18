@@ -5,6 +5,7 @@ export const BarBox = styled.div`
   width: 230px;
   height: 85vh;
   overflow: hidden;
+  float: left;
 `;
 
 export const Menu = styled.div`
