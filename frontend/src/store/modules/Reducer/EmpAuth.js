@@ -1,20 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// 유저 정보 저장 파일 (Redux에 저장)
-
 export const empSlice = createSlice({
     name: 'employee',
     initialState: {
-        empno: false,
+        empInfo: false,
 
     },
     reducers: {
         SET_EMP_INFO: (state, action) => {
-            state.empno = action.payload;
-            // state.role = action.type;
+            state.empInfo = action.payload;
         },
         DELETE_EMP_INFO: (state) => {
-            state.empno = null;
+            state.empInfo = null;
         },
     }
 })

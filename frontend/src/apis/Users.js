@@ -75,7 +75,6 @@ export const logoutUser = async (credentials, ACCESS_TOKEN) => {
         return {
             status,
             code,
-            // text
             json
         };
     } else {
