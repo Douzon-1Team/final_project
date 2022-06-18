@@ -7,32 +7,24 @@ import { DELETE_TOKEN } from '../store/modules/Reducer/TokenAuth';
 import { logoutUser } from '../apis/Users';
 
 function Logout(){
-    const ACCESS_TOKEN = useSelector((state) => { return state })
-
+    const token = useSelector((state) => { return state })
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // Cookie에 저장된 Refresh Token 정보를 받아 온다
     const refreshToken = getCookieToken();
 
     async function logout() {
-        const data = await logoutUser({ refresh_token: refreshToken }, ACCESS_TOKEN);
+        const data = await logoutUser({ refresh_token: refreshToken }, token);
 
         if (data.status) {
-            // store에 저장된 Access Token 정보를 삭제
             dispatch(DELETE_TOKEN());
-            // Cookie에 저장된 Refresh Token 정보를 삭제
             removeCookieToken();
-            return navigate("/");
+            return navigate("/login");
         } else {
-            window.location.reload();
+            return navigate("/login");
         }
     }
-
-    // 해당 컴포넌트가 요청된 후 한 번만 실행
-    useEffect( () => {
-        logout();
-    }, [])
+    useEffect( () => { logout(); }, [])
 
     return (
         <>

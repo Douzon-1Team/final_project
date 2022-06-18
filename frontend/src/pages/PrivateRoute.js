@@ -10,9 +10,7 @@ export default function PrivateRoute() {
     console.log("isAuth : "+isAuth); // Loaded -> Failed
 
     if (isAuth === 'Failed') {
-        return (
-            <Navigate to="/" state={{from: location}}/>
-        )
+        return ( <Navigate to="/" state={{from: location}}/> )
     }
     return <Outlet />
 }

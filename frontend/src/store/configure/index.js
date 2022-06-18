@@ -2,7 +2,7 @@ import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import empReducer from '../modules/Reducer/EmpAuth';
 import tokenReducer from '../modules/Reducer/TokenAuth';
 import storage from 'redux-persist/lib/storage';
-import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE,  PERSIST, PURGE, REGISTER } from 'redux-persist';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 const persistConfig = {
     key: 'root',
