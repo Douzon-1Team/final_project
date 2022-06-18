@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface EmployeeMapper {
 
     @Insert("INSERT INTO employee(empno, emp_name, emp_pwd, role, qr_code_url, emp_profile) " +
-            "values(#{empno}, #{name}, #{password}, #{role}, #{qr}, #{profile})")
+            "VALUES(#{empno}, #{name}, #{password}, #{role}, #{qr}, #{profile})")
     int save(Employee employee);
 
     @Results(id = "employee", value = {
@@ -19,6 +19,12 @@ public interface EmployeeMapper {
     })
     @Select("SELECT * FROM employee WHERE empno=#{user_id}")
     Optional<Employee> findByUserId(@Param("user_id") String userId);
+
+    @Select("SELECT emp_pwd FROM employee WHERE empno=#{empno}")
+    Optional<String> findPasswordByEmpno(String empno);
+
+    @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
+    int updateByEmpno(Employee employee);
 
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
