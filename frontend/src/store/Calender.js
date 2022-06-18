@@ -7,7 +7,14 @@ export const getList = createAsyncThunk("GET_TODO", async () => {
             empnos: '220101'
         }
     });
+    var test = [];
+
     console.log(response.data);
+
+    // TODO : map으로 받은 데이터 쪼개서 리스트로 합치기
+    response.data.map(data) => {
+
+    };
     console.log('here');
     return response.data;
 });
