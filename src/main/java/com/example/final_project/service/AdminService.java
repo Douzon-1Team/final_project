@@ -1,8 +1,7 @@
 package com.example.final_project.service;
 
-import com.example.final_project.dto.EmpInfoDto;
-import com.example.final_project.dto.EmpUpdateDto;
-import com.example.final_project.dto.LoginRequestDto;
+import com.example.final_project.dto.*;
+import com.example.final_project.mapper.AdminMapper;
 import com.example.final_project.mapper.DeptMapper;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
@@ -13,8 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,7 @@ public class AdminService {
     private final EmpInfoCompMapper empInfoCompMapper;
     private final EmployeeMapper employeeMapper;
     private final DeptMapper deptMapper;
+    private final AdminMapper adminMapper;
     private final QRService qrService;
     private final PasswordEncoder passwordEncoder;
 
@@ -74,6 +77,16 @@ public class AdminService {
             return Code.SAME_PASSWORD;
 
         return null;
+    }
+
+    @Transactional
+    public List<EmpListResponseDto> list(@RequestBody SearchFilterRequestDto filterDto){
+            List<String> deptNo = new ArrayList<>();
+        if(filterDto.getDeptName() != null) {
+            deptNo = deptMapper.findAllDeptNo(filterDto.getDeptName());
+        }
+
+        return adminMapper.findByFilter(filterDto, deptNo);
     }
 
     @Transactional

@@ -28,5 +28,4 @@ public interface EmployeeMapper {
 
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
-
 }

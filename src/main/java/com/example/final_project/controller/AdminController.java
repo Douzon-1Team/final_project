@@ -1,8 +1,6 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.dto.EmpInfoDto;
-import com.example.final_project.dto.EmpUpdateDto;
-import com.example.final_project.dto.TokenDto;
+import com.example.final_project.dto.*;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
 import com.example.final_project.model.Code;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +37,12 @@ public class AdminController {
         if(error != null) response.sendError(error.getCode(), error.getMessage());
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/admin/list")
+    public ResponseEntity<List<EmpListResponseDto>> list(@RequestBody SearchFilterRequestDto filterDto){
+        List<EmpListResponseDto> dto = adminService.list(filterDto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/admin/remove/{empno}")
