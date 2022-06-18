@@ -28,28 +28,27 @@ public class CalendarController {
     public ResponseEntity<?> test(@RequestParam(value ="empnos") String empno, HttpServletResponse response) throws IOException {
         System.out.println(empno);
 
-
-//        List<CalendarResponseDto> test = calendarMapper.findUserVacation(empno);
-
-
-//        for (int i = 0; i < test.size(); i++) {
-//            System.out.println(test.get(i).getEmpno());
-//        }
-//        for (int i = 0; i < test.)
-
-        List<CalendarResponseDto2> Calendarvaction = calendarMapper.findUserVacation(empno);
-        if (Calendarvaction == null || Calendarvaction.isEmpty()) {
+        List<CalendarResponseDto.vacationBuilder> Calendarvacation = calendarMapper.findUserVacation(empno);
+        if (Calendarvacation == null || Calendarvacation.isEmpty()) {
             response.sendError(Code.CALENDAR_VACATION_ERROR.getCode());
             return null;
         }
-//
-        List<CalendarResponseDto> Calendarwork = calendarMapper.findUserWork(empno);
+
+        List<CalendarResponseDto.workBuilder> Calendarwork = calendarMapper.findUserWork(empno);
         if (Calendarwork == null || Calendarwork.isEmpty()) {
             response.sendError(Code.CALENDAR_WORK_ERROR.getCode());
             return null;
         }
-//        System.out.println(Calendarvaction.size());
-//        System.out.println(Calendarwork.size());
+
+        System.out.println(Calendarvacation.size());
+        System.out.println(Calendarwork.size());
+
+        for (int i = 0; i < Calendarvacation.size(); i++)
+            System.out.println(Calendarvacation.get(i));
+        System.out.println();
+
+        for (int i = 0; i < Calendarwork.size(); i++)
+            System.out.println(Calendarwork.get(i));
 
         List<testDto> Calendar = new ArrayList<>();
 
