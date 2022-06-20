@@ -1,23 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Main from "./Main";
-import { Title, Table, Button2, Button } from '../styles/profile';
-import GetProfile from "../apis/ApiService";
 import {useSelector} from "react-redux";
-// import {useSelector} from "react-redux";
+import {Button, Button2, Table, Title} from "../styles/profile";
 
-function Profile() {
+function EmpInfo() {
     let empInfo = useSelector( (state) => {return state});
-    const [emp, setEmp] = useState({deptName: null, name: null, extensionNum: null, profile: null, rankName: null})
-    useEffect(() => {
-        GetProfile(empInfo.EMP_INFO.empInfo.empno).then(response => {
-            setEmp(response);
-            console.log(response);
-        })
-    }, []);
+    console.log(empInfo.EMP_INFO.empInfo.name);
 
     return (
         <>
-            <Main/>
+            <Main />
             <Title>사원 정보 관리</Title>
 
             <Table>
@@ -28,23 +20,24 @@ function Profile() {
                 </tr>
                 <tr>
                     <td>부서</td>
-                    {emp.deptName}
+                    <td></td>
                 </tr>
                 <tr>
                     <td>이름</td>
-                    {emp.name}
+                    <p>{empInfo.EMP_INFO.empInfo.name}</p>
                 </tr>
                 <tr>
                     <td>직급</td>
-                    {emp.rankName}
+                    <p>
+                    </p>
                 </tr>
                 <tr>
                     <td>사번</td>
-                    { empInfo.EMP_INFO.empInfo.empno }
+                    <p>{empInfo.EMP_INFO.empInfo.empno}</p>
                 </tr>
                 <tr>
-                    <td>내선번호</td>
-                    { emp.extensionNum }
+                    <td>사원번호</td>
+                    <td></td>
                 </tr>
             </Table>
             <button>사진 업로드</button>
@@ -88,4 +81,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default EmpInfo;

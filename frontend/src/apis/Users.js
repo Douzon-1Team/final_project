@@ -1,7 +1,12 @@
 // 유저 로그인/로그아웃 파일
 
 // promise 요청 타임아웃 시간 선언
+import {useSelector} from "react-redux";
+
 const TIME_OUT = 300 * 1000;
+
+// let rest = useSelector( (state) => { return state });
+// console.log(rest);
 
 const statusError = {
     status: false,

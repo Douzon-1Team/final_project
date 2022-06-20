@@ -6,6 +6,7 @@ import PrivateRoute from "./pages/PrivateRoute";
 import Main from "./pages/Main";
 import Logout from "./pages/Logout";
 import Profile from "./pages/Profile";
+// import EmpInfo from "./pages/EmpInfo";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route element={ <PrivateRoute /> }>
             <Route path="/main" element={<Main />} />
             <Route path="/profile" element={<Profile />} />
+            {/*<Route path="/empInfo" element={<EmpInfo />} />*/}
             <Route path="/logout" element={<Logout />} />
           </Route>
 
