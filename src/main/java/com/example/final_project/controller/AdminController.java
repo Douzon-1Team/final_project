@@ -6,6 +6,7 @@ import com.example.final_project.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,14 +19,16 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/admin/register")
-    public ResponseEntity register(@RequestBody EmpInfoDto registerDto){
-        adminService.register(registerDto);
+    public ResponseEntity register(@RequestPart(value = "EmpInfoDto") EmpInfoDto registerDto,
+                                   @RequestPart(value = "file") MultipartFile profile){
+        adminService.register(registerDto, profile);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/admin/update")
-    public ResponseEntity update(@RequestBody EmpUpdateDto updateDto, HttpServletResponse response) throws IOException {
-        adminService.update(updateDto);
+    public ResponseEntity update(@RequestPart(value = "EmpUpdateDto") EmpUpdateDto updateDto,
+                                 @RequestPart(value = "file") MultipartFile profile){
+        adminService.update(updateDto, profile);
         return ResponseEntity.ok().build();
     }
 

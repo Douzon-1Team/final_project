@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -18,19 +19,19 @@ public class EmpInfoDto {
     private String deptName;
     private String name;
     private String extensionNum;
-    private String profile;
+    private MultipartFile profile;
     private Role role;
     private Rank rank;
     private Date hireDate;
 
-    public static Employee toEmployee(EmpInfoDto emp, String empno, String pwd, String qr){
+    public static Employee toEmployee(EmpInfoDto emp, String empno, String profileUrl, String pwd, String qrUrl){
        return  Employee.builder()
                 .name(emp.getName())
-                .profile(emp.getProfile())
+                .profile(profileUrl)
                 .role(emp.getRole())
                 .password(pwd)
                 .empno(empno)
-                .qr(qr)
+                .qr(qrUrl)
                 .build();
     }
 

@@ -13,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,18 +29,22 @@ public class AdminService {
     private final DeptMapper deptMapper;
     private final AdminMapper adminMapper;
     private final QRService qrService;
+    private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void register(EmpInfoDto empInfoDto){
+    public void register(EmpInfoDto empInfoDto, MultipartFile profile){
 
         String deptNo = deptMapper.findByDeptName(empInfoDto.getDeptName());
         String empno = createEmpNo(deptNo);
         String pwd = passwordEncoder.encode("dz"+empno);
-        String qr = qrService.createQR(empno);
         String email = empno+"@douzone.net";
 
-        employeeMapper.save(EmpInfoDto.toEmployee(empInfoDto, empno, pwd, qr));
+        File qr = qrService.createQR(empno);
+        String qrUrl = s3Service.uploadFile(qr);
+        String profileUrl = s3Service.uploadProfile(profile, empno);
+
+        employeeMapper.save(EmpInfoDto.toEmployee(empInfoDto, empno, profileUrl, pwd, qrUrl));
         empInfoCompMapper.save(EmpInfoDto.toEmpInfoComp(empInfoDto, empno, deptNo, email));
     }
 
@@ -51,17 +57,21 @@ public class AdminService {
     }
 
     @Transactional
-    public void update(EmpUpdateDto updateDto){
-        int updateResult = 0;
+    public void update(EmpUpdateDto updateDto, MultipartFile profile){
+        employeeMapper.findByUserId(updateDto.getEmpno())
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+
+        String profileUrl = null;
+        if(profile != null)
+            profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
+
+        String password = null;
         if(updateDto.getPwd() != null) {
             validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
-            String pwd = updateDto.getNewPwd();
-            updateResult = employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(pwd)));
-        }else{
-            updateResult = employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, null));
+            password = passwordEncoder.encode(updateDto.getNewPwd());
         }
-        if(updateResult == 0) throw new EmpException(ErrorCode.EMP_NOTFOUND);
 
+        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(password), profileUrl));
         String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
         empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
     }

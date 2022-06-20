@@ -24,11 +24,11 @@ public class EmpUpdateDto {
     private String chkPwd;
     private boolean isResigned;
 
-    public static Employee toEmployee(EmpUpdateDto emp, String pwd){
+    public static Employee toEmployee(EmpUpdateDto emp, String pwd, String profileUrl){
         return Employee.builder()
                 .empno(emp.getEmpno())
                 .name(emp.getName())
-                .profile(emp.getProfile())
+                .profile(profileUrl)
                 .role(emp.getRole())
                 .password(pwd)
                 .isResigned(emp.isResigned())
