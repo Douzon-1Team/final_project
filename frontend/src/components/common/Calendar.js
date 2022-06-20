@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import TUICalendar from "@toast-ui/react-calendar";
 import { ISchedule, ICalendarInfo } from "tui-calendar";
-import { getList} from "../../store/Calender";
+import {calendarReducer, getList} from "../../store/Calender";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
@@ -30,56 +30,119 @@ import CalendarStyle from "./Calendarstyle";
 // https://gipyeonglee.tistory.com/209
 // 휴일 API 받아와서 라이브러리에 공휴일 적용
 
+// TODO : 얘네 두개는 필요없을듯
+function Calendar() {
 const start = new Date();
 const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
-const schedules = [ // schedules 일정 관리
-    {
-        calendarId: "1", // 색깔
-        category: "time", // hours or time or date 설정 가능
-        isVisible: true,
-        title: "Study",
-        id: "1",
-        body: "Test",
-        start,
-        end
-    },
-    {
-        calendarId: "2",
-        category: "time",
-        isVisible: true,
-        title: "Meeting",
-        id: "2",
-        body: "Description",
-        start: new Date(new Date().setHours(start.getHours() + 1)),
-        end: new Date(new Date().setHours(start.getHours() + 2))
-    }
+// var [schedules, setschedules] = useState({}); // 출/퇴근 기록
+var schedules = [ // schedules 일정 관리
+    // {
+    //     calendarId: "1", // 색깔
+    //     category: "time", // hours or time or date 설정 가능
+    //     isVisible: true,
+    //     title: "휴가 - 결제완료",
+    //     id: "3",
+    //     body: "Test",
+    //     start: new Date(new Date().setHours(start.getHours() + 1)),
+    //     end: new Date(new Date().setHours(start.getHours() + 4))
+    // },
+    // {
+    //     calendarId: "2",
+    //     category: "time",
+    //     isVisible: true,
+    //     title: "오전반차 - 결제진행",
+    //     id: "4",
+    //     body: "Description",
+    //     start: new Date(new Date().setHours(start.getHours() + 1)),
+    //     end: new Date(new Date().setHours(start.getHours() + 48))
+    // },
 ];
 
 const calendars = [
+    // 정상출근
     {
-        id: "1",
-        name: "My Calendar",
+        id: "1", // id로 schedules와 연동되므로 순차적으로 올리기
+        name: "출근",
         color: "#ffffff",
         bgColor: "#9e5fff",
         dragBgColor: "#9e5fff",
         borderColor: "#9e5fff"
     },
+    // 조퇴
     {
         id: "2",
-        name: "Company",
+        name: "조퇴",
         color: "#ffffff",
         bgColor: "#00a9ff",
         dragBgColor: "#00a9ff",
         borderColor: "#00a9ff"
-    }
+    },
+    // 결근
+    {
+        id: "3",
+        name: "결근",
+        color: "#ffffff",
+        bgColor: "#00a9ff",
+        dragBgColor: "#00a9ff",
+        borderColor: "#00a9ff"
+    },
+    // 지각
+    {
+        id: "4",
+        name: "지각",
+        color: "#ffffff",
+        bgColor: "#00a9ff",
+        dragBgColor: "#00a9ff",
+        borderColor: "#00a9ff"
+    },
+    // 결제진행
+
+    // 결제완료
+
 ];
 
-function Calendar() {
-    const [inputValue, setInputValue] = useState("");
+// TODO : Redux 데이터 바로 불러오기
+
+    // const [inputValue, setInputValue] = useState("");
+    // const [scheduless, setschedules] = useState([]); // 출/퇴근 기록
+    // const [calendars, setcalendars] = useState([]); // 휴가기록
+
+    // 1. 휴가 req, reject, accept, vacation_start, vacation_end
+
+    // 2. 출석 empno, dept_no, onwork, offwork, on_off_work, time,
+    //        attendance, tardy, leave_early, vacation, unregistered, date
+    // 정상출근 -> 출근O, 결근X, 지각X, 조퇴X, 퇴근O, vacation은 상관X
+    // 지각 -> 출근O, 지각O
+    // 조퇴 -> 조퇴O
+    // 결근 -> 출/퇴근 QR data X
+    // date(날짜), onwork(출근시간), attendance(출근(1)/결근(default 0)여부), offwork(퇴근시간), tardy(지각여부(0 -> 1(지각))),
+    // leave_early(조퇴여부(0 -> 1(조퇴))) unregistered(퇴근 미등록(0 -> 1(미등록)))
 
     const dispatch = useDispatch();
-    const todoList = useSelector((state) => state.todoReducer);
-    console.log(todoList);
+    const calendarList = useSelector((state) => state.calendarReducer);
+    var test = {};
+    // test = calendarList[0];
+    for (var i = 0; i < calendarList.length; i++) {
+        test = calendarList[i];
+    }
+    // console.log(calendarList[0]);
+    // setschedules(...calendarList);
+    schedules.push(...calendarList);
+    console.log(test);
+    // console.log(...calendarList);
+    console.log(schedules);
+    // setschedules(calendarList[0].start);
+    // calendarId: "1", // 색깔
+    //     category
+    //     isVisible
+    //     title
+    //     id
+    //     body
+    //     start
+    //     end
+
+    // setschedules(calendarId:1, category:"time", isVisible:true, title:calendarList)
+
     useEffect(() => {
         dispatch(getList());
     }, []);
