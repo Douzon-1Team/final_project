@@ -1,6 +1,6 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.model.Code;
+import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class RefreshController {
         String accessToken = jwtService.validateRefreshToken(body.get("refresh_token"));
 
         if(accessToken == null){
-            response.sendError(Code.EXPIRED_TOKEN.getCode(), Code.EXPIRED_TOKEN.getMessage());
+            response.sendError(ErrorCode.EXPIRED_TOKEN.getCode(), ErrorCode.EXPIRED_TOKEN.getMessage());
             return null;
         }
 

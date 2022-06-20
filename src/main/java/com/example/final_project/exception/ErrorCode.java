@@ -1,13 +1,17 @@
-package com.example.final_project.model;
+package com.example.final_project.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Code {
+//@JsonFormat(shape = JsonFormat.Shape.STRING)
+public enum ErrorCode {
 
-    UNKNOWN_ERROR(1001, "토큰이 존재하지 않습니다."),
+    EMP_NOTFOUND(404, "해당 사원이 존재하지 않습니다."),
+
+    UNKNOWN_TOKEN(1001, "토큰이 존재하지 않습니다."),
     WRONG_TYPE_TOKEN(1002, "변조된 토큰입니다."),
     EXPIRED_TOKEN(1003, "만료된 토큰입니다."),
     ACCESS_DENIED(1004, "권한이 없습니다."),
