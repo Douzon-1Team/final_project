@@ -13,9 +13,12 @@ public class CalendarResponseDto { // client에게 응답
     private String title;
     private boolean reject;
     private boolean accept;
+    private String reason;
     private String context;
     private String vacationStart;
     private String vacationEnd;
+    private String datestart;
+    private String dateend;
     private String deptNo;
     private String onwork;
     private String offwork;

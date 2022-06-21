@@ -25,9 +25,9 @@ public class CalendarController {
     private final CalendarMapper calendarMapper;
 
     @GetMapping("/main")
-    public ResponseEntity<?> test(@RequestParam(value ="empnos") String empno, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> test(@RequestParam("empnos") String empno, HttpServletResponse response) throws IOException {
 
-
+        System.out.println(empno);
 //        List<CalendarResponseDto.vacationBuilder> Calendarvacation = calendarMapper.findUserVacation(empno);
         List<CalendarResponseDto> Calendarvacation = calendarMapper.findUserVacation(empno);
         if (Calendarvacation == null || Calendarvacation.isEmpty()) {
