@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import LogoImg from '../assets/img/logo.png';
-import backgroundImg from "../assets/img/login_bg.jpeg";
 
 const Title = styled.p`
     font-size: 1.6rem;
@@ -12,14 +10,6 @@ const Table = styled.table`
     border: 3px solid #bcbcbc;
     width: 70%;
     font-weight: bold;
-`;
-
-const Container = styled.div`
-    background-image: url(${backgroundImg});
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    z-index:1;
 `;
 
 const Input = styled.input`
@@ -69,14 +59,6 @@ const Button2 = styled.button`
     &:hover {
         cursor: pointer;
     }
-`;
-
-const Logo = styled.img.attrs({
-    src:  LogoImg,
-})` 
-    padding: 5% 0 0 5%;
-    width: 28%;
-    max-width: 200px;
 `;
 
 export {Title, Table, Input, Button, Button2};

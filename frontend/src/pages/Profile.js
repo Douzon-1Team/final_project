@@ -69,20 +69,6 @@ function Profile() {
                 </tr>
             </Table>
             <p>* 현재 비밀번호로의 변경은 불가능합니다.</p>
-
-            <div className="box-env">
-                <label htmlFor="">사원</label>
-                <input type="radio" name="chk_emp" value="" />
-                <label htmlFor="">담당자</label>
-                <input type="radio" name="chk_manager" value="" />
-            </div>
-
-            <Button>퇴사자등록</Button>
-            <Button2>사원정보 삭제</Button2>
-
-            <br/>
-            <button>저장</button>
-            <button>취소</button>
         </>
     );
 }
