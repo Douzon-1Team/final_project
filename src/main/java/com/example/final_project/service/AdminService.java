@@ -1,19 +1,22 @@
 package com.example.final_project.service;
 
 import com.example.final_project.dto.*;
+import com.example.final_project.exception.EmpException;
+import com.example.final_project.exception.ErrorCode;
+import com.example.final_project.exception.PasswordException;
 import com.example.final_project.mapper.AdminMapper;
 import com.example.final_project.mapper.DeptMapper;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
-import com.example.final_project.model.Code;
-import com.example.final_project.model.EmpInfoComp;
 import com.example.final_project.model.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -27,18 +30,22 @@ public class AdminService {
     private final DeptMapper deptMapper;
     private final AdminMapper adminMapper;
     private final QRService qrService;
+    private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void register(EmpInfoDto empInfoDto){
+    public void register(EmpInfoDto empInfoDto, MultipartFile profile){
 
         String deptNo = deptMapper.findByDeptName(empInfoDto.getDeptName());
         String empno = createEmpNo(deptNo);
         String pwd = passwordEncoder.encode("dz"+empno);
-        String qr = qrService.createQR(empno);
         String email = empno+"@douzone.net";
 
-        employeeMapper.save(EmpInfoDto.toEmployee(empInfoDto, empno, pwd, qr));
+        File qr = qrService.createQR(empno);
+        String qrUrl = s3Service.uploadFile(qr);
+        String profileUrl = s3Service.uploadProfile(profile, empno);
+
+        employeeMapper.save(EmpInfoDto.toEmployee(empInfoDto, empno, profileUrl, pwd, qrUrl));
         empInfoCompMapper.save(EmpInfoDto.toEmpInfoComp(empInfoDto, empno, deptNo, email));
     }
 
@@ -51,32 +58,37 @@ public class AdminService {
     }
 
     @Transactional
-    public Code update(EmpUpdateDto updateDto){
+    public void update(EmpUpdateDto updateDto, MultipartFile profile){
+        employeeMapper.findByUserId(updateDto.getEmpno())
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+
+        String profileUrl = null;
+        if(profile != null)
+            profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
+
+        String password = null;
         if(updateDto.getPwd() != null) {
-            Code error = validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
-            if (error != null) return error;
+            validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
+            password = passwordEncoder.encode(updateDto.getNewPwd());
         }
-        String pwd = updateDto.getNewPwd();
+
+        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(password), profileUrl));
         String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
-
-        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(pwd)));
         empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
-
-        return null;
     }
 
-    public Code validatePassword(String empno, String pwd, String newPwd, String chkPwd){
+    public void validatePassword(String empno, String pwd, String newPwd, String chkPwd){
         String originPwd = employeeMapper.findPasswordByEmpno(empno)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사원이 존재하지 않습니다."));
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
         if(!passwordEncoder.matches(pwd, originPwd))
-            return Code.WRONG_PASSWORD;
-        if(!newPwd.equals(chkPwd))
-            return Code.MISMATCH_PASSWORD;
-        if(pwd.equals(newPwd))
-            return Code.SAME_PASSWORD;
+            throw new PasswordException(ErrorCode.WRONG_PASSWORD);
 
-        return null;
+        if(!newPwd.equals(chkPwd))
+            throw new PasswordException(ErrorCode.MISMATCH_PASSWORD);
+
+        if(pwd.equals(newPwd))
+            throw new PasswordException(ErrorCode.SAME_PASSWORD);
     }
 
     @Transactional
@@ -91,6 +103,9 @@ public class AdminService {
 
     @Transactional
     public void remove(String empno){
+        Employee emp = employeeMapper.findByUserId(empno)
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
         employeeMapper.remove(empno);
+        s3Service.s3Delete(emp.getProfile(), emp.getQr());
     }
 }

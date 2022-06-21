@@ -29,7 +29,7 @@ public class ProfileService {
                                     .name(employee.getName())
                                     .rankName(empInfoComp.getRank().getName())
                                     .extensionNum(empInfoComp.getExtensionNum())
-                                    .profile(employee.getProfile())
+                                    .profile(null)
                                     .role(employee.getRole())
                                     .build();
     }

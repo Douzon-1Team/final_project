@@ -40,6 +40,8 @@ dependencies {
 
     implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
     implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 }
 
 tasks.named('test') {

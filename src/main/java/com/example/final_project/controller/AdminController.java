@@ -1,18 +1,12 @@
 package com.example.final_project.controller;
 
 import com.example.final_project.dto.*;
-import com.example.final_project.mapper.EmpInfoCompMapper;
-import com.example.final_project.mapper.EmployeeMapper;
-import com.example.final_project.model.Code;
-import com.example.final_project.model.EmpInfoComp;
-import com.example.final_project.model.Employee;
+import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.service.AdminService;
-import com.example.final_project.service.QRService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -25,17 +19,16 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/admin/register")
-    public ResponseEntity register(@RequestBody EmpInfoDto registerDto){
-        adminService.register(registerDto);
+    public ResponseEntity register(@RequestPart(value = "EmpInfoDto") EmpInfoDto registerDto,
+                                   @RequestPart(value = "file") MultipartFile profile){
+        adminService.register(registerDto, profile);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/admin/update")
-    public ResponseEntity update(@RequestBody EmpUpdateDto updateDto, HttpServletResponse response) throws IOException {
-        Code error = adminService.update(updateDto);
-
-        if(error != null) response.sendError(error.getCode(), error.getMessage());
-
+    public ResponseEntity update(@RequestPart(value = "EmpUpdateDto") EmpUpdateDto updateDto,
+                                 @RequestPart(value = "file") MultipartFile profile){
+        adminService.update(updateDto, profile);
         return ResponseEntity.ok().build();
     }
 

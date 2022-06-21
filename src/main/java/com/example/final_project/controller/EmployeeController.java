@@ -3,6 +3,8 @@ package com.example.final_project.controller;
 import com.example.final_project.dto.LoginRequestDto;
 import com.example.final_project.dto.LoginResponseDto;
 import com.example.final_project.dto.TokenDto;
+import com.example.final_project.exception.EmpException;
+import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.jwt.JwtTokenProvider;
 import com.example.final_project.mapper.EmployeeMapper;
 import com.example.final_project.model.Employee;
@@ -24,7 +26,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
-@PropertySource("classpath:application.yml")
 @RestController
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -38,7 +39,7 @@ public class EmployeeController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) throws JsonProcessingException {
         Employee employee = employeeMapper.findByUserId(loginRequestDto.getEmpno())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사번 입니다."));
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), employee.getPassword())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
