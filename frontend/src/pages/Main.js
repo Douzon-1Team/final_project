@@ -6,7 +6,7 @@ import Calendar from "../components/common/Calendar";
 function Main() {
   return(
       <>
-        {/*<Layout />*/}
+        <Layout />
         <Calendar />
       </>
       )

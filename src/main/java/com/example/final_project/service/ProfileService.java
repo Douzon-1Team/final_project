@@ -25,10 +25,10 @@ public class ProfileService {
         EmpInfoComp empInfoComp = empInfoCompMapper.findByEmpno(empno).get();
 
         return EmpInfoDto.builder().rankName(empInfoComp.getRank().getName())
-                                    .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptno()))
+                                    .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptNo()))
                                     .name(employee.getName())
                                     .rankName(empInfoComp.getRank().getName())
-                                    .extensionNum(empInfoComp.getExtensionNUm())
+                                    .extensionNum(empInfoComp.getExtensionNum())
                                     .profile(employee.getProfile())
                                     .role(employee.getRole())
                                     .build();

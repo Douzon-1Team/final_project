@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { render } from "react-dom";
+// import { render } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import TUICalendar from "@toast-ui/react-calendar";
-import { ISchedule, ICalendarInfo } from "tui-calendar";
+// import { ISchedule, ICalendarInfo } from "tui-calendar";
 import {calendarReducer, getList} from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
