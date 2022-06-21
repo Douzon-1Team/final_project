@@ -3,13 +3,12 @@ package com.example.final_project.model;
 import java.util.Collection;
 import java.util.Collections;
 
-import com.example.final_project.dto.EmpInfoDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,6 +20,7 @@ public class Employee implements UserDetails{
     private Role role;
     private String profile;
     private String qr;
+    private boolean isResigned;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

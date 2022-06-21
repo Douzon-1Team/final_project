@@ -38,11 +38,11 @@ public class EmpInfoDto {
     public static EmpInfoComp toEmpInfoComp(EmpInfoDto emp, String empno, String deptNo, String email){
         return EmpInfoComp.builder()
                 .empno(empno)
-                .deptno(deptNo)
+                .deptNo(deptNo)
                 .email(email)
                 .rank(emp.getRank())
                 .hireDate(emp.getHireDate())
-                .extensionNUm(emp.getExtensionNum())
+                .extensionNum(emp.getExtensionNum())
                 .build();
     }
 }
