@@ -3,7 +3,6 @@ import Main from "./Main";
 import { Title, Table, Button2, Button } from '../styles/profile';
 import GetProfile from "../apis/ApiService";
 import {useSelector} from "react-redux";
-// import {useSelector} from "react-redux";
 
 function Profile() {
     let empInfo = useSelector( (state) => {return state});
