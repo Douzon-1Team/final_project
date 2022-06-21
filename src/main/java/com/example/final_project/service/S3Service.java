@@ -2,6 +2,7 @@ package com.example.final_project.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
-@PropertySource("classpath : application.yml")
+@PropertySource("classpath:application.yml")
 @Component
 @RequiredArgsConstructor
 public class S3Service {
@@ -26,11 +28,10 @@ public class S3Service {
 
     @Transactional
     public String uploadProfile(MultipartFile multipartFile, String empno){
-        String filePath = "src/main/resources/profile/";
-        String fileName = "profile-"+empno;
-        String extendsion = ".png";
+        String filePath = "src/main/resources/";
+        String fileName = "profile/profile-"+empno;
 
-        File uploadImg = convert(multipartFile, filePath+fileName+extendsion)  // 파일 변환 후 로컬에 저장
+        File uploadImg = convert(multipartFile, filePath+fileName)  // 파일 변환 후 로컬에 저장
                 .orElseThrow(() -> new IllegalArgumentException("파일 변환에 실패하였습니다."));
 
         String url = s3Uploader(uploadImg, fileName); // s3로 업로드
@@ -42,8 +43,7 @@ public class S3Service {
 
     @Transactional
     public String uploadFile(File file){
-
-        String fileName = file.getName();
+        String fileName = "qr/"+file.getName();
         String url = s3Uploader(file, fileName);
 
         file.delete();
@@ -70,5 +70,12 @@ public class S3Service {
         }
 
         return Optional.of(convertFile);
+    }
+
+    public void s3Delete(String profileName, String qrName){
+        String[] tmp = profileName.split("/");
+        String[] tmp2 = qrName.split("/");
+        amazonS3Client.deleteObject(new DeleteObjectRequest(bucket,tmp[tmp.length-2]+"/"+tmp[tmp.length-1]));
+        amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, tmp2[tmp2.length-2]+"/"+tmp2[tmp2.length-1]));
     }
 }

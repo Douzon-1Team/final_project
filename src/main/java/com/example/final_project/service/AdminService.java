@@ -8,6 +8,7 @@ import com.example.final_project.mapper.AdminMapper;
 import com.example.final_project.mapper.DeptMapper;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
+import com.example.final_project.model.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -102,7 +103,9 @@ public class AdminService {
 
     @Transactional
     public void remove(String empno){
-        if(employeeMapper.remove(empno) == 0)
-            throw new EmpException(ErrorCode.EMP_NOTFOUND);
+        Employee emp = employeeMapper.findByUserId(empno)
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+        employeeMapper.remove(empno);
+        s3Service.s3Delete(emp.getProfile(), emp.getQr());
     }
 }

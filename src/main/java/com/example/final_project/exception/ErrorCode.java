@@ -21,8 +21,8 @@ public enum ErrorCode {
     MISMATCH_PASSWORD(2002, "새비밀 번호가 일치하지 않습니다."),
     SAME_PASSWORD(2003, "이전 비밀번호와 같은 비밀번호는 사용이 불가합니다."),
 
-    CALENDAR_VACATION_ERROR(3001, "바보"),
-    CALENDAR_WORK_ERROR(3002, "멍청이");
+    CALENDAR_VACATION_ERROR(3001, "휴가 에러"),
+    CALENDAR_WORK_ERROR(3002, "출근 에러");
 
     private int code;
     private String message;

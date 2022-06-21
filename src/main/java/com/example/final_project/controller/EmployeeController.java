@@ -26,7 +26,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
-@PropertySource("classpath:application.yml")
 @RestController
 @RequiredArgsConstructor
 public class EmployeeController {

@@ -20,7 +20,7 @@ import java.util.Map;
 @Service
 public class QRService {
     public File createQR(String empno){
-        String qrName = "src/main/resources/qrCode/qr-"+empno+".png";
+        String qrName = "src/main/resources/qrCode/qr-"+empno;
 
         QRCodeWriter qrCodeWriter = new QRCodeWriter(); // QRCode 생성
         MatrixToImageConfig matrixToImageConfig = new MatrixToImageConfig();
