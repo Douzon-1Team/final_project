@@ -24,15 +24,13 @@ public class ProfileService {
         Employee employee = employeeMapper.findByUserId(empno).get();
         EmpInfoComp empInfoComp = empInfoCompMapper.findByEmpno(empno).get();
 
-        // 1. 부서명 2. 이름 3. 직급 4. 사번 5. 사원번호 6. 프로필 사진(+사진업로드) 7. ++ 8. QR
         return EmpInfoDto.builder().rankName(empInfoComp.getRank().getName())
-                                    .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptno())) // 1. 부서명
-                                    .name(employee.getName()) // 2. 이름
-                                    .rankName(empInfoComp.getRank().getName()) // 직급
-                                    //사번
-                                    .extensionNum(empInfoComp.getExtensionNUm()) //내선번호
-                                    .profile(employee.getProfile()) // 6. 프로필 사진
-                                    .role(employee.getRole()) // ++ 권한에 따라 페이지 이동 다르게
+                                    .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptno()))
+                                    .name(employee.getName())
+                                    .rankName(empInfoComp.getRank().getName())
+                                    .extensionNum(empInfoComp.getExtensionNUm())
+                                    .profile(employee.getProfile())
+                                    .role(employee.getRole())
                                     .build();
     }
 }
