@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import Header from './Header/Header';
-import Logo from './Logo/Logo';
-import SideBar from './SideBar/SideBar';
+import React, { useState } from "react";
+import Header from "../common/Header/Header";
+import Logo from "../common/Logo/Logo";
+import SideBar from "../common/SideBar/SideBar";
 
 const Layout = () => {
-  const [role, setRole] = useState(1); // 0 일반 사용자, 1 담당자, 2 관리자
+  const [role, setRole] = useState(0); // 0 일반 사용자, 1 담당자, 2 관리자
   const [sideView, setSideView] = useState(false); // 사이드바 개시 여부
   const changeState = () => {
     setSideView(!sideView);
@@ -13,7 +13,7 @@ const Layout = () => {
     <>
       <Logo role={role} />
       <Header role={role} sideView={sideView} changeState={changeState} />
-      {sideView === true ? <SideBar role={role} /> : null}
+      {sideView && <SideBar role={role} />}
     </>
   );
 };

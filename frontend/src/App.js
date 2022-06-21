@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
-import { Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Logout from './pages/Logout';
-import Main from './pages/Main';
-import { useSelector } from 'react-redux';
+import React from "react";
+import "./App.css";
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import Main from "./pages/Main";
+import LeaveReq from "./components/LeaveReq/LeaveReq";
+import { useSelector } from "react-redux";
 
 // import User from "./components/common/User";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/main" element={<Main />} />
+        <Route path="/leavereq" element={<LeaveReq />} />
         {/* <Route path="/user" element={<User />} /> */}
         {/* 404 page */}
         <Route path="*" element={<div> 없는 페이지 </div>} />
