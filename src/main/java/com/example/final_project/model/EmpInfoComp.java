@@ -11,9 +11,9 @@ import java.util.Date;
 @Builder
 public class EmpInfoComp {
     private String empno;
-    private String deptno;
+    private String deptNo;
     private Rank rank;
     private String email;
-    private String extensionNUm;
+    private String extensionNum;
     private Date hireDate;
 }

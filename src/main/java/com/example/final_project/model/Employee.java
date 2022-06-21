@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,6 +20,7 @@ public class Employee implements UserDetails{
     private Role role;
     private String profile;
     private String qr;
+    private boolean isResigned;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

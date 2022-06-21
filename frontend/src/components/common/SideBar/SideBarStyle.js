@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const BarBox = styled.div`
   background-color: #d9d9d9;
+
   width: 250px;
   height: 100vh;
   float: left;
