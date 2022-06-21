@@ -22,6 +22,7 @@ public class EmpInfoDto {
     private Role role;
     private Rank rank;
     private Date hireDate;
+    private String rankName; // String형 직급
 
     public static Employee toEmployee(EmpInfoDto emp, String empno, String pwd, String qr){
        return  Employee.builder()
@@ -37,11 +38,12 @@ public class EmpInfoDto {
     public static EmpInfoComp toEmpInfoComp(EmpInfoDto emp, String empno, String deptNo, String email){
         return EmpInfoComp.builder()
                 .empno(empno)
-                .deptno(deptNo)
+                .deptNo(deptNo)
                 .email(email)
                 .rank(emp.getRank())
                 .hireDate(emp.getHireDate())
-                .extensionNUm(emp.getExtensionNum())
+                .extensionNum(emp.getExtensionNum())
                 .build();
     }
 }
+

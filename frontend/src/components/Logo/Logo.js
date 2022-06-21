@@ -32,7 +32,7 @@ const Logo = ({ role }) => {
       <LogoImgbox onClick={ () => { return navigate("/main")}} />
       <Profilefrom>
         <UserImg />
-        <UserName>{empName.EMP_INFO.empno.name}</UserName>
+        <UserName>{empName.EMP_INFO.empInfo.name}</UserName>
         <UserSetting onClick={() => setOpen(!open)}>
           {open === true ? <BsChevronCompactUp /> : <BsChevronCompactDown />}
         </UserSetting>
