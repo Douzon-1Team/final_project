@@ -13,6 +13,7 @@ export function CheckToken(key) {
             console.log("empInfo : "+token.EMP_INFO.empno);
             if(token.EMP_INFO.empno === false) {
                 setIsAuth('Failed');
+                // console.log("empInfo : "+token.EMP_INFO.empno);
             }
         };
         checkAuthToken();
