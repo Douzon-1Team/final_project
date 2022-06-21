@@ -1,6 +1,7 @@
 // 유저 로그인/로그아웃 파일
 
 // promise 요청 타임아웃 시간 선언
+
 const TIME_OUT = 300 * 1000;
 
 const statusError = {
@@ -75,7 +76,6 @@ export const logoutUser = async (credentials, ACCESS_TOKEN) => {
         return {
             status,
             code,
-            // text
             json
         };
     } else {

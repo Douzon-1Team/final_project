@@ -19,13 +19,11 @@ function Login() {
     const response = await loginUser({ empno, password });
 
     if (response.status) {
-      console.log(response)
+      // console.log(response)
       setRefreshToken(response.json.refresh_token)
       dispatch(SET_TOKEN(response.json.accessToken))
       dispatch(SET_EMP_INFO(response.json));
-      // dispatch(SET_EMP_INFO(response.json.empno),
-      // SET_EMP_INFO(response.json.role)
-      console.log(response.json);
+      // console.log(response.json);
       alert('로그인 성공');
       return navigate('/main');
     } else {

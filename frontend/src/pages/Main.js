@@ -1,15 +1,15 @@
 import React from 'react';
 import Layout from '../components/Layout';
-// import Employee from "./Employee";
+import Calendar from "../components/common/Calendar";
 
+// redux 사번 받아오기
 function Main() {
-  console.log()
-  return (
-      <div>
+  return(
+      <>
         <Layout />
-        {/*<Employee/>*/}
-      </div>
-  );
+        <Calendar />
+      </>
+      )
 }
 
 export default Main;

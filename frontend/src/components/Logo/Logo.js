@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { style } from './LogoStyle';
 import { BsChevronCompactDown, BsChevronCompactUp } from 'react-icons/bs';
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 
 const Logo = ({ role }) => {
+  const empName = useSelector( state => { return state });
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const setLists = [
     {
       id: 1,
@@ -25,19 +29,19 @@ const Logo = ({ role }) => {
 
   return (
     <LogoForm>
-      <LogoImgbox />
+      <LogoImgbox onClick={ () => { return navigate("/main")}} />
       <Profilefrom>
         <UserImg />
-        <UserName>홍길동</UserName>
+        <UserName>{empName.EMP_INFO.empInfo.name}</UserName>
         <UserSetting onClick={() => setOpen(!open)}>
           {open === true ? <BsChevronCompactUp /> : <BsChevronCompactDown />}
         </UserSetting>
         {open && (
           <SettingOpen onMouseOver={() => setOpen(true)} onMouseOut={() => setOpen(false)}>
-            <SetForm>{setLists[0].menu}</SetForm>
+            <SetForm onClick={ () => { return navigate("/profile")}}>{setLists[0].menu}</SetForm>
             <SetForm>{setLists[1].menu}</SetForm>
             {role !== 0 ? <SetForm>{setLists[2].menu}</SetForm> : null}
-            <SetForm>{setLists[3].menu}</SetForm>
+            <SetForm onClick={ () => { return navigate("/logout")}}>{setLists[3].menu}</SetForm>
           </SettingOpen>
         )}
       </Profilefrom>

@@ -23,6 +23,7 @@ public class EmpInfoDto {
     private Role role;
     private Rank rank;
     private Date hireDate;
+    private String rankName; // String형 직급
 
     public static Employee toEmployee(EmpInfoDto emp, String empno, String profileUrl, String pwd, String qrUrl){
        return  Employee.builder()
@@ -46,3 +47,4 @@ public class EmpInfoDto {
                 .build();
     }
 }
+
