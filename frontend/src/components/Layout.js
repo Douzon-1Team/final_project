@@ -12,10 +12,10 @@ const Layout = () => {
 
     useEffect(()=>{
         let chkRole = [...role];
-        if(empRole.EMP_INFO.empno.role === 'ROLE_MANAGER'){
+        if(empRole.EMP_INFO.empInfo.role === 'ROLE_MANAGER'){
             chkRole[1] = empRole;
             setRole(1);
-        } else if(empRole.EMP_INFO.empno.role === 'ROLE_ADMIN'){
+        } else if(empRole.EMP_INFO.empInfo.role === 'ROLE_ADMIN'){
             chkRole[2] = empRole;
             setRole(2);
         } else { chkRole[0] = empRole; setRole(0)}
