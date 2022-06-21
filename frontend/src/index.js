@@ -8,7 +8,6 @@ import {Provider} from "react-redux";
 import axios from "axios";
 import store from "./store/configure";
 import {CookiesProvider} from "react-cookie";
-
 axios.defaults.withCredentials = true;
 
 

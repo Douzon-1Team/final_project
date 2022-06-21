@@ -3,70 +3,35 @@ import { render } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import TUICalendar from "@toast-ui/react-calendar";
 import { ISchedule, ICalendarInfo } from "tui-calendar";
-import {calendarReducer, getList} from "../../store/Calender";
+import {calendarReducer, getList} from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
+import Button from '@mui/material/Button';
 import CalendarStyle from "./Calendarstyle";
-
-// TODO 1.
-// 출근, 조퇴, 반차, 결근 & 휴가 하루는 TODAY ~ 하루종일 이므로
-// END에서 hours data만 가져오면 ㄱㄴ
-
-// 기간이 이틀 이상인 데이터는 start와 end getData 해야함
-
-// hours와 date구분해야함
-// db에서 가져온 데이터가 휴가라면
-// getDate 넣기
-// 이외의 것들 getHours 넣기
-
-// TODO 2.
-// 서버에서 받아온 날짜별 일정 data 넣기
-
-// TODO 3.
-// getDate를 useEffect와 useState 사용하기
-
-// TODO 4.
-// https://gipyeonglee.tistory.com/209
-// 휴일 API 받아와서 라이브러리에 공휴일 적용
+import _ from "lodash";
+import {
+    BsFillArrowLeftSquareFill,
+    BsFillArrowRightSquareFill,
+} from "react-icons/bs";
 
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
 const start = new Date();
 const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
-// var [schedules, setschedules] = useState({}); // 출/퇴근 기록
 var schedules = [ // schedules 일정 관리
-    // {
-    //     calendarId: "1", // 색깔
-    //     category: "time", // hours or time or date 설정 가능
-    //     isVisible: true,
-    //     title: "휴가 - 결제완료",
-    //     id: "3",
-    //     body: "Test",
-    //     start: new Date(new Date().setHours(start.getHours() + 1)),
-    //     end: new Date(new Date().setHours(start.getHours() + 4))
-    // },
-    // {
-    //     calendarId: "2",
-    //     category: "time",
-    //     isVisible: true,
-    //     title: "오전반차 - 결제진행",
-    //     id: "4",
-    //     body: "Description",
-    //     start: new Date(new Date().setHours(start.getHours() + 1)),
-    //     end: new Date(new Date().setHours(start.getHours() + 48))
-    // },
 ];
 
+// TODO : 얘는 따로 뺴줘야할듯
 const calendars = [
     // 정상출근
     {
         id: "1", // id로 schedules와 연동되므로 순차적으로 올리기
         name: "출근",
         color: "#ffffff",
-        bgColor: "#9e5fff",
-        dragBgColor: "#9e5fff",
-        borderColor: "#9e5fff"
+        bgColor: "#03bd9e",
+        dragBgColor: "#03bd9e",
+        borderColor: "#03bd9e"
     },
     // 조퇴
     {
@@ -82,30 +47,30 @@ const calendars = [
         id: "3",
         name: "결근",
         color: "#ffffff",
-        bgColor: "#00a9ff",
-        dragBgColor: "#00a9ff",
-        borderColor: "#00a9ff"
+        bgColor: "#FF0000",
+        dragBgColor: "#FF0000",
+        borderColor: "#FF0000"
     },
     // 지각
     {
         id: "4",
         name: "지각",
         color: "#ffffff",
-        bgColor: "#00a9ff",
-        dragBgColor: "#00a9ff",
-        borderColor: "#00a9ff"
+        bgColor: "#FFA500",
+        dragBgColor: "#FFA500",
+        borderColor: "#FFA500"
     },
-    // 결제진행
-
-    // 결제완료
+    // 결제진행/결제완료? #00AAFF
+    {
+        id: "5",
+        name: "연차",
+        color: "#ffffff",
+        bgColor: "#00AAFF",
+        borderColor: "#FF0000"
+    },
 
 ];
-
-// TODO : Redux 데이터 바로 불러오기
-
     // const [inputValue, setInputValue] = useState("");
-    // const [scheduless, setschedules] = useState([]); // 출/퇴근 기록
-    // const [calendars, setcalendars] = useState([]); // 휴가기록
 
     // 1. 휴가 req, reject, accept, vacation_start, vacation_end
 
@@ -120,28 +85,7 @@ const calendars = [
 
     const dispatch = useDispatch();
     const calendarList = useSelector((state) => state.calendarReducer);
-    var test = {};
-    // test = calendarList[0];
-    for (var i = 0; i < calendarList.length; i++) {
-        test = calendarList[i];
-    }
-    // console.log(calendarList[0]);
-    // setschedules(...calendarList);
     schedules.push(...calendarList);
-    console.log(test);
-    // console.log(...calendarList);
-    console.log(schedules);
-    // setschedules(calendarList[0].start);
-    // calendarId: "1", // 색깔
-    //     category
-    //     isVisible
-    //     title
-    //     id
-    //     body
-    //     start
-    //     end
-
-    // setschedules(calendarId:1, category:"time", isVisible:true, title:calendarList)
 
     useEffect(() => {
         dispatch(getList());
@@ -152,49 +96,52 @@ const calendars = [
         const { calendarId, id } = e.schedule;
         const el = cal.current.calendarInst.getElement(id, calendarId);
 
-        console.log(e, el.getBoundingClientRect());
+        // TODO : 얘네 3개 보내줄거임(근태 조정 & 휴가 신청) - title로 구분 할 것
+        console.log(e.schedule.title);
+        console.log(e.schedule.start);
+        console.log(e.schedule.end);
     }, []);
 
-    const onBeforeCreateSchedule = useCallback((scheduleData) => { // 일정 클릭시 일정 팝업창 생성
-        console.log(scheduleData);
+    const onBeforeCreateSchedule = (scheduleData) => { // 일정 클릭시 일정 팝업창 생성
+        var year = scheduleData.start.getFullYear();
+        var month = ('0' + (scheduleData.start.getMonth() + 1)).slice(-2);
+        var day = ('0' + scheduleData.start.getDate()).slice(-2);
 
-        const schedule = {
-            id: String(Math.random()),
-            title: scheduleData.title,
-            isAllDay: scheduleData.isAllDay,
-            start: scheduleData.start,
-            end: scheduleData.end,
-            category: scheduleData.isAllDay ? "allday" : "time",
-            dueDateClass: "",
-            location: scheduleData.location,
-            raw: {
-                class: scheduleData.raw["class"]
-            },
-            state: scheduleData.state
-        };
+        var dateStart = year + '-' + month  + '-' + day;
 
-        cal.current.calendarInst.createSchedules([schedule]);
-    }, []);
+        var year = scheduleData.end.getFullYear();
+        var month = ('0' + (scheduleData.end.getMonth() + 1)).slice(-2);
+        var day = ('0' + scheduleData.end.getDate()).slice(-2);
 
-    const onBeforeDeleteSchedule = useCallback((res) => { // 삭제 팝업창
-        console.log(res);
+        var dateEnd = year + '-' + month  + '-' + day;
 
-        const { id, calendarId } = res.schedule;
+        // TODO : 오늘 이전 연차신청목록 클릭시 -> 어떻게 할지?
+        if (new Date() > scheduleData.start) {
+            const test = _.find(schedules, { empno: '220101', date: `${dateStart}` });
+            console.log(test);
+        } else { // TODO : 연차 신청
+            const test2 = _.find(schedules, { datestart: `${dateStart}` });
+            console.log('over here!');
+            // if (test2 == null) {
+                // dateStart 보내기
+            // }
+        }
+        // 승범님에게 data 보내기~
+        // window.location.href = 'https://www.naver.com/';
+    };
 
-        cal.current.calendarInst.deleteSchedule(id, calendarId);
-    }, []);
 
-    const onBeforeUpdateSchedule = useCallback((e) => { // 수정 팝업창
-        console.log(e);
-
-        const { schedule, changes } = e;
-
-        cal.current.calendarInst.updateSchedule(
-            schedule.id,
-            schedule.calendarId,
-            changes
-        );
-    }, []);
+    // const onBeforeUpdateSchedule = useCallback((e) => { // 수정 팝업창
+    //     console.log(e);
+    //
+    //     const { schedule, changes } = e;
+    //
+    //     cal.current.calendarInst.updateSchedule(
+    //         schedule.id,
+    //         schedule.calendarId,
+    //         changes
+    //     );
+    // }, []);
 
     function _getFormattedTime(time) { // 시간 설정
         const date = new Date(time);
@@ -205,6 +152,7 @@ const calendars = [
     }
 
     function _getTimeTemplate(schedule, isAllDay) { // 일정 data
+        console.log(123123);
         var html = [];
 
         if (!isAllDay) {
@@ -261,34 +209,39 @@ const calendars = [
         setDate(`${year}년 ${month + 1}월`);
     }
 
+    // TODO : Today 추가
     return (
         <CalendarStyle>
-            <button
-                onClick={() => {
-                    onClickPrev()}}
-            >
-                PREV
-            </button>
-            <button
-                onClick={() => {
-                    onClickNext()}}
-            >
-                NEXT
-            </button>
-            <span>{date}</span>
+            <div className="calendar_header">
+            <Button className="today" variant="contained">오늘 날짜</Button>
+                <BsFillArrowLeftSquareFill className="prev"
+                    onClick={() => {
+                        onClickPrev()
+                    }}
+                />
+            <span className="date">{date}</span>
+                        <BsFillArrowRightSquareFill className="next"
+                            onClick={() => {
+                                onClickNext()}}
+                        />
+
+                <Button className="dept_vacation" variant="contained">부서별 휴가일정</Button>
+            </div>
             <TUICalendar
                 ref={cal}
-                height="750px"
                 view="month"
-                useCreationPopup={true}
-                useDetailPopup={true}
+                // useCreationPopup={true}
+                // useDetailPopup={true}
                 template={templates}
                 calendars={calendars}
                 schedules={schedules}
                 onClickSchedule={onClickSchedule}
                 onBeforeCreateSchedule={onBeforeCreateSchedule}
-                onBeforeDeleteSchedule={onBeforeDeleteSchedule}
-                onBeforeUpdateSchedule={onBeforeUpdateSchedule}
+                month={{
+                    daynames: ['일', '월', '화', '수', '목', '금', '토']
+                }}
+            // onBeforeDeleteSchedule={onBeforeDeleteSchedule}
+                // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
             />
         </CalendarStyle>
     );
