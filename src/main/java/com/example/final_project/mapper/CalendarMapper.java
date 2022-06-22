@@ -16,12 +16,13 @@ public interface CalendarMapper {
                     " join (select empno, date as offwork from attendance_time where on_off_work = 0) b on a.empno = b.empno"+
                     " where a.empno = #{empno} and on_off_work = 1 and day(a.date) = day(b.offwork))) a"+
     " INNER JOIN attendance_status b on day(onwork) = day(b.date) and a.empno = b.empno ORDER BY date;")
-
 //    List<CalendarResponseDto.vacationBuilder> findUserVacation(String empno);
     List<CalendarResponseDto> findUserVacation(String empno);
 
-    // 출근 데이터
+    // 휴가 데이터
     @Select("select req title, reject, context, accept, reason, vacation_start VacationStart, DATE_FORMAT(vacation_start, '%Y-%m-%d') datestart, vacation_end VacationEnd, DATE_FORMAT(vacation_end, '%Y-%m-%d') dateend from attendance_req WHERE empno = #{empno} ORDER BY vacation_start;")
 //    List<CalendarResponseDto.workBuilder> findUserWork(String empno);
     List<CalendarResponseDto> findUserWork(String empno);
+
+
 }

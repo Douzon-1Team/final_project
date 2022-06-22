@@ -16,6 +16,6 @@ public interface ProgressBar52hMapper {
             "GROUP BY DATE_FORMAT(date, '%Y%U');")
     Long overtimeWeek(String empno);
     @Select("select TIMESTAMPDIFF(hour,date,now()) from attendance_time" +
-            " where empno = #{empno} and date_format(date,'%y%m%d') = date_format(now(),'%y%m%d')")
+            " where empno = #{empno} and on_off_work = 1 and date_format(date,'%y%m%d') = date_format(now(),'%y%m%d')")
     Long todayWorkTime(String empno);
 }

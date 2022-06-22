@@ -3,11 +3,12 @@ package com.example.final_project.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-@Getter
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class CalendarResponseDto { // client에게 응답
     private String empno;
     private String title;
@@ -30,6 +31,12 @@ public class CalendarResponseDto { // client에게 응답
     private String vacation;
     private boolean unregistered;
     private String date;
+    private int totalAnnualLeave;
+    private int remainingAnnualLeaveDay;
+    private int remainingAnnualLeaveTime;
+    private Long attendanceWeek;
+    private Long overtimeWeek;
+    private Long todayWorkTime;
 
 //    @Builder(builderClassName = "workBuilder", builderMethodName = "workBuilder")
 //    public CalendarResponseDto(String empno, String req, boolean reject, boolean accept, String vacationStart, String vacationEnd) {

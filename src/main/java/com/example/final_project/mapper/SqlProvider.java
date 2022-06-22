@@ -6,7 +6,6 @@ import com.example.final_project.model.Employee;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
-import java.util.Map;
 
 public class SqlProvider {
     public String updateEmployee(Employee emp){

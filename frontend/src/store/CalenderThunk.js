@@ -6,6 +6,7 @@ export const getList = createAsyncThunk("GET_TODO", async () => {
     // TODO : REDUX에서 로그인 유저정보 받아오기
             try {
                 const response = await getMain({empnos:220101});
+                console.log(response.data);
                 for (var i = 0; i < response.data.length; i++) {
                     if (response.data[i].empno != null) { // 출근
                         if (response.data[i].vacation != null) continue;
@@ -117,7 +118,7 @@ export const getList = createAsyncThunk("GET_TODO", async () => {
                 // TODO : 1. 년 단위로 가져오기? 2. 달력에 데이터 뿌리기
                 return response.data;
             } catch (e) {
-                alert("시스템 에러입니다. 관리자에게 문의 해주세요");
+                // alert("시스템 에러입니다. 관리자에게 문의 해주세요");
             }
 
     // 1. 휴가 req, reject, accept, vacation_start, vacation_end
