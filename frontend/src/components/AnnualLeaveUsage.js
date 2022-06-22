@@ -4,13 +4,16 @@ import {TextContainer, CardContainer, TitleContainer} from "../styles/main2";
 import {Grid} from "@mui/material";
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 
-const AnnualLeaveUsage = ({total , used, annualLeaveInfo}) => {
+const AnnualLeaveUsage = ({totalAnnualLeave , remainingAnnualLeaveDay, remainingAnnualLeaveTime}) => {
+
     const [options, setOptions] = useState({
         series: [
             {
                 type: 'gauge',
                 startAngle: 90,
                 endAngle: -270,
+                min: 0,
+                max:totalAnnualLeave,
                 pointer: {
                     show: false
                 },
@@ -44,7 +47,17 @@ const AnnualLeaveUsage = ({total , used, annualLeaveInfo}) => {
                     show: false,
                     distance: 50
                 },
-                data: annualLeaveInfo,
+                data: [{
+                    value: totalAnnualLeave-remainingAnnualLeaveDay,
+                    name:'',
+                    title: {
+                        offsetCenter: ['0%', '0%']
+                    },
+                    detail: {
+                        valueAnimation: true,
+                        offsetCenter: ['0%', '10%']
+                    }
+                }],
                 title: {
                     fontSize: 12
                 },
@@ -56,7 +69,7 @@ const AnnualLeaveUsage = ({total , used, annualLeaveInfo}) => {
                     borderColor: 'auto',
                     borderRadius: 20,
                     borderWidth: 1,
-                    formatter: '{value}%'
+                    formatter: '{value}일'
                 }
             }
         ]
@@ -71,13 +84,13 @@ const AnnualLeaveUsage = ({total , used, annualLeaveInfo}) => {
                     </TitleContainer>
                     <CardContainer>
                         <TextContainer>
-                            전체 일수 : {total} 일
+                            전체 일수 : {totalAnnualLeave} 일
                         </TextContainer>
                         <TextContainer>
-                            사용 일수 : {used} 일
+                            잔여 일수 : {remainingAnnualLeaveDay} 일
                         </TextContainer>
                         <TextContainer>
-                            잔여 일수 : {total-used} 일
+                            잔여 시간 : {remainingAnnualLeaveTime} H
                         </TextContainer>
                     </CardContainer>
                 </Grid>

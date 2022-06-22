@@ -9,6 +9,6 @@ export const getMain = async ({ empnos }) => {
             }
         );
     } catch (error) {
-        alert("시스템 에러입니다. 관리자에게 문의 해주세요");
+        // alert("시스템 에러입니다. 관리자에게 문의 해주세요");
     }
 };

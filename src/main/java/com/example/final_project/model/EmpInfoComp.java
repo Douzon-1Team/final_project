@@ -16,4 +16,5 @@ public class EmpInfoComp {
     private String email;
     private String extensionNum;
     private Date hireDate;
+    private int remainingAnnualLeave;
 }
