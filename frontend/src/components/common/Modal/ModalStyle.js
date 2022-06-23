@@ -8,8 +8,8 @@ export const Modal = styled.div`
   position: absolute;
 `;
 export const ModalWindow = styled.div`
-  height: 18%;
-  width: 20%;
+  height: 150px;
+  width: 400px;
   background-color: rgba(255, 255, 255);
   position: absolute;
   border-radius: 3%;
