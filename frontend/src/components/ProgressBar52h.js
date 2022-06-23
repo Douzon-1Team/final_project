@@ -3,7 +3,10 @@ import Card from '@mui/material/Card';
 import {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue} from "../styles/main2";
 import {Grid} from "@mui/material";
 
-export default function ProgressBar52h({ attendanceWeek, overtimeWeek, todayWorkTime}) {
+const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
+    const [options, setOptions] = useState({
+        //시간 추가해서 금일근무시간 실시간으로 증가 처리 필요
+    });
     return (
         <Card sx={{ maxWidth: 500 }}>
             <CardContainer>
@@ -30,3 +33,5 @@ export default function ProgressBar52h({ attendanceWeek, overtimeWeek, todayWork
         </Card>
     );
 }
+
+export default ProgressBar52h;
