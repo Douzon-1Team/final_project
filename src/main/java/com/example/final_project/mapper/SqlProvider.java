@@ -6,7 +6,6 @@ import com.example.final_project.model.Employee;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
-import java.util.Map;
 
 public class SqlProvider {
     public String updateEmployee(Employee emp){
@@ -35,8 +34,10 @@ public class SqlProvider {
 
     public String selectEmployee(SearchFilterRequestDto dto, List<String> deptNo){
         SQL sql = new SQL();
-        sql.SELECT("role, emp_name, employee.empno, rank, extension_num");
-        sql.FROM("employee, emp_info_comp");
+        sql.SELECT("role, emp_name, employee.empno, rank, hire_date, extension_num, dept_name");
+        sql.FROM("employee");
+        sql.INNER_JOIN("emp_info_comp on employee.empno = emp_info_comp.empno");
+        sql.INNER_JOIN("dept on dept.dept_no = emp_info_comp.dept_no");
         if(dto.getRole() != null) sql.WHERE("role in" +forEach(dto.getRole()));
         if(!deptNo.isEmpty()) sql.WHERE("dept_no in" +forEach(dto.getDeptName()));
         if(dto.getRank() != null) sql.WHERE("rank in"+forEach(dto.getRank()));

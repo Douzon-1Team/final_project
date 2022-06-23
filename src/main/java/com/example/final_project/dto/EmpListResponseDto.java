@@ -17,6 +17,7 @@ public class EmpListResponseDto {
     String rank;
     String empno;
     String extensionNum;
+    String empName;
     Date hireDate;
 }
 
