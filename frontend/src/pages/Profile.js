@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Main from "./Main";
 import { Title, Table, Button2, Button } from '../styles/profile';
 import GetProfile from "../apis/ApiService";
 import {useSelector} from "react-redux";
@@ -16,7 +15,6 @@ function Profile() {
 
     return (
         <>
-            <Main/>
             <Title>사원 정보 관리</Title>
 
             <Table>
