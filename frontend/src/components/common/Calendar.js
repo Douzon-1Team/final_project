@@ -8,12 +8,14 @@ import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
 import Button from "@mui/material/Button";
-import CalendarStyle from "./Calendarstyle";
+import CalendarStyle from "../../styles/Calendarstyle";
 import _ from "lodash";
 import {
   BsFillArrowLeftSquareFill,
   BsFillArrowRightSquareFill,
+  BsDot,
 } from "react-icons/bs";
+
 
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
@@ -235,10 +237,15 @@ function Calendar() {
           }}
         />
 
+        <Button className="dept_vacation" variant="contained">월간 근태기록</Button>
         <Button className="dept_vacation" variant="contained">
           부서별 휴가일정
         </Button>
       </div>
+      <BsDot className="dot1" />출근
+      <BsDot className="dot2" />조퇴
+      <BsDot className="dot3" />결근
+      <BsDot className="dot4" />지각
       <TUICalendar
         ref={cal}
         view="month"
