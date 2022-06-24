@@ -1,0 +1,241 @@
+import React, { useState } from "react";
+import { style } from "./AttendanceReqStyle";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { ko } from "date-fns/esm/locale";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import { modalStyle } from "../common/Modal/ModalStyle";
+import axios from "axios";
+import { useSelector } from "react-redux";
+
+export const AttendanceReq = () => {
+  const [sortNum, setSortNum] = useState(0); // 근태구분
+  const today = new Date();
+  const [startDate, setStartDate] = useState(today); // 휴가&반차 시작일
+  const [endDate, setEndDate] = useState(today); // 휴가&반차 종료일
+  const [timeValid, setTimeValid] = useState(true);
+  // -------------------------------------------
+  const [modalSwitch, setModalSwitch] = useState(false);
+  const [sendBefore, setSendBefore] = useState(false);
+  const [sendAfter, setSendAfter] = useState(false);
+  const [req, setReq] = useState("");
+  // -------------------------------------------
+  function onSet(para) {
+    if (para === 1) setReq("출/퇴근");
+    else if (para === 2) setReq("지각");
+    else if (para == 3) setReq("결근");
+
+    if (sortNum === para) {
+      setSortNum(0);
+    } else {
+      setSortNum(para);
+      if (para === 3) setTimeValid(false);
+      else setTimeValid(true);
+    }
+  }
+  const start = dayjs(startDate);
+  const end = dayjs(endDate);
+  let startFormat, endFormat;
+  startFormat = start.format("YYYY-MM-DD HH:mm:00");
+  endFormat = end.format("YYYY-MM-DD HH:mm:00");
+  // ----------------------------------------------------------
+  const [comment, setComment] = useState("");
+  const handleChangeComment = (e) => {
+    setComment(e.target.value);
+  };
+  // ---------------------------------------------------------------------------------
+  const empName = useSelector((state) => {
+    return state;
+  });
+  const [empNo, setEmpNo] = useState(empName.EMP_INFO.empInfo.empno);
+  // ---------------------------------------------------------------------------------
+  function sendData(sortNum) {
+    sortNum === 0 ? setModalSwitch(true) : setSendBefore(true);
+  }
+  // ---------------------------------------------------------------------------------
+  let navigate = useNavigate();
+  const f1 = () => {
+    axios
+      .post("/vacationreq", {
+        empNo: empNo,
+        req: req,
+        startFormat: startFormat,
+        endFormat: endFormat,
+        comment: comment,
+      })
+      .then((response) => {
+        console.log("전달완료 무야호");
+      })
+      .catch((error) => {
+        console.log(error, "*******************************");
+      });
+  };
+  function completed() {
+    f1();
+    navigate("/main");
+  }
+  // ----------------------------------------------------------
+
+  return (
+    <Container>
+      {modalSwitch && (
+        <Modal>
+          <ModalWindow>
+            <ModalTitle>근태 구분을 선택해주세요</ModalTitle>
+            <YesButton
+              onClick={() => setModalSwitch(false)}
+              modalSwitch={modalSwitch}
+            >
+              확 인
+            </YesButton>
+          </ModalWindow>
+        </Modal>
+      )}
+      {sendBefore && (
+        <Modal>
+          <ModalWindow>
+            <ModalTitle>신청서를 제출하시겠습니까?</ModalTitle>
+            <YesButton
+              onClick={() => setSendAfter(true)}
+              onCllick={() => setSendBefore(false)}
+              sendBefore={sendBefore}
+            >
+              확 인
+            </YesButton>
+            <NoButton onClick={() => setSendBefore(false)}>취 소</NoButton>
+          </ModalWindow>
+        </Modal>
+      )}
+      {sendAfter && (
+        <Modal>
+          <ModalWindow>
+            <ModalTitle>성공적으로 신청되었습니다.</ModalTitle>
+            <YesButton onClick={() => completed()} sendAfter={sendAfter}>
+              확 인
+            </YesButton>
+          </ModalWindow>
+        </Modal>
+      )}
+      <LeaveSort>
+        <SortTag>근태구분</SortTag>
+        <SortContent>
+          <ButtonA onClick={() => onSet(1)} sortNum={sortNum}>
+            출/퇴근
+          </ButtonA>
+          <ButtonB onClick={() => onSet(2)} sortNum={sortNum}>
+            지각
+          </ButtonB>
+          <ButtonC onClick={() => onSet(3)} sortNum={sortNum}>
+            결근
+          </ButtonC>
+        </SortContent>
+      </LeaveSort>
+      {/* ------------------------- */}
+      <LeaveTerm>
+        <TermTag>조정기간</TermTag>
+        <TermContent>
+          <TermSelect>
+            <DatePicker
+              sortNum={sortNum}
+              locale={ko}
+              dateFormat="yyyy년 MM월 dd일"
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+              }}
+            />
+          </TermSelect>
+        </TermContent>
+      </LeaveTerm>
+      {/* ------------------------- */}
+      <LeaveTime timeValid={timeValid}>
+        <TimeTag>조정시간</TimeTag>
+        <TimeContent>
+          {" "}
+          <TimeSelect>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+                setEndDate(date);
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={1}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+              minTime={new Date().setHours(9, 0, 0, 0)}
+              maxTime={new Date().setHours(18, 0, 0, 0)}
+            />
+          </TimeSelect>
+          <Text1> 부터 </Text1>
+          <TimeSelect>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+                setEndDate(date);
+              }}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={1}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+              minTime={new Date().setHours(9, 0, 0, 0)}
+              maxTime={new Date().setHours(18, 0, 0, 0)}
+            />
+          </TimeSelect>
+          <Text1> 까지 </Text1>
+        </TimeContent>
+      </LeaveTime>
+      {/* ------------------------- */}
+      <LeaveName>
+        <NameTag>대상자</NameTag>
+        <NameContent>{empName.EMP_INFO.empInfo.name}</NameContent>
+      </LeaveName>
+      {/* ------------------------- */}
+      <LeaveReason>
+        <ReasonTag>사유</ReasonTag>
+        <ReasonContent name="comment" onChange={handleChangeComment} />
+      </LeaveReason>
+      {/* ------------------------- */}
+      <ButtonBox>
+        <Button2_1 onClick={() => sendData(sortNum)}>신 청</Button2_1>
+        <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
+      </ButtonBox>
+    </Container>
+  );
+};
+
+const {
+  Container,
+  LeaveSort,
+  LeaveTerm,
+  LeaveTime,
+  LeaveName,
+  LeaveReason,
+  SortTag,
+  TermTag,
+  TimeTag,
+  NameTag,
+  ReasonTag,
+  SortContent,
+  TermContent,
+  TimeContent,
+  NameContent,
+  ReasonContent,
+  ButtonBox,
+  Button2_1,
+  Button2_2,
+  ButtonA,
+  ButtonB,
+  ButtonC,
+  TermSelect,
+  TimeSelect,
+  Text1,
+} = style;
+
+const { Modal, ModalWindow, ModalTitle, YesButton, NoButton } = modalStyle;
+
+export default AttendanceReq;

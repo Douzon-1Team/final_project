@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LogoImg from '../../../src/assets/img/logo.png';
+import LogoImg from '../../../../src/assets/img/logo.png';
 
 export const LogoForm = styled.div`
   height: 7vh;
