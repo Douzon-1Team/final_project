@@ -9,7 +9,7 @@ import Profile from "./pages/Profile";
 import LeaveReq from "./components/LeaveReq/LeaveReq";
 import LeaveList from "./components/LeaveList/LeaveList";
 import AttendanceReq from "./components/AttendanceReq/Attendance";
-// import EmpInfo from "./pages/EmpInfo";
+import ProfileUpdate from "./pages/ProfileUpdate";
 
 function App() {
   return (
@@ -19,6 +19,7 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/main" element={<Main />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/update" element={<ProfileUpdate />} />
           {/*<Route path="/empInfo" element={<EmpInfo />} />*/}
           <Route path="/logout" element={<Logout />} />
           <Route path="/leavereq" element={<LeaveReq />} />
