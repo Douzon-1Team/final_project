@@ -3,17 +3,15 @@ import Layout from "../components/common/Layout";
 import Calendar from "../components/common/Calendar";
 import ProgressBar52h from "../components/ProgressBar52h";
 import AnnualLeaveUsage from "../components/AnnualLeaveUsage";
-import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
+import {MainStyle} from "../styles/mainstyle";
 
 // redux 사번 받아오기
 function Main() {
   const subComponentData = useSelector((state) => state.calendarReducer[0]);
   return (
-    <>
-      <Layout />
-      <Grid container spacing={2} justifyContent="end" maxWidth="90%">
-        <Grid item xs={3}>
+      <>
+    <MainStyle>
           <ProgressBar52h
             attendanceWeek={subComponentData.attendanceWeek}
             todayWorkTime={subComponentData.todayWorkTime}
@@ -25,12 +23,9 @@ function Main() {
             remainingAnnualLeaveDay={subComponentData.remainingAnnualLeaveDay}
             remainingAnnualLeaveTime={subComponentData.remainingAnnualLeaveTime}
           />
-        </Grid>
-        <Grid item xs={6}>
+    </MainStyle>
           <Calendar />
-        </Grid>
-      </Grid>
-    </>
+      </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue} from "../styles/main2";
+import {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue} from "../styles/mainstyle";
 import {Grid} from "@mui/material";
 
 export default function ProgressBar52h({ attendanceWeek, overtimeWeek, todayWorkTime}) {
