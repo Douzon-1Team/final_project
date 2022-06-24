@@ -14,17 +14,17 @@ function Main() {
       <Layout />
       <Grid container spacing={2} justifyContent="end" maxWidth="90%">
         <Grid item xs={3}>
-          <ProgressBar52h
-            attendanceWeek={subComponentData.attendanceWeek}
-            todayWorkTime={subComponentData.todayWorkTime}
-            overtimeWeek={subComponentData.overtimeWeek}
-          />
+          {/*<ProgressBar52h*/}
+          {/*  attendanceWeek={subComponentData.attendanceWeek}*/}
+          {/*  todayWorkTime={subComponentData.todayWorkTime}*/}
+          {/*  overtimeWeek={subComponentData.overtimeWeek}*/}
+          {/*/>*/}
           <br />
-          <AnnualLeaveUsage
-            totalAnnualLeave={subComponentData.totalAnnualLeave}
-            remainingAnnualLeaveDay={subComponentData.remainingAnnualLeaveDay}
-            remainingAnnualLeaveTime={subComponentData.remainingAnnualLeaveTime}
-          />
+          {/*<AnnualLeaveUsage*/}
+          {/*  totalAnnualLeave={subComponentData.totalAnnualLeave}*/}
+          {/*  remainingAnnualLeaveDay={subComponentData.remainingAnnualLeaveDay}*/}
+          {/*  remainingAnnualLeaveTime={subComponentData.remainingAnnualLeaveTime}*/}
+          {/*/>*/}
         </Grid>
         <Grid item xs={6}>
           <Calendar />

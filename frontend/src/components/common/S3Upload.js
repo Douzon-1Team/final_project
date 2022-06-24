@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 import styled from 'styled-components/macro';
 import { BiImageAdd } from 'react-icons/bi';
-// import * as dotenv from "dotenv";
+import {useSelector} from "react-redux";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const ProfileUploadWrap = styled.div`
@@ -33,20 +33,16 @@ const ProfileUploadWrap = styled.div`
   }
 `;
 
-// dotenv.config();
-// console.log((JSON.parse(localStorage.userInfo).image = data.location));
 const S3Upload = () => {
+    const userName = useSelector(state => {return state});
     const imagePatchConfig = {
         headers: {
-            // Authorization: `Bearer ${JSON.parse(localStorage.getItem('userInfo')).token}`,
             'Content-Type': 'application/json',
         },
     };
     const handleClick = (event) => {
         const file = event.target.files[0];
-        // const bytes = parse(file);
-        // const newFileName = v4();
-        // const newFileName = v4();
+        const newFileName = v4();
         const config = {
             bucketName: process.env.REACT_APP_BUCKET_NAME,
             region: process.env.REACT_APP_REGION,
@@ -61,30 +57,22 @@ const S3Upload = () => {
             } else {
                 if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') {
                     console.log(file);
-                    console.log(`https://${process.env.REACT_APP_BUCKET_NAME}.s3.${process.env.REACT_APP_REGION}.amazonaws.com/profile_${file.name}`)
-                    ReactS3Client.uploadFile(file, 'profile_'+file.name)
-                        .then((data) => {
-                        ///////
-                        console.log('1234')
-                        // console.log(data);
+                    // ReactS3Client.uploadFile(file, 'profile_'+file.name)
+                    ReactS3Client.uploadFile(file, `profile-${userName.EMP_INFO.empInfo.empno}-`+newFileName)
+                        .then((data) => { console.log('1234')
                         axios.post('/profile/update', { image: data.location }, imagePatchConfig)
                             .then((res) => {
-                                console.log(res, '이미지 보내짐');
+                                console.log('이미지 전송 완료'); //res.data, '~~'
                                     localStorage.setItem(
-                                        'userInfo',
-                                        JSON.stringify({
-                                            ...JSON.parse(localStorage.userInfo),
-                                            image: data.location,
-                                        })
+                                        'profile',
+                                        res.data
                                     );
-                                    window.location.reload();
-                                // }
+                                    // window.location.reload();
                             })
                             .catch((err) => {
                                 console.log(err, '이미지 변경 안됨');
                             });
-                    })///////
-                    .catch((err) => console.log(err));
+                    }).catch((err) => console.log(err));
                 } else {
                     alert('JPEG, PNG, JPG 파일만 업로드 가능합니다.');
                     event.target.value = null;
