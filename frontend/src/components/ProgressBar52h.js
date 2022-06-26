@@ -24,7 +24,7 @@ const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
                     누적 근무시간 : {attendanceWeek} H
                 </TextContainer>
                 <TextContainer>
-                    초가 근무시간 : {overtimeWeek} H
+                    초과 근무시간 : {overtimeWeek} H
                 </TextContainer>
                 <TextContainer>
                     금일 근무시간 : {todayWorkTime} H
