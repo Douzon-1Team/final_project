@@ -9,6 +9,10 @@ import {MainStyle} from "../styles/mainstyle";
 // redux 사번 받아오기
 function Main() {
   const subComponentData = useSelector((state) => state.calendarReducer[0]);
+    console.log(subComponentData)
+    console.log(subComponentData.overtimeWeek)
+    console.log(subComponentData.todayWorkTime)
+
   return (
       <>
     <MainStyle>
