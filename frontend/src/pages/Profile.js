@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Main from "./Main";
-import { Title, Table, Button2, Button } from '../styles/profile';
+import { Title, Table } from '../styles/profile';
 import GetProfile from "../apis/ApiService";
 import {useSelector} from "react-redux";
-import axios from "axios";
 
 function Profile() {
     let empInfo = useSelector( (state) => {return state});

@@ -12,6 +12,8 @@ const statusError = {
 };
 
 const requestPromise = (url, option) => {
+    console.log(url)
+    console.log(option)
     return fetch(url, option);
 };
 
@@ -53,6 +55,35 @@ export const loginUser = async (credentials) => {
         return statusError;
     }
 };
+
+export const updatePwd = async (credentials) => {
+    const option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(credentials)
+    };
+    const data = await getPromise('/profile/updatePwd', option).catch(() => {
+        return statusError;
+    });
+
+    if (parseInt(Number(data.status)/100)===2) {
+        const status = data.ok;
+        const code = data.status;
+        const text = await data.text();
+        const json = text.length ? JSON.parse(text) : "";
+
+        return {
+            status,
+            code,
+            json
+        };
+    } else {
+        return statusError;
+    }
+};
+
 
 export const logoutUser = async (credentials, ACCESS_TOKEN) => {
     const option = {

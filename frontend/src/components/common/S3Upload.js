@@ -63,15 +63,15 @@ const S3Upload = () => {
                         axios.post('/profile/update', { image: data.location }, imagePatchConfig)
                             .then((res) => {
                                 console.log('이미지 전송 완료'); //res.data, '~~'
+                                    // TODO : localStorage에 저장하는 것이 괜찮을까?
                                     localStorage.setItem(
                                         'profile',
                                         res.data
                                     );
                                     // window.location.reload();
-                            })
-                            .catch((err) => {
-                                console.log(err, '이미지 변경 안됨');
-                            });
+                                }
+                            )
+                            .catch((err) => { console.log(err, '이미지 변경 안됨'); });
                     }).catch((err) => console.log(err));
                 } else {
                     alert('JPEG, PNG, JPG 파일만 업로드 가능합니다.');
