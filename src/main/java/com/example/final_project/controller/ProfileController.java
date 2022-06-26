@@ -25,13 +25,14 @@ public class ProfileController {
         return ResponseEntity.ok().body(empInfoDto);
     }
 
-//    @PostMapping("/profile/update")
-//    public ResponseEntity updateProfile(@RequestPart(value = "EmpUpdateDto") EmpUpdateDto updateDto,
-//                                        @RequestPart(value = "file", required = false) MultipartFile profile){
-//        System.out.println(updateDto);
-//        profileService.updateProfile(updateDto, profile);
-//        return ResponseEntity.ok().build();
-//    }
+    // 비밀번호 변경
+    @PostMapping("/profile/updatePwd")
+    public ResponseEntity updatePwd(@RequestBody EmpUpdateDto updateDto) {
+        System.out.println("profile Controller : updateDto (위)"+updateDto);
+        profileService.updatePwd(updateDto);
+        System.out.println("profile Controller : updateDto (아래)"+updateDto);
+        return ResponseEntity.ok().build();
+    }
 
 //    @PostMapping("/profile/update")
 //    public ResponseEntity updateProfile(@RequestBody Object profile){
@@ -40,6 +41,7 @@ public class ProfileController {
 //        return ResponseEntity.ok().build();
 //    }
 
+    // 프로필 사진 변경
     @PostMapping(path = "/profile/update")
     public String updateProfile(@RequestBody HashMap<String, Object> param){
         System.out.println(param.get("image"));

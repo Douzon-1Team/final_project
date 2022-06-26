@@ -47,34 +47,25 @@ public class ProfileService {
     }
 
     @Transactional
-    public void updateProfile(@RequestPart(value = "EmpUpdateDto") EmpUpdateDto updateDto,
-                       @RequestPart(value = "profile") MultipartFile profile){
-//    public void updateProfile(EmpUpdateDto updateDto, MultipartFile profile){
+    public void updatePwd(EmpUpdateDto updateDto){
         employeeMapper.findByUserId(updateDto.getEmpno())
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-
-        String profileUrl = null;
-        if(profile != null)
-            profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
 
         String password = null;
         if(updateDto.getPwd() != null) {
             validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
-
-//        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(password), profileUrl));
-//        String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
-//        empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
-        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password, profileUrl));
-        String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
-        empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
+        System.out.println("service password: "+password);
+        System.out.println("service updateDto: "+updateDto);
+        employeeMapper.updatePwd(EmpUpdateDto.toEmployeePwd(updateDto, password));
     }
 
     public void validatePassword(String empno, String pwd, String newPwd, String chkPwd){
         String originPwd = employeeMapper.findPasswordByEmpno(empno)
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
+        System.out.println(empno);
         if(!passwordEncoder.matches(pwd, originPwd)) {
             System.out.println(passwordEncoder.encode(pwd));
             System.out.println(originPwd);

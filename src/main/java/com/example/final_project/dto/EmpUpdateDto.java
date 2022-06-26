@@ -35,6 +35,16 @@ public class EmpUpdateDto {
                 .build();
     }
 
+
+    public static Employee toEmployeePwd(EmpUpdateDto emp, String pwd){
+        return Employee.builder()
+                .empno(emp.getEmpno())
+                .password(pwd)
+//                .password(emp.newPwd)
+                .isResigned(emp.isResigned())
+                .build();
+    }
+
     public static EmpInfoComp toEmpInfoComp(EmpUpdateDto emp, String deptNo){
         return EmpInfoComp.builder()
                 .empno(emp.getEmpno())
