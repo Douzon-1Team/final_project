@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.SelectProvider;
 import java.util.List;
 
 public interface AdminMapper {
-
     @SelectProvider(type = SqlProvider.class, method = "selectEmployee")
     List<EmpListResponseDto> findByFilter(SearchFilterRequestDto dto, List<String> deptNo);
 }

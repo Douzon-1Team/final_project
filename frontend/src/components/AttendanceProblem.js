@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import {ToggleText, ComponentContainer, ChartContainer} from "../styles/graphStyle";
 
 // prettier-ignore
 const month = [
@@ -34,13 +37,19 @@ const data = [[0, 0, 5], [0, 1, 1], [0, 2, 0], [0, 3, 0],
         return [item[1], item[0], item[2] || '-'];
     });
 
-const attendanceProblem = ({...list}) => {
+const AttendanceProblem = ({...list}) => {
+    const [view, setView] = React.useState('list');
+
+    const handleChange = (event, nextView) => {
+        setView(nextView);
+    };
+
     const [options, setOptions] = useState({
         tooltip: {
 
         },
         grid: {
-            height: '40%',
+            height: '75%',
             width: '75%',
             top: 'center'
         },
@@ -85,10 +94,32 @@ const attendanceProblem = ({...list}) => {
     });
 
     return (
-        <ECharts
-            option={options}
-        />
+        <>
+            <ComponentContainer>
+                <div>
+                    <ToggleButtonGroup
+                        orientation="vertical"
+                        value={view}
+                        exclusive
+                        onChange={handleChange}
+                    >
+                        <ToggleButton value="list" aria-label="list" style={{height:"150px"}}>
+                            <ToggleText>사원별</ToggleText>
+                        </ToggleButton>
+                        <ToggleButton value="module" aria-label="module" style={{height:"150px"}}>
+                            <ToggleText>부서별</ToggleText>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
+                <ChartContainer>
+                    <ECharts
+                        option={options}
+                        style={{width: "1000px"}}
+                    />
+                </ChartContainer>
+            </ComponentContainer>
+        </>
     );
 }
 
-export default attendanceProblem;
+export default AttendanceProblem;

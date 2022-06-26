@@ -55,6 +55,7 @@ const VacationGraph = ({...list}) => {
     });
 
     return (
+
         <ECharts
             option={options}
         />
