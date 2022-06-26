@@ -29,6 +29,9 @@ public interface EmployeeMapper {
     @UpdateProvider(type=SqlProvider.class, method="updatePwd")
     int updatePwd(Employee employee);
 
+//    @UpdateProvider(type=SqlProvider.class, method="updateImg")
+//    int updateImg(Employee employee);
+
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
 }

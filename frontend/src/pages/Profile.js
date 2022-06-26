@@ -7,12 +7,14 @@ import {useForm} from "react-hook-form";
 import {updatePwd} from "../apis/Users";
 import S3Upload from "../components/common/S3Upload";
 import { Title, Table } from '../styles/profile';
+import axios from "axios";
 
 function Profile() {
     let empInfo = useSelector( (state) => {return state});
-    const [emp, setEmp] = useState({deptName: null, name: null, extensionNum: null, profile: null, rankName: null})
+    const [emp, setEmp] = useState({deptName: null, name: null, extensionNum: null, profilePath: null, rankName: null} )
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
+    const [img, setImg] = useState([]);
 
     useEffect(() => {
         GetProfile(empInfo.EMP_INFO.empInfo.empno).then(response => {
@@ -21,6 +23,8 @@ function Profile() {
         })
     }, []);
 
+    // let empno = empInfo.EMP_INFO.empInfo.empno;
+    console.log(emp)
     const onValid = async ({ empno, pwd, newPwd, chkPwd }) => {
         const response = await updatePwd({ empno, pwd, newPwd, chkPwd });
         if (response.status) {
@@ -31,6 +35,18 @@ function Profile() {
         }
     };
 
+    function searchApi() {
+        const url = emp.profilePath;
+        axios.get(url)
+            .then(function(response) {
+                setImg(response.data);
+                console.log("성공");
+            })
+            .catch(error => { console.log(error);} //CORS error
+            )
+
+    }
+
     return (
         <>
             <Main/>
@@ -39,6 +55,7 @@ function Profile() {
             <Table>
                 <tr>
                     <td rowSpan="6">사진</td>
+                    <button onClick={searchApi}> 불러오기 </button>
                     <td>회사</td>
                     <td>더존비즈온</td>
                 </tr>
@@ -66,7 +83,7 @@ function Profile() {
             <S3Upload />
 
             <form onSubmit={handleSubmit(onValid)}>
-                <input {...register('empno')} type="text" placeholder="사 번(나중에 hidden처리)" /><br/>
+                <input {...register('empno')} type="text" placeholder="사 번(나중에 hidden처리)" defaultValue="${empInfo.EMP_INFO.empInfo.empno}" /><br/>
                 <input {...register('pwd')} type="password" placeholder="비밀번호" /><br/>
                 <input {...register('newPwd')} type="password" placeholder="변경할 pwd" /><br/>
                 <input {...register('chkPwd')} type="password" placeholder="변경 확인 pwd" /><br/>

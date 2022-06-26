@@ -5,7 +5,6 @@ import com.example.final_project.dto.EmpUpdateDto;
 import com.example.final_project.exception.EmpException;
 import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.exception.PasswordException;
-import com.example.final_project.mapper.AdminMapper;
 import com.example.final_project.mapper.DeptMapper;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
@@ -15,20 +14,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileService {
 
-    private final EmpInfoCompMapper empInfoCompMapper;
     private final EmployeeMapper employeeMapper;
-    private final DeptMapper deptMapper;
-    private final AdminMapper adminMapper;
-    private final QRService qrService;
-    private final S3Service s3Service;
     private final PasswordEncoder passwordEncoder;
+    private final EmpInfoCompMapper empInfoCompMapper;
+    private final DeptMapper deptMapper;
+//    private final EmpUpdateDto empUpdateDto;
 
     @Transactional
     public EmpInfoDto getProfile(String empno){
@@ -41,7 +36,7 @@ public class ProfileService {
                                     .name(employee.getName())
                                     .rankName(empInfoComp.getRank().getName())
                                     .extensionNum(empInfoComp.getExtensionNum())
-                                    .profile(null)
+                                    .profilePath(employee.getProfile())
                                     .role(employee.getRole())
                                     .build();
     }
@@ -56,8 +51,6 @@ public class ProfileService {
             validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
-        System.out.println("service password: "+password);
-        System.out.println("service updateDto: "+updateDto);
         employeeMapper.updatePwd(EmpUpdateDto.toEmployeePwd(updateDto, password));
     }
 
@@ -77,4 +70,17 @@ public class ProfileService {
         if(pwd.equals(newPwd))
             throw new PasswordException(ErrorCode.SAME_PASSWORD);
     }
+
+//    public void updateProfile(String param){
+//    public void updateProfile(HashMap<String, Object> param){
+//        employeeMapper.findByUserId(empUpdateDto.getEmpno())
+//                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+//
+//        String profile = null;
+//        if(param != null) ;
+//            profile = empUpdateDto.getProfile();
+//        System.out.println(profile);
+//
+//        employeeMapper.updateImg(EmpUpdateDto.toEmployeeImg(empUpdateDto, profile));
+//    }
 }

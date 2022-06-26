@@ -31,7 +31,7 @@ const S3Upload = () => {
                     // ReactS3Client.uploadFile(file, 'profile_'+file.name)
                     ReactS3Client.uploadFile(file, `profile-${userName.EMP_INFO.empInfo.empno}-`+newFileName)
                         .then((data) => { console.log('1234')
-                        axios.post('/profile/update', { image: data.location }, imagePatchConfig)
+                        axios.post('/profile/updateImg', { image: data.location }, imagePatchConfig)
                             .then((res) => {
                                 console.log('이미지 전송 완료'); //res.data, '~~'
                                     // TODO : localStorage에 저장하는 것이 괜찮을까? 고민

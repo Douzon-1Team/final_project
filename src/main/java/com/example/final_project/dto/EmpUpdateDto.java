@@ -40,10 +40,17 @@ public class EmpUpdateDto {
         return Employee.builder()
                 .empno(emp.getEmpno())
                 .password(pwd)
-//                .password(emp.newPwd)
                 .isResigned(emp.isResigned())
                 .build();
     }
+
+//    public static Employee toEmployeeImg(EmpUpdateDto emp, String profile){
+//        return Employee.builder()
+//                .empno(emp.getEmpno())
+//                .profile(profile)
+//                .isResigned(emp.isResigned())
+//                .build();
+//    }
 
     public static EmpInfoComp toEmpInfoComp(EmpUpdateDto emp, String deptNo){
         return EmpInfoComp.builder()
