@@ -41,5 +41,9 @@ const TitleContainer = styled.div`
     text-align: center;
 `
 
+const MainStyle = styled.div`
+    display: inline-block;
+    width: 400px;
+`
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer};
+export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainStyle};

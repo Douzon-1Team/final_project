@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const BarBox = styled.div`
   background-color: #d9d9d9;
-  width: 230px;
-  height: 85vh;
-  overflow: hidden;
+
+  width: 250px;
+  height: 100vh;
   float: left;
 `;
 
@@ -15,7 +15,7 @@ export const Menu = styled.div`
 export const SideMenuForm = styled.div`
   margin-left: 10px;
   min-width: 200px;
-  width: 13vw;
+  width: 12vw;
   height: fit-content;
   min-height: 50px;
   &:hover {
