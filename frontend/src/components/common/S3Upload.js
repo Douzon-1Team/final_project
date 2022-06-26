@@ -1,40 +1,11 @@
 import S3 from 'react-aws-s3';
 import { v4 } from 'uuid';
 import axios from 'axios';
-import styled from 'styled-components/macro';
-import { BiImageAdd } from 'react-icons/bi';
 import {useSelector} from "react-redux";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-const ProfileUploadWrap = styled.div`
-  input[id='editicon'] {
-    display: none;
-  }
-  input[id='editicon'] + label {
-    width: 1.9rem;
-    height: 1.9rem;
-    padding: 0.35rem 0 0 0.2rem;
-    font-size: 1.2em;
-    text-align: center;
-    color: #333;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 1px solid #f6f6f6;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
-    display: block;
-    position: absolute;
-    bottom: 0;
-    right: -0.8rem;
-    cursor: pointer;
-  }
-  input[id='editicon'] + label:hover {
-    color: #fff;
-    background-color: brown;
-  }
-`;
-
 const S3Upload = () => {
-    const userName = useSelector(state => {return state});
+    const userName = useSelector(state => { return state });
     const imagePatchConfig = {
         headers: {
             'Content-Type': 'application/json',
@@ -63,7 +34,7 @@ const S3Upload = () => {
                         axios.post('/profile/update', { image: data.location }, imagePatchConfig)
                             .then((res) => {
                                 console.log('이미지 전송 완료'); //res.data, '~~'
-                                    // TODO : localStorage에 저장하는 것이 괜찮을까?
+                                    // TODO : localStorage에 저장하는 것이 괜찮을까? 고민
                                     localStorage.setItem(
                                         'profile',
                                         res.data
@@ -81,14 +52,7 @@ const S3Upload = () => {
         }
     };
 
-    return (
-        <ProfileUploadWrap>
-            <input id='editicon' type='file' accept='image/*' onChange={handleClick} />
-            <label htmlFor='editicon'>
-                <BiImageAdd />
-            </label>
-        </ProfileUploadWrap>
-    );
+    return <input id='editicon' type='file' accept='image/*' onChange={handleClick} />
 };
 
 export default S3Upload;

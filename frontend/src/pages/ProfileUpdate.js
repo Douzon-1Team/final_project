@@ -1,10 +1,9 @@
 import React from 'react';
-import { Title, Table, Button } from '../styles/profile';
+import { Title, Table } from '../styles/profile';
 import S3Upload from "../components/common/S3Upload";
 import {useForm} from "react-hook-form";
 import { updatePwd} from "../apis/Users";
 import {useNavigate} from "react-router";
-import {Input} from "../styles/login";
 
 function ProfileUpdate() {
     const navigate = useNavigate();
