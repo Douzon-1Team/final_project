@@ -7,14 +7,13 @@ import {useForm} from "react-hook-form";
 import {updatePwd} from "../apis/Users";
 import S3Upload from "../components/common/S3Upload";
 import { Title, Table } from '../styles/profile';
-import axios from "axios";
 
 function Profile() {
     let empInfo = useSelector( (state) => {return state});
     const [emp, setEmp] = useState({deptName: null, name: null, extensionNum: null, profilePath: null, rankName: null} )
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
-    const [img, setImg] = useState([]);
+    // const [img, setImg] = useState([]);
 
     useEffect(() => {
         GetProfile(empInfo.EMP_INFO.empInfo.empno).then(response => {
