@@ -28,14 +28,10 @@ public class Employee implements UserDetails{
     }
 
     @Override
-    public String getPassword() {
-        return this.password;
-    }
+    public String getPassword() { return this.password; }
 
     @Override
-    public String getUsername() {
-        return this.empno;
-    }
+    public String getUsername() { return this.empno; }
 
     @Override
     public boolean isAccountNonExpired() {

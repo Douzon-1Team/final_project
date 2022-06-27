@@ -9,7 +9,6 @@ import Profile from "./pages/Profile";
 import LeaveReq from "./components/LeaveReq/LeaveReq";
 import AttendanceReq from "./components/AttendanceReq/Attendance";
 import Layout from "./components/common/Layout";
-// import EmpInfo from "./pages/EmpInfo";
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
         <Route element={ <> <Layout /> <PrivateRoute /> </>}>
           <Route path="/main" element={<Main />} />
           <Route path="/profile" element={<Profile />} />
-          {/*<Route path="/empInfo" element={<EmpInfo />} />*/}
           <Route path="/logout" element={<Logout />} />
           <Route path="/leavereq" element={<LeaveReq />} />
           <Route path="/attendancereq" element={<AttendanceReq />} />

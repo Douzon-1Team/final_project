@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "../components/common/Layout";
 import Calendar from "../components/common/Calendar";
 import ProgressBar52h from "../components/ProgressBar52h";
 import AnnualLeaveUsage from "../components/AnnualLeaveUsage";
@@ -10,12 +9,10 @@ import {MainStyle} from "../styles/mainstyle";
 function Main() {
   const subComponentData = useSelector((state) => state.calendarReducer[0]);
     console.log(subComponentData)
-    console.log(subComponentData.overtimeWeek)
-    console.log(subComponentData.todayWorkTime)
 
   return (
       <>
-    <MainStyle>
+        <MainStyle>
           <ProgressBar52h
             attendanceWeek={subComponentData.attendanceWeek}
             todayWorkTime={subComponentData.todayWorkTime}
@@ -27,8 +24,8 @@ function Main() {
             remainingAnnualLeaveDay={subComponentData.remainingAnnualLeaveDay}
             remainingAnnualLeaveTime={subComponentData.remainingAnnualLeaveTime}
           />
-    </MainStyle>
-          <Calendar />
+        </MainStyle>
+        <Calendar />
       </>
   );
 }
