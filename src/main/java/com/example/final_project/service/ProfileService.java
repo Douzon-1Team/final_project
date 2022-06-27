@@ -23,7 +23,6 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final EmpInfoCompMapper empInfoCompMapper;
     private final DeptMapper deptMapper;
-//    private final EmpUpdateDto empUpdateDto;
 
     @Transactional
     public EmpInfoDto getProfile(String empno){
@@ -71,16 +70,16 @@ public class ProfileService {
             throw new PasswordException(ErrorCode.SAME_PASSWORD);
     }
 
-//    public void updateProfile(String param){
-//    public void updateProfile(HashMap<String, Object> param){
-//        employeeMapper.findByUserId(empUpdateDto.getEmpno())
-//                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-//
-//        String profile = null;
-//        if(param != null) ;
-//            profile = empUpdateDto.getProfile();
-//        System.out.println(profile);
-//
-//        employeeMapper.updateImg(EmpUpdateDto.toEmployeeImg(empUpdateDto, profile));
-//    }
+    @Transactional
+    public void updateProfile(EmpUpdateDto empUpdateDto){
+//        System.out.println(empUpdateDto.getEmpno());
+//        System.out.println(empUpdateDto.getProfile());
+        employeeMapper.findByUserId(empUpdateDto.getEmpno())
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+
+        String profile = empUpdateDto.getProfile();
+//        System.out.println("profile: "+profile);
+
+        employeeMapper.updateImg(empUpdateDto.toEmployeeImg(empUpdateDto, profile));
+    }
 }

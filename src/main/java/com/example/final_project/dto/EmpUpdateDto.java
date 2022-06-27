@@ -4,11 +4,10 @@ import com.example.final_project.model.EmpInfoComp;
 import com.example.final_project.model.Employee;
 import com.example.final_project.model.Rank;
 import com.example.final_project.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class EmpUpdateDto {
@@ -35,7 +34,6 @@ public class EmpUpdateDto {
                 .build();
     }
 
-
     public static Employee toEmployeePwd(EmpUpdateDto emp, String pwd){
         return Employee.builder()
                 .empno(emp.getEmpno())
@@ -44,13 +42,13 @@ public class EmpUpdateDto {
                 .build();
     }
 
-//    public static Employee toEmployeeImg(EmpUpdateDto emp, String profile){
-//        return Employee.builder()
-//                .empno(emp.getEmpno())
-//                .profile(profile)
-//                .isResigned(emp.isResigned())
-//                .build();
-//    }
+    public static Employee toEmployeeImg(EmpUpdateDto emp, String profile){
+        return Employee.builder()
+                .empno(emp.getEmpno())
+                .profile(profile)
+                .isResigned(emp.isResigned())
+                .build();
+    }
 
     public static EmpInfoComp toEmpInfoComp(EmpUpdateDto emp, String deptNo){
         return EmpInfoComp.builder()

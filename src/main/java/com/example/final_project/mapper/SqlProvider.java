@@ -40,24 +40,24 @@ public class SqlProvider {
         return sql.toString();
     }
 
-//    public String updateImg(Employee emp){
-//        SQL sql = new SQL();
-//        int isNull = 0;
-//        sql.UPDATE("employee");
-//
-//        if(emp.getPassword() != null) {
-//            sql.SET("emp_profile = #{profile}");
-//            isNull++;
-//        }
-//        if(emp.getRole() != null) {
-//            sql.SET("role = #{role}");
-//            isNull++;
-//        }
-//
-//        if(isNull == 0) return "UPDATE employee SET emp_profile = #{profile}, rank = null role WHERE 1=0";
-//        sql.WHERE("empno = #{empno}");
-//        return sql.toString();
-//    }
+    public String updateImg(Employee emp){
+        SQL sql = new SQL();
+        int isNull = 0;
+        sql.UPDATE("employee");
+
+        if(emp.getPassword() != null) {
+            sql.SET("emp_profile = #{profile}");
+            isNull++;
+        }
+        if(emp.getRole() != null) {
+            sql.SET("role = #{role}");
+            isNull++;
+        }
+
+        if(isNull == 0) return "UPDATE employee SET emp_profile = #{profile}, rank = null role WHERE 1=0";
+        sql.WHERE("empno = #{empno}");
+        return sql.toString();
+    }
 
     public String updateEmpInfoComp(EmpInfoComp emp){
         SQL sql = new SQL();
