@@ -5,7 +5,8 @@ const USER_URL = `${BASE_URL}/profile/`;
 
 function GetProfile(empno) {
     return fetch(USER_URL+`${empno}`)
-        .then( response => { return response.json(); })
+        .then( response => {
+            return response.json(); })
         .then( emp => { return emp; })
         .catch( error => console.log("error : " + error));
 }

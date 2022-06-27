@@ -19,12 +19,9 @@ function Profile() {
     useEffect(() => {
         GetProfile(empInfo.EMP_INFO.empInfo.empno).then(response => {
             setEmp(response);
-            console.log(response);
         })
     }, []);
 
-    // let empno = empInfo.EMP_INFO.empInfo.empno;
-    console.log(emp)
     const onValid = async ({ empno, pwd, newPwd, chkPwd }) => {
         const response = await updatePwd({ empno, pwd, newPwd, chkPwd });
         if (response.status) {
@@ -35,41 +32,29 @@ function Profile() {
         }
     };
 
-    function searchApi() {
-        const url = emp.profilePath;
-        axios.get(url)
-            .then(function(response) {
-                setImg(response.data);
-                console.log("성공");
-            })
-            .catch(error => { console.log(error);} //CORS error
-            )
-
-    }
-
     return (
         <>
             <Main/>
             <Title>사원 정보 관리</Title>
-
             <Table>
                 <tr>
-                    <td rowSpan="6">사진</td>
-                    <button onClick={searchApi}> 불러오기 </button>
+                    <td rowSpan="6">
+                        <img src={emp.profilePath} />
+                    </td>
                     <td>회사</td>
                     <td>더존비즈온</td>
                 </tr>
                 <tr>
                     <td>부서</td>
-                    {emp.deptName}
+                    { emp.deptName }
                 </tr>
                 <tr>
                     <td>이름</td>
-                    {emp.name}
+                    { emp.name }
                 </tr>
                 <tr>
                     <td>직급</td>
-                    {emp.rankName}
+                    { emp.rankName }
                 </tr>
                 <tr>
                     <td>사번</td>
@@ -83,7 +68,7 @@ function Profile() {
             <S3Upload />
 
             <form onSubmit={handleSubmit(onValid)}>
-                <input {...register('empno')} type="text" placeholder="사 번(나중에 hidden처리)" defaultValue="${empInfo.EMP_INFO.empInfo.empno}" /><br/>
+                <input {...register('empno')} type="text" placeholder="사 번(나중에 hidden처리)" defaultValue="" /><br/>
                 <input {...register('pwd')} type="password" placeholder="비밀번호" /><br/>
                 <input {...register('newPwd')} type="password" placeholder="변경할 pwd" /><br/>
                 <input {...register('chkPwd')} type="password" placeholder="변경 확인 pwd" /><br/>
