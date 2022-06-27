@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import Main from "./Main";
 import GetProfile from "../apis/ApiService";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
@@ -33,7 +32,6 @@ function Profile() {
 
     return (
         <>
-            <Main/>
             <Title>사원 정보 관리</Title>
             <Table>
                 <tr>
