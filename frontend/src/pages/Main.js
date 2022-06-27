@@ -9,7 +9,6 @@ import {MainStyle} from "../styles/mainstyle";
 function Main() {
   const subComponentData = useSelector((state) => state.calendarReducer[0]);
     console.log(subComponentData)
-    console.log(subComponentData.todayWorkTime)
 
   return (
       <>
