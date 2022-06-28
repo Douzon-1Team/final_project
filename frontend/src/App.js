@@ -7,8 +7,9 @@ import Main from "./pages/Main";
 import Logout from "./pages/Logout";
 import Profile from "./pages/Profile";
 import LeaveReq from "./components/LeaveReq/LeaveReq";
-import LeaveList from "./components/LeaveList/LeaveList";
-import AttendanceReq from "./components/AttendanceReq/Attendance";
+import LeaveList from "./components/List/LeaveList";
+import AttendanceList from "./components/List/AttendanceList";
+import AttendanceReq from "./components/AttendanceReq/AttendanceReq";
 // import EmpInfo from "./pages/EmpInfo";
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
           <Route path="/leavereq" element={<LeaveReq />} />
           <Route path="/attendancereq" element={<AttendanceReq />} />
           <Route path="/leavelist" element={<LeaveList />} />
+            <Route path="/attendancelist" element={<AttendanceList />} />
+
         </Route>
 
         {/* 404 page */}

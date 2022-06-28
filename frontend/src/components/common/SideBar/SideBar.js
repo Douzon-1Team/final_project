@@ -109,7 +109,7 @@ export const SideBar = ({ role }) => {
             <SmallSideMenu onClick={() => navigate("/leavereq")}>
               {SideMenu2[0].menu}
             </SmallSideMenu>
-            <SmallSideMenu>{SideMenu2[1].menu}</SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/leavelist")}>{SideMenu2[1].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}
@@ -125,8 +125,10 @@ export const SideBar = ({ role }) => {
         </SideMenuForm>
         {secondMenu3 === true ? (
           <SmallSide>
-            <SmallSideMenu>{SideMenu3[0].menu}</SmallSideMenu>
-            <SmallSideMenu>{SideMenu3[1].menu}</SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/attendancereq")}>
+              {SideMenu3[0].menu}
+            </SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/attendancelist")}>{SideMenu3[1].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}

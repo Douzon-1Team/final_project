@@ -9,7 +9,7 @@ const Layout = () => {
     return state;
   });
   const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
-  const [sideView, setSideView] = useState(false); // 사이드바 개시 여부
+  const [sideView, setSideView] = useState(true); // 사이드바 개시 여부
   const changeState = () => {
     setSideView(!sideView);
   };

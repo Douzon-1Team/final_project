@@ -1,1 +1,20 @@
-POST http://localhost:8080/admin/register
+### 안드로이드 테스트(application/x-www-form-urlencoded - key=value&key=value)
+POST http://kosa2.iptime.org:50232/postTest
+Content-Type: application/x-www-form-urlencoded
+
+value=220101
+
+### 로그인 테스트
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "empno": "220101",
+  "password": "1234"
+}
+
+### 그래프 조회용 테스트
+POST http://localhost:8080/main
+Content-Type: text/plain
+
+220101
