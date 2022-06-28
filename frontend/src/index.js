@@ -14,9 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <CookiesProvider>
         <Provider store={store}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </Provider>
     </CookiesProvider>
 );

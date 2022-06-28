@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const S3Upload = () => {
-    const userName = useSelector(state => { return state });
+    const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
     const imagePatchConfig = {
         headers: {
             'Content-Type': 'application/json',
@@ -29,16 +29,15 @@ const S3Upload = () => {
                 if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') {
                     console.log(file);
                     // ReactS3Client.uploadFile(file, 'profile_'+file.name)
-                    ReactS3Client.uploadFile(file, `profile-${userName.EMP_INFO.empInfo.empno}-`+newFileName)
+                    ReactS3Client.uploadFile(file, `profile-${empNo}-`+newFileName)
                         .then((data) => {
-                        axios.post('/profile/updateImg', { empno: `${userName.EMP_INFO.empInfo.empno}`, profile: data.location }, imagePatchConfig)
+                        axios.post('/profile/updateImg', { empno: `${empNo}`, profile: data.location }, imagePatchConfig)
                             .then((res) => {
                                 console.log('이미지 전송 완료'); //res.data, '~~'
                                 // TODO : localStorage에 저장하는 것이 괜찮을까? 고민
-                                localStorage.setItem(
-                                    'profile',
-                                    res.data
-                                );
+                                localStorage.setItem('profile', res.data);
+                                alert('이미지 변경이 완료되었습니다.');
+                                window.location.reload();
                             }).catch((err) => { console.log(err, '이미지 변경 안됨'); });
                         }).catch((err) => console.log(err));
                 } else {
@@ -48,7 +47,7 @@ const S3Upload = () => {
             }
         }
     };
-    return <input id='editicon' type='file' accept='image/*' onChange={handleClick} />
+    return <input type='file' accept='image/*' onChange={handleClick} />
 };
 
 export default S3Upload;

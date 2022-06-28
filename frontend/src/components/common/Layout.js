@@ -5,9 +5,7 @@ import SideBar from "./SideBar/SideBar";
 import { useSelector } from "react-redux";
 
 const Layout = () => {
-  const empRole = useSelector((state) => {
-    return state;
-  });
+  const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
   const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
   const [sideView, setSideView] = useState(false); // 사이드바 개시 여부
   const changeState = () => {
@@ -16,10 +14,10 @@ const Layout = () => {
 
   useEffect(() => {
     let chkRole = [...role];
-    if (empRole.EMP_INFO.empInfo.role === "ROLE_MANAGER") {
+    if (empRole === "ROLE_MANAGER") {
       chkRole[1] = empRole;
       setRole(1);
-    } else if (empRole.EMP_INFO.empInfo.role === "ROLE_ADMIN") {
+    } else if (empRole === "ROLE_ADMIN") {
       chkRole[2] = empRole;
       setRole(2);
     } else {

@@ -26,7 +26,7 @@ public interface EmployeeMapper {
     @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
     int updateByEmpno(Employee employee);
 
-    @UpdateProvider(type=SqlProvider.class, method="updatePwd")
+    @Update("UPDATE employee SET emp_pwd = #{password} where empno=#{empno}")
     int updatePwd(Employee employee);
 
     @Update("UPDATE employee SET emp_profile = #{profile} where empno=#{empno}")

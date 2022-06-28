@@ -72,14 +72,10 @@ public class ProfileService {
 
     @Transactional
     public void updateProfile(EmpUpdateDto empUpdateDto){
-//        System.out.println(empUpdateDto.getEmpno());
-//        System.out.println(empUpdateDto.getProfile());
         employeeMapper.findByUserId(empUpdateDto.getEmpno())
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
         String profile = empUpdateDto.getProfile();
-//        System.out.println("profile: "+profile);
-
         employeeMapper.updateImg(empUpdateDto.toEmployeeImg(empUpdateDto, profile));
     }
 }

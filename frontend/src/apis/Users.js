@@ -12,8 +12,6 @@ const statusError = {
 };
 
 const requestPromise = (url, option) => {
-    console.log(url)
-    console.log(option)
     return fetch(url, option);
 };
 

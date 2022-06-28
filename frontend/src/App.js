@@ -11,30 +11,34 @@ import AttendanceReq from "./components/AttendanceReq/Attendance";
 import Layout from "./components/common/Layout";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route element={ <> <Layout /> <PrivateRoute /> </>}>
-          <Route path="/main" element={<Main />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="/leavereq" element={<LeaveReq />} />
-          <Route path="/attendancereq" element={<AttendanceReq />} />
-        </Route>
+    // const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+    // const empName = useSelector( (state) => state.EMP_INFO.empInfo[1] );
+    // const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
 
-        {/* 404 page */}
-        <Route
-          path="*"
-          element={
-            <div>
-              {" "}
-              없는 페이지 <Login />{" "}
-            </div>
-          }
-        />
-      </Routes>
-    </>
+    return (
+        <>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route element={ <> <Layout /> <PrivateRoute /> </>}>
+              <Route path="/main" element={<Main />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/leavereq" element={<LeaveReq />} />
+              <Route path="/attendancereq" element={<AttendanceReq />} />
+            </Route>
+
+            {/* 404 page */}
+            <Route
+              path="*"
+              element={
+                <div>
+                  {" "}
+                  없는 페이지 <Login />{" "}
+                </div>
+              }
+            />
+          </Routes>
+        </>
   );
 }
 

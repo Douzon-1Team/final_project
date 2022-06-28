@@ -13,6 +13,7 @@ public class ProfileController {
 
     private final ProfileService profileService;
 
+    // 사원 정보 조회
     @GetMapping("/profile/{empno}")
     public ResponseEntity<EmpInfoDto> getProfile(@PathVariable String empno){
         EmpInfoDto empInfoDto = profileService.getProfile(empno);
