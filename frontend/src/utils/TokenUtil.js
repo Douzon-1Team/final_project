@@ -3,18 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCookieToken } from "../auth/Cookie";
 
 export function CheckToken(key) {
-    const [isAuth, setIsAuth] = useState('Loaded');
-    const token = useSelector((state) => { return state });
+    const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+    const [isAuth, setIsAuth] = useState('');
     const refreshToken = getCookieToken();
     const dispatch = useDispatch();
 
     useEffect(() => {
         const checkAuthToken = async () => {
-            // console.log("empInfo : "+token.EMP_INFO.empInfo);
-            if(token.EMP_INFO.empno === false) {
-                setIsAuth('Failed');
-                // console.log("empInfo : "+token.EMP_INFO.empno);
-            }
+            empNo === undefined ? setIsAuth('Failed') : setIsAuth('Loaded')
         };
         checkAuthToken();
     }, [refreshToken, dispatch, key]);

@@ -15,7 +15,6 @@ const rootReducer = combineReducers({
     EMP_INFO: empReducer,
     ACCESS_TOKEN: tokenReducer,
     calendarReducer: calendarReducer.reducer
-
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

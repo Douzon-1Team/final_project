@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 const Logo = ({ role }) => {
-  const empName = useSelector((state) => {
-    return state;
-  });
+  const empName = useSelector( (state) => state.EMP_INFO.empInfo[1] );
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const setLists = [
@@ -38,7 +36,7 @@ const Logo = ({ role }) => {
       />
       <Profilefrom>
         <UserImg />
-        <UserName>{empName.EMP_INFO.empInfo.name}</UserName>
+        <UserName>{empName}</UserName>
         <UserSetting onClick={() => setOpen(!open)}>
           {open === true ? <BsChevronCompactUp /> : <BsChevronCompactDown />}
         </UserSetting>
