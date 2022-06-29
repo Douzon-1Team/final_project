@@ -7,8 +7,8 @@ import {MainStyle} from "../styles/mainstyle";
 
 // redux 사번 받아오기
 function Main() {
-  const subComponentData = useSelector((state) => state.calendarReducer);
-    console.log(subComponentData)
+  const subComponentData = useSelector((state) => state.calendarReducer[0]);
+    console.log(subComponentData[0])
 
   return (
       <>

@@ -27,8 +27,7 @@ public class CalendarResponseDto { // client에게 응답
     private String time;
     private boolean attendance;
     private boolean tardy;
-    private boolean LeaveEarly;
-    private String vacation;
+    private String etc;
     private boolean unregistered;
     private String date;
     private int totalAnnualLeave;
