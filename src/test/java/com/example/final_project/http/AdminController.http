@@ -2,7 +2,7 @@
 POST http://kosa2.iptime.org:50232/postTest
 Content-Type: application/x-www-form-urlencoded
 
-value=220101
+empno=220101&time=2022-06-27 18:01:00
 
 ### 로그인 테스트
 POST http://localhost:8080/login
@@ -10,8 +10,14 @@ Content-Type: application/json
 
 {
     "empno": "220101",
-    "password": "1234"
+    "password": "1111"
 }
+
+### 출근 테스트
+POST http://localhost:8080/attendanceCheck
+Content-Type: application/x-www-form-urlencoded
+
+empno=220101&time=2022-06-27 18:01:00
 
 ### 그래프 조회용 테스트
 POST http://localhost:8080/main

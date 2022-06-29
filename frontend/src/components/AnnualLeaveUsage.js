@@ -49,13 +49,13 @@ const AnnualLeaveUsage = ({totalAnnualLeave , remainingAnnualLeaveDay, remaining
                 },
                 data: [{
                     value: totalAnnualLeave-remainingAnnualLeaveDay,
-                    name:'',
+                    name:'사용일수',
                     title: {
-                        offsetCenter: ['0%', '0%']
+                        offsetCenter: ['0%', '-20%']
                     },
                     detail: {
                         valueAnimation: true,
-                        offsetCenter: ['0%', '10%']
+                        offsetCenter: ['0%', '15%']
                     }
                 }],
                 title: {
