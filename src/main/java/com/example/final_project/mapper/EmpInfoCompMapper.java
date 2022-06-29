@@ -2,11 +2,12 @@ package com.example.final_project.mapper;
 
 import com.example.final_project.model.EmpInfoComp;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 import java.util.Optional;
-
+@Mapper
 public interface EmpInfoCompMapper {
 
     @Insert("INSERT INTO emp_info_comp(empno, dept_no, rank, email, extension_num) " +
