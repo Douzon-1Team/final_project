@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-export const getMain = async ({ empnos }) => {
+
+export const getMain = async ( {empno} ) => {
     try {
+        console.log(empno);
         return await axios.get(
             `${process.env.REACT_APP_LOCAL_MAIN_HOST}`,
             {
-                params: { empnos }
+                params: {empno}
             }
         );
     } catch (error) {

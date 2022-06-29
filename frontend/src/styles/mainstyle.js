@@ -46,4 +46,12 @@ const MainStyle = styled.div`
     width: 400px;
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainStyle};
+const MainchatStyle = styled.div`
+    float: right;
+    .echarts-for-react {
+    width: 1000px !important;
+    height: 700px !important;
+    }
+`
+
+export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainStyle, MainchatStyle};
