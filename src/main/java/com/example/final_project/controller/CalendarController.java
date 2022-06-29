@@ -2,9 +2,8 @@ package com.example.final_project.controller;
 
 import com.example.final_project.dto.CalendarResponseDto;
 import com.example.final_project.exception.ErrorCode;
-import com.example.final_project.mapper.AnnualLeaveUsageMapper;
 import com.example.final_project.mapper.CalendarMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
+import com.example.final_project.mapper.MonthChatMapper;
 import com.example.final_project.service.SubComponentInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,36 +25,44 @@ public class CalendarController {
 
     private final CalendarMapper calendarMapper;
     private final SubComponentInfoService subComponentInfoService;
+    private final MonthChatMapper monthChatMapper;
 
     @GetMapping("/main")
-
-    public ResponseEntity<?> test(@RequestParam("empnos") String empno, HttpServletResponse response) throws IOException {
-
+    public ResponseEntity<?> test(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
         System.out.println(empno);
-//        List<CalendarResponseDto.vacationBuilder> Calendarvacation = calendarMapper.findUserVacation(empno);
-        List<CalendarResponseDto> Calendarvacation = calendarMapper.findUserVacation(empno);
-        if (Calendarvacation == null || Calendarvacation.isEmpty()) {
-            response.sendError(ErrorCode.CALENDAR_VACATION_ERROR.getCode());
-            return null;
-        }
+        LocalDate now = LocalDate.now();
+        String year = String.valueOf(now.getYear());
+        // TODO : 달력으로부터 올해 날짜 받아오게
+        System.out.println(year);
 
-//        List<CalendarResponseDto.workBuilder> Calendarwork = calendarMapper.findUserWork(empno);
-        List<CalendarResponseDto> Calendarwork = calendarMapper.findUserWork(empno);
-        if (Calendarwork == null || Calendarwork.isEmpty()) {
-            response.sendError(ErrorCode.CALENDAR_WORK_ERROR.getCode());
-            return null;
-        }
+        List<CalendarResponseDto> Calendarwork = calendarMapper.findUserVacation(empno);
 
-        CalendarResponseDto SubComponentInfo = subComponentInfoService.SubComponentInfo(empno);
+        List<CalendarResponseDto> Calendarnotwork = calendarMapper.findUserNotWork(empno);
 
-        List<CalendarResponseDto> Calendar = new ArrayList<>();
-        Calendar.add(SubComponentInfo);
-        Calendar.addAll(Calendarvacation);
-        Calendar.addAll(Calendarwork);
+        List<CalendarResponseDto> Calendarvacation = calendarMapper.findUserWork(empno);
+
+        List<CalendarResponseDto> Monthdate = monthChatMapper.findWorkDate(year, empno);
+
+        List<CalendarResponseDto> Vacation = monthChatMapper.findVacationDate(year, empno);
+
+        List<CalendarResponseDto> Nonwork = monthChatMapper.findNonWorkDate(year, empno);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        return ResponseEntity.ok().headers(headers).body(Calendar);
+
+        CalendarResponseDto SubComponentInfo = subComponentInfoService.SubComponentInfo(empno);
+
+        List<CalendarResponseDto> Usermain = new ArrayList<>();
+        Usermain.add(SubComponentInfo);
+        Usermain.addAll(Calendarvacation);
+        Usermain.addAll(Calendarwork);
+        Usermain.addAll(Calendarnotwork);
+        Usermain.addAll(Monthdate);
+        Usermain.addAll(Vacation);
+        Usermain.addAll(Nonwork);
+
+
+        return ResponseEntity.ok().headers(headers).body(Usermain);
     }
 }

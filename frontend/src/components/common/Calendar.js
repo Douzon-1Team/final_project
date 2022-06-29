@@ -7,6 +7,7 @@ import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
+import Chart from "../month/chart";
 import Button from "@mui/material/Button";
 import CalendarStyle from "../../styles/Calendarstyle";
 import _ from "lodash";
@@ -85,12 +86,19 @@ function Calendar() {
   // date(날짜), onwork(출근시간), attendance(출근(1)/결근(default 0)여부), offwork(퇴근시간), tardy(지각여부(0 -> 1(지각))),
   // leave_early(조퇴여부(0 -> 1(조퇴))) unregistered(퇴근 미등록(0 -> 1(미등록)))
 
+  const empno = useSelector((state) => state.EMP_INFO);
+  console.log(empno.empInfo[0]);
   const dispatch = useDispatch();
-  const calendarList = useSelector((state) => state.calendarReducer);
+  const mainData = useSelector((state) => state.calendarReducer);
+  let calendarList = _.filter(mainData, 'title');
+  let work = _.filter(mainData, 'm');
+  console.log(mainData);
+  console.log(work);
   schedules.push(...calendarList);
 
   useEffect(() => {
-    dispatch(getList());
+    // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
+    dispatch(getList({empno : empno.empInfo[0]}));
   }, []);
   const cal = useRef(null);
 
@@ -158,7 +166,6 @@ function Calendar() {
 
   function _getTimeTemplate(schedule, isAllDay) {
     // 일정 data
-    console.log(123123);
     var html = [];
 
     if (!isAllDay) {
@@ -187,7 +194,6 @@ function Calendar() {
   const templates = {
     // 일정 view
     time: function (schedule) {
-      console.log(schedule);
       return _getTimeTemplate(schedule, false);
     },
   };
@@ -215,54 +221,59 @@ function Calendar() {
     const year = cal?.current?.calendarInst.getDate().getFullYear();
     setDate(`${year}년 ${month + 1}월`);
   }
+  const [chartview, setChartView] = useState(false);
 
   // TODO : Today 추가
   return (
-    <CalendarStyle>
-      <div className="calendar_header">
-        <Button className="today" variant="contained">
-          오늘 날짜
-        </Button>
-        <BsFillArrowLeftSquareFill
-          className="prev"
-          onClick={() => {
-            onClickPrev();
-          }}
-        />
-        <span className="date">{date}</span>
-        <BsFillArrowRightSquareFill
-          className="next"
-          onClick={() => {
-            onClickNext();
-          }}
-        />
+      <>
+        {chartview == false ?
+            <CalendarStyle>
+              <div className="calendar_header">
+                <Button className="today" variant="contained">
+                  오늘 날짜
+                </Button>
+                <BsFillArrowLeftSquareFill
+                    className="prev"
+                    onClick={() => {
+                      onClickPrev();
+                    }}
+                />
+                <span className="date">{date}</span>
+                <BsFillArrowRightSquareFill
+                    className="next"
+                    onClick={() => {
+                      onClickNext();
+                    }}
+                />
 
-        <Button className="dept_vacation" variant="contained">월간 근태기록</Button>
-        <Button className="dept_vacation" variant="contained">
-          부서별 휴가일정
-        </Button>
-      </div>
-      <BsDot className="dot1" />출근
-      <BsDot className="dot2" />조퇴
-      <BsDot className="dot3" />결근
-      <BsDot className="dot4" />지각
-      <TUICalendar
-        ref={cal}
-        view="month"
-        // useCreationPopup={true}
-        // useDetailPopup={true}
-        template={templates}
-        calendars={calendars}
-        schedules={schedules}
-        onClickSchedule={onClickSchedule}
-        onBeforeCreateSchedule={onBeforeCreateSchedule}
-        month={{
-          daynames: ["일", "월", "화", "수", "목", "금", "토"],
-        }}
-        // onBeforeDeleteSchedule={onBeforeDeleteSchedule}
-        // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
-      />
-    </CalendarStyle>
+                <Button className="dept_vacation" variant="contained" onClick={() => { setChartView(true) }}>월간 근태기록</Button>
+                <Button className="dept_vacation" variant="contained">
+                  부서별 휴가일정
+                </Button>
+              </div>
+              <BsDot className="dot1" />출근
+              <BsDot className="dot2" />조퇴
+              <BsDot className="dot3" />결근
+              <BsDot className="dot4" />지각
+              <TUICalendar
+                  ref={cal}
+                  view="month"
+                  // useCreationPopup={true}
+                  // useDetailPopup={true}
+                  template={templates}
+                  calendars={calendars}
+                  schedules={schedules}
+                  onClickSchedule={onClickSchedule}
+                  onBeforeCreateSchedule={onBeforeCreateSchedule}
+                  month={{
+                    daynames: ["일", "월", "화", "수", "목", "금", "토"],
+                  }}
+                  // onBeforeDeleteSchedule={onBeforeDeleteSchedule}
+                  // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
+              />
+            </CalendarStyle>
+            : <Chart data={work} /> }
+      </>
   );
 }
 
