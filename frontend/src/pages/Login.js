@@ -8,6 +8,7 @@ import { SET_TOKEN } from '../store/modules/Reducer/TokenAuth';
 import { SET_EMP_INFO } from "../store/modules/Reducer/EmpAuth";
 import Fade from 'react-reveal';
 import { Form, Container, Input, Button, Logo } from '../styles/login';
+import {LoginFail, LoginSuccess} from "../components/common/alert/alert";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,10 +23,10 @@ function Login() {
       setRefreshToken(response.json.refresh_token)
       dispatch(SET_TOKEN(response.json.accessToken))
       dispatch(SET_EMP_INFO(response.json));
-      alert('로그인 성공');
+      LoginSuccess(); // alert 창
       return navigate('/main');
     } else {
-      alert('사번과 비밀번호를 다시 한번 확인하세요.');
+      LoginFail();
     }
     setValue('password', '');
   };

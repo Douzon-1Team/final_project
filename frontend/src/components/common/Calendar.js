@@ -16,10 +16,12 @@ import {
   BsFillArrowRightSquareFill,
   BsDot,
 } from "react-icons/bs";
+import {useNavigate} from "react-router";
 
 
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
+  const navigate = useNavigate();
   const start = new Date();
   const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
   var schedules = [
@@ -108,6 +110,7 @@ function Calendar() {
     const el = cal.current.calendarInst.getElement(id, calendarId);
 
     // TODO : 얘네 3개 보내줄거임(근태 조정 & 휴가 신청) - title로 구분 할 것
+    console.log(e);
     console.log(e.schedule.title);
     console.log(e.schedule.start);
     console.log(e.schedule.end);
@@ -134,7 +137,7 @@ function Calendar() {
     } else {
       // TODO : 연차 신청
       const test2 = _.find(schedules, { datestart: `${dateStart}` });
-      console.log("over here!");
+      return navigate("/leavereq");
       // if (test2 == null) {
       // dateStart 보내기
       // }
@@ -216,20 +219,42 @@ function Calendar() {
 
   function onClickNext() {
     cal?.current?.calendarInst.next();
-    console.log(cal?.current?.calendarInst.getDate());
     const month = cal?.current?.calendarInst.getDate().getMonth();
     const year = cal?.current?.calendarInst.getDate().getFullYear();
     setDate(`${year}년 ${month + 1}월`);
   }
+
+  function onClickTodayBtn() {
+    cal?.current?.calendarInst.today();
+    const month = new Date().getMonth();
+    const year = new Date().getFullYear();
+    setDate(`${year}년 ${month + 1}월`);
+  }
   const [chartview, setChartView] = useState(false);
 
+  const handleMonthClick = useCallback(() => {
+    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 6}}, true);
+    cal.current.calendarInst.changeView("month", true);
+  }, []);
+
+  const handleWeekClick = useCallback(() => {
+    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 3}}, true);
+    cal.current.calendarInst.changeView('month', true);
+    // console.log(cal.current.calendarInst.changeView("week"));
+  }, []);
+
+  const handleDayClick = useCallback(() => {
+    console.log(cal.current.calendarInst.changeView("day"));
+  }, []);
   // TODO : Today 추가
   return (
       <>
         {chartview == false ?
             <CalendarStyle>
               <div className="calendar_header">
-                <Button className="today" variant="contained">
+                <Button className="today" variant="contained" onClick={() => {
+                  onClickTodayBtn();
+                }}>
                   오늘 날짜
                 </Button>
                 <BsFillArrowLeftSquareFill
@@ -245,6 +270,15 @@ function Calendar() {
                       onClickNext();
                     }}
                 />
+                <button type="button" onClick={handleMonthClick}>
+                  Month
+                </button>
+                <button type="button" onClick={handleWeekClick}>
+                  Week
+                </button>
+                <button type="button" onClick={handleDayClick}>
+                  Day
+                </button>
 
                 <Button className="dept_vacation" variant="contained" onClick={() => { setChartView(true) }}>월간 근태기록</Button>
                 <Button className="dept_vacation" variant="contained">
@@ -259,7 +293,7 @@ function Calendar() {
                   ref={cal}
                   view="month"
                   // useCreationPopup={true}
-                  // useDetailPopup={true}
+                  useDetailPopup={true}
                   template={templates}
                   calendars={calendars}
                   schedules={schedules}

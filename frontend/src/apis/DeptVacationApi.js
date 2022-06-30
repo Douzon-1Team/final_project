@@ -1,17 +1,17 @@
 import axios from 'axios';
-import {MainCalendarError} from "../components/common/alert/alert";
+import {DeptVacationError} from "../components/common/alert/alert";
 
 
 export const getMain = async ( {empno} ) => {
     try {
         console.log(empno);
         return await axios.get(
-            `${process.env.REACT_APP_LOCAL_MAIN_HOST}`,
+            "http://localhost:8080/dvacation",
             {
                 params: {empno}
             }
         );
     } catch (error) {
-        MainCalendarError();
+        DeptVacationError();
     }
 };
