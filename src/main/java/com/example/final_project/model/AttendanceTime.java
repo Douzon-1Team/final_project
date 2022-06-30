@@ -13,5 +13,4 @@ public class AttendanceTime {
     LocalDateTime date;
     int time;
     int onOffWork;
-
 }
