@@ -21,6 +21,7 @@ const Header = ({ role, sideView, changeState }) => {
             )}
         </HeaderForm>
     );
+
 };
 const { HeaderForm, Menubox, MenuName } = style;
 export default Header;

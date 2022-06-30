@@ -10,7 +10,7 @@ export const empSlice = createSlice({
             state.empInfo = [action.payload.empno, action.payload.name, action.payload.role];
         },
         DELETE_EMP_INFO: (state) => {
-            state.empInfo = null;
+            state.empInfo = false;
         },
     }
 })

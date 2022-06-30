@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { modalStyle } from "../common/Modal/ModalStyle";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import Layout from "../common/Layout";
 
 export const LeaveReq = () => {
   const [sortNum, setSortNum] = useState(0); // 휴가구분

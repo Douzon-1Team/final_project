@@ -48,7 +48,7 @@ public class EmployeeController {
         jwtService.login(tokenDto);
 
         Cookie cookie = new Cookie("refresh_token", tokenDto.getRefreshToken());
-        cookie.setPath("/login");
+        cookie.setPath("/");
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
 

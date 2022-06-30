@@ -9,7 +9,7 @@ export default function PrivateRoute() {
 
     if (isAuth === 'Failed') {
         alert("로그인 후 이용해주십시오.");
-        return <Navigate to="/" state={{from: location}} />
+        return <Navigate to="/login" state={{from: location}} />
     }
     return <Outlet />
 }
