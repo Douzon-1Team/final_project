@@ -8,6 +8,7 @@ import Logout from "./pages/Logout";
 import Profile from "./pages/Profile";
 import LeaveReq from "./components/LeaveReq/LeaveReq";
 import Layout from "./components/common/Layout";
+import EmpList from "./components/admin/EmpList";
 import {useSelector} from "react-redux";
 import AdminPage from "./pages/AdminPage";
 import LeaveList from "./components/List/LeaveList";
@@ -30,6 +31,7 @@ function App() {
                     <Route path="/leavelist" element={<LeaveList />} />
                     <Route path="/attendancereq" element={<AttendanceReq />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
+                    <Route path="/admin/list" element={<EmpList/>}/>
                 </Route>
 
                 {/* 404 page */}

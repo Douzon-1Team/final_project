@@ -1,24 +1,33 @@
 package com.example.final_project.dto;
 
-import lombok.AllArgsConstructor;
+import com.example.final_project.model.Rank;
+import com.example.final_project.model.Role;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class EmpListResponseDto {
-    String role;
+    String roleName;
     String deptName;
-    String rank;
+    String rankName;
     String empno;
     String extensionNum;
     String empName;
     Date hireDate;
+
+    @Builder
+    public EmpListResponseDto(String empno, String deptName, Rank rank, Role role,  String empName, String extensionNum, Date hireDate){
+        this.roleName = role.getName();
+        this.deptName = deptName;
+        this.rankName = rank.getName();
+        this.empno = empno;
+        this.extensionNum = extensionNum;
+        this.empName = empName;
+        this.hireDate = hireDate;
+    }
 }
 
 

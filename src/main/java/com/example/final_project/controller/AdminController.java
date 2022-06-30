@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -32,9 +30,9 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/admin/list")
-    public ResponseEntity<List<EmpListResponseDto>> list(@RequestBody SearchFilterRequestDto filterDto){
-        List<EmpListResponseDto> dto = adminService.list(filterDto);
+    @GetMapping("/list")
+    public ResponseEntity<List<EmpListResponseDto>> list(){
+        List<EmpListResponseDto> dto = adminService.list();
         return ResponseEntity.ok().body(dto);
     }
 
