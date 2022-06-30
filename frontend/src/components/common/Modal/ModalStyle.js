@@ -37,12 +37,12 @@ export const YesButton = styled.div`
   width: 80px;
   margin-left: ${({ modalSwitch, sendBefore, sendAfter }) =>
     modalSwitch === true
-      ? "35%"
-      : sendBefore === true
-      ? "30%"
-      : sendAfter === true
-      ? "35%"
-      : ""};
+        ? "30%"
+        : sendBefore === true
+            ? "25%"
+            : sendAfter === true
+                ? "30%"
+                : ""};
   &:hover {
     font-size: 22px;
     font-weight: bolder;

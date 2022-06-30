@@ -92,13 +92,8 @@ public class AdminService {
     }
 
     @Transactional
-    public List<EmpListResponseDto> list(@RequestBody SearchFilterRequestDto filterDto){
-            List<String> deptNo = new ArrayList<>();
-        if(filterDto.getDeptName() != null) {
-            deptNo = deptMapper.findAllDeptNo(filterDto.getDeptName());
-        }
-
-        return adminMapper.findByFilter(filterDto, deptNo);
+    public List<EmpListResponseDto> list(){
+        return adminMapper.findByNotResigned();
     }
 
     @Transactional

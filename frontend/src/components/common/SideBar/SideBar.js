@@ -45,11 +45,11 @@ export const SideBar = ({ role }) => {
   const SideMenu3 = [
     {
       id: 1,
-      menu: "근태 신청",
+      menu: "근태조정 신청",
     },
     {
       id: 2,
-      menu: "근태 목록",
+      menu: "근태조정 신청 목록",
     },
   ];
   const SideMenu4 = [
@@ -89,7 +89,9 @@ export const SideBar = ({ role }) => {
         </SideMenuForm>
         {secondMenu1 === true ? (
           <SmallSide>
-            <SmallSideMenu>{SideMenu1[0].menu}</SmallSideMenu>
+            {/*일별 현황*/}
+            <SmallSideMenu>{SideMenu1[0].menu} </SmallSideMenu>
+            {/*월별 현황*/}
             <SmallSideMenu>{SideMenu1[1].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
@@ -106,10 +108,12 @@ export const SideBar = ({ role }) => {
         </SideMenuForm>
         {secondMenu2 === true ? (
           <SmallSide>
+            {/*휴가 신청*/}
             <SmallSideMenu onClick={() => navigate("/leavereq")}>
               {SideMenu2[0].menu}
             </SmallSideMenu>
-            <SmallSideMenu>{SideMenu2[1].menu}</SmallSideMenu>
+            {/*휴가 신청 목록*/}
+            <SmallSideMenu onClick={() => navigate("/leavelist")}>{SideMenu2[1].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}
@@ -125,8 +129,10 @@ export const SideBar = ({ role }) => {
         </SideMenuForm>
         {secondMenu3 === true ? (
           <SmallSide>
-            <SmallSideMenu>{SideMenu3[0].menu}</SmallSideMenu>
-            <SmallSideMenu>{SideMenu3[1].menu}</SmallSideMenu>
+            {/*근태 신청*/}
+            <SmallSideMenu onClick={() => navigate("/attendancereq")}>{SideMenu3[0].menu}</SmallSideMenu>
+            {/*근태 목록*/}
+            <SmallSideMenu onClick={() => navigate("/attendancelist")}>{SideMenu3[1].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}

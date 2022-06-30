@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const Layout = () => {
   const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
   const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
-  const [sideView, setSideView] = useState(false); // 사이드바 개시 여부
+  const [sideView, setSideView] = useState(true); // 사이드바 개시 여부
   const changeState = () => {
     setSideView(!sideView);
   };
@@ -28,11 +28,11 @@ const Layout = () => {
   }, []);
 
   return (
-    <>
-      <Logo role={role} />
-      <Header role={role} sideView={sideView} changeState={changeState} />
-      {sideView && <SideBar role={role} />}
-    </>
+      <>
+        <Logo role={role} />
+        <Header role={role} sideView={sideView} changeState={changeState} />
+        {sideView && <SideBar role={role} />}
+      </>
   );
 };
 
