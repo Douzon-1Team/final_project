@@ -1,0 +1,79 @@
+package com.example.final_project.controller;
+
+import com.example.final_project.dto.LoginRequestDto;
+import com.example.final_project.dto.LoginResponseDto;
+import com.example.final_project.dto.TokenDto;
+import com.example.final_project.exception.EmpException;
+import com.example.final_project.exception.ErrorCode;
+import com.example.final_project.jwt.JwtTokenProvider;
+import com.example.final_project.mapper.EmployeeMapper;
+import com.example.final_project.model.Employee;
+import com.example.final_project.service.JwtService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+@Slf4j
+@RestController
+@RequiredArgsConstructor
+public class EmployeeController {
+
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final EmployeeMapper employeeMapper;
+    private final JwtService jwtService;
+
+    // 로그인
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) throws JsonProcessingException {
+        Employee employee = employeeMapper.findByUserId(loginRequestDto.getEmpno())
+                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
+        if (!passwordEncoder.matches(loginRequestDto.getPassword(), employee.getPassword())) {
+            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+        }
+        TokenDto tokenDto = jwtTokenProvider.createAccessToken(employee.getUsername(), employee.getRole());
+        jwtService.login(tokenDto);
+
+        Cookie cookie = new Cookie("refresh_token", tokenDto.getRefreshToken());
+        cookie.setPath("/login");
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+
+        response.addCookie(cookie);
+
+        LoginResponseDto dto = LoginResponseDto.builder()
+                .accessToken(tokenDto.getAccessToken())
+                .name(employee.getName())
+                .profile(employee.getProfile())
+                .role(employee.getRole())
+                .empno(employee.getEmpno())
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return ResponseEntity.ok().headers(headers).body(dto);
+    }
+
+    //Token test
+    @RestController
+    public class TestController {
+        @PostMapping("/test")
+        public HttpStatus test(){
+            return HttpStatus.OK;
+        }
+    }
+}
