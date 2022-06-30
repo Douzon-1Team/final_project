@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -60,9 +61,10 @@ class AttendanceCheckMapperTest {
         String empno = "220101";
         String columns = "tardy";
         String values = "1";
-        AttendanceUpdateDto attendanceUpdateDto = AttendanceUpdateDto.builder().empno(empno).columns(columns).values(values).build();
+        LocalDate today = LocalDate.now();
+        AttendanceUpdateDto attendanceUpdateDto = AttendanceUpdateDto.builder().empno(empno).columns(columns).values(values).date(today).build();
         //when
-        attendanceCheckMapper.attendanceProblem(attendanceUpdateDto);
+        attendanceCheckMapper.updateAttendanceStatus(attendanceUpdateDto);
         //then
 
     }

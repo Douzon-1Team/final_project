@@ -3,6 +3,7 @@ package com.example.final_project.mapper;
 import com.example.final_project.model.Employee;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeMapper {
@@ -22,6 +23,9 @@ public interface EmployeeMapper {
 
     @Select("SELECT emp_pwd FROM employee WHERE empno=#{empno}")
     Optional<String> findPasswordByEmpno(String empno);
+
+    @Select("SELECT empno FROM employee WHERE empno NOT LIKE '%admin%';")
+    List<String> findAllEmpNo();
 
     @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
     int updateByEmpno(Employee employee);
