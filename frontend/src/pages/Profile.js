@@ -9,7 +9,9 @@ import {Title, Table, Button, Form, Img, QR, Line} from '../styles/profile';
 
 function Profile() {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
-    const [emp, setEmp] = useState({ deptName: null, name: null, extensionNum: null, profilePath: null, rankName: null });
+    const [emp, setEmp] = useState(
+      { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, qrPath: null }
+    );
     const { register, handleSubmit } = useForm();
     const navigate = useNavigate();
 
@@ -41,7 +43,7 @@ function Profile() {
     return (
         <>
             <Title>개인 정보 관리</Title>
-            <QR>QR code</QR>
+            <a href={ emp.qrPath }><QR>QR code</QR></a>
             <Table>
                 <tr>
                     <td rowSpan="6">

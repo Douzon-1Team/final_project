@@ -19,11 +19,9 @@ public class EmpInfoDto {
     private String name;
     private String extensionNum;
     private MultipartFile profile;
-    private String profilePath;
     private Role role;
     private Rank rank;
     private Date hireDate;
-    private String rankName;
 
     public static Employee toEmployee(EmpInfoDto emp, String empno, String profileUrl, String pwd, String qrUrl){
        return  Employee.builder()

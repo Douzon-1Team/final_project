@@ -1,7 +1,7 @@
 package com.example.final_project.service;
 
-import com.example.final_project.dto.EmpInfoDto;
 import com.example.final_project.dto.EmpUpdateDto;
+import com.example.final_project.dto.ProfileDto;
 import com.example.final_project.exception.EmpException;
 import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.exception.PasswordException;
@@ -25,32 +25,32 @@ public class ProfileService {
     private final DeptMapper deptMapper;
 
     @Transactional
-    public EmpInfoDto getProfile(String empno){
+    public ProfileDto getProfile(String empno){
 
         Employee employee = employeeMapper.findByUserId(empno).get();
         EmpInfoComp empInfoComp = empInfoCompMapper.findByEmpno(empno).get();
 
-        return EmpInfoDto.builder().rankName(empInfoComp.getRank().getName())
-                                    .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptNo()))
-                                    .name(employee.getName())
-                                    .rankName(empInfoComp.getRank().getName())
-                                    .extensionNum(empInfoComp.getExtensionNum())
-                                    .profilePath(employee.getProfile())
-                                    .role(employee.getRole())
-                                    .build();
+        return ProfileDto.builder()
+                .deptName(deptMapper.findByDeptNo(empInfoComp.getDeptNo()))
+                .name(employee.getName())
+                .rankName(empInfoComp.getRank().getName())
+                .extensionNum(empInfoComp.getExtensionNum())
+                .profilePath(employee.getProfile())
+                .qrPath(employee.getQr())
+                .build();
     }
 
     @Transactional
-    public void updatePwd(EmpUpdateDto updateDto){
-        employeeMapper.findByUserId(updateDto.getEmpno())
+    public void updatePwd(EmpUpdateDto empUpdateDto){
+        employeeMapper.findByUserId(empUpdateDto.getEmpno())
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
         String password = null;
-        if(updateDto.getPwd() != null) {
-            validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
-            password = passwordEncoder.encode(updateDto.getNewPwd());
+        if(empUpdateDto.getPwd() != null) {
+            validatePassword(empUpdateDto.getEmpno(), empUpdateDto.getPwd(), empUpdateDto.getNewPwd(), empUpdateDto.getChkPwd());
+            password = passwordEncoder.encode(empUpdateDto.getNewPwd());
         }
-        employeeMapper.updatePwd(EmpUpdateDto.toEmployeePwd(updateDto, password));
+        employeeMapper.updatePwd(EmpUpdateDto.toEmployeePwd(empUpdateDto, password));
     }
 
     public void validatePassword(String empno, String pwd, String newPwd, String chkPwd){

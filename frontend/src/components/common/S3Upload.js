@@ -36,7 +36,6 @@ const S3Upload = () => {
                                     console.log(res);
                                     console.log(data);
                                     console.log('이미지 전송 완료'); //res.data, '~~'
-                                    // TODO : localStorage에 저장하는 것이 괜찮을까? 고민
                                     localStorage.setItem('profile', res.data);
                                     alert('이미지 변경이 완료되었습니다.');
                                     window.location.reload();
