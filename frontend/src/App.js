@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import LeaveReq from "./components/LeaveReq/LeaveReq";
 import AttendanceReq from "./components/AttendanceReq/Attendance";
 import Layout from "./components/common/Layout";
+import EmpList from "./components/admin/EmpList";
 
 function App() {
     // const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -25,6 +26,7 @@ function App() {
               <Route path="/logout" element={<Logout />} />
               <Route path="/leavereq" element={<LeaveReq />} />
               <Route path="/attendancereq" element={<AttendanceReq />} />
+                <Route path="/admin/list" element={<EmpList/>}/>
             </Route>
 
             {/* 404 page */}
