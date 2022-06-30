@@ -28,44 +28,44 @@ const Logo = ({ role }) => {
   ];
 
   return (
-    <LogoForm>
-      <LogoImgbox
-        onClick={() => {
-          return navigate("/main");
-        }}
-      />
-      <Profilefrom>
-        <UserImg />
-        <UserName>{empName}</UserName>
-        <UserSetting onClick={() => setOpen(!open)}>
-          {open === true ? <BsChevronCompactUp /> : <BsChevronCompactDown />}
-        </UserSetting>
-        {open && (
-          <SettingOpen
-            onMouseOver={() => setOpen(true)}
-            onMouseOut={() => setOpen(false)}
-          >
-            <SetForm
-              onClick={() => {
-                return navigate("/profile");
-              }}
-            >
-              {setLists[0].menu}
-            </SetForm>
-            <SetForm>{setLists[1].menu}</SetForm>
-            {role !== 0 ? <SetForm>{setLists[2].menu}</SetForm> : null}
-            <SetForm
-              onClick={() => {
-                return navigate("/logout");
-              }}
-            >
-              {setLists[3].menu}
-            </SetForm>
-          </SettingOpen>
-        )}
-      </Profilefrom>
-    </LogoForm>
-    // -----------------------------
+      <LogoForm>
+        <LogoImgbox
+            onClick={() => {
+              return navigate("/main");
+            }}
+        />
+        <Profilefrom>
+          <UserImg />
+          <UserName>{empName}</UserName>
+          <UserSetting onClick={() => setOpen(!open)}>
+            {open === true ? <BsChevronCompactUp /> : <BsChevronCompactDown />}
+          </UserSetting>
+          {open && (
+              <SettingOpen
+                  onMouseOver={() => setOpen(true)}
+                  onMouseOut={() => setOpen(false)}
+              >
+                <SetForm
+                    onClick={() => {
+                      return navigate("/profile");
+                    }}
+                >
+                  {setLists[0].menu}
+                </SetForm>
+                <SetForm>{setLists[1].menu}</SetForm>
+                {role !== 0 ? <SetForm>{setLists[2].menu}</SetForm> : null}
+                <SetForm
+                    onClick={() => {
+                      return navigate("/logout");
+                    }}
+                >
+                  {setLists[3].menu}
+                </SetForm>
+              </SettingOpen>
+          )}
+        </Profilefrom>
+      </LogoForm>
+      // -----------------------------
   );
 };
 const {
