@@ -15,7 +15,7 @@ const Chart = (props) => {
 
     const notwork = _.filter(props.data, 'etc');
     const vacation = _.filter(props.data, 'vacation');
-    const work = props.data.slice(0,2);
+    const work = _.filter(props.data, 'normalwork');
 
     notwork.filter(function(test) {
         console.log(test);

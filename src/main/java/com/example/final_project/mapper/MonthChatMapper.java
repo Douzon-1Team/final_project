@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MonthChatMapper {
 
-    @Select("SELECT DATE_FORMAT(date,'%Y-%m') m, COUNT(*) count, DATE_FORMAT(date,'%m') month FROM attendance_status where empno = #{empno} and etc is null GROUP BY m;")
+    @Select("SELECT DATE_FORMAT(date,'%Y-%m') m, COUNT(*) count, DATE_FORMAT(date,'%m') month, IFNULL(etc, '출근') normalwork FROM attendance_status where empno = #{empno} and etc is null GROUP BY m;")
     List<CalendarResponseDto> findWorkDate(String year, String empno);
 
     @Select("SELECT DATE_FORMAT(vacation_start,'%Y-%m') m, COUNT(*) count, DATEDIFF(vacation_end, vacation_start) datediff, req vacation, DATE_FORMAT(vacation_start,'%m') month FROM attendance_req where empno = #{empno} and req REGEXP '휴가|오전반차|오후반차|시간연차' GROUP BY m;")

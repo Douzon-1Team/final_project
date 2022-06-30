@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import _ from "lodash";
 import { getMain } from "../apis/CalendarApi";
+import {MainCalendarError2} from "../components/common/alert/alert";
 
 export const getList = createAsyncThunk("GET_TODO", async (empno) => {
   // TODO : 본인 승인시 detail 페이지 접근 불가
@@ -185,7 +186,7 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
     // TODO : req와 status 동일한 데이터 존재할시 req를 우선으로 뿌려주기
     return response.data;
   } catch (e) {
-    // alert("시스템 에러입니다. 관리자에게 문의 해주세요");
+    MainCalendarError2();
   }
 
   // 1. 휴가 req, reject, accept, vacation_start, vacation_end
