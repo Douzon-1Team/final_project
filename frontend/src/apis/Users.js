@@ -1,7 +1,6 @@
-// 유저 로그인/로그아웃 파일
+// 회원 로그인/로그아웃 파일
 
 // promise 요청 타임아웃 시간 선언
-
 const TIME_OUT = 300 * 1000;
 
 const statusError = {
@@ -82,7 +81,7 @@ export const updatePwd = async (credentials) => {
     }
 };
 
-
+// TODO : back /logout 통신
 export const logoutUser = async (credentials, ACCESS_TOKEN) => {
     const option = {
         method: 'POST',

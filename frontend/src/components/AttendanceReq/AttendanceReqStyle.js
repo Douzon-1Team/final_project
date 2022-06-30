@@ -178,6 +178,32 @@ export const ButtonC = styled.button`
   font-size: 13px;
   font-weight: bolder;
 `;
+export const ButtonD = styled.button`
+  background-color: ${({ sortNum }) => (sortNum === 4 ? "#00aaff" : "")};
+  color: ${({ sortNum }) => (sortNum === 4 ? "#ffffff" : "")};
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  margin-left: 10px;
+  border: 0px;
+  width: 90px;
+  height: 25px;
+  font-size: 13px;
+  font-weight: bolder;
+`;
+export const ButtonE = styled.button`
+  background-color: ${({ sortNum }) => (sortNum === 5 ? "#00aaff" : "")};
+  color: ${({ sortNum }) => (sortNum === 5 ? "#ffffff" : "")};
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  margin-left: 10px;
+  border: 0px;
+  width: 90px;
+  height: 25px;
+  font-size: 13px;
+  font-weight: bolder;
+`;
 // ---------------------------------------------
 export const TermSelect = styled.div`
   input {
@@ -229,6 +255,8 @@ export const style = {
   ButtonA,
   ButtonB,
   ButtonC,
+  ButtonD,
+  ButtonE,
   TermSelect,
   TimeSelect,
   Text1,

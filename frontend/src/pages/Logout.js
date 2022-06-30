@@ -1,36 +1,27 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getCookieToken, removeCookieToken } from '../auth/Cookie';
 import { DELETE_TOKEN } from '../store/modules/Reducer/TokenAuth';
-import { logoutUser } from '../apis/Users';
+import { DELETE_EMP_INFO } from "../store/modules/Reducer/EmpAuth";
 
 function Logout(){
-    const token = useSelector((state) => { return state })
+    const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const refreshToken = getCookieToken();
-
-    async function logout() {
-        const data = await logoutUser({ refresh_token: refreshToken }, token);
-
-        if (data.status) {
-            dispatch(DELETE_TOKEN());
-            removeCookieToken();
-            return navigate("/login");
-        } else {
-            return navigate("/login");
-        }
+    if(empNo !== null){
+        dispatch(DELETE_TOKEN());
+        dispatch(DELETE_EMP_INFO());
+        // removeCookieToken();
+        // TODO : 1. dispatch | 2. /logout 시 서버 통신
+        alert("성공적으로 로그아웃 되었습니다.");
+        localStorage.removeItem("LoginChk");
+        return navigate("/login");
+    } else {
+        alert("로그아웃에 실패했습니다.");
+        return false;
     }
-    useEffect( () => { logout(); }, [])
-
-    return (
-        <>
-            <Link to="/" />
-        </>
-    );
+    return <Link to="/login" />
 }
 
 export default Logout;
