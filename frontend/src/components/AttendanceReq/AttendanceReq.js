@@ -7,9 +7,12 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import { modalStyle } from "../common/Modal/ModalStyle";
 import axios from "axios";
+import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 
 export const AttendanceReq = () => {
+  const { state } = useLocation(); // TODO : 달력으로부터 넘어온 데이터
+  // TODO : state데이터가 존재하지 않으면 null데이터 출력 -> state에서 넘어온 데이터 있으면 값 넣어주면 됨
   const empName = useSelector( (state) => state.EMP_INFO.empInfo[1] );
   const empNo=useSelector( (state) => state.EMP_INFO.empInfo[0] );
   // const [empNo, setEmpNo] = useState(empName);
