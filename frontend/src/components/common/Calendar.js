@@ -109,11 +109,18 @@ function Calendar() {
     const { calendarId, id } = e.schedule;
     const el = cal.current.calendarInst.getElement(id, calendarId);
 
-    // TODO : 얘네 3개 보내줄거임(근태 조정 & 휴가 신청) - title로 구분 할 것
-    console.log(e);
-    console.log(e.schedule.title);
-    console.log(e.schedule.start);
-    console.log(e.schedule.end);
+    if (e.schedule.title !== "출근" && new Date() > e.schedule.start) {
+      const test = [];
+      console.log(e.schedule);
+      test.push(e.schedule.title);
+      test.push(e.schedule.start);
+      test.push(e.schedule.end);
+      // TODO : 이상근태가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기
+      navigate('/attendancereq', {
+        state: test,
+      });
+    } else {
+    }
   }, []);
 
   const onBeforeCreateSchedule = (scheduleData) => {
@@ -132,18 +139,15 @@ function Calendar() {
 
     // TODO : 오늘 이전 연차신청목록 클릭시 -> 어떻게 할지?
     if (new Date() > scheduleData.start) {
-      const test = _.find(schedules, { empno: "220101", date: `${dateStart}` });
-      console.log(test);
+      // const test = _.find(schedules, { empno: "220101", date: `${dateStart}` });
+      console.log('아무일도 안 일어납니다^^');
     } else {
-      // TODO : 연차 신청
-      const test2 = _.find(schedules, { datestart: `${dateStart}` });
-      return navigate("/leavereq");
-      // if (test2 == null) {
-      // dateStart 보내기
-      // }
+      // TODO : 조건문 걸기
+      const start = scheduleData.start;
+      navigate("/leavereq", {
+        state: start,
+      });
     }
-    // 승범님에게 data 보내기~
-    // window.location.href = 'https://www.naver.com/';
   };
 
   // const onBeforeUpdateSchedule = useCallback((e) => { // 수정 팝업창
@@ -159,11 +163,13 @@ function Calendar() {
   // }, []);
 
   function _getFormattedTime(time) {
-    // 시간 설정
+    // start 시간 설정
+    // TODO : END 시간도 표시해줄까?
     const date = new Date(time);
-    const h = date.getHours();
-    const m = date.getMinutes();
-
+    let h = date.getHours();
+    let m = date.getMinutes();
+    h = h > 9 ? h : '0' + h;
+    m = m > 9 ? m : '0' + m;
     return `${h}:${m}`;
   }
 
@@ -238,7 +244,7 @@ function Calendar() {
   }, []);
 
   const handleWeekClick = useCallback(() => {
-    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 3}}, true);
+    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 4}}, true);
     cal.current.calendarInst.changeView('month', true);
     // console.log(cal.current.calendarInst.changeView("week"));
   }, []);
@@ -247,6 +253,10 @@ function Calendar() {
     console.log(cal.current.calendarInst.changeView("day"));
   }, []);
   // TODO : Today 추가
+
+  function dVcationPage() {
+    return navigate("/dvacation");
+  }
   return (
       <>
         {chartview == false ?
@@ -281,7 +291,7 @@ function Calendar() {
                 </button>
 
                 <Button className="dept_vacation" variant="contained" onClick={() => { setChartView(true) }}>월간 근태기록</Button>
-                <Button className="dept_vacation" variant="contained">
+                <Button className="dept_vacation" variant="contained" onClick={() => {dVcationPage()}}>
                   부서별 휴가일정
                 </Button>
               </div>
@@ -293,7 +303,7 @@ function Calendar() {
                   ref={cal}
                   view="month"
                   // useCreationPopup={true}
-                  useDetailPopup={true}
+                  // useDetailPopup={true}
                   template={templates}
                   calendars={calendars}
                   schedules={schedules}

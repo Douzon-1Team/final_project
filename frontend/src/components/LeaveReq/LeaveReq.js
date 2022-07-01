@@ -8,8 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { modalStyle } from "../common/Modal/ModalStyle";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import {useLocation} from "react-router";
 
 export const LeaveReq = () => {
+  const { state } = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
+  console.log(state);
   const [sortNum, setSortNum] = useState(0); // 휴가구분
   const today = new Date();
   const tomorrow = new Date(today);

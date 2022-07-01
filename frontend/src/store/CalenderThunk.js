@@ -12,7 +12,7 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
     // 2. req를 제외한 나머지를 먼저 판단하고 req테이블에서 중복날짜들 전부제외하고 출력
     const response = await getMain(empno);
     console.log(response);
-    for (var i = 1; i < response.data.length; i++) {
+    for (var i = 1;  i < response.data.length; i++) {
       if (response.data[i].m != null || response.data[i].count != null || response.data[i].datediff != null) continue
       if (response.data[i].empno != null) { // 정상 출/퇴근, 조퇴, 지각 판단
         if (response.data[i].tardy == 1) {

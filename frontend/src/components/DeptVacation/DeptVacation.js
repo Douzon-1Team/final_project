@@ -13,23 +13,24 @@ import {
     BsDot,
 } from "react-icons/bs";
 import {useNavigate} from "react-router";
+import {getMain} from "../../apis/DeptVacationApi";
 
 // TODO : 얘네 두개는 필요없을듯
 function DeptVacation() {
-    const [chartview, setChartView] = useState(false);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
-    var schedules = [
-        // schedules 일정 관리
-    ];
+    const [schedules, setschedules] = useState([]);
+    // var schedules = [
+    // schedules 일정 관리
+    // ];
 
     // TODO : 얘는 따로 뺴줘야할듯
     const calendars = [
         // 정상출근
         {
             id: "1",
-            name: "출근",
+            name: "해당사원휴가",
             color: "#ffffff",
             bgColor: "#03bd9e",
             dragBgColor: "#03bd9e",
@@ -38,47 +39,46 @@ function DeptVacation() {
         // 조퇴
         {
             id: "2",
-            name: "조퇴",
+            name: "나머지애들휴가",
             color: "#ffffff",
             bgColor: "#00a9ff",
             dragBgColor: "#00a9ff",
             borderColor: "#00a9ff",
         },
-        // 결근
-        {
-            id: "3",
-            name: "결근",
-            color: "#ffffff",
-            bgColor: "#FF0000",
-            dragBgColor: "#FF0000",
-            borderColor: "#FF0000",
-        },
-        // 지각
-        {
-            id: "4",
-            name: "지각",
-            color: "#ffffff",
-            bgColor: "#FFA500",
-            dragBgColor: "#FFA500",
-            borderColor: "#FFA500",
-        },
-        // 결제진행/결제완료? #00AAFF
-        {
-            id: "5",
-            name: "연차",
-            color: "#ffffff",
-            bgColor: "#00AAFF",
-            borderColor: "#FF0000",
-        },
     ];
 
     const empno = useSelector((state) => state.EMP_INFO);
-    // schedules.push(...calendarList);
 
+    const getvacation = async () => {
+        await getMain({empno: 220102}).then((res) => {
+                const vacation = res.data;
+                if (vacation.length != 0) {
+                    for (let i = 0; i < vacation.length; i++) {
+                        if (vacation[i].empno === empno.empInfo[0]) {
+                            vacation[i].calendarId = "1";
+                        } else {
+                            vacation[i].calendarId = "2";
+                        }
+                        _.merge(vacation[i], {
+                            isVisible: true, id: i + 1,
+                            category: "allday",
+                            start: new Date(vacation[i].vacationStart),
+                            end: new Date(vacation[i].vacationEnd)
+                        });
+                    }
+                    setschedules(vacation);
+                    console.log(schedules);
+                } else {
+                    // error
+                }
+            }
+        );
+    }
 
 
     useEffect(() => {
         // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
+        getvacation();
     }, []);
     const cal = useRef(null);
 
@@ -205,6 +205,9 @@ function DeptVacation() {
         cal.current.calendarInst.changeView("month", true);
     }, []);
 
+    function mainPage() {
+        return navigate("/main");
+    }
 
     return (
         <>
@@ -232,9 +235,8 @@ function DeptVacation() {
                             Month
                         </button>
 
-                        <Button className="dept_vacation" variant="contained" onClick={() => { setChartView(true) }}>일간 근태기록</Button>
-                        <Button className="dept_vacation" variant="contained">
-                            부서별 휴가일정
+                        <Button className="dept_vacation" variant="contained" onClick={() => {mainPage()}}>
+                            내 휴가일정
                         </Button>
                     </div>
                     <BsDot className="dot1" />출근
