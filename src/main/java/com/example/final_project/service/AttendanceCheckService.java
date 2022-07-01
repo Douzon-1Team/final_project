@@ -3,6 +3,7 @@ package com.example.final_project.service;
 import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
+import com.example.final_project.model.AttendanceReq;
 import com.example.final_project.model.AttendanceTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,24 +21,51 @@ public class AttendanceCheckService {
     LocalDate today = LocalDate.now();
     public String  onOffWorkCheck(String empno, LocalDateTime now){
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno);
-        LocalTime onWork;
-        LocalTime offWork;
-        if(attendanceCheckDto.getFlexible() == 1){
-            onWork = attendanceCheckDto.getGetToWorkTimeSetF().toLocalTime();
-            offWork = attendanceCheckDto.getGetOffWorkTimeSetF().toLocalTime();
-        } else{
-            onWork = attendanceCheckDto.getGetToWorkTimeSet().toLocalTime();
-            offWork = attendanceCheckDto.getGetOffWorkTimeSet().toLocalTime();
-        }
-        //휴가 체크해서 출퇴근 시간 바꿔준후 넣기
-        //vacationChecker(attendanceCheckDto.getVacation(),onWork,offWork);
-        if("오전반차".equals(attendanceCheckDto.getEtc())){
-            onWork.plusHours(4);
-        }
-        if("오후반차".equals(attendanceCheckDto.getEtc())){
-            offWork.minusHours(4);
-        }
+        LocalTime onWork = onWorkTimeCheck(attendanceCheckDto);
+        LocalTime offWork = offWorkTimeCheck(attendanceCheckDto);
+        log.info("출근:"+onWork.toString());
+        log.info("퇴근:"+offWork.toString());
         return timeCheck(empno, now, onWork, offWork);
+    }
+
+    public LocalTime onWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
+        LocalTime onWorkTime;
+        if(attendanceCheckDto.getFlexible() == 1){
+            onWorkTime = attendanceCheckDto.getGetToWorkTimeSetF().toLocalTime();
+        } else{
+            onWorkTime = attendanceCheckDto.getGetToWorkTimeSet().toLocalTime();
+        }
+        if("오전반차".equals(attendanceCheckDto.getEtc())){
+            onWorkTime.plusHours(4);
+        } else if ("시간연차".equals(attendanceCheckDto.getEtc())) {
+            AttendanceReq attendanceReq = attendanceCheckMapper.timeVacation(attendanceCheckDto.getEmpno());
+            if(onWorkTime == attendanceReq.getVacationStart().toLocalTime()){
+                onWorkTime = attendanceReq.getVacationEnd().toLocalTime();
+            }
+        }
+        return onWorkTime;
+    }
+
+    public LocalTime offWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
+        LocalTime offWorkTime;
+        if(attendanceCheckDto.getFlexible() == 1){
+            offWorkTime = attendanceCheckDto.getGetOffWorkTimeSetF().toLocalTime();
+        } else{
+            offWorkTime = attendanceCheckDto.getGetOffWorkTimeSet().toLocalTime();
+        }
+        log.info(attendanceCheckDto.getEtc());
+        log.info(offWorkTime.toString());
+        if("오후반차".equals(attendanceCheckDto.getEtc())){
+            offWorkTime.minusHours(4);
+        } else if ("시간연차".equals(attendanceCheckDto.getEtc())) {
+            AttendanceReq attendanceReq = attendanceCheckMapper.timeVacation(attendanceCheckDto.getEmpno());
+            log.info(offWorkTime.toString());
+            if(offWorkTime == attendanceReq.getVacationEnd().toLocalTime()){
+                offWorkTime = attendanceReq.getVacationStart().toLocalTime();
+                log.info("test2"+offWorkTime.toString());
+            }
+        }
+        return offWorkTime;
     }
 
     public String timeCheck(String empno, LocalDateTime now, LocalTime onWork, LocalTime offWork){
@@ -46,9 +74,6 @@ public class AttendanceCheckService {
             //정상 출근
             if(attendanceChecker(empno, now, 1)){
                 AttendanceUpdateDto attendance = AttendanceUpdateDto.builder().empno(empno).columns("attendance").values("1").date(today).build();
-                log.info(attendance.getColumns());
-                log.info(attendance.getValues());
-                log.info(attendance.getEmpno());
                 attendanceCheckMapper.updateAttendanceStatus(attendance);
                 return "출근";
             }else {
@@ -63,7 +88,7 @@ public class AttendanceCheckService {
             }else {
                 return "퇴근시간이 아닙니다.";
             }
-        } else if(nowTime.isAfter(offWork) || now.equals(offWork)){
+        } else if(nowTime.isAfter(offWork) || nowTime.equals(offWork)){
             // 퇴근
             if(attendanceChecker(empno, now, 0)){
                 if(checkUnregisteredOn(empno)){
@@ -90,7 +115,7 @@ public class AttendanceCheckService {
     }
 
     public boolean duplicationCheck(String empno, int onOffWork){
-        if(attendanceCheckMapper.duplicatedCheck(empno, onOffWork).isEmpty()){
+        if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork).isEmpty()){
             return true;
         }else {
             return false;
@@ -115,16 +140,6 @@ public class AttendanceCheckService {
             return false;
         }
     }
-
-/*    public void vacationChecker(String vacation,LocalTime onWork, LocalTime offWork){
-        if(vacation == "휴가"){
-
-        } else if(vacation == "오전반차"){
-            onWork.plusHours(4);
-        } else if (vacation == "오후반차") {
-
-        }
-    }*/
 
     public void lunchCheck(){
 

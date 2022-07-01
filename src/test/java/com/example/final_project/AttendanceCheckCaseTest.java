@@ -1,7 +1,11 @@
 package com.example.final_project;
 
+import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
+import com.example.final_project.model.AttendanceStatus;
+import com.example.final_project.model.AttendanceTime;
 import com.example.final_project.service.AttendanceCheckService;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -36,11 +39,15 @@ public class AttendanceCheckCaseTest {
         //given
         String empno = "220109";
         LocalDateTime normal = LocalDate.now().atTime(8, 59,59,1);
+        AttendanceTime onWorkNormalTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2,4)).date(normal).onOffWork(1).build();
+        AttendanceStatus onWorkNormalStatus = AttendanceStatus.builder().empno(empno).deptNo(empno.substring(2,4)).attendance(1).build();
+
         //when
         String normalMsg = attendanceCheckService.onOffWorkCheck(empno, normal);
 
         //then
         assertThat(normalMsg).isEqualTo("출근");
+
 
 
     }
