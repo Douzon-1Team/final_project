@@ -20,7 +20,7 @@ public class EmpInfoDto {
     private String extensionNum;
     private MultipartFile profile;
     private Role role;
-    private Rank rank;
+    private String rankName;
     private Date hireDate;
 
     public static Employee toEmployee(EmpInfoDto emp, String empno, String profileUrl, String pwd, String qrUrl){
@@ -39,7 +39,7 @@ public class EmpInfoDto {
                 .empno(empno)
                 .deptNo(deptNo)
                 .email(email)
-                .rank(emp.getRank())
+                .rank(Rank.valueOfName(emp.getRankName()))
                 .hireDate(emp.getHireDate())
                 .extensionNum(emp.getExtensionNum())
                 .build();
