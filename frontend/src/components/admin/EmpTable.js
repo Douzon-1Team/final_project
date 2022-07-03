@@ -1,4 +1,5 @@
 import React, {useState, useMemo} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {useTable, useSortBy, usePagination, useFilters} from "react-table";
 import {SearchFilter, SelectFilter, RangeFilter, dateBetweenFilter} from './Filter'
 import {Table, Header, Button, Row, Cell, Order, Pagination} from "./EmpTableStyle";
@@ -10,10 +11,12 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 function EmpTable(props) {
     const data = props.data;
     const {num, setNum} = useState(data.length);
+    const navigate = useNavigate();
 
-    const updateEmp = (empno) =>{
-        //TODO: 사원정보 수정페이지로 이동
-    };
+    const toUpdateEmp = (e, empno) => {
+        e.preventDefault();
+        navigate(`/profile/${empno}`);
+    }
 
     const columns = useMemo(
         () => [
@@ -30,7 +33,8 @@ function EmpTable(props) {
                     return value.slice(0,10)
                 }
             },
-            {Header: '정보관리', Cell: ({row}) => {return <Button onClick={updateEmp(row.original.empno)}>수정</Button> }}
+            {Header: '정보관리', Cell: ({row}) => {return <Button onClick={(e) => toUpdateEmp(e, row.original.empno)}>수정</Button> }}
+
         ],[]);
 
     const defaultColumn = React.useMemo(

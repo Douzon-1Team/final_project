@@ -16,17 +16,16 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @PostMapping("/admin/register")
+    @PostMapping("/register")
     public ResponseEntity register(@RequestPart(value = "EmpInfoDto") EmpInfoDto registerDto,
                                    @RequestPart(value = "file") MultipartFile profile){
         adminService.register(registerDto, profile);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/admin/update")
-    public ResponseEntity update(@RequestPart(value = "EmpUpdateDto") EmpUpdateDto updateDto,
-                                 @RequestPart(value = "file") MultipartFile profile){
-        adminService.update(updateDto, profile);
+    @PatchMapping("/update")
+    public ResponseEntity update(@RequestBody EmpUpdateDto updateDto){
+        adminService.update(updateDto);
         return ResponseEntity.ok().build();
     }
 

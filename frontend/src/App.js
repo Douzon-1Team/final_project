@@ -10,10 +10,10 @@ import LeaveReq from "./components/LeaveReq/LeaveReq";
 import Layout from "./components/common/Layout";
 import EmpList from "./components/admin/EmpList";
 import {useSelector} from "react-redux";
-import AdminPage from "./pages/AdminPage";
 import LeaveList from "./components/List/LeaveList";
 import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
+import UpdateEmp from "./components/admin/UpdateEmp"
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
@@ -25,13 +25,14 @@ function App() {
                 <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
                     <Route path="/main" element={<Main />} />
-                    <Route path="/profile" element={ empRole !== "ROLE_ADMIN" ? <Profile /> : <AdminPage />} />
+                    <Route path="/profile" element={ <Profile />}/>
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/leavereq" element={<LeaveReq />} />
                     <Route path="/leavelist" element={<LeaveList />} />
                     <Route path="/attendancereq" element={<AttendanceReq />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
-                    <Route path="/admin/list" element={<EmpList/>}/>
+                    <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
+                    <Route path="/profile/:empno" element={<UpdateEmp/>}/>
                 </Route>
 
                 {/* 404 page */}

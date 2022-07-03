@@ -58,13 +58,13 @@ public class AdminService {
     }
 
     @Transactional
-    public void update(EmpUpdateDto updateDto, MultipartFile profile){
+    public void update(EmpUpdateDto updateDto){
         employeeMapper.findByUserId(updateDto.getEmpno())
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
-        String profileUrl = null;
-        if(profile != null)
-            profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
+//        String profileUrl = null;
+//        if(profile != null)
+//            profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
 
         String password = null;
         if(updateDto.getPwd() != null) {
@@ -72,7 +72,7 @@ public class AdminService {
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
 
-        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(password), profileUrl));
+        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password));
         String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
         empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
     }
