@@ -21,6 +21,10 @@ export const SideBar = ({ role }) => {
       id: 4,
       menu: "팀 관리",
     },
+    {
+      id: 5,
+      menu: "관리자"
+    }
   ];
   const SideMenu1 = [
     {
@@ -67,10 +71,22 @@ export const SideBar = ({ role }) => {
     },
   ];
 
+  const SideMenu5 = [
+    {
+      id: 1,
+      menu: "사원 등록"
+    },
+    {
+      id: 2,
+      menu: "사원 정보 조회"
+    }
+  ]
+
   const [secondMenu1, setSecondMenu1] = useState(false);
   const [secondMenu2, setSecondMenu2] = useState(false);
   const [secondMenu3, setSecondMenu3] = useState(false);
   const [secondMenu4, setSecondMenu4] = useState(false);
+  const [secondMenu5, setSecondMenu5] = useState(false);
 
   let navigate = useNavigate();
 
@@ -156,6 +172,24 @@ export const SideBar = ({ role }) => {
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}
+        {role === 2 ? (
+            <SideMenuForm onClick={() => setSecondMenu5(!secondMenu5)}>
+              <MenuTextBox>{sideMenu[4].menu}</MenuTextBox>
+              <SideMenuBox>
+                {secondMenu5 === true ? (
+                    <BsChevronCompactUp />
+                ) : (
+                    <BsChevronCompactDown />
+                )}
+              </SideMenuBox>
+            </SideMenuForm>
+        ) : null}
+        {secondMenu5 === true ? (
+            <SmallSide>
+              <SmallSideMenu onClick={() => navigate("/profile/new")}>{SideMenu5[0].menu}</SmallSideMenu>
+              <SmallSideMenu onClick={() => navigate("/admin/list")}>{SideMenu5[1].menu}</SmallSideMenu>
+            </SmallSide>
+        ) : null}
       </Menu>
     </BarBox>
   );
