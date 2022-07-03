@@ -14,9 +14,8 @@ public interface EmpInfoCompMapper {
             "VALUES(#{empno}, #{deptNo}, #{rank}, #{email}, #{extensionNum})")
     int save(EmpInfoComp empInfoComp);
 
-    @Select("SELECT COUNT(*) FROM emp_info_comp e " +
-            "WHERE DATE_FORMAT(e.hire_date, '%y') = #{year} AND dept_no = #{deptNo}")
-    int countByDeptNo(String deptNo, int year);
+    @Select("select empno from emp_info_comp where dept_no = #{deptNo} and left(empno, 2) = #{year} order by empno desc limit 1;")
+    String findLastEmpno(String deptNo, int year);
 
     @Select("SELECT * FROM emp_info_comp WHERE empno=#{empno}")
     Optional<EmpInfoComp> findByEmpno(String empno);

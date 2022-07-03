@@ -33,6 +33,7 @@ function App() {
                     <Route path="/attendancelist" element={<AttendanceList />} />
                     <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
                     <Route path="/profile/:empno" element={<UpdateEmp/>}/>
+                    <Route path="/profile/new" element={<UpdateEmp/>}/>
                 </Route>
 
                 {/* 404 page */}

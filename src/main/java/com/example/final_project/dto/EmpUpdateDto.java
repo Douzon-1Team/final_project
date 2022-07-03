@@ -17,17 +17,18 @@ public class EmpUpdateDto {
     private String extensionNum;
     private String profile;
     private Role role;
-    private Rank rank;
+    private String rankName;
     private String pwd;
     private String newPwd;
     private String chkPwd;
-    private boolean isResigned;
+    private boolean resigned;
 
-    public static Employee toEmployee(EmpUpdateDto emp, String pwd){
+    public static Employee toEmployee(EmpUpdateDto emp, String pwd, String profile){
         return Employee.builder()
                 .empno(emp.getEmpno())
                 .name(emp.getName())
                 .role(emp.getRole())
+                .profile(profile)
                 .password(pwd)
                 .isResigned(emp.isResigned())
                 .build();
@@ -54,7 +55,7 @@ public class EmpUpdateDto {
                 .empno(emp.getEmpno())
                 .deptNo(deptNo)
                 .extensionNum(emp.getExtensionNum())
-                .rank(emp.getRank())
+                .rank(Rank.valueOfName(emp.getRankName()))
                 .build();
     }
 }
