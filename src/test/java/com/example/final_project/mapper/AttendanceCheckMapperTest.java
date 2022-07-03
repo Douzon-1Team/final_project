@@ -32,8 +32,8 @@ class AttendanceCheckMapperTest {
         Optional<AttendanceTime> notDuplicated = Optional.empty();
 
         //when
-        Optional<AttendanceTime> attendanceTime = attendanceCheckMapper.duplicatedCheck("220101",1);
-        Optional<AttendanceTime> attendanceTimeNull = attendanceCheckMapper.duplicatedCheck("220101",3);
+        Optional<AttendanceTime> attendanceTime = attendanceCheckMapper.findAttendanceTimeByEmpno("220101",1);
+        Optional<AttendanceTime> attendanceTimeNull = attendanceCheckMapper.findAttendanceTimeByEmpno("220101",3);
 
         //then
         assertThat(attendanceTime).isNotEqualTo(notDuplicated);

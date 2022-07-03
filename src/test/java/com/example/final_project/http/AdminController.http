@@ -1,5 +1,5 @@
 ### 안드로이드 테스트(application/x-www-form-urlencoded - key=value&key=value)
-POST http://kosa2.iptime.org:50232/postTest
+POST http://kosa2.iptime.org:50232/attendanceCheck
 Content-Type: application/x-www-form-urlencoded
 
 empno=220101&time=2022-06-27 18:01:00
@@ -13,11 +13,11 @@ Content-Type: application/json
     "password": "1111"
 }
 
-### 출근 테스트
+### 출퇴근 테스트
 POST http://localhost:8080/attendanceCheck
 Content-Type: application/x-www-form-urlencoded
 
-empno=220106&time=2022-06-30 09:08:00
+empno=220109&time=2022-07-01 16:08:00
 
 ### 그래프 조회용 테스트
 POST http://localhost:8080/main

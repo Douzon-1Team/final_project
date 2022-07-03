@@ -3,7 +3,7 @@ package com.example.final_project.model;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -16,5 +16,5 @@ public class AttendanceStatus {
     int leaveEarly;
     String etc;
     int unregistered;
-    Date date;
+    LocalDateTime date;
 }

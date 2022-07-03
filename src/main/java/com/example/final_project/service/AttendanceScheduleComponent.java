@@ -16,19 +16,23 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AttendanceStatusCreatService {
+public class AttendanceScheduleComponent {
 
     private final AttendanceCheckMapper attendanceCheckMapper;
     private final EmployeeMapper employeeMapper;
 
-    @Scheduled(cron="0 43 21 * * ?")
-    public void scheduleRunner(){
-        createStatus();
-        checkUnregisteredOff();
-        log.info("스케줄러");
+    @Scheduled(cron = "0 55 23 * * ?")
+    public void scheduleTomorrow(){
+//        createStatus();
+//        log.info("내일 스테이터스 등록");
+    }
+    @Scheduled(cron = "1 0 0 * * ?")
+    public void scheduleYesterday(){
+//        checkUnregisteredOff();
+//        log.info("이상근태 점검");
     }
     @Scheduled(cron="0/10 * * * * *")
-    public void cheduledTest(){
+    public void scheduledTest(){
 //        createStatus();
 //        checkUnregisteredOff();
 //        log.info("스케줄러");
@@ -50,19 +54,30 @@ public class AttendanceStatusCreatService {
         for (String empno : empnoList) {
             String vacationCheckFlag;
             if(attendanceCheckMapper.findByEmpno(empno,yesterday).isEmpty()){
-                vacationCheckFlag = "";
+                vacationCheckFlag = null;
             }else {
                 vacationCheckFlag = attendanceCheckMapper.findByEmpno(empno,yesterday).get().getEtc();
-                //log.info(empno + " : " + vacationCheckFlag);
             }
-
-            if(!"휴가".equals(vacationCheckFlag) && !"결근".equals(vacationCheckFlag) ){
-                if(attendanceCheckMapper.unregisteredOffCheck(empno).isEmpty()){
-                    AttendanceUpdateDto attendanceUpdateDto = AttendanceUpdateDto.builder().empno(empno).columns("unregistered").values("1").date(yesterday).build();
-                    attendanceCheckMapper.updateAttendanceStatus(attendanceUpdateDto);
+            if(!"휴가".equals(vacationCheckFlag)){
+                if(attendanceCheckMapper.unregisteredOffCheck(empno,0).isEmpty()){
+                    if(attendanceCheckMapper.unregisteredOffCheck(empno,1).isEmpty()) {
+                        //결근 처리
+                        attendanceStatusUpdate(empno,"etc","결근",yesterday);
+                    }else {
+                        //퇴근 미등록 처리
+                        attendanceStatusUpdate(empno,"unregistered","1",yesterday);
+                    }
                 }
             }
         }
+    }
+    public void tardyCheckPerTime(){
+        //한시간마다 출석하지 않은 직원에 대하여 지각확인
+    }
+
+    public void attendanceStatusUpdate(String empno, String column, String value, LocalDate date){
+        AttendanceUpdateDto attendanceUpdateDto = AttendanceUpdateDto.builder().empno(empno).columns(column).values(value).date(date).build();
+        attendanceCheckMapper.updateAttendanceStatus(attendanceUpdateDto);
     }
 
     public String getVacationInfo(String empno){

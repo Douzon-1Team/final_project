@@ -13,7 +13,11 @@ import {useSelector} from "react-redux";
 import LeaveList from "./components/List/LeaveList";
 import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
+<<<<<<< HEAD
 import UpdateEmp from "./components/admin/UpdateEmp"
+=======
+import DeptVacation from "./components/DeptVacation/DeptVacation";
+>>>>>>> main
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
@@ -32,8 +36,9 @@ function App() {
                     <Route path="/attendancereq" element={<AttendanceReq />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
                     <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
-                    <Route path="/profile/:empno" element={<UpdateEmp/>}/>
-                    <Route path="/profile/new" element={<UpdateEmp/>}/>
+                    <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
+                    <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
+                    <Route path="/dvacation" element={<DeptVacation />}/>
                 </Route>
 
                 {/* 404 page */}
