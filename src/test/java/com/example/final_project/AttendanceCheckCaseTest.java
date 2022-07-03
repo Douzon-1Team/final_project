@@ -1,11 +1,9 @@
 package com.example.final_project;
 
-import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
 import com.example.final_project.model.AttendanceStatus;
 import com.example.final_project.model.AttendanceTime;
 import com.example.final_project.service.AttendanceCheckService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,19 +36,49 @@ public class AttendanceCheckCaseTest {
     public void onWorkNormalTest() throws Exception {
         //given
         String empno = "220109";
-        LocalDateTime normal = LocalDate.now().atTime(8, 59,59,1);
-        AttendanceTime onWorkNormalTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2,4)).date(normal).onOffWork(1).build();
-        AttendanceStatus onWorkNormalStatus = AttendanceStatus.builder().empno(empno).deptNo(empno.substring(2,4)).attendance(1).build();
+        int onOffWork = 1;
+        LocalDateTime normal = LocalDate.now().atTime(8, 59,59);
 
         //when
         String normalMsg = attendanceCheckService.onOffWorkCheck(empno, normal);
+        AttendanceTime attendanceTime = attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork).get();
+        AttendanceStatus attendanceStatus = attendanceCheckMapper.findByEmpno(empno, LocalDate.now()).get();
 
         //then
+        assertThat(attendanceTime.getDate()).isEqualTo(normal);
+        assertThat(attendanceStatus.getDate().toLocalDate()).isEqualTo(LocalDate.now());
+        assertThat(attendanceStatus.getAttendance()).isEqualTo(1);
         assertThat(normalMsg).isEqualTo("출근");
-
-
-
     }
+
+    @Test
+    @DisplayName("중복출근")
+    public void onWorkDuplicateTest() throws Exception {
+        //given
+        String empno = "220109";
+        LocalDateTime duplicateOnFirst = LocalDate.now().atTime(9, 00,00,1);
+        LocalDateTime duplicateOnSecond = LocalDate.now().atTime(18, 00,00,1);
+        //when
+        attendanceCheckService.onOffWorkCheck(empno, duplicateOnFirst);
+        String duplicateMsg = attendanceCheckService.onOffWorkCheck(empno, duplicateOnSecond);
+        //then
+        assertThat(duplicateMsg).isEqualTo("이미 퇴근하셨습니다");
+    }
+
+    @Test
+    @DisplayName("중복출근(지각)")
+    public void onWorkDuplicateTardyTest() throws Exception {
+        //given
+        String empno = "220109";
+        LocalDateTime duplicateOnFirst = LocalDate.now().atTime(9, 00,00,1);
+        LocalDateTime duplicateOnSecond = LocalDate.now().atTime(18, 00,00,1);
+        //when
+        attendanceCheckService.onOffWorkCheck(empno, duplicateOnFirst);
+        String duplicateMsg = attendanceCheckService.onOffWorkCheck(empno, duplicateOnSecond);
+        //then
+        assertThat(duplicateMsg).isEqualTo("이미 퇴근하셨습니다");
+    }
+
     @Test
     @DisplayName("지각")
     public void onWorkTardyTest() throws Exception {
@@ -61,6 +89,19 @@ public class AttendanceCheckCaseTest {
         String tardyMsg = attendanceCheckService.onOffWorkCheck(empno, tardy);
         //then
         assertThat(tardyMsg).isEqualTo("지각입니다.");
+
+    }
+
+    @Test
+    @DisplayName("출근시간 X")
+    public void beforeOnWorkTest() throws Exception {
+        //given
+        String empno = "220109";
+        LocalDateTime beforeOnWork = LocalDate.now().atTime(4, 59,59,9);
+        //when
+        String beforeOnWorkMsg = attendanceCheckService.onOffWorkCheck(empno, beforeOnWork);
+        //then
+        assertThat(beforeOnWorkMsg).isEqualTo("출근시간이 아닙니다.");
 
     }
 

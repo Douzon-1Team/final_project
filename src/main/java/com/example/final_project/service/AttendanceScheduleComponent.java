@@ -16,7 +16,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class AttendanceSchedule {
+public class AttendanceScheduleComponent {
 
     private final AttendanceCheckMapper attendanceCheckMapper;
     private final EmployeeMapper employeeMapper;
@@ -70,6 +70,9 @@ public class AttendanceSchedule {
                 }
             }
         }
+    }
+    public void tardyCheckPerTime(){
+        //한시간마다 출석하지 않은 직원에 대하여 지각확인
     }
 
     public void attendanceStatusUpdate(String empno, String column, String value, LocalDate date){
