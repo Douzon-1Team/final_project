@@ -23,8 +23,6 @@ public class AttendanceCheckService {
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno);
         LocalTime onWork = onWorkTimeCheck(attendanceCheckDto);
         LocalTime offWork = offWorkTimeCheck(attendanceCheckDto);
-        log.info("출근:"+onWork.toString());
-        log.info("퇴근:"+offWork.toString());
         return timeCheck(empno, now, onWork, offWork);
     }
 
@@ -70,7 +68,10 @@ public class AttendanceCheckService {
 
     public String timeCheck(String empno, LocalDateTime now, LocalTime onWork, LocalTime offWork){
         LocalTime nowTime = now.toLocalTime();
-        if(nowTime.isBefore(onWork) || nowTime.equals(onWork)){
+        LocalTime resetTime = LocalTime.of(5,0,0);
+        if(nowTime.isBefore(resetTime) || nowTime.isBefore(resetTime)){
+            return "출근시간이 아닙니다.";
+        } else if(nowTime.isBefore(onWork) || nowTime.equals(onWork)){
             //정상 출근
             if(attendanceChecker(empno, now, 1)){
                 AttendanceUpdateDto attendance = AttendanceUpdateDto.builder().empno(empno).columns("attendance").values("1").date(today).build();
@@ -142,10 +143,7 @@ public class AttendanceCheckService {
     }
 
     public void lunchCheck(){
-
+        // 생각해보면 여기말고 adminSetting에서 확인해주는게 맞는것 같음
     }
-
-
-
 
 }
