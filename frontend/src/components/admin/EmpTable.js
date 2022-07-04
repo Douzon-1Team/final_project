@@ -28,10 +28,7 @@ function EmpTable(props) {
             {Header: '직급', accessor: 'rankName', Filter: SelectFilter},
             {Header: '내선번호', accessor: 'extensionNum', Filter: SearchFilter},
             {Header: '입사일', accessor: 'hireDate', Filter: RangeFilter, filter: dateBetweenFilter,
-                Cell: ({value}) => {
-                console.log(value)
-                    return value.slice(0,10)
-                }
+                Cell: ({value}) => {return value.slice(0,10)}
             },
             {Header: '정보관리', Cell: ({row}) => {return <Button onClick={(e) => toUpdateEmp(e, row.original.empno)}>수정</Button> }}
 

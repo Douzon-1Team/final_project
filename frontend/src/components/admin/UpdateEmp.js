@@ -13,9 +13,10 @@ function Profile() {
     const empNo = param.empno;
     const isNew = empNo ? false : true;
     const [emp, setEmp] = useState(
-        { deptName: null, name: null, extensionNum: null, rankName: null, image: null, resigned: null }
+        { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, resigned: null }
     );
-    const { register, handleSubmit, setValue } = useForm();
+    const { register, handleSubmit, setValue, watch } = useForm();
+    const avatar = watch('image');
 
     useEffect(() => {
         if(!isNew){
@@ -25,14 +26,12 @@ function Profile() {
         }
     }, []);
 
-    // const [avatarPreview, setAvatarPreview] = useState('');
-    // const avatar = watch('avatar');
-    // useEffect(() => {
-    //     if (avatar && avatar.length > 0) {
-    //         const file = avatar[0];
-    //         setAvatarPreview(URL.createObjectURL(file));
-    //     }
-    // }, [avatar]);
+    useEffect(() => {
+        if (avatar && avatar.length > 0) {
+            const file = avatar[0];
+            setEmp({profilePath: URL.createObjectURL(file)});
+        }
+    }, [avatar]);
 
     const updateInfo = async ({ deptName, name, rankName, extensionNum, role, image, resigned}) => {
         const data = {
@@ -49,13 +48,8 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpUpdateDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        console.log("퇴사자", resigned)
-        console.log(data)
-
         const response = await axios.patch('http://localhost:8080/update', form,
                 {header: {ContentType: 'application/json; charset=UTF-8'}});
-
-        console.log(response)
 
         navigate("/admin/list");
     };
@@ -91,7 +85,6 @@ function Profile() {
 
     const deleteInfo = async () => {
         const response = axios.delete(`http://localhost:8080/remove/${empNo}`);
-        console.log(response);
         navigate("/admin/list");
     }
 
@@ -102,12 +95,18 @@ function Profile() {
             <Table>
                 <tr>
                     <td rowSpan="6">
-                        {isNew ? <img src={defaultImg} alt="기본 프로필 이미지"/> : <Img src={ emp.profilePath } />}
+                        {emp.profilePath ? <img src={emp.profilePath} style={{display:"block"}}/> : <img src={defaultImg} style={{display:"block"}}/>}
+                        <label
+                            htmlFor="image"
+                        >파일 선택
                         <input
                             {...register("image")}
+                            id="image"
                             type="file"
                             accept="image/*"
+                            style={{visibility:"hidden"}}
                         />
+                        </label>
                     </td>
                     <td>회사</td>
                     <td>더존비즈온</td>
@@ -150,7 +149,7 @@ function Profile() {
                 </>
             }
                 <input {...register('empno')} type="text" defaultValue={empNo} hidden />
-                <Button type="reset">취소</Button>
+                <Button type="reset" onClick={(e) => {e.preventDefault(); navigate("/admin/list")}}>취소</Button>
                 <Button type="submit">저장</Button>
                 {!isNew &&
                     <Line>
