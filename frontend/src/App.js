@@ -13,11 +13,8 @@ import {useSelector} from "react-redux";
 import LeaveList from "./components/List/LeaveList";
 import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
-<<<<<<< HEAD
 import UpdateEmp from "./components/admin/UpdateEmp"
-=======
 import DeptVacation from "./components/DeptVacation/DeptVacation";
->>>>>>> main
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );

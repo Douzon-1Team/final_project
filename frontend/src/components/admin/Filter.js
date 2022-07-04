@@ -1,4 +1,5 @@
 import React, {useMemo} from 'react';
+import GetProfile from "../../apis/ApiService";
 
 const SearchFilter = ({column}) => {
     const { setFilter } = column;
@@ -67,7 +68,11 @@ function RangeFilter({column: { filterValue = [], preFilteredRows, setFilter, id
             : new Date(0);
         let max = preFilteredRows.length
             ? new Date(preFilteredRows[0].values[id])
-            : new Date(0);
+            : new Date(0);if(!isNew){
+            GetProfile(empNo).then(response => {
+                setEmp(response);
+            })
+        }
 
         preFilteredRows.forEach((row) => {
             const rowDate = new Date(row.values[id]);
