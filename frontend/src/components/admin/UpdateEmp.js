@@ -149,7 +149,7 @@ function Profile() {
                 </>
             }
                 <input {...register('empno')} type="text" defaultValue={empNo} hidden />
-                <Button type="reset">취소</Button>
+                <Button type="reset" onClick={(e) => {e.preventDefault(); navigate("/admin/list")}}>취소</Button>
                 <Button type="submit">저장</Button>
                 {!isNew &&
                     <Line>
