@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import GetProfile from "../../apis/ApiService"
+// import GetProfile from "../../apis/ApiService"
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import {Title, Table, Button, Form, Img, Line} from '../../styles/profile';
 import axios from 'axios';
 import defaultImg from "../../assets/img/defualt_profile.png";
+import {getProfile} from "../../apis/ApiService";
 
 function Profile() {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ function Profile() {
 
     useEffect(() => {
         if(!isNew){
-            GetProfile(empNo).then(response => {
+            getProfile(empNo).then(response => {
                 setEmp(response);
             })
         }
