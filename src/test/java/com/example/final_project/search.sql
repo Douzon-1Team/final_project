@@ -215,3 +215,5 @@ select *
 from attendance_req;
 
 select dept_no from emp_info_comp where empno = 220101;
+
+select * from attendance_time where empno = 220101 and DATE_FORMAT(date,'%y%m%d')= DATE_FORMAT(now(),'%y%m%d') and on_off_work = 1;
