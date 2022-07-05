@@ -1,7 +1,8 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.dto.*;
-import com.example.final_project.exception.ErrorCode;
+import com.example.final_project.dto.EmpInfoDto;
+import com.example.final_project.dto.EmpListResponseDto;
+import com.example.final_project.dto.EmpUpdateDto;
 import com.example.final_project.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

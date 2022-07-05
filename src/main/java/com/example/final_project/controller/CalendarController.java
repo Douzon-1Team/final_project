@@ -1,7 +1,6 @@
 package com.example.final_project.controller;
 
 import com.example.final_project.dto.CalendarResponseDto;
-import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.mapper.CalendarMapper;
 import com.example.final_project.mapper.MonthChatMapper;
 import com.example.final_project.service.SubComponentInfoService;

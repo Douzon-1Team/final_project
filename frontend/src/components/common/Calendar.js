@@ -16,11 +16,12 @@ import {
   BsFillArrowRightSquareFill,
   BsDot,
 } from "react-icons/bs";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 
 
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
+  const { state } = useLocation(); // TODO : 사원목록 탭에서 넘어온 사원 데이터
   const navigate = useNavigate();
   const start = new Date();
   const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -100,7 +101,13 @@ function Calendar() {
 
   useEffect(() => {
     // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
-    dispatch(getList({empno : empno.empInfo[0]}));
+    // TODO : 새로고침시 사라지지 않고 메인 버튼을 누르거나 뒤로가기를 해야 STATE가 사라짐
+    // --> 결론 : 완전 잘됨
+    if (state !== null) {
+      dispatch(getList({empno : state}));
+    } else {
+      dispatch(getList({empno : empno.empInfo[0]}));
+    }
   }, []);
   const cal = useRef(null);
 

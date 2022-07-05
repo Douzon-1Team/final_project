@@ -20,7 +20,7 @@ function Main() {
           />
           <br />
           <AnnualLeaveUsage
-            totalAnnualLeave={subComponentData.totalAnnualLeave}
+            totalAnnualLeave={subComponentData.totalAnnualLesave}
             remainingAnnualLeaveDay={subComponentData.remainingAnnualLeaveDay}
             remainingAnnualLeaveTime={subComponentData.remainingAnnualLeaveTime}
           />

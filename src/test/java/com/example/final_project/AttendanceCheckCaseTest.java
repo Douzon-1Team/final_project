@@ -1,11 +1,9 @@
 package com.example.final_project;
 
-import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
 import com.example.final_project.model.AttendanceStatus;
 import com.example.final_project.model.AttendanceTime;
 import com.example.final_project.service.AttendanceCheckService;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
