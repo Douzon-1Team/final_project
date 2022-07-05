@@ -15,6 +15,9 @@ import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
+import DeptMember from "./components/DeptMember/DeptMember";
+import AttendanceProblem from "./components/AttendanceProblem";
+import Report from "./components/Report";
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
@@ -32,6 +35,10 @@ function App() {
                     <Route path="/leavelist" element={<LeaveList />} />
                     <Route path="/attendancereq" element={<AttendanceReq />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
+                    <Route path="/admin/list" element={<EmpList/>} />
+                    <Route path="/dvacation" element={<DeptVacation />} />
+                    <Route path="/deptmember" element={<DeptMember />} />
+                    <Route path="/report" element={<Report />} />
                     <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
