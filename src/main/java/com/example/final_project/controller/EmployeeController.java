@@ -42,6 +42,7 @@ public class EmployeeController {
             return ResponseEntity.status(ErrorCode.EXPIRED_TOKEN.getCode()).body(ErrorCode.EXPIRED_TOKEN.getMessage());
 
         return ResponseEntity.ok().body(accessToken);
+
     }
 
 }
