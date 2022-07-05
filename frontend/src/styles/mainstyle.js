@@ -41,10 +41,10 @@ const TitleContainer = styled.div`
     text-align: center;
 `
 
-const MainStyle = styled.div`
-    display: inline-block;
-    width: 400px;
-`
+// const MainStyle = styled.div`
+//     display: inline-block;
+//     width: 400px;
+// `
 
 const MainchatStyle = styled.div`
     float: right;
@@ -54,4 +54,4 @@ const MainchatStyle = styled.div`
     }
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainStyle, MainchatStyle};
+export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainchatStyle};

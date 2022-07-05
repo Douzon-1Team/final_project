@@ -18,13 +18,35 @@ import DeptVacation from "./components/DeptVacation/DeptVacation";
 import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
 import Report from "./components/Report";
+import { styled } from '@mui/material/styles';
 
+const RootStyle = styled('div')({
+    display: 'flex',
+    minHeight: '100%',
+    overflow: 'hidden'
+});
+
+const APP_BAR_MOBILE = 64;
+const APP_BAR_DESKTOP = 92;
+
+const MainStyle = styled('div')(({ theme }) => ({
+    flexGrow: 1,
+    overflow: 'auto',
+    minHeight: '100%',
+    paddingTop: APP_BAR_MOBILE + 24,
+    paddingBottom: theme.spacing(10),
+    [theme.breakpoints.up('lg')]: {
+        paddingTop: APP_BAR_DESKTOP + 24,
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2)
+    }
+}));
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
     let LoginChk = localStorage.getItem("LoginChk");
 
     return (
-        <>
+        <RootStyle>
             <Routes>
                 <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
@@ -56,7 +78,7 @@ function App() {
                     }
                 />
             </Routes>
-        </>
+        </RootStyle>
     );
 }
 

@@ -9,6 +9,7 @@ import { modalStyle } from "../common/Modal/ModalStyle";
 import axios from "axios";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
+import {MainStyle} from "../../styles/Globalstyle"
 
 export const AttendanceReq = () => {
   const { state } = useLocation(); // TODO : 달력으로부터 넘어온 데이터
@@ -87,7 +88,7 @@ export const AttendanceReq = () => {
   // ----------------------------------------------------------
 
   return (
-      <>
+      <MainStyle>
         <Container>
           {modalSwitch && (
               <Modal>
@@ -221,7 +222,7 @@ export const AttendanceReq = () => {
             <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
           </ButtonBox>
         </Container>
-      </>
+      </MainStyle>
   );
 };
 
