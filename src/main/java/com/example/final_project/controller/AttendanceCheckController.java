@@ -20,8 +20,9 @@ public class AttendanceCheckController {
     public String postTest(HttpServletRequest request){
         String empno = request.getParameter("empno");
         String strDate = request.getParameter("time");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
         LocalDateTime date = LocalDateTime.parse(strDate, formatter);
+        log.info(date.toString());
 
         return attendanceCheckService.onOffWorkCheck(empno, date);
     }

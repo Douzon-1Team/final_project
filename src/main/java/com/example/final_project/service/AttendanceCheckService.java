@@ -3,6 +3,7 @@ package com.example.final_project.service;
 import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
+import com.example.final_project.mapper.ProgressBar52hMapper;
 import com.example.final_project.model.AttendanceReq;
 import com.example.final_project.model.AttendanceTime;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.time.LocalTime;
 @Slf4j
 public class AttendanceCheckService {
     private final AttendanceCheckMapper attendanceCheckMapper;
+    private final ProgressBar52hMapper progressBar52hMapper;
     LocalDate today = LocalDate.now();
     public String  onOffWorkCheck(String empno, LocalDateTime now){
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno);
@@ -41,7 +43,7 @@ public class AttendanceCheckService {
                 onWorkTime = attendanceReq.getVacationEnd().toLocalTime();
             }
         }
-        return onWorkTime;
+        return lunchCheck(onWorkTime);
     }
 
     public LocalTime offWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
@@ -51,19 +53,15 @@ public class AttendanceCheckService {
         } else{
             offWorkTime = attendanceCheckDto.getGetOffWorkTimeSet().toLocalTime();
         }
-        log.info(attendanceCheckDto.getEtc());
-        log.info(offWorkTime.toString());
         if("오후반차".equals(attendanceCheckDto.getEtc())){
             offWorkTime.minusHours(4);
         } else if ("시간연차".equals(attendanceCheckDto.getEtc())) {
             AttendanceReq attendanceReq = attendanceCheckMapper.timeVacation(attendanceCheckDto.getEmpno());
-            log.info(offWorkTime.toString());
             if(offWorkTime == attendanceReq.getVacationEnd().toLocalTime()){
                 offWorkTime = attendanceReq.getVacationStart().toLocalTime();
-                log.info("test2"+offWorkTime.toString());
             }
         }
-        return offWorkTime;
+        return lunchCheck(offWorkTime);
     }
 
     public String timeCheck(String empno, LocalDateTime now, LocalTime onWork, LocalTime offWork){
@@ -106,8 +104,8 @@ public class AttendanceCheckService {
     }
 
     public boolean attendanceChecker(String empno, LocalDateTime date, int onOffWork){
-        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).onOffWork(onOffWork).build();
-        if(duplicationCheck(empno,onOffWork)){
+        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).time(todayWorkTiem(empno,onOffWork)).onOffWork(onOffWork).build();
+        if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork).isEmpty()){
             attendanceCheckMapper.attendanceCheck(attendanceTime);
             return true;
         }else {
@@ -115,11 +113,11 @@ public class AttendanceCheckService {
         }
     }
 
-    public boolean duplicationCheck(String empno, int onOffWork){
-        if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork).isEmpty()){
-            return true;
+    public Long todayWorkTiem(String empno, int onOffWork){
+        if(onOffWork==0){
+            return progressBar52hMapper.todayWorkTime(empno);
         }else {
-            return false;
+            return null;
         }
     }
 
@@ -133,7 +131,7 @@ public class AttendanceCheckService {
     }
 
     public boolean checkUnregisteredOn(String empno){
-        if(duplicationCheck(empno, 1)){
+        if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, 1).isEmpty()){
             AttendanceUpdateDto unregisteredOnEtc = AttendanceUpdateDto.builder().empno(empno).columns("etc").values("출근미등록").date(today).build();
             attendanceCheckMapper.updateAttendanceStatus(unregisteredOnEtc);
             return true;
@@ -142,8 +140,11 @@ public class AttendanceCheckService {
         }
     }
 
-    public void lunchCheck(){
-        // 생각해보면 여기말고 adminSetting에서 확인해주는게 맞는것 같음
+    public LocalTime lunchCheck(LocalTime time){
+        if(13 <= time.getHour()&& time.getHour() < 14){
+            return LocalTime.of(14,0,0);
+        }else {
+            return time;
+        }
     }
-
 }
