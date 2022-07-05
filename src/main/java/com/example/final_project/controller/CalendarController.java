@@ -27,7 +27,7 @@ public class CalendarController {
     private final MonthChatMapper monthChatMapper;
 
     @GetMapping("/main")
-    public ResponseEntity<?> test(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> maincalendar(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
         System.out.println(empno);
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
