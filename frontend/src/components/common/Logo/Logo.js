@@ -3,6 +3,7 @@ import { style } from "./LogoStyle";
 import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import SettingModal from "../Modal/SettingModal";
 
 const Logo = ({ role }) => {
   const empName = useSelector( (state) => state.EMP_INFO.empInfo[1] );

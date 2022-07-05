@@ -72,7 +72,7 @@ function DeptVacation() {
                     // error
                 }
             }
-        );
+        ).catch(console.log('실패야 이녀석아'));
     }
 
 

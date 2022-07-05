@@ -11,7 +11,6 @@ import com.example.final_project.mapper.EmployeeMapper;
 import com.example.final_project.model.Employee;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.el.parser.Token;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -37,7 +36,6 @@ public class EmployeeService implements UserDetailsService {
         return employeeMapper.findByUserId(userId)
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
     }
-
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response){
         Employee employee = employeeMapper.findByUserId(loginRequestDto.getEmpno())
@@ -72,8 +70,4 @@ public class EmployeeService implements UserDetailsService {
         return jwtService.validateRefreshToken(refreshToken);
     }
 
-    @Transactional
-    public void logout(TokenDto tokenDto){
-
-    }
 }

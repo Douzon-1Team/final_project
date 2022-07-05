@@ -24,8 +24,17 @@ public interface EmployeeMapper {
     @Select("SELECT emp_pwd FROM employee WHERE empno=#{empno}")
     Optional<String> findPasswordByEmpno(String empno);
 
-    @Select("SELECT empno FROM employee WHERE empno NOT LIKE '%admin%';")
+    @Select("SELECT empno FROM employee WHERE empno NOT LIKE '%admin%'")
     List<String> findAllEmpNo();
+
+    @Select("select dept_no from emp_info_comp where empno = #{empno}")
+    String findDeptNoByempno(String empno);
+
+    @Select("select emp_name from employee where empno = #{empno}")
+    String findNameByempno(String empno);
+
+    @Select("SELECT empno FROM emp_info_comp WHERE empno NOT LIKE '%admin%' and dept_no = #{deptNo}")
+    List<String> findEmpNoByDept(String deptNo);
 
     @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
     int updateByEmpno(Employee employee);
@@ -38,4 +47,8 @@ public interface EmployeeMapper {
 
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
+
+    //유저의 권한 확인
+    @Select("SELECT role FROM employee WHERE empno=#{empno}")
+    String findByUserRole(String empno);
 }

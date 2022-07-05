@@ -22,7 +22,7 @@ public interface CalendarMapper {
 //    List<CalendarResponseDto.workBuilder> findUserWork(String empno);
     List<CalendarResponseDto> findUserVacation(String empno);
 
-    // 이상근태 데이터(req 이전)q
+    // 이상근태 데이터(req 이전)
     @Select("select dept_no deptno, attendance, tardy, agree, etc, unregistered, DATE_FORMAT(date, '%Y-%m-%d') notreqdate from attendance_status where empno = #{empno} and etc REGEXP '무단결근|퇴근미등록|출근미등록';")
     List<CalendarResponseDto> findUserNotWork(String empno);
 

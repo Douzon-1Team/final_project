@@ -11,6 +11,8 @@ const statusError = {
 };
 
 const requestPromise = (url, option) => {
+    console.log(url)
+    console.log(option)
     return fetch(url, option);
 };
 
@@ -53,6 +55,7 @@ export const loginUser = async (credentials) => {
     }
 };
 
+// 비밀번호 변경
 export const updatePwd = async (credentials) => {
     const option = {
         method: 'POST',
@@ -62,6 +65,64 @@ export const updatePwd = async (credentials) => {
         body: JSON.stringify(credentials)
     };
     const data = await getPromise('/profile/updatePwd', option).catch(() => {
+        return statusError;
+    });
+
+    if (parseInt(Number(data.status)/100)===2) {
+        const status = data.ok;
+        const code = data.status;
+        const text = await data.text();
+        const json = text.length ? JSON.parse(text) : "";
+
+        return {
+            status,
+            code,
+            json
+        };
+    } else {
+        return statusError;
+    }
+};
+
+// 근무시간 설정
+export const settingTime = async (credentials) => {
+    const option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(credentials)
+    };
+    const data = await getPromise('/setting/time', option).catch(() => {
+        return statusError;
+    });
+
+    if (parseInt(Number(data.status)/100)===2) {
+        const status = data.ok;
+        const code = data.status;
+        const text = await data.text();
+        const json = text.length ? JSON.parse(text) : "";
+
+        return {
+            status,
+            code,
+            json
+        };
+    } else {
+        return statusError;
+    }
+};
+
+// 페이지보기 형식 설정
+export const settingGraph = async (credentials) => {
+    const option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(credentials)
+    };
+    const data = await getPromise('/setting/graph', option).catch(() => {
         return statusError;
     });
 

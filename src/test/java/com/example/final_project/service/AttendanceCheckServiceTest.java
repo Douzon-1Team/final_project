@@ -34,21 +34,5 @@ class AttendanceCheckServiceTest {
 
     }
 
-    @Test
-    @DisplayName("중복체크 점검")
-    public void duplicationCheck() throws Exception {
-        //given
-        //null 객체인 경우
-        Optional<AttendanceTime> notDuplicated = Optional.empty();
-        //정상 객체인 경우
-        Optional<AttendanceTime> duplicated;
-
-        //when
-        attendanceCheckService.duplicationCheck("220101",0);
-
-        //then
-    }
-
-
 
 }
