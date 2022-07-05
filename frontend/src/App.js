@@ -18,13 +18,20 @@ import DeptVacation from "./components/DeptVacation/DeptVacation";
 import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
 import Report from "./components/Report";
+import { styled } from '@mui/material/styles';
+
+const RootStyle = styled('div')({
+    display: 'flex',
+    minHeight: '100%',
+    overflow: 'hidden'
+});
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
     let LoginChk = localStorage.getItem("LoginChk");
 
     return (
-        <>
+        <RootStyle>
             <Routes>
                 <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
@@ -56,7 +63,7 @@ function App() {
                     }
                 />
             </Routes>
-        </>
+        </RootStyle>
     );
 }
 

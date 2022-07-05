@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Graph52hController {
     private final Graph52hService graph52hService;
     @GetMapping("/graph52h")
-    public ResponseEntity<?> test(@RequestParam("empno") String empno){
+    public ResponseEntity<?> graph52h(@RequestParam("empno") String empno){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         log.info(empno);
