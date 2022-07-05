@@ -11,6 +11,6 @@ public class AttendanceTime {
     String empno;
     String deptNo;
     LocalDateTime date;
-    Long time;
+    int time;
     int onOffWork;
 }
