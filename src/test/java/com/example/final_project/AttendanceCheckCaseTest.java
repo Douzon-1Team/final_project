@@ -1,7 +1,6 @@
 package com.example.final_project;
 
 import com.example.final_project.mapper.AttendanceCheckMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
 import com.example.final_project.model.AttendanceStatus;
 import com.example.final_project.model.AttendanceTime;
 import com.example.final_project.service.AttendanceCheckService;
@@ -26,13 +25,10 @@ public class AttendanceCheckCaseTest {
 
     @Autowired
     AttendanceCheckMapper attendanceCheckMapper;
-    @Autowired
-    ProgressBar52hMapper progressBar52hMapper;
     AttendanceCheckService attendanceCheckService;
-
     @BeforeEach
     void init(){
-        attendanceCheckService = new AttendanceCheckService(attendanceCheckMapper,progressBar52hMapper);
+        attendanceCheckService = new AttendanceCheckService(attendanceCheckMapper);
     }
 
     @Test

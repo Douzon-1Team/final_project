@@ -3,7 +3,6 @@ package com.example.final_project.service;
 import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
 import com.example.final_project.model.AttendanceReq;
 import com.example.final_project.model.AttendanceTime;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import java.time.LocalTime;
 @Slf4j
 public class AttendanceCheckService {
     private final AttendanceCheckMapper attendanceCheckMapper;
-    private final ProgressBar52hMapper progressBar52hMapper;
     LocalDate today = LocalDate.now();
     public String  onOffWorkCheck(String empno, LocalDateTime now){
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno);
@@ -104,20 +102,12 @@ public class AttendanceCheckService {
     }
 
     public boolean attendanceChecker(String empno, LocalDateTime date, int onOffWork){
-        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).time(todayWorkTiem(empno,onOffWork)).onOffWork(onOffWork).build();
+        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).onOffWork(onOffWork).build();
         if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork).isEmpty()){
             attendanceCheckMapper.attendanceCheck(attendanceTime);
             return true;
         }else {
             return false;
-        }
-    }
-
-    public Long todayWorkTiem(String empno, int onOffWork){
-        if(onOffWork==0){
-            return progressBar52hMapper.todayWorkTime(empno);
-        }else {
-            return null;
         }
     }
 

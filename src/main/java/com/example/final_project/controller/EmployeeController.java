@@ -42,7 +42,12 @@ public class EmployeeController {
             return ResponseEntity.status(ErrorCode.EXPIRED_TOKEN.getCode()).body(ErrorCode.EXPIRED_TOKEN.getMessage());
 
         return ResponseEntity.ok().body(accessToken);
+    }
 
+    @DeleteMapping("/logout")
+    public ResponseEntity<Void> logout(TokenDto dto){
+        employeeService.logout(dto);
+        return ResponseEntity.ok().build();
     }
 
 }
