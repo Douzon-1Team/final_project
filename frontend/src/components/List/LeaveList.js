@@ -7,6 +7,7 @@ import {style} from "./ListStyle";
 import {modalStyle} from "../common/Modal/ModalStyle"
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import {MainStyle} from "../../styles/Globalstyle"
 
 const LeaveList = () => {
     const [loadingData, setLoadingData]=useState(true);
@@ -147,7 +148,7 @@ const LeaveList = () => {
     }
 // ------------------------------------------------------
     return (
-        <>
+        <MainStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -204,7 +205,7 @@ const LeaveList = () => {
                 </tbody>
             </table>
             <DeleteButton onClick={()=>DeleteCheck()}>삭 제</DeleteButton>
-        </>
+        </MainStyle>
     );
 };
 const {DeleteButton}=style;

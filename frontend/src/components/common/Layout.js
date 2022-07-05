@@ -3,8 +3,11 @@ import Header from "./Header/Header";
 import Logo from "./Logo/Logo";
 import SideBar from "./SideBar/SideBar";
 import { useSelector } from "react-redux";
+import DashboardNavbar from "../common/Header/DashboardNavbar"
+import DashboardSidebar from "./SideBar/DashboardSidebar";
 
 const Layout = () => {
+  const [open, setOpen] = useState(false);
   const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
   const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
   const [sideView, setSideView] = useState(true); // 사이드바 개시 여부
@@ -29,9 +32,11 @@ const Layout = () => {
 
   return (
       <>
-        <Logo role={role} />
-        <Header role={role} sideView={sideView} changeState={changeState} />
-        {sideView && <SideBar role={role} />}
+        <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
+        {/*<Logo role={role} />*/}
+        {/*<Header role={role} sideView={sideView} changeState={changeState} />*/}
+        {/*{sideView && <SideBar role={role} />}*/}
+        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       </>
   );
 };

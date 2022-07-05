@@ -108,3 +108,8 @@ select * from emp_info_comp where dept_no = '01';
 select e.empno, e.emp_name name, c.rank, c.dept_no, etc, DATE_FORMAT(date, '%m') m, count(emp_name) count, DENSE_RANK() OVER (ORDER BY e.emp_name) sort
             from emp_info_comp c join employee e on c.empno = e.empno join attendance_status `as` on e.empno = `as`.empno and etc REGEXP '조퇴|지각|무단결근|퇴근미등록|출근미등록'
             where c.dept_no in (select dept_no from emp_info_comp where empno=220101) group by empno, m;
+
+
+select c.empno, e.emp_name name, DATE_FORMAT(date,'%H:%i') onofftime, time totaltime, on_off_work from attendance_time c
+                                                                                                           join employee e on c.empno = e.empno
+where c.dept_no in (select dept_no from emp_info_comp where empno = 220101) and DATE_FORMAT(c.date, '%Y-%m-%d') = '2022-06-29' order by empno;

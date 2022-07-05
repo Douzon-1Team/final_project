@@ -8,6 +8,7 @@ import { SET_EMP_INFO } from "../store/modules/Reducer/EmpAuth";
 import { Form, Container, Input, Button, Logo } from '../styles/login';
 import Fade from 'react-reveal';
 import {LoginFail, LoginSuccess} from "../components/common/alert/alert";
+import { MainStyle } from "../styles/Globalstyle";
 
 function Login() {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Login() {
     };
 
     return (
-        <>
+        <MainStyle>
             <Container>
                 <Fade bottom>
                     <Form onSubmit={handleSubmit(onValid)}>
@@ -43,7 +44,7 @@ function Login() {
                     </Form>
                 </Fade>
             </Container>
-        </>
+        </MainStyle>
     );
 }
 

@@ -14,6 +14,7 @@ import {
 } from "react-icons/bs";
 import {useNavigate} from "react-router";
 import {getMain} from "../../apis/DeptVacationApi";
+import {MainStyle} from "../../styles/Globalstyle"
 
 // TODO : 얘네 두개는 필요없을듯
 function DeptVacation() {
@@ -210,7 +211,7 @@ function DeptVacation() {
     }
 
     return (
-        <>
+        <MainStyle>
                 <CalendarStyle>
                     <div className="calendar_header">
                         <Button className="today" variant="contained" onClick={() => {
@@ -260,7 +261,7 @@ function DeptVacation() {
                         // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
                     />
                 </CalendarStyle>
-        </>
+        </MainStyle>
     );
 }
 

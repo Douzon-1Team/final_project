@@ -22,7 +22,7 @@ public interface AttendanceCheckMapper {
             "WHERE a.empno=#{empno} and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d')")
     AttendanceCheckDto timeCheck(String empno);
 
-    @Insert("INSERT INTO attendance_time (empno, dept_no, date, on_off_work) VALUES (#{empno}, #{deptNo}, #{date}, #{onOffWork})")
+    @Insert("INSERT INTO attendance_time (empno, dept_no, date, on_off_work, time) VALUES (#{empno}, #{deptNo}, #{date}, #{onOffWork}, #{time})")
     int attendanceCheck(AttendanceTime attendanceTime);
 
     @Update("update attendance_status_test set ${columns} = #{values} where empno = #{empno} and date_format(date,'%Y-%m-%d') = #{date}")

@@ -5,7 +5,7 @@ import axios from "axios";
 import Layout from "../common/Layout";
 import {style} from "./ListStyle"
 import {Modal, ModalTitle, ModalWindow, NoButton, YesButton} from "../common/Modal/ModalStyle";
-
+import {MainStyle} from "../../styles/Globalstyle"
 const LeaveList = () => {
     const [loadingData, setLoadingData]=useState(true);
     const [data,setData]=useState([]);
@@ -126,7 +126,7 @@ const LeaveList = () => {
     }
 // -------------------------------------------------------
     return (
-        <>
+        <MainStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -183,7 +183,7 @@ const LeaveList = () => {
                 </tbody>
             </table>
             <DeleteButton onClick={()=>DeleteCheck()}>삭 제</DeleteButton>
-        </>
+        </MainStyle>
     );
 };
 

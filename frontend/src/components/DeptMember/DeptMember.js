@@ -13,6 +13,7 @@ import {
 import {getDeptMember} from "../../apis/DeptMemberApi";
 import {DeptMemberList, MemberImg} from "../../styles/DeptMemberstyle";
 import {useNavigate} from "react-router";
+import {MainStyle} from "../../styles/Globalstyle";
 
 const useStyles = makeStyles({
     table: {
@@ -67,6 +68,7 @@ function DeptMember() {
         });
     }
         return (
+            <MainStyle>
             <DeptMemberList>
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
@@ -103,6 +105,7 @@ function DeptMember() {
                     </Table>
                 </TableContainer>
             </DeptMemberList>
+            </MainStyle>
         )
 }
 

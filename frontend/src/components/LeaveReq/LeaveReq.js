@@ -9,6 +9,7 @@ import { modalStyle } from "../common/Modal/ModalStyle";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import {useLocation} from "react-router";
+import {MainStyle} from "../../styles/Globalstyle"
 
 export const LeaveReq = () => {
   const { state } = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
@@ -113,7 +114,7 @@ export const LeaveReq = () => {
   // ----------------------------------------------------------
 
   return (
-      <>
+      <MainStyle>
         {modalSwitch && (
             <Modal>
               <ModalWindow>
@@ -255,7 +256,7 @@ export const LeaveReq = () => {
             <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
           </ButtonBox>
         </Container>
-      </>
+      </MainStyle>
   );
 };
 
