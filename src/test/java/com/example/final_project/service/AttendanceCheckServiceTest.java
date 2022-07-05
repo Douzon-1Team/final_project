@@ -22,13 +22,14 @@ class AttendanceCheckServiceTest {
     public void tardyCheckTest() throws Exception {
 
         //given
+        String empno = "220109";
         LocalTime onWork = LocalTime.of(8,59,59,0);
         LocalTime onWorkLate = LocalTime.of(9,10,1,0);
         LocalTime settingTime = LocalTime.of(9,0,0,0);
 
         //when
-        attendanceCheckService.tardyCheck(onWorkLate,settingTime, "220101");
-        attendanceCheckService.tardyCheck(onWork,settingTime, "220101");
+        attendanceCheckService.tardyCheck(onWorkLate,settingTime, empno);
+        attendanceCheckService.tardyCheck(onWork,settingTime, empno);
         //then
 
     }

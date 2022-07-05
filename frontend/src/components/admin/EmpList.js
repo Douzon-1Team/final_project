@@ -18,7 +18,7 @@ function EmpList() {
 
     return (
         <>
-            { loading ? <></> : <EmpTable data={rowData} ></EmpTable>}
+            { loading ? <>Loading...</> : <EmpTable data={rowData} ></EmpTable>}
         </>
     );
 }

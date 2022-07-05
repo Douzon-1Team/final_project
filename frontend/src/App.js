@@ -10,10 +10,10 @@ import LeaveReq from "./components/LeaveReq/LeaveReq";
 import Layout from "./components/common/Layout";
 import EmpList from "./components/admin/EmpList";
 import {useSelector} from "react-redux";
-import AdminPage from "./pages/AdminPage";
 import LeaveList from "./components/List/LeaveList";
 import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
+import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
 import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
@@ -29,7 +29,7 @@ function App() {
                 <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
                     <Route path="/main" element={<Main />} />
-                    <Route path="/profile" element={ empRole !== "ROLE_ADMIN" ? <Profile /> : <AdminPage />} />
+                    <Route path="/profile" element={ <Profile />}/>
                     <Route path="/logout" element={<Logout />} />
                     <Route path="/leavereq" element={<LeaveReq />} />
                     <Route path="/leavelist" element={<LeaveList />} />
@@ -39,6 +39,10 @@ function App() {
                     <Route path="/dvacation" element={<DeptVacation />} />
                     <Route path="/deptmember" element={<DeptMember />} />
                     <Route path="/report" element={<Report />} />
+                    <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
+                    <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
+                    <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
+                    <Route path="/dvacation" element={<DeptVacation />}/>
                 </Route>
 
                 {/* 404 page */}

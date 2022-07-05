@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {format} from 'date-fns';
+import GetProfile from "../../apis/ApiService";
 
 const SearchFilter = ({column}) => {
     const { setFilter } = column;
@@ -45,7 +45,6 @@ function dateBetweenFilter(rows, id, filterValues) {
             var date = [month, day, year].join("/");
             var hour = dateAndHour[1];
             var formattedData = date + " " + hour;
-            console.log(formattedData)
 
             const cellDate = new Date(formattedData);
 

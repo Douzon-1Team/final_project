@@ -1,13 +1,21 @@
 import React from 'react';
 
 const BASE_URL = "http://localhost:8080";
-const USER_URL = `${BASE_URL}/profile/`;
+const URL_PROFILE = `${BASE_URL}/profile/`;
+const URL_SETTING = `${BASE_URL}/setting/`;
 
-function GetProfile(empno) {
-    return fetch(USER_URL+`${empno}`)
+export const getProfile = function GetProfile(empno) {
+  return fetch(URL_PROFILE+`${empno}`)
         .then( response => {
-            return response.json(); })
+               return response.json(); })
         .then( emp => { return emp; })
         .catch( error => console.log("error : " + error));
 }
-export default GetProfile;
+
+export const getSetting = function GetDeptNo(empno) {
+  return fetch(URL_SETTING+`${empno}`)
+        .then( response => {
+                return response.json(); })
+        .then( emp => { return emp; })
+        .catch( error => console.log("error : " + error));
+}

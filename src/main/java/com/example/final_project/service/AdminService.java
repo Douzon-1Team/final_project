@@ -52,9 +52,9 @@ public class AdminService {
     public String createEmpNo(String deptNo){
 
         int year = Calendar.getInstance().get(Calendar.YEAR)%100;
-        String unique = String.format("%02d", empInfoCompMapper.countByDeptNo(deptNo, year)+1);
+        int unique = Integer.valueOf(empInfoCompMapper.findLastEmpno(deptNo, year))+1;
 
-        return year+deptNo+unique;
+        return String.valueOf(unique);
     }
 
     @Transactional
@@ -67,27 +67,27 @@ public class AdminService {
             profileUrl = s3Service.uploadProfile(profile, updateDto.getEmpno());
 
         String password = null;
-        if(updateDto.getPwd() != null) {
-            validatePassword(updateDto.getEmpno(), updateDto.getPwd(), updateDto.getNewPwd(), updateDto.getChkPwd());
+        if(updateDto.getNewPwd() != null) {
+            validatePassword(updateDto.getNewPwd(), updateDto.getChkPwd());
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
 
-        employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, passwordEncoder.encode(password), profileUrl));
-        String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
-        empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
+        System.out.println(updateDto.isResigned());
+        if(!updateDto.getName().isEmpty() || profileUrl != null || password != null || updateDto.getRole() != null || updateDto.isResigned())
+            employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password, profileUrl));
+
+        if(!updateDto.getDeptName().isEmpty() || !updateDto.getRankName().isEmpty()) {
+            String deptNo = deptMapper.findByDeptName(updateDto.getDeptName());
+            empInfoCompMapper.updateByEmpno(EmpUpdateDto.toEmpInfoComp(updateDto, deptNo));
+        }
     }
 
-    public void validatePassword(String empno, String pwd, String newPwd, String chkPwd){
-        String originPwd = employeeMapper.findPasswordByEmpno(empno)
-                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-
-        if(!passwordEncoder.matches(pwd, originPwd))
-            throw new PasswordException(ErrorCode.WRONG_PASSWORD);
+    public void validatePassword(String newPwd, String chkPwd){
 
         if(!newPwd.equals(chkPwd))
             throw new PasswordException(ErrorCode.MISMATCH_PASSWORD);
 
-        if(pwd.equals(newPwd))
+        if(newPwd.equals(newPwd))
             throw new PasswordException(ErrorCode.SAME_PASSWORD);
     }
 
