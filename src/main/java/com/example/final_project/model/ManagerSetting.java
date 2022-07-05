@@ -13,4 +13,5 @@ public class ManagerSetting {
     Time getOffWorkTimeSet;
     Time getToWorkTimeSetF;
     Time getOffWorkTimeSetF;
+    String chartStat;
 }

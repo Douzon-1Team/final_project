@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import GetProfile from "../apis/ApiService";
+import {getProfile} from "../apis/ApiService";
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {useForm} from "react-hook-form";
 import {updatePwd} from "../apis/Users";
 import S3Upload from "../components/common/S3Upload";
 import {Title, Table, Button, Form, Img, QR, Line} from '../styles/profile';
+import SettingModal from "../components/common/Modal/SettingModal";
 
 function Profile() {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -16,7 +17,7 @@ function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        GetProfile(empNo).then(response => {
+        getProfile(empNo).then(response => {
             setEmp(response);
         })
     }, []);
@@ -106,6 +107,7 @@ function Profile() {
             <Line>
                 <p>* 현재 비밀번호로의 변경은 불가능합니다.</p>
             </Line>
+            <SettingModal/>
         </>
     );
 }
