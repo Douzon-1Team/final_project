@@ -3,7 +3,7 @@ package com.example.final_project.service;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.example.final_project.dto.CalendarResponseDto;
 import com.example.final_project.mapper.EmployeeMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
+import com.example.final_project.mapper.SubComponentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 public class Graph52hService {
     private final EmployeeMapper employeeMapper;
-    private final ProgressBar52hMapper progressBar52hMapper;
+    private final SubComponentMapper subComponentMapper;
 
     public List<CalendarResponseDto> graph52h(String managerEmpno){
         List<CalendarResponseDto> dataList = new ArrayList<>();
@@ -26,8 +26,8 @@ public class Graph52hService {
             try {
                 dataList.add(CalendarResponseDto.builder().empno(empno)
                                 .name(employeeMapper.findNameByempno(empno))
-                                .attendanceWeek(progressBar52hMapper.attendanceWeek(empno))
-                                .overtimeWeek(progressBar52hMapper.overtimeWeek(empno)).build());
+                                .attendanceWeek(subComponentMapper.attendanceWeek(empno))
+                                .overtimeWeek(subComponentMapper.overtimeWeek(empno)).build());
             }catch (NullPointerException e){
                 System.out.println(empno + " : NullPointerException!!");
             }

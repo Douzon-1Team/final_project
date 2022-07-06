@@ -3,7 +3,7 @@ package com.example.final_project.service;
 import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
+import com.example.final_project.mapper.SubComponentMapper;
 import com.example.final_project.model.AttendanceReq;
 import com.example.final_project.model.AttendanceTime;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.time.LocalTime;
 @Slf4j
 public class AttendanceCheckService {
     private final AttendanceCheckMapper attendanceCheckMapper;
-    private final ProgressBar52hMapper progressBar52hMapper;
+    private final SubComponentMapper subComponentMapper;
     public String  onOffWorkCheck(String empno, LocalDateTime now){
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno,now);
         LocalTime onWork = onWorkTimeCheck(attendanceCheckDto);
@@ -119,7 +119,7 @@ public class AttendanceCheckService {
 
     public Long todayWorkTiem(String empno, int onOffWork){
         if(onOffWork==0){
-            return progressBar52hMapper.todayWorkTime(empno);
+            return subComponentMapper.todayWorkTime(empno);
         }else {
             return null;
         }

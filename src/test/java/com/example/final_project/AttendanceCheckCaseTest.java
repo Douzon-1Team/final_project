@@ -1,7 +1,7 @@
 package com.example.final_project;
 
 import com.example.final_project.mapper.AttendanceCheckMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
+import com.example.final_project.mapper.SubComponentMapper;
 import com.example.final_project.model.AttendanceStatus;
 import com.example.final_project.model.AttendanceTime;
 import com.example.final_project.service.AttendanceCheckService;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 
 @MybatisTest
 @Slf4j
@@ -29,11 +29,11 @@ public class AttendanceCheckCaseTest {
     @Autowired
     AttendanceCheckMapper attendanceCheckMapper;
     @Autowired
-    ProgressBar52hMapper progressBar52hMapper;
+    SubComponentMapper subComponentMapper;
     AttendanceCheckService attendanceCheckService;
     @BeforeEach
     void init(){
-        attendanceCheckService = new AttendanceCheckService(attendanceCheckMapper,progressBar52hMapper);
+        attendanceCheckService = new AttendanceCheckService(attendanceCheckMapper,subComponentMapper);
     }
     @Test
     @DisplayName("#1 정상출근")

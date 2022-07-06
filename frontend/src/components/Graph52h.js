@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {getGraph52hData} from "../apis/Graph52hApi";
 import {useSelector} from "react-redux";
-import _ from "lodash";
 
 const Graph52h = () => {
-
     let [attendanceWeek, setAttendance] = useState([]);
     let [overtimeWeek, setOvertimeWeek] = useState([]);
     let [name, setName] = useState([]);
@@ -32,7 +30,6 @@ const Graph52h = () => {
     }
     useEffect(() => {
         getJsonData()
-
     }, []);
 
     const [options, setOptions] = useState({
