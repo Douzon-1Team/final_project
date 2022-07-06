@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -27,7 +29,7 @@ public class test {
         //given
 
         //when
-        AttendanceCheckDto b = attendanceCheckMapper.timeCheck("220101");
+        AttendanceCheckDto b = attendanceCheckMapper.timeCheck("220101", LocalDateTime.now());
         //then
         //assertThat(total).isEqualTo(4);
         System.out.println("Tlqkffusk"+b.getGetToWorkTimeSet());

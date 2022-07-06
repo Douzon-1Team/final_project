@@ -24,18 +24,14 @@ import javax.servlet.http.HttpServletResponse;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EmployeeService implements UserDetailsService {
+public class EmployeeService{
 
     private final EmployeeMapper employeeMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtService jwtService;
 
-    @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        return employeeMapper.findByUserId(userId)
-                .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-    }
+
     @Transactional
     public LoginResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response){
         Employee employee = employeeMapper.findByUserId(loginRequestDto.getEmpno())
@@ -47,7 +43,7 @@ public class EmployeeService implements UserDetailsService {
         TokenDto tokenDto = jwtTokenProvider.createAccessToken(employee.getUsername(), employee.getRole());
         jwtService.login(tokenDto);
 
-        Cookie cookie = new Cookie("refresh_token", tokenDto.getRefreshToken());
+        Cookie cookie = new Cookie("refreshToken", tokenDto.getRefreshToken());
         cookie.setPath("/");
         cookie.setSecure(true);
 //        cookie.setHttpOnly(true);

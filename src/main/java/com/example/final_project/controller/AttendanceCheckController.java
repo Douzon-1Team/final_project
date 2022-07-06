@@ -20,7 +20,7 @@ public class AttendanceCheckController {
     public String postTest(HttpServletRequest request){
         String empno = request.getParameter("empno");
         String strDate = request.getParameter("time");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime date = LocalDateTime.parse(strDate, formatter);
         log.info(date.toString());
 

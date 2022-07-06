@@ -28,8 +28,6 @@ class AttendanceCheckServiceTest {
         LocalTime settingTime = LocalTime.of(9,0,0,0);
 
         //when
-        attendanceCheckService.tardyCheck(onWorkLate,settingTime, empno);
-        attendanceCheckService.tardyCheck(onWork,settingTime, empno);
         //then
 
     }
