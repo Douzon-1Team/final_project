@@ -231,3 +231,22 @@ from attendance_status
 where empno = 220109;
 
 select dept_no from emp_info_comp where empno = 220101;
+
+select *
+from attendance_status
+where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+
+select empno, count(case when attendance = 1 then 1 end) attendance, count(case when tardy = 1 then 1 end) tardy, count(case when etc = '결근' then 1 end) absenteeism, count(case when etc = '휴가' then 1 end) vacation
+from attendance_status
+where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+
+
+select count(case when attendance = 1 then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+select count(case when tardy = 1 then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+select count(case when etc = '결근' then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+select count(case when etc = '휴가' then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
+
+
+select *
+from attendance_status
+where tardy=1;
