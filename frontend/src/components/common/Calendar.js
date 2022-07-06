@@ -9,7 +9,7 @@ import "tui-calendar/dist/tui-calendar.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
 import Chart from "../month/chart";
 import Button from "@mui/material/Button";
-import CalendarStyle from "../../styles/Calendarstyle";
+import {CalendarStyle} from "../../styles/Calendarstyle";
 import _ from "lodash";
 import {
   BsFillArrowLeftSquareFill,
@@ -102,7 +102,6 @@ function Calendar() {
   useEffect(() => {
     // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
     // TODO : 새로고침시 사라지지 않고 메인 버튼을 누르거나 뒤로가기를 해야 STATE가 사라짐
-    // --> 결론 : 완전 잘됨
     if (state !== null) {
       dispatch(getList({empno : state}));
     } else {
@@ -117,15 +116,17 @@ function Calendar() {
     const el = cal.current.calendarInst.getElement(id, calendarId);
 
     if (e.schedule.title !== "출근" && new Date() > e.schedule.start) {
-      const test = [];
+      const req = [];
       console.log(e.schedule);
-      test.push(e.schedule.title);
-      test.push(e.schedule.start);
-      test.push(e.schedule.end);
-      // TODO : 이상근태가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기
-      navigate('/attendancereq', {
-        state: test,
-      });
+      req.push(e.schedule.title);
+      req.push(e.schedule.start);
+      req.push(e.schedule.end);
+      // TODO : 이상근태가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
+      if (state !== null) {
+        navigate('/attendancereq', {
+          state: req,
+        });
+      }
     } else {
       console.log('non');
     }
@@ -145,16 +146,18 @@ function Calendar() {
 
     var dateEnd = year + "-" + month + "-" + day;
 
-    // TODO : 오늘 이전 연차신청목록 클릭시 -> 어떻게 할지?
     if (new Date() > scheduleData.start) {
-      // const test = _.find(schedules, { empno: "220101", date: `${dateStart}` });
-      console.log('아무일도 안 일어납니다^^');
+      // TODO : 오늘 이전 연차신청목록 클릭시 -> 아무일 없음
     } else {
-      // TODO : 조건문 걸기
-      const start = scheduleData.start;
-      navigate("/leavereq", {
-        state: start,
-      });
+      // 금일 이후 달력 클릭시 휴가신청 페이지로 넘어감
+      if (state === null) {
+        const start = scheduleData.start;
+        navigate("/leavereq", {
+          state: start,
+        });
+      } else {
+        // 근태관리자가 사원꺼 클릭중인데 어칼지?
+      }
     }
   };
 
@@ -247,34 +250,51 @@ function Calendar() {
   const [chartview, setChartView] = useState(false);
 
   const handleMonthClick = useCallback(() => {
-    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 6}}, true);
+    // cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 6}}, true);
     cal.current.calendarInst.changeView("month", true);
   }, []);
 
   const handleWeekClick = useCallback(() => {
-    cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 4}}, true);
-    cal.current.calendarInst.changeView('month', true);
-    // console.log(cal.current.calendarInst.changeView("week"));
+    // cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 4}}, true);
+    // cal.current.calendarInst.changeView('month', true);
+    console.log(cal.current.calendarInst.changeView("week"));
   }, []);
 
   const handleDayClick = useCallback(() => {
     console.log(cal.current.calendarInst.changeView("day"));
   }, []);
   // TODO : Today 추가
-
   function dVcationPage() {
     return navigate("/dvacation");
   }
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
   return (
       <>
+
         {chartview == false ?
             <CalendarStyle>
               <div className="calendar_header">
-                <Button className="today" variant="contained" onClick={() => {
+                <div className="calbutton">
+                  <Button variant="contained" type="button" onClick={handleMonthClick}>
+                    월별
+                  </Button>
+                  <Button variant="contained" type="button" onClick={handleWeekClick}>
+                    주별
+                  </Button>
+                  <Button variant="contained" type="button" onClick={handleDayClick}>
+                    일별
+                  </Button>
+                </div>
+                <Button variant="contained" className="today" onClick={() => {
                   onClickTodayBtn();
                 }}>
                   오늘 날짜
                 </Button>
+
                 <BsFillArrowLeftSquareFill
                     className="prev"
                     onClick={() => {
@@ -288,25 +308,19 @@ function Calendar() {
                       onClickNext();
                     }}
                 />
-                <button type="button" onClick={handleMonthClick}>
-                  Month
-                </button>
-                <button type="button" onClick={handleWeekClick}>
-                  Week
-                </button>
-                <button type="button" onClick={handleDayClick}>
-                  Day
-                </button>
 
                 <Button className="dept_vacation" variant="contained" onClick={() => { setChartView(true) }}>월간 근태기록</Button>
                 <Button className="dept_vacation" variant="contained" onClick={() => {dVcationPage()}}>
                   부서별 휴가일정
                 </Button>
               </div>
+              <div className="headerdot">
               <BsDot className="dot1" />출근
-              <BsDot className="dot2" />조퇴
+              <BsDot className="dot2" />지각
               <BsDot className="dot3" />결근
-              <BsDot className="dot4" />지각
+              <BsDot className="dot4" />연차
+              </div>
+
               <TUICalendar
                   ref={cal}
                   view="month"
