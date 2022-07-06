@@ -22,6 +22,7 @@ public class AttendanceCheckDto {
     String etc;
     int unregistered;
     int flexible;
+    String req;
     LocalDateTime getToWorkTimeSet;
     LocalDateTime getOffWorkTimeSet;
     LocalDateTime getToWorkTimeSetF;
