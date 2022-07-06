@@ -161,7 +161,7 @@ select *
 from attendance_status
 where etc = '휴가';
 
-select * from attendance_req where DATEDIFF(vacation_end,now())>0 and DATEDIFF(vacation_start,now()) < 0 and req REGEXP '휴가|오전반차|오후반차' and  accept=1;
+select * from attendance_req where DATEDIFF(vacation_end,now())>0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차' and  accept=1;
 
 select req,vacation_start,vacation_end, DATEDIFF(now(), vacation_end), DATEDIFF(now(), vacation_start), accept
 from attendance_req
@@ -175,7 +175,9 @@ select *
 from attendance_time
 where date like '2022-07-01%' and empno = 220102;
 
-select * from attendance_req where DATEDIFF(vacation_end,now())>0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220103;
+select * from attendance_req
+join attendance_status
+where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 ;
 
 select *
 from attendance_req
@@ -199,10 +201,19 @@ select *
 from attendance_status
 where empno = 220102;
 
-SELECT a.empno empno, a.dept_no dept_no, attendance, tardy, etc, unregistered, flexible, get_to_work_time_set, get_off_work_time_set, get_to_work_time_set_f, get_off_work_time_set_f
+SELECT a.empno empno, a.dept_no dept_no, attendance, tardy, etc, unregistered, flexible, get_to_work_time_set, get_off_work_time_set, get_to_work_time_set_f, get_off_work_time_set_f,date,
+(select req from attendance_req where DATEDIFF(vacation_end,'2022-06-29T10:59:59') >= 0 and DATEDIFF(vacation_start,'2022-06-29T10:59:59') <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220109) req
 FROM attendance_status a join emp_info_comp b join manager_setting c
 on a.empno = b.empno and a.dept_no = b.dept_no = c.dept_no
-WHERE a.empno=220101 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+WHERE a.empno = 220109 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT('2022-06-29T10:59:59','%y%m%d');
+
+
+select *
+from attendance_time
+where empno= 220109 and date like '2022-07-05%';
+
+select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220109
+
 
 select *
 from employee;
@@ -212,6 +223,11 @@ from emp_info_comp
 where dept_no = 01;
 
 select *
-from attendance_req;
+from attendance_req
+where empno = 220109;
+
+select *
+from attendance_status
+where empno = 220109;
 
 select dept_no from emp_info_comp where empno = 220101;
