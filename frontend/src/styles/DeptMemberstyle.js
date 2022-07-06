@@ -1,6 +1,14 @@
 import styled from "styled-components";
 
 const DeptMemberList = styled.div`
+    .MuiTableHead-root {
+        background: #00AAFF;
+    }
+    .MuiTableCell-head {
+        color: #FFFFFF;
+        font-size: 20px;
+        font-weight: bold;
+    }
     display: inline-block !important;
     max-width: 100%;
     width: 1500px;
@@ -13,12 +21,9 @@ const DeptMemberList = styled.div`
 `
 
 const MemberImg = styled.img`
-    width: 20px;
-    max-width: 20px;
-    min-width: 20px;
-    height: 20px; 
-    max-height: 20px;
-    min-height: 20px;
+    width: 45px;
+    height: 45px; 
+    border-radius: 23px;
 `;
 
 export {MemberImg, DeptMemberList};

@@ -22,6 +22,14 @@ const TextContainer = styled.div`
     margin-left: 5%;
     margin-bottom: 3%;
     margin-top: 3%;
+    font-size: 18px;
+`
+
+const TextContainer2 = styled.div`
+    margin-left: 13%;
+    margin-bottom: 7%;
+    margin-top: 3%;
+    font-size: 18px;
 `
 const CardContainer = styled.div`
     padding-top: 4%;
@@ -35,16 +43,25 @@ const progressValue = styled.div`
     position: relative;
     margin-top: 3%;
 `
-const TitleContainer = styled.div`
-    font-size: 20px;
+const TitleContainer2 = styled.div`
+    float: left;
+    font-size: 30px;
     margin-top: 4%;
     text-align: center;
+    font-weight: bold;
 `
 
-// const MainStyle = styled.div`
-//     display: inline-block;
-//     width: 400px;
-// `
+const TitleContainer1 = styled.div`
+    font-size: 30px;
+    margin-top: 4%;
+    text-align: center;
+    font-weight: bold;
+`
+
+const MainStyles = styled.div`
+    display: inline-block;
+    width: 400px;
+`
 
 const MainchatStyle = styled.div`
     float: right;
@@ -54,4 +71,4 @@ const MainchatStyle = styled.div`
     }
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainchatStyle};
+export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles};
