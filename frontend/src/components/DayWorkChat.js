@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {DayWorkChatStyle} from '../styles/DayWorkChatStyle'
 import _ from 'lodash';
+import {useNavigate} from 'react-router-dom';
 
 const DayWorkChat = (props) => {
     // TODO : 출/퇴근 기록은 목록형에서 보여주기
     // TODO : 중복 이름 제거 후 각각 넣어줌
     // TODO : 총 근무시간이 8시간을 넘어간다면 초과근무 데이터로 넣어줌
     const [data, setdata] = useState([]);
+    const navigate = useNavigate();
 
     // setdata(workmember);
     // ['홍길동', 43.3, 85.8, 93.7],
@@ -100,13 +102,15 @@ const DayWorkChat = (props) => {
     return (
         <>
             {options.dataset.source.length !== 0 ?
+                <>
         <DayWorkChatStyle>
             <ECharts
                 option={options}
                 style={{width: "1000px", height:"800px"}}
             />
         </DayWorkChatStyle>
-            : <></> }
+                    <button onClick={() => navigate('/report/list', {state: options.dataset.source})}>목록형</button>
+          </>  : <></> }
         </>
     );
 }
