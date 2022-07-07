@@ -81,10 +81,10 @@ public class AttendanceScheduleComponent {
     }
 
     public String getVacationInfo(String empno){
-        if (attendanceCheckMapper.VacationCheck(empno).isEmpty()){
+        if (attendanceCheckMapper.vacationCheckTomorrow(empno).isEmpty()){
             return null;
         }else {
-            return attendanceCheckMapper.VacationCheck(empno).get().getReq();
+            return attendanceCheckMapper.vacationCheckTomorrow(empno).get().getReq();
         }
     }
 }

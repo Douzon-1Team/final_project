@@ -22,6 +22,7 @@ public class AttendanceCheckController {
         String strDate = request.getParameter("time");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime date = LocalDateTime.parse(strDate, formatter);
+        log.info(date.toString());
 
         return attendanceCheckService.onOffWorkCheck(empno, date);
     }

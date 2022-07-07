@@ -15,22 +15,20 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
-        String exception = (String)request.getAttribute("exception");
+        ErrorCode exception = (ErrorCode) request.getAttribute("exception");
 
-        if(exception == null) {
+        if(exception == null)
             setResponse(response, ErrorCode.UNKNOWN_TOKEN);
-        }
-        //잘못된 타입의 토큰인 경우
-        else if(exception.equals(ErrorCode.WRONG_TYPE_TOKEN.getCode())) {
+
+        else if(exception == ErrorCode.WRONG_TYPE_TOKEN)
             setResponse(response, ErrorCode.WRONG_TYPE_TOKEN);
-        }
-        //토큰 만료된 경우
-        else if(exception.equals(ErrorCode.EXPIRED_TOKEN.getCode())) {
+
+        else if(exception == ErrorCode.EXPIRED_TOKEN)
             setResponse(response, ErrorCode.EXPIRED_TOKEN);
-        }
-        else {
+
+        else
             setResponse(response, ErrorCode.ACCESS_DENIED);
-        }
+
     }
 
     private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {

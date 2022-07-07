@@ -1,7 +1,6 @@
 package com.example.final_project.controller;
 
 import com.example.final_project.dto.CalendarResponseDto;
-import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.mapper.CalendarMapper;
 import com.example.final_project.mapper.MonthChatMapper;
 import com.example.final_project.service.SubComponentInfoService;
@@ -28,7 +27,7 @@ public class CalendarController {
     private final MonthChatMapper monthChatMapper;
 
     @GetMapping("/main")
-    public ResponseEntity<?> test(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
+    public ResponseEntity<?> maincalendar(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
         System.out.println(empno);
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());

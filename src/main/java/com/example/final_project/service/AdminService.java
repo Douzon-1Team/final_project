@@ -1,6 +1,5 @@
 package com.example.final_project.service;
 
-import com.example.final_project.dto.*;
 import com.example.final_project.exception.EmpException;
 import com.example.final_project.exception.ErrorCode;
 import com.example.final_project.exception.PasswordException;
@@ -8,6 +7,9 @@ import com.example.final_project.mapper.AdminMapper;
 import com.example.final_project.mapper.DeptMapper;
 import com.example.final_project.mapper.EmpInfoCompMapper;
 import com.example.final_project.mapper.EmployeeMapper;
+import com.example.final_project.dto.EmpInfoDto;
+import com.example.final_project.dto.EmpListResponseDto;
+import com.example.final_project.dto.EmpUpdateDto;
 import com.example.final_project.model.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -70,7 +72,6 @@ public class AdminService {
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
 
-        System.out.println(updateDto.isResigned());
         if(!updateDto.getName().isEmpty() || profileUrl != null || password != null || updateDto.getRole() != null || updateDto.isResigned())
             employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password, profileUrl));
 
