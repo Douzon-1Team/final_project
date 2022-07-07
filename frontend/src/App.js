@@ -15,6 +15,7 @@ import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
+import VacationGraph from "./components/VacationGraph";
 import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
 import Report from "./components/Report";
@@ -30,7 +31,7 @@ const RootStyle = styled('div')({
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
-    let LoginChk = localStorage.getItem("LoginChk");
+    const LoginChk = localStorage.getItem("LoginChk");
 
     return (
         <RootStyle>
@@ -52,8 +53,10 @@ function App() {
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
+<<<<<<< HEAD
                     <Route path="/report/list" element={<ChartList/>}/>
                     <Route path="/report/att" element={<AttendanceProblemList/>}/>
+                    <Route path="/dvacation-status" element={<VacationGraph />}/>
                 </Route>
 
                 {/* 404 page */}

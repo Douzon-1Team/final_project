@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue} from "../styles/mainstyle";
+import {
+    BorderLinearProgress,
+    PbContainer,
+    TextContainer,
+    CardContainer,
+    progressValue,
+    TitleContainer2
+} from "../styles/mainstyle";
 import {Grid} from "@mui/material";
 
 const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
@@ -10,6 +17,9 @@ const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
     return (
         <Card sx={{ maxWidth: 500 }}>
             <CardContainer>
+                <TitleContainer2>
+                    금주 근무시간
+                </TitleContainer2>
                 <PbContainer>
                     <Grid container spacing={1}>
                     <Grid item xs={10}>

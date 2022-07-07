@@ -6,10 +6,9 @@ export const LogoForm = styled.div`
 `;
 
 export const LogoImgbox = styled.div`
-  height: 7vh;
-  width: 7vh;
-  margin-left: 1vw;
-  float: left;
+  height: 10vh;
+  width: 10vh;
+  margin-left: 4vw;
   background-image: url(${LogoImg});
   background-size: cover;
   &:hover { cursor: pointer; }

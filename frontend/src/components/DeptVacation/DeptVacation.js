@@ -5,7 +5,7 @@ import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 import Chart from "../month/chart";
 import Button from "@mui/material/Button";
-import CalendarStyle from "../../styles/Calendarstyle";
+import {DeptCalendarStyle} from "../../styles/Calendarstyle";
 import _ from "lodash";
 import {
     BsFillArrowLeftSquareFill,
@@ -22,17 +22,15 @@ function DeptVacation() {
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
     const [schedules, setschedules] = useState([]);
-    // var schedules = [
-    // schedules 일정 관리
-    // ];
 
-    // TODO : 얘는 따로 뺴줘야할듯
+
+    // TODO : 본인 휴가 색깔과 다른 부서원 색깔 정하기
     const calendars = [
         // 정상출근
         {
             id: "1",
-            name: "해당사원휴가",
-            color: "#ffffff",
+            name: "내 휴가",
+            color: "#03bd9e",
             bgColor: "#03bd9e",
             dragBgColor: "#03bd9e",
             borderColor: "#03bd9e",
@@ -40,7 +38,7 @@ function DeptVacation() {
         // 조퇴
         {
             id: "2",
-            name: "나머지애들휴가",
+            name: "다른 부서원 휴가",
             color: "#ffffff",
             bgColor: "#00a9ff",
             dragBgColor: "#00a9ff",
@@ -83,14 +81,6 @@ function DeptVacation() {
     }, []);
     const cal = useRef(null);
 
-    const onClickSchedule = useCallback((e) => {
-        // calendar 클릭시
-        const { calendarId, id } = e.schedule;
-        const el = cal.current.calendarInst.getElement(id, calendarId);
-
-        // TODO : 얘네 3개 보내줄거임(근태 조정 & 휴가 신청) - title로 구분 할 것
-    }, []);
-
     const onBeforeCreateSchedule = (scheduleData) => {
         // 일정 클릭시 일정 팝업창 생성
         var year = scheduleData.start.getFullYear();
@@ -104,29 +94,7 @@ function DeptVacation() {
         var day = ("0" + scheduleData.end.getDate()).slice(-2);
 
         var dateEnd = year + "-" + month + "-" + day;
-
-        // TODO : 오늘 이전 연차신청목록 클릭시 -> 어떻게 할지?
-        if (new Date() > scheduleData.start) {
-            const test = _.find(schedules, { empno: "220101", date: `${dateStart}` });
-            console.log(test);
-        } else {
-            // TODO : 연차 신청
-            const test2 = _.find(schedules, { datestart: `${dateStart}` });
-            return navigate("/leavereq");
-        }
     };
-
-    // const onBeforeUpdateSchedule = useCallback((e) => { // 수정 팝업창
-    //     console.log(e);
-    //
-    //     const { schedule, changes } = e;
-    //
-    //     cal.current.calendarInst.updateSchedule(
-    //         schedule.id,
-    //         schedule.calendarId,
-    //         changes
-    //     );
-    // }, []);
 
     function _getFormattedTime(time) {
         // 시간 설정
@@ -201,18 +169,13 @@ function DeptVacation() {
         setDate(`${year}년 ${month + 1}월`);
     }
 
-    const handleMonthClick = useCallback(() => {
-        cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 6}}, true);
-        cal.current.calendarInst.changeView("month", true);
-    }, []);
-
     function mainPage() {
         return navigate("/main");
     }
 
     return (
         <MainStyle>
-                <CalendarStyle>
+                <DeptCalendarStyle>
                     <div className="calendar_header">
                         <Button className="today" variant="contained" onClick={() => {
                             onClickTodayBtn();
@@ -232,35 +195,26 @@ function DeptVacation() {
                                 onClickNext();
                             }}
                         />
-                        <button type="button" onClick={handleMonthClick}>
-                            Month
-                        </button>
 
                         <Button className="dept_vacation" variant="contained" onClick={() => {mainPage()}}>
                             내 휴가일정
                         </Button>
                     </div>
-                    <BsDot className="dot1" />출근
-                    <BsDot className="dot2" />조퇴
-                    <BsDot className="dot3" />결근
-                    <BsDot className="dot4" />지각
                     <TUICalendar
                         ref={cal}
                         view="month"
-                        // useCreationPopup={true}
                         useDetailPopup={true}
                         template={templates}
                         calendars={calendars}
                         schedules={schedules}
-                        onClickSchedule={onClickSchedule}
                         onBeforeCreateSchedule={onBeforeCreateSchedule}
                         month={{
+                            workweek: true,
                             daynames: ["일", "월", "화", "수", "목", "금", "토"],
                         }}
-                        // onBeforeDeleteSchedule={onBeforeDeleteSchedule}
-                        // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
+
                     />
-                </CalendarStyle>
+                </DeptCalendarStyle>
         </MainStyle>
     );
 }

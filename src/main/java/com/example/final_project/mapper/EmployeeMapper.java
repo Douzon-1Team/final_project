@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 import java.util.Optional;
 
+@Mapper
 public interface EmployeeMapper {
 
     @Insert("INSERT INTO employee(empno, emp_name, emp_pwd, role, qr_code_url, emp_profile) " +
