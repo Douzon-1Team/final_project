@@ -16,13 +16,26 @@ import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
 import AcceptReq from "./components/AcceptReq/AcceptReq";
+import VacationGraph from "./components/VacationGraph";
+import DeptMember from "./components/DeptMember/DeptMember";
+import AttendanceProblem from "./components/AttendanceProblem";
+import Report from "./components/Report";
+import { styled } from '@mui/material/styles';
+import ChartList from "./components/ChartList";
+import AttendanceProblemList from "./components/AttendanceProblemList";
+
+const RootStyle = styled('div')({
+    display: 'flex',
+    minHeight: '100%',
+    overflow: 'hidden'
+});
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
-    let LoginChk = localStorage.getItem("LoginChk");
+    const LoginChk = localStorage.getItem("LoginChk");
 
     return (
-        <>
+        <RootStyle>
             <Routes>
                 <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
@@ -33,11 +46,18 @@ function App() {
                     <Route path="/leavelist" element={<LeaveList />} />
                     <Route path="/attendancereq" element={<AttendanceReq />} />
                     <Route path="/attendancelist" element={<AttendanceList />} />
+                    <Route path="/admin/list" element={<EmpList/>} />
+                    <Route path="/dvacation" element={<DeptVacation />} />
+                    <Route path="/deptmember" element={<DeptMember />} />
+                    <Route path="/report" element={<Report />} />
                     <Route path="/admin/list" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <EmpList/>}/>
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
                     <Route path="/acceptreq" element={<AcceptReq />} />
+                    <Route path="/report/list" element={<ChartList/>}/>
+                    <Route path="/report/att" element={<AttendanceProblemList/>}/>
+                    <Route path="/dvacation-status" element={<VacationGraph />}/>
                 </Route>
 
                 {/* 404 page */}
@@ -51,7 +71,7 @@ function App() {
                     }
                 />
             </Routes>
-        </>
+        </RootStyle>
     );
 }
 

@@ -22,6 +22,14 @@ const TextContainer = styled.div`
     margin-left: 5%;
     margin-bottom: 3%;
     margin-top: 3%;
+    font-size: 18px;
+`
+
+const TextContainer2 = styled.div`
+    margin-left: 13%;
+    margin-bottom: 7%;
+    margin-top: 3%;
+    font-size: 18px;
 `
 const CardContainer = styled.div`
     padding-top: 4%;
@@ -35,13 +43,22 @@ const progressValue = styled.div`
     position: relative;
     margin-top: 3%;
 `
-const TitleContainer = styled.div`
-    font-size: 20px;
+const TitleContainer2 = styled.div`
+    float: left;
+    font-size: 30px;
     margin-top: 4%;
     text-align: center;
+    font-weight: bold;
 `
 
-const MainStyle = styled.div`
+const TitleContainer1 = styled.div`
+    font-size: 30px;
+    margin-top: 4%;
+    text-align: center;
+    font-weight: bold;
+`
+
+const MainStyles = styled.div`
     display: inline-block;
     width: 400px;
 `
@@ -54,4 +71,24 @@ const MainchatStyle = styled.div`
     }
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, CardContainer, progressValue, TitleContainer, MainStyle, MainchatStyle};
+const AttendanceCardTitle = styled.div`
+    font-size: 30px;
+    margin-top: 4%;
+    text-align: center;
+`
+const AttendanceCardText = styled.div`
+    font-size: 60px;
+    margin-top: 4%;
+    text-align: center;
+`
+const CardContent = styled.div`
+    width: 250px;
+    height: 250px;
+`
+const TopLine = styled.div`
+    height: 15px;
+    background-color: ${(props) => props.color || "#0057b7"};
+
+`
+
+export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles, AttendanceCardTitle, AttendanceCardText, CardContent, TopLine};

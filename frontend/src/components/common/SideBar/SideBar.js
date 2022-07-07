@@ -4,6 +4,7 @@ import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 // BsChevronDoubleUp
 export const SideBar = ({ role }) => {
+  console.log(role)
   const sideMenu = [
     {
       id: 1,
@@ -167,8 +168,8 @@ export const SideBar = ({ role }) => {
         {secondMenu4 === true ? (
           <SmallSide>
             <SmallSideMenu onClick={() => navigate("/acceptreq")}>{SideMenu4[0].menu}</SmallSideMenu>
-            <SmallSideMenu>{SideMenu4[1].menu}</SmallSideMenu>
-            <SmallSideMenu>{SideMenu4[2].menu}</SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/deptmember")}>{SideMenu4[1].menu}</SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/report")}>{SideMenu4[2].menu}</SmallSideMenu>
           </SmallSide>
         ) : null}
         {/* ---------------------------------------- */}

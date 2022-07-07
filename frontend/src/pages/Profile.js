@@ -7,6 +7,7 @@ import {updatePwd} from "../apis/Users";
 import S3Upload from "../components/common/S3Upload";
 import {Title, Table, Button, Form, Img, QR, Line} from '../styles/profile';
 import SettingModal from "../components/common/Modal/SettingModal";
+import { MainStyle } from "../styles/Globalstyle";
 
 function Profile() {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -42,7 +43,7 @@ function Profile() {
     };
 
     return (
-        <>
+        <MainStyle>
             <Title>개인 정보 관리</Title>
             <a href={ emp.qrPath }><QR>QR code</QR></a>
             <Table>
@@ -108,7 +109,7 @@ function Profile() {
                 <p>* 현재 비밀번호로의 변경은 불가능합니다.</p>
             </Line>
             <SettingModal/>
-        </>
+        </MainStyle>
     );
 }
 export default Profile;

@@ -9,7 +9,7 @@ import {modalStyle} from "../common/Modal/ModalStyle";
 import axios from "axios";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router";
-import st from "react-datepicker";
+import {MainStyle} from "../../styles/Globalstyle";
 
 export const LeaveReq = () => {
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
@@ -142,9 +142,6 @@ export const LeaveReq = () => {
         f1();
         navigate("/main");
     }
-
-    // ----------------------------------------------------------
-
     return (
         <>
             {modalSwitch && (

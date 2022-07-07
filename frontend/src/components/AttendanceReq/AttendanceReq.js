@@ -7,8 +7,9 @@ import dayjs from "dayjs";
 import {useNavigate} from "react-router-dom";
 import {modalStyle} from "../common/Modal/ModalStyle";
 import axios from "axios";
-import {useLocation} from "react-router";
-import {useSelector} from "react-redux";
+import { useLocation } from "react-router";
+import { useSelector } from "react-redux";
+import {MainStyle} from "../../styles/Globalstyle"
 
 export const AttendanceReq = () => {
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 데이터
@@ -63,7 +64,6 @@ export const AttendanceReq = () => {
     const [sendBefore, setSendBefore] = useState(false);
     const [sendAfter, setSendAfter] = useState(false);
     const [req, setReq] = useState("");
-
     // -------------------------------------------
     function onSet(para) {
         if (para === 1) setReq("지각");
