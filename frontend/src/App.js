@@ -53,7 +53,6 @@ function App() {
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
-<<<<<<< HEAD
                     <Route path="/report/list" element={<ChartList/>}/>
                     <Route path="/report/att" element={<AttendanceProblemList/>}/>
                     <Route path="/dvacation-status" element={<VacationGraph />}/>
