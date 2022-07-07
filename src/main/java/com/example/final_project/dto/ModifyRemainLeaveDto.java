@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class DeleteVacationDto {
-    private String reqId;
+public class ModifyRemainLeaveDto {
     private String empNo;
-    private int grossHours;
+    private int takeHours;
 }

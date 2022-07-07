@@ -15,6 +15,7 @@ import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
+import AcceptReq from "./components/AcceptReq/AcceptReq";
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
+                    <Route path="/acceptreq" element={<AcceptReq />} />
                 </Route>
 
                 {/* 404 page */}

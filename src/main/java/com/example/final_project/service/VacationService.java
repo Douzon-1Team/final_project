@@ -14,4 +14,9 @@ public class VacationService {
         if(vacationMapper.save(dto) == 0)
             throw new IllegalArgumentException("휴가 등록에 실패하였습니다.");
     }
+
+    public void vacation2(VacationRequestDto dto){
+        if(vacationMapper.save2(dto) == 0)
+            throw new IllegalArgumentException("휴가 등록에 실패하였습니다.");
+    }
 }

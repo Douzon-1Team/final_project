@@ -21,7 +21,8 @@ const LeaveList = () => {
     const columns = React.useMemo(
         () => [
             {
-                Header: <input type="checkbox" id="0"/>,
+                // Header: <input type="checkbox" id="0"/>,
+                Header: '',
                 accessor: 'check',
             },
             {

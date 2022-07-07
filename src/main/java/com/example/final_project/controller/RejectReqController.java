@@ -1,7 +1,7 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.dto.DeleteVacationDto;
-import com.example.final_project.service.DeleteVacationService;
+import com.example.final_project.dto.RejectReqDto;
+import com.example.final_project.service.RejectReqService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class DeleteVacationListController {
-
+public class RejectReqController {
     @Autowired
-    private final DeleteVacationService deleteVacationService;
-    @PostMapping("/delvacationreq")
-    public ResponseEntity delVacation(@RequestBody DeleteVacationDto dto){
-
-        deleteVacationService.vacation(dto);
+    private final RejectReqService rejectReqService;
+    @PostMapping("/rejectreq")
+    public ResponseEntity rejectreq(@RequestBody RejectReqDto dto){
+        rejectReqService.rejectreq(dto);
         return ResponseEntity.ok().build();
     }
 }

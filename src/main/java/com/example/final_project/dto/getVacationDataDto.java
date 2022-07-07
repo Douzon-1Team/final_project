@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
 @Builder
+@Getter
 @NoArgsConstructor
-public class DeleteVacationDto {
-    private String reqId;
-    private String empNo;
-    private int grossHours;
+@AllArgsConstructor
+public class getVacationDataDto {
+    private String workStart;
+    private String workEnd;
 }
