@@ -4,6 +4,7 @@ import { BsChevronCompactDown, BsChevronCompactUp } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 // BsChevronDoubleUp
 export const SideBar = ({ role }) => {
+  console.log(role)
   const sideMenu = [
     {
       id: 1,

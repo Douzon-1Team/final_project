@@ -6,13 +6,16 @@ import {ToggleText, ComponentContainer, ChartContainer} from "../styles/graphSty
 import {getAttendance} from "../apis/AttendanceApi";
 import _ from "lodash";
 import DayWorkChat from "./DayWorkChat";
+import {useNavigate} from 'react-router-dom'
 
 const AttendanceProblem = (props) => {
+    const navigate = useNavigate();
     // prettier-ignore
     const month = [
         '1월', '2월', '3월', '4월', '5월', '6월',
         '7월', '8월', '9월', '10월', '11월','12월'
     ];
+
 // prettier-ignore[달, 사람위치, 횟수]
 //     const data = [[0, 0, 5], [0, 1, 1], [0, 2, 0], [0, 3, 0],
 //         [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0],
@@ -130,6 +133,7 @@ const AttendanceProblem = (props) => {
                         />
                     </ChartContainer>
                 </ComponentContainer>
+                <button onClick={() => navigate('/report/att')}>목록형</button>
             </>
         }
         </>

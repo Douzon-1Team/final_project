@@ -20,6 +20,8 @@ import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
 import Report from "./components/Report";
 import { styled } from '@mui/material/styles';
+import ChartList from "./components/ChartList";
+import AttendanceProblemList from "./components/AttendanceProblemList";
 
 const RootStyle = styled('div')({
     display: 'flex',
@@ -51,6 +53,8 @@ function App() {
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
+                    <Route path="/report/list" element={<ChartList/>}/>
+                    <Route path="/report/att" element={<AttendanceProblemList/>}/>
                     <Route path="/dvacation-status" element={<VacationGraph />}/>
                 </Route>
 
