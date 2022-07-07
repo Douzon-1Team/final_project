@@ -15,10 +15,11 @@ import AttendanceList from "./components/List/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
+import VacationGraph from "./components/VacationGraph";
 
 function App() {
     const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
-    let LoginChk = localStorage.getItem("LoginChk");
+    const LoginChk = localStorage.getItem("LoginChk");
 
     return (
         <>
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/profile/:empno" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
+                    <Route path="/dvacation-status" element={<VacationGraph />}/>
                 </Route>
 
                 {/* 404 page */}
