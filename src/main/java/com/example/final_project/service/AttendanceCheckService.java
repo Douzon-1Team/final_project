@@ -3,6 +3,7 @@ package com.example.final_project.service;
 import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
+import com.example.final_project.mapper.EmployeeMapper;
 import com.example.final_project.mapper.SubComponentMapper;
 import com.example.final_project.model.AttendanceReq;
 import com.example.final_project.model.AttendanceTime;
@@ -20,17 +21,19 @@ import java.time.LocalTime;
 public class AttendanceCheckService {
     private final AttendanceCheckMapper attendanceCheckMapper;
     private final SubComponentMapper subComponentMapper;
+    private final EmployeeMapper employeeMapper;
+
     public String  onOffWorkCheck(String empno, LocalDateTime now){
         AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.timeCheck(empno,now);
         LocalTime onWork = onWorkTimeCheck(attendanceCheckDto);
         LocalTime offWork = offWorkTimeCheck(attendanceCheckDto);
-        log.info(attendanceCheckDto.getReq());
-        log.info(offWork.toString());
-        return timeCheck(empno, now, onWork, offWork);
+        String msg = employeeMapper.findNameByempno(empno) + "(" + empno + ")님 " + timeCheck(empno, now, onWork, offWork);
+        return msg;
     }
 
     public LocalTime onWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
         LocalTime onWorkTime;
+        log.info(attendanceCheckDto.getFlexible()+"");
         if(attendanceCheckDto.getFlexible() == 1){
             onWorkTime = attendanceCheckDto.getGetToWorkTimeSetF().toLocalTime();
         } else{
@@ -44,7 +47,7 @@ public class AttendanceCheckService {
                 onWorkTime = attendanceReq.getVacationEnd().toLocalTime();
             }
         }
-        return lunchCheck(onWorkTime);
+        return lunchCheck(onWorkTime,1);
     }
 
     public LocalTime offWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
@@ -63,23 +66,23 @@ public class AttendanceCheckService {
                 offWorkTime = attendanceReq.getVacationStart().toLocalTime();
             }
         }
-        return lunchCheck(offWorkTime);
+        return lunchCheck(offWorkTime,0);
     }
 
     public String timeCheck(String empno, LocalDateTime now, LocalTime onWork, LocalTime offWork){
         LocalTime nowTime = now.toLocalTime();
         LocalDate nowDate = now.toLocalDate();
         LocalTime resetTime = LocalTime.of(5,0,0);
-        if(nowTime.isBefore(resetTime) || nowTime.isBefore(resetTime)){
+        if(nowTime.isBefore(resetTime)){
             return "출근시간이 아닙니다.";
         } else if(nowTime.isBefore(onWork) || nowTime.equals(onWork)){
             //정상 출근
             if(attendanceChecker(empno, now, 1)){
                 AttendanceUpdateDto attendance = AttendanceUpdateDto.builder().empno(empno).columns("attendance").values("1").date(nowDate).build();
                 attendanceCheckMapper.updateAttendanceStatus(attendance);
-                return "출근";
+                return "출근하셨습니다.";
             }else {
-                return "이미 출근하셨습니다";
+                return "이미 출근하셨습니다.";
             }
         } else if (nowTime.isAfter(onWork) && nowTime.isBefore(offWork)) {
             if(attendanceChecker(empno, now, 1)){
@@ -95,12 +98,12 @@ public class AttendanceCheckService {
             // 퇴근
             if(attendanceChecker(empno, now, 0)){
                 if(checkUnregisteredOn(empno, nowDate)){
-                    return "퇴근(출근 미등록)";
+                    return "퇴근하셨습니다.(출근 미등록)";
                 }else {
-                    return "퇴근";
+                    return "퇴근하셨습니다.";
                 }
             }else{
-                return "이미 퇴근하셨습니다";
+                return "이미 퇴근하셨습니다.";
             }
         } else {
             return "다시 시도해주세요.";
@@ -108,7 +111,7 @@ public class AttendanceCheckService {
     }
 
     public boolean attendanceChecker(String empno, LocalDateTime date, int onOffWork){
-        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).time(todayWorkTiem(empno,onOffWork)).onOffWork(onOffWork).build();
+        AttendanceTime attendanceTime = AttendanceTime.builder().empno(empno).deptNo(empno.substring(2, 4)).date(date).time(todayWorkTime(empno,onOffWork)).onOffWork(onOffWork).build();
         if(attendanceCheckMapper.findAttendanceTimeByEmpno(empno, onOffWork, date).isEmpty()){
             attendanceCheckMapper.attendanceCheck(attendanceTime);
             return true;
@@ -117,7 +120,7 @@ public class AttendanceCheckService {
         }
     }
 
-    public Long todayWorkTiem(String empno, int onOffWork){
+    public Long todayWorkTime(String empno, int onOffWork){
         if(onOffWork==0){
             return subComponentMapper.todayWorkTime(empno);
         }else {
@@ -144,12 +147,21 @@ public class AttendanceCheckService {
         }
     }
 
-    public LocalTime lunchCheck(LocalTime time){
-        if(13 <= time.getHour()&& time.getHour() < 14){
-            return LocalTime.of(14,0,0);
+    public LocalTime lunchCheck(LocalTime time, int flag){
+        if(flag==1){
+            if(13 <= time.getHour()&& time.getHour() <= 14){
+                return LocalTime.of(14,0,0);
+            }else {
+                return time;
+            }
         }else {
-            return time;
+            if(13 <= time.getHour()&& time.getHour() <= 14){
+                return LocalTime.of(13,0,0);
+            }else {
+                return time;
+            }
         }
+
     }
 
 }
