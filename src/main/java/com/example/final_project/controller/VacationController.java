@@ -18,13 +18,14 @@ public class VacationController {
 
     @PostMapping("/vacationreq")
     public ResponseEntity vacation(@RequestBody VacationRequestDto dto) {
-        System.out.println(dto.getEmpNo());
-        System.out.println(dto.getReq());
-        System.out.println(dto.getStartFormat());
-        System.out.println(dto.getEndFormat());
-        System.out.println(dto.getComment());
-
         vacationService.vacation(dto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/vacationreq2")
+    public ResponseEntity vacation2(@RequestBody VacationRequestDto dto) {
+        vacationService.vacation2(dto);
 
         return ResponseEntity.ok().build();
     }

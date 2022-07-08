@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import LogoImg from '../../../../src/assets/img/logo.png';
+import SideLogo from '../../../../src/assets/img/sidebarlogo.png';
 
 export const LogoForm = styled.div`
   height: 7vh;
 `;
 
 export const LogoImgbox = styled.div`
-  height: 10vh;
-  width: 10vh;
-  margin-left: 4vw;
-  background-image: url(${LogoImg});
+  height: 15vh;
+  width: 20vh;
+  margin-left: 2vw;
+  background-image: url(${SideLogo});
   background-size: cover;
   &:hover { cursor: pointer; }
 `;
@@ -23,13 +23,10 @@ export const Profilefrom = styled.div`
   min-width: 200px;
 `;
 
-export const UserImg = styled.div`
-  border: 1px solid black;
-  float: left;
-  width: 6vh;
-  height: 6vh;
-  border-radius: 50%;
-  text-align: center;
+export const UserImg = styled.img`
+    width: 55px;
+    height: 55px; 
+    border-radius: 50%;
 `;
 
 export const UserName = styled.div`

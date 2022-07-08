@@ -167,7 +167,7 @@ export const SideBar = ({ role }) => {
         ) : null}
         {secondMenu4 === true ? (
           <SmallSide>
-            <SmallSideMenu>{SideMenu4[0].menu}</SmallSideMenu>
+            <SmallSideMenu onClick={() => navigate("/acceptreq")}>{SideMenu4[0].menu}</SmallSideMenu>
             <SmallSideMenu onClick={() => navigate("/deptmember")}>{SideMenu4[1].menu}</SmallSideMenu>
             <SmallSideMenu onClick={() => navigate("/report")}>{SideMenu4[2].menu}</SmallSideMenu>
           </SmallSide>
