@@ -13,4 +13,5 @@ public class NotificationDto {
     String empno;
     String profile;
     LocalTime date;
+    boolean approve;
 }

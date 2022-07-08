@@ -49,6 +49,7 @@ public class EmployeeService{
 //        cookie.setHttpOnly(true);
 
         response.addCookie(cookie);
+        log.info(employee.getProfile());
 
         LoginResponseDto dto = LoginResponseDto.builder()
                 .accessToken(tokenDto.getAccessToken())

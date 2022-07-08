@@ -283,3 +283,7 @@ select * from attendance_status where tardy=1 and DATE_FORMAT(date,'%y%m%d') = D
 select emp_profile from employee where empno;
 
 select date from attendance_time where DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and on_off_work = 1 and empno = 220101;
+
+select * from attendance_req where accept = 1 and req = '지각' and DATE_FORMAT(att_req_start,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+
+select * from attendance_status where agree = 1 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');

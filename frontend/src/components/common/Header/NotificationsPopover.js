@@ -31,7 +31,7 @@ export default function NotificationsPopover() {
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
-  const tardy = notifications.filter((item) => item.date === null).length;
+  const tardy = notifications.filter((item) => item.approve === false).length;
 
   const [open, setOpen] = useState(null);
 
@@ -41,6 +41,7 @@ export default function NotificationsPopover() {
       setNotifications(NOTIFICATIONS);
     }).catch(console.log('수신 실패'))
   }
+
 
   useEffect(() => {
     getTardyList();
@@ -63,7 +64,7 @@ export default function NotificationsPopover() {
         sx={{ width: 40, height: 40 }}
       >
         <Badge badgeContent={tardy} color="error">
-          <AiFillBell width={25} height={25} />
+          <AiFillBell size={27} />
         </Badge>
       </IconButton>
 
@@ -105,6 +106,7 @@ NotificationItem.propTypes = {
     name: PropTypes.string,
     profile: PropTypes.string,
     date: PropTypes.string,
+    approve: PropTypes.bool,
   }),
 };
 

@@ -23,8 +23,6 @@ public class NotificationController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         List<NotificationDto> notificationDto = notificationService.tardyMemberList(empno);
-        log.info(empno);
-        log.info(notificationDto.get(0).getProfile());
         return ResponseEntity.ok().headers(headers).body(notificationDto);
     }
 }
