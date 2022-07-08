@@ -82,6 +82,35 @@ export const updatePwd = async (credentials) => {
     }
 };
 
+// 근무시간 선택
+export const settingTimeChoice = async (credentials) => {
+    const option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': "application/json",
+        },
+        body: JSON.stringify(credentials)
+    };
+    const data = await getPromise('/setting', option).catch(() => {
+        return statusError;
+    });
+
+    if (parseInt(Number(data.status)/100)===2) {
+        const status = data.ok;
+        const code = data.status;
+        const text = await data.text();
+        const json = text.length ? JSON.parse(text) : "";
+
+        return {
+            status,
+            code,
+            json
+        };
+    } else {
+        return statusError;
+    }
+};
+
 // 근무시간 설정
 export const settingTime = async (credentials) => {
     const option = {

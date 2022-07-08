@@ -13,15 +13,13 @@ function VacationGraph() {
     getDvacation(empNo).then(response => {
       setDeptStatus(response)
     })
-  }, []);
-
-  console.log(deptStatus)
+  }, [deptStatus]);
 
   return (
     <>
     { deptStatus === false ? null :
         deptStatus.map((status, i) => {
-          return <>
+          return <div key={i}>
             <ECharts
               option={
                 {
@@ -102,7 +100,7 @@ function VacationGraph() {
                 }
               }
             />
-          </>
+          </div>
         })
       }
     </>
