@@ -9,28 +9,46 @@ import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {MainStyle} from "../../styles/Globalstyle"
 
+let grossHours=0;
+
 const LeaveList = () => {
     const [loadingData, setLoadingData]=useState(true);
     const [data,setData]=useState([]);
     const [checkedReqId,setCheckedReqId]=useState([]);
-    function onClickChecked (target) {
-        checkedReqId.includes(target)? checkedReqId.splice(checkedReqId.indexOf(target),1):checkedReqId.push(target);
-        setCheckedReqId(checkedReqId);
-        console.log(target);
-    }
-
     const today = dayjs(new Date());
     let todayFormat=today.format("YYYY-MM-DD hh:mm:00");
 
+    function onClickChecked (reqid,start,end,accept,req) {
+        let hours=0;
+        if((start>=todayFormat)&&(accept==1)){
+            if((req==='오전반차')||(req==='오후반차')){
+                hours=4;
+            }else if(req==='휴가'){
+                hours=8*((Date.parse(end)-Date.parse(start))/(1000*60*60*24)+1);
+            }else{ // 시간연차
+                hours=(Date.parse(end)-Date.parse(start))/(1000*60*60);
+            }
+        }
+        if(checkedReqId.includes(reqid)){
+            checkedReqId.splice(checkedReqId.indexOf(reqid),1);
+            grossHours-=hours;
+        }else{
+            checkedReqId.push(reqid);
+            grossHours+=hours;
+        }
+        setCheckedReqId(checkedReqId);
+    }
+
     for(let i=0; i<data.length;i++){
         if(data[i].vacationstart>=todayFormat){
-            data[i].check=<input id={i} type="checkbox" name="checkbox" onClick={() => onClickChecked(data[i].reqid)}/>
+            data[i].check=<input id={i} type="checkbox" name="checkbox" onClick={() => onClickChecked(data[i].reqid, data[i].vacationstart, data[i].vacationend, data[i].accept, data[i].req)}/>
         }
     }
     const columns = React.useMemo(
         () => [
             {
-                Header: <input type="checkbox" id="all"/>,
+                // Header: <input type="checkbox" id="all"/>,
+                Header: '',
                 accessor: 'check',
             },
             {
@@ -92,7 +110,7 @@ const LeaveList = () => {
     }
     for(let i=0;i<data.length;i++){
         if(data[i].req==="휴가"){
-            data[i].days=(Date.parse(data[i].vacationend)-Date.parse(data[i].vacationstart))/(1000*60*60*24);
+            data[i].days=(Date.parse(data[i].vacationend)-Date.parse(data[i].vacationstart))/(1000*60*60*24)+1;
             data[i].days=Math.ceil(data[i].days);
             data[i].days=data[i].days+' D';
         }else {
@@ -106,9 +124,8 @@ const LeaveList = () => {
             await axios
                 .get("http://localhost:8080/vacationlist", {params:{'empno' : empNo}})
                 .then((res)=>{
-                    // status ->  -> catch
-                    console.log("**수신 성공 : ",res.data)
                     setData(res.data);
+                    console.log(res.data);
                     setLoadingData(false);
                 })
         }
@@ -129,13 +146,17 @@ const LeaveList = () => {
     const [modalSwitch,setModalSwitch] =useState(false);
     function DeleteCheck() {
         setModalSwitch(!modalSwitch);
+        console.log(data);
     }
     function DeleteEx(checkedReqId) {
         setModalSwitch(false); // 모달창 끄고
         for(let i=0;i<checkedReqId.length;i++){
+            console.log("___",grossHours);
             axios
                 .post("/delvacationreq",{
                     reqId:checkedReqId[i],
+                    empNo:empNo,
+                    grossHours:grossHours,
                 })
                 .then((res)=>{
                     console.log("**삭제 요청 완료");

@@ -15,13 +15,10 @@ public class DeleteVacationListController {
 
     @Autowired
     private final DeleteVacationService deleteVacationService;
-
     @PostMapping("/delvacationreq")
     public ResponseEntity delVacation(@RequestBody DeleteVacationDto dto){
-        System.out.println(dto.getReqId());
 
         deleteVacationService.vacation(dto);
-
         return ResponseEntity.ok().build();
     }
 }

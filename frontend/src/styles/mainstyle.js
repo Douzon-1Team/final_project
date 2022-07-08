@@ -71,4 +71,24 @@ const MainchatStyle = styled.div`
     }
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles};
+const AttendanceCardTitle = styled.div`
+    font-size: 30px;
+    margin-top: 4%;
+    text-align: center;
+`
+const AttendanceCardText = styled.div`
+    font-size: 60px;
+    margin-top: 4%;
+    text-align: center;
+`
+const CardContent = styled.div`
+    width: 250px;
+    height: 250px;
+`
+const TopLine = styled.div`
+    height: 15px;
+    background-color: ${(props) => props.color || "#0057b7"};
+
+`
+
+export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles, AttendanceCardTitle, AttendanceCardText, CardContent, TopLine};

@@ -1,8 +1,7 @@
 package com.example.final_project.service;
 
 import com.example.final_project.dto.CalendarResponseDto;
-import com.example.final_project.mapper.AnnualLeaveUsageMapper;
-import com.example.final_project.mapper.ProgressBar52hMapper;
+import com.example.final_project.mapper.SubComponentMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,15 +10,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class SubComponentInfoService {
-    private final ProgressBar52hMapper progressBar52hMapper;
-    private final AnnualLeaveUsageMapper annualLeaveUsageMapper;
+    private final SubComponentMapper subComponentMapper;
     public CalendarResponseDto SubComponentInfo(String empno){
         return CalendarResponseDto.builder()
-                .totalAnnualLeave(annualLeaveUsageMapper.totalAnnualLeave(empno))
-                .remainingAnnualLeaveDay(annualLeaveUsageMapper.remainingAnnualLeaveDay(empno))
-                .remainingAnnualLeaveTime(annualLeaveUsageMapper.remainingAnnualLeaveTime(empno))
-                .attendanceWeek(progressBar52hMapper.attendanceWeek(empno))
-                .overtimeWeek(progressBar52hMapper.overtimeWeek(empno))
-                .todayWorkTime(progressBar52hMapper.todayWorkTime(empno)).build();
+                .totalAnnualLeave(subComponentMapper.totalAnnualLeave(empno))
+                .remainingAnnualLeaveDay(subComponentMapper.remainingAnnualLeaveDay(empno))
+                .remainingAnnualLeaveTime(subComponentMapper.remainingAnnualLeaveTime(empno))
+                .attendanceWeek(subComponentMapper.attendanceWeek(empno))
+                .overtimeWeek(subComponentMapper.overtimeWeek(empno))
+                .todayWorkTime(subComponentMapper.todayWorkTime(empno))
+                .attendanceCount(subComponentMapper.attendanceCount(empno))
+                .tardyCount(subComponentMapper.tardyCount(empno))
+                .absenteeismCount(subComponentMapper.absenteeismCount(empno))
+                .vacationCount(subComponentMapper.vacationCount(empno)).build();
     }
 }

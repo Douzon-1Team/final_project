@@ -26,4 +26,7 @@ public interface EmpInfoCompMapper {
 
     @Select("UPDATE emp_info_comp SET flexible=#{flexible} WHERE empno=#{empno}")
     String updateFlexible(String empno, String flexible);
+
+    @Select("SELECT dept_no FROM emp_info_comp WHERE empno=#{empno}")
+    String findDeptNo(String empno);
 }

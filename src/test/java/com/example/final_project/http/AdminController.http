@@ -17,7 +17,7 @@ Content-Type: application/json
 POST http://localhost:8080/attendanceCheck
 Content-Type: application/x-www-form-urlencoded
 
-empno=220109&time=2022-07-01 14:00:00
+empno=220109&time=2022-07-07 15:00:00
 
 ### 그래프 조회용 테스트
 POST http://localhost:8080/main
