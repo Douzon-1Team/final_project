@@ -246,7 +246,34 @@ select count(case when tardy = 1 then 1 end) from attendance_status where empno 
 select count(case when etc = '결근' then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
 select count(case when etc = '휴가' then 1 end) from attendance_status where empno = 220102 and DATE_FORMAT(date,'%y%m') = DATE_FORMAT(now(),'%y%m');
 
+select *
+from attendance_time
+where on_off_work = 1;
 
 select *
-from attendance_status
-where tardy=1;
+from attendance_status a join attendance_time b
+on a.empno = b.empno
+where tardy=1 and DATE_FORMAT(a.date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+
+select emp_name, emp_profile
+from employee;
+
+
+-- 한시간마다 지각 체크
+select a.empno, flexible, get_to_work_time_set,get_to_work_time_set_f,
+(select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220109) req
+from attendance_status_test a join manager_setting b join emp_info_comp c
+on a.dept_no = b.dept_no and a.empno = c.empno
+where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and a.empno = 220109;
+
+select * from attendance_status_test where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+
+select *
+from attendance_time;
+
+select *
+from attendance_status_test a
+left outer join attendance_time b
+on a.empno = b.empno and DATE_FORMAT(a.date,'%y%m%d') =DATE_FORMAT(b.date,'%y%m%d')
+where a.attendance = 0 and DATE_FORMAT(a.date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+

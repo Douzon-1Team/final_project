@@ -12,8 +12,14 @@ import {Grid} from "@mui/material";
 
 const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
     const [options, setOptions] = useState({
-        //시간 추가해서 금일근무시간 실시간으로 증가 처리 필요
+
     });
+
+    const [time ,setTime] = useState(0)
+    setInterval(() => {
+        setTime(time+1);
+    }, 3600000);
+
     return (
         <Card sx={{ maxWidth: 500 }}>
             <CardContainer>
@@ -37,7 +43,7 @@ const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
                     초과 근무시간 : {overtimeWeek} H
                 </TextContainer>
                 <TextContainer>
-                    금일 근무시간 : {todayWorkTime} H
+                    금일 근무시간 : {todayWorkTime+time} H
                 </TextContainer>
             </CardContainer>
         </Card>
