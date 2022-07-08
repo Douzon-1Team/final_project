@@ -30,19 +30,19 @@ function DeptVacation() {
         {
             id: "1",
             name: "내 휴가",
-            color: "#03bd9e",
-            bgColor: "#03bd9e",
-            dragBgColor: "#03bd9e",
-            borderColor: "#03bd9e",
+            color: "#ffffff",
+            bgColor: "#00AAFF",
+            dragBgColor: "#00AAFF",
+            borderColor: "#00AAFF",
         },
         // 조퇴
         {
             id: "2",
             name: "다른 부서원 휴가",
             color: "#ffffff",
-            bgColor: "#00a9ff",
-            dragBgColor: "#00a9ff",
-            borderColor: "#00a9ff",
+            bgColor: "#ffcfa0",
+            dragBgColor: "#ff9f40",
+            borderColor: "#ff9f40",
         },
     ];
 
@@ -51,6 +51,7 @@ function DeptVacation() {
     const getvacation = async () => {
         await getMain({empno: 220102}).then((res) => {
                 const vacation = res.data;
+                console.log(vacation);
                 if (vacation.length != 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno.empInfo[0]) {
@@ -71,7 +72,7 @@ function DeptVacation() {
                     // error
                 }
             }
-        ).catch(console.log('실패야 이녀석아'));
+        ).catch(console.log('error'));
     }
 
 
