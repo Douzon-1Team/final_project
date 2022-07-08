@@ -26,14 +26,17 @@ public class NotificationService {
         for (String empnoDept : empnoList) {
             String name = employeeMapper.findNameByempno(empnoDept);
             String profile = employeeMapper.findProfileByempno(empnoDept);
-            log.info(profile);
             LocalTime date = notificationMapper.findOnWorkTimeByempno(empnoDept).toLocalTime();
+            boolean approve = (notificationMapper.findAcceptByempno(empnoDept).isPresent() || notificationMapper.findAgreeByempno(empnoDept).isPresent());
+            if(approve)log.info("짠");
             notificationDtoList.add(NotificationDto.builder()
                     .id(numb)
                     .empno(empnoDept)
                     .name(name)
                     .profile(profile)
+                    .approve(approve)
                     .date(date).build());
+            numb++;
         }
         return notificationDtoList;
     }

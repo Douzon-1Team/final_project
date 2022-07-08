@@ -23,13 +23,10 @@ export const Profilefrom = styled.div`
   min-width: 200px;
 `;
 
-export const UserImg = styled.div`
-  border: 1px solid black;
-  float: left;
-  width: 6vh;
-  height: 6vh;
-  border-radius: 50%;
-  text-align: center;
+export const UserImg = styled.img`
+    width: 55px;
+    height: 55px; 
+    border-radius: 50%;
 `;
 
 export const UserName = styled.div`
