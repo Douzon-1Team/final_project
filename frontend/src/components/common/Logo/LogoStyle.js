@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import LogoImg from '../../../../src/assets/img/logo.png';
+import SideLogo from '../../../../src/assets/img/sidebarlogo.png';
 
 export const LogoForm = styled.div`
   height: 7vh;
 `;
 
 export const LogoImgbox = styled.div`
-  height: 10vh;
-  width: 10vh;
-  margin-left: 4vw;
-  background-image: url(${LogoImg});
+  height: 15vh;
+  width: 20vh;
+  margin-left: 2vw;
+  background-image: url(${SideLogo});
   background-size: cover;
   &:hover { cursor: pointer; }
 `;

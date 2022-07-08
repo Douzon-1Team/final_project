@@ -18,6 +18,7 @@ import DeptVacation from "./components/DeptVacation/DeptVacation";
 import DeptMember from "./components/DeptMember/DeptMember";
 import AttendanceProblem from "./components/AttendanceProblem";
 import Report from "./components/Report";
+import Page404 from "./pages/Page404";
 import { styled } from '@mui/material/styles';
 
 const RootStyle = styled('div')({
@@ -58,7 +59,7 @@ function App() {
                     element={
                         <div>
                             {" "}
-                            없는 페이지 <Login />{" "}
+                            <Page404 />{" "}
                         </div>
                     }
                 />

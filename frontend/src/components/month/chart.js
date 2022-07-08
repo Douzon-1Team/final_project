@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import ECharts from 'echarts-for-react';
 import {MainchatStyle} from "../../styles/mainstyle";
 import Button from "@mui/material/Button";
@@ -74,10 +74,10 @@ const Chart = (props) => {
             },
         ]
     });
-    console.log(options.series[2].data);
-    options.series[1].data = [...nowork];
-    options.series[2].data = [...rest];
-    options.series[0].data = [...works];
+
+        options.series[1].data = [...nowork];
+        options.series[2].data = [...rest];
+        options.series[0].data = [...works];
 
     return (
         <>
