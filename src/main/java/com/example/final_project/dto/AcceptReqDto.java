@@ -3,14 +3,12 @@ package com.example.final_project.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-public class DeleteVacationDto {
-    private String reqId;
+public class AcceptReqDto {
+    private String reqid;
     private String empNo;
-    private int grossHours;
+    private int minusHours;
 }

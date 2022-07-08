@@ -14,14 +14,13 @@ export const LeaveSort = styled.div`
   height: 40px;
 `;
 export const LeaveTerm = styled.div`
-  display: ${({ termValid }) => (termValid === true ? "block" : "none")};
   border-top: 1px solid black;
   border-left: 0px;
   border-right: 0px;
   height: 40px;
 `;
 export const LeaveTime = styled.div`
-  display: ${({ timeValid }) => (timeValid === true ? "block" : "none")};
+  display: ${({ sortNum }) => (sortNum === 0 ? "none" : "")};
   border-top: 1px solid black;
   border-left: 0px;
   border-right: 0px;
@@ -195,33 +194,49 @@ export const ButtonD = styled.button`
 // ---------------------------------------------
 export const TermSelect = styled.div`
   input {
-    width: 120px;
+    width: 110px;
     border: 1px solid black;
     border-radius: 2px;
     background-color: #eaeaea;
     cursor: pointer;
+    font-weight: bolder;
   }
   float: left;
 `;
-export const TimeSelect = styled.div`
+export const TimeSelect1 = styled.div`
   input {
-    width: 120px;
     border: 1px solid black;
     border-radius: 2px;
-    background-color: #eaeaea;
-    cursor: pointer;
+    width:60px;
+    cursor:pointer;
+    background-color: ${({ pointerAble1 }) => (pointerAble1 === true ? "#eaeaea" : "none")};
+    pointer-events: ${({ pointerAble1 }) => (pointerAble1 === true ? "" : "none")};
+    border : ${({ pointerAble1 }) => (pointerAble1 === true ? "" : "0px")};
+    font-weight: bolder;
+  }
+  float: left;
+`;
+export const TimeSelect2 = styled.div`
+  input {
+    width:60px;
+    border: 1px solid black;
+    border-radius: 2px;
+    cursor:pointer;
+    background-color: ${({ pointerAble2 }) => (pointerAble2 === true ? "#eaeaea" : "none")};
+    pointer-events: ${({ pointerAble2 }) => (pointerAble2 === true ? "" : "none")};
+    border : ${({ pointerAble2 }) => (pointerAble2 === true ? "" : "0px")};
+    font-weight: bolder;
   }
   float: left;
 `;
 export const Text1 = styled.div`
   float: left;
-  padding-top: 3px;
+  padding-top: 2px;
   padding-right: 10px;
-  padding-left: 5px;
 `;
 export const HalfLeaveSet = styled.div`
   display: ${({ sortNum }) =>
-    sortNum === 2 || sortNum === 3 ? "none" : "block"};
+    sortNum === 2 || sortNum === 3 || sortNum===4? "none" : "block"};
   height: fit-content;
   width: 350px;
   height: 30px;
@@ -254,7 +269,8 @@ export const style = {
   ButtonC,
   ButtonD,
   TermSelect,
-  TimeSelect,
+  TimeSelect1,
+  TimeSelect2,
   Text1,
   HalfLeaveSet,
 };

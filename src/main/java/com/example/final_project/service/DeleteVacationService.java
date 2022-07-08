@@ -13,5 +13,8 @@ public class DeleteVacationService {
     public void vacation(DeleteVacationDto dto){
         if(deleteVacationMapper.save(dto)==0)
             throw new IllegalArgumentException("휴가 삭제에 실패하였습니다.");
+
+        if(deleteVacationMapper.save2(dto)==0)
+            throw new IllegalArgumentException("휴가 삭제에 실패하였습니다.");
     }
 }
