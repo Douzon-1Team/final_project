@@ -1,6 +1,27 @@
 import styled from "styled-components";
 
 const CalendarStyle = styled.div`
+    @media screen and (max-width: 2000px) {
+        width: 900px;
+    }
+    
+    @media screen and (max-width: 1650px) {
+        width: 700px;
+        button.mon {
+            display: none;
+        }
+        button.week {
+            display: none;
+        }
+        button.day {
+            display: none;
+        }button.today {
+            display: none;
+        }
+        @media screen and (max-width: 1450px) {
+        width: 1000px;
+    }
+    }
     display: inline-block;
     button {
         background-color: #00AAFF;
@@ -111,6 +132,9 @@ const CalendarStyle = styled.div`
 `
 
 const DeptCalendarStyle = styled.div`
+    @media screen and (max-width: 2000px) {
+            width: 1300px;
+    }
     display: inline-block;
     button {
         background-color: #00AAFF;

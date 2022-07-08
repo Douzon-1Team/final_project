@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Calendar from "../components/common/Calendar";
 import ProgressBar52h from "../components/ProgressBar52h";
 import AnnualLeaveUsage from "../components/AnnualLeaveUsage";
@@ -9,11 +9,11 @@ import AttendanceCard from "../components/AttendanceCard";
 
 // redux 사번 받아오기
 function Main() {
-  const subComponentData = useSelector((state) => state.calendarReducer[0]);
-    console.log(subComponentData[0])
+    const subComponentData = useSelector((state) => state.calendarReducer[0]);
 
   return (
       <MainStyle>
+          {subComponentData !== undefined ?
           <Mainchats>
           <ProgressBar52h
             attendanceWeek={subComponentData.attendanceWeek}
@@ -33,6 +33,7 @@ function Main() {
               vacationCount = {subComponentData.vacationCount}
           />
           </Mainchats>
+          : <></> }
         <Calendar />
       </MainStyle>
   );

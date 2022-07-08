@@ -61,6 +61,7 @@ const AttendanceProblem = (props) => {
     useEffect(() => {
         if (handleView === false) {
             setemp(props.data[0]);
+            console.log(props.data[1]);
             setdata(props.data[1]);
         }
     })
@@ -77,10 +78,11 @@ const AttendanceProblem = (props) => {
             for (let i = 0; i < x.length; i++) {
                 for (let j = 1; j < 13; j++) {
                     if (props.data[2][i].m === j) {
-                        x[i] = [props.data[2][i].m, props.data[2][i].deptNo, props.data[2][i].count]
+                        x[i] = [props.data[2][i].m-1, props.data[2][i].deptNo-1, props.data[2][i].count]
                     }
                 }
             }
+            console.log(x);
             setdeptdata(x);
             setdeptmem(uniqueArr);
         }
@@ -125,6 +127,9 @@ const AttendanceProblem = (props) => {
                 label: {
                     show: true
                 },
+                itemStyle:{
+                    color: '#626A8E',
+                },
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 20,
@@ -160,7 +165,7 @@ const AttendanceProblem = (props) => {
         },
         visualMap: {
             min: 0,
-            max: 10,
+            max: 40,
             calculable: true,
             orient: 'vertical',
             right: '5%',
@@ -237,6 +242,7 @@ const AttendanceProblem = (props) => {
         //         }
         //     ]
         // })
+        console.log(deptdata);
         option.yAxis.data = [...deptmem];
         option.series[0].data= [...deptdata];
     }

@@ -99,6 +99,7 @@ const DayWorkChat = (props) => {
                 emphasis: {
                     focus: 'series'
                 },
+                itemStyle: {color: '#64CD3C'},
             },
             {
                 type: 'bar',
@@ -106,6 +107,7 @@ const DayWorkChat = (props) => {
                 emphasis: {
                     focus: 'series'
                 },
+                itemStyle: {color: '#00AAFF'},
             },
         ]
     });

@@ -18,12 +18,13 @@ public interface CalendarMapper {
     List<CalendarResponseDto> findUserWork(String empno);
 
     // 휴가 데이터
-    @Select("select req title, reject, context, accept, reason, vacation_start VacationStart, DATE_FORMAT(vacation_start, '%Y-%m-%d') datestart, vacation_end VacationEnd, DATE_FORMAT(vacation_end, '%Y-%m-%d') dateend from attendance_req WHERE empno = #{empno} ORDER BY vacation_start;")
+    @Select("select req title, reject, context, accept, reason, vacation_start VacationStart, DATE_FORMAT(vacation_start, '%Y-%m-%d') datestart, vacation_end VacationEnd, DATE_FORMAT(vacation_end, '%Y-%m-%d') dateend from attendance_req WHERE empno = 220102 and req REGEXP '휴가|반차|연차' ORDER BY vacation_start;")
 //    List<CalendarResponseDto.workBuilder> findUserWork(String empno);
     List<CalendarResponseDto> findUserVacation(String empno);
 
     // 이상근태 데이터(req 이전)
-    @Select("select dept_no deptno, attendance, tardy, agree, etc, unregistered, DATE_FORMAT(date, '%Y-%m-%d') notreqdate from attendance_status where empno = #{empno} and etc REGEXP '무단결근|퇴근미등록|출근미등록';")
+    @Select("select dept_no deptno, date, accept,reject, attendance, tardy, agree, etc, unregistered, DATE_FORMAT(date, '%Y-%m-%d') notreqdate from attendance_status at join attendance_req ar on at.empno = ar.empno\n" +
+            "where at.empno = 220102 and etc REGEXP '결근|등록' and accept != true and reject != true and agree != true;")
     List<CalendarResponseDto> findUserNotWork(String empno);
 
 }
