@@ -212,7 +212,7 @@ select *
 from attendance_time
 where empno= 220109 and date like '2022-07-05%';
 
-select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220109
+select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = 220109;
 
 
 select *
@@ -277,3 +277,9 @@ left outer join attendance_time b
 on a.empno = b.empno and DATE_FORMAT(a.date,'%y%m%d') =DATE_FORMAT(b.date,'%y%m%d')
 where a.attendance = 0 and DATE_FORMAT(a.date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
 
+
+select * from attendance_status where tardy=1 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d');
+
+select emp_profile from employee where empno;
+
+select date from attendance_time where DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and on_off_work = 1 and empno = 220101;
