@@ -26,13 +26,22 @@ public class ManagerSettingService {
         return dto;
     }
 
-    // 1. 근무시간 설정
+    // 1. 근무시간 선택
+    @Transactional
+    public void updateWorkTimeChoice(ManagerSettingDto managerSettingDto){
+        String empno = managerSettingDto.getEmpno();
+        String flexible = managerSettingDto.getFlexible();
+        empInfoCompMapper.updateFlexible(empno, flexible);
+    }
+
+    // 2. 근무시간 설정
     @Transactional
     public void updateWorkTime(ManagerSettingDto managerSettingDto) {
         String empno = managerSettingDto.getEmpno();
-        String roleChk = employeeMapper.findByUserRole(empno);
+//        String roleChk = employeeMapper.findByUserRole(empno);
 
-        if (!roleChk.equals("ROLE_USER")) {
+//        System.out.println(empno + roleChk);
+//        if (!roleChk.equals("ROLE_USER")) {
             LocalTime WORK_START = managerSettingDto.getGetToWorkTimeSet();
             LocalTime WORK_END = managerSettingDto.getGetOffWorkTimeSet();
             LocalTime WORK_START_F = managerSettingDto.getGetToWorkTimeSetF();
@@ -44,11 +53,14 @@ public class ManagerSettingService {
             Time endFlex = Time.valueOf(WORK_END_F);
 
             ManagerSetting ms = ManagerSettingDto.toTimeSetting(managerSettingDto, start, end, startFlex, endFlex);
+            System.out.println(ms);
             managerSettingMapper.updateTime(ms);
-        } else {
-            String flexible = managerSettingDto.getFlexible();
-            empInfoCompMapper.updateFlexible(empno, flexible);
-        }
+//        } else {
+//            String flexible = managerSettingDto.getFlexible();
+//            empInfoCompMapper.updateFlexible(empno, flexible);
+//            System.out.println(flexible);
+//        }
+//        System.out.println("끝");
     }
 
     @Transactional

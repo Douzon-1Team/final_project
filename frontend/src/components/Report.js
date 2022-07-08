@@ -4,6 +4,7 @@ import AttendanceProblem from "./AttendanceProblem";
 import {getAttendance} from "../apis/AttendanceApi";
 import _ from "lodash";
 import {MainStyle} from "../styles/Globalstyle";
+import VacationGraph from "./VacationGraph";
 
 const Report = () => {
     const [data, setdata] = useState([[]]);
@@ -39,10 +40,13 @@ const Report = () => {
 
 
     return (
+      <>
         <MainStyle>
             <DayWorkChat data={daywork} />
             <AttendanceProblem data={[emp, data]} />
+            <VacationGraph />
         </MainStyle>
+      </>
     )
 }
 
