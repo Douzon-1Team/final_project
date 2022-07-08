@@ -2,52 +2,69 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {DayWorkChatStyle} from '../styles/DayWorkChatStyle'
 import _ from 'lodash';
+import {useNavigate} from 'react-router-dom';
 
 const DayWorkChat = (props) => {
-    // TODO : 출/퇴근 기록은 목록형에서 보여주기
-    // TODO : 중복 이름 제거 후 각각 넣어줌
-    // TODO : 총 근무시간이 8시간을 넘어간다면 초과근무 데이터로 넣어줌
     const [data, setdata] = useState([]);
+    const navigate = useNavigate();
 
-    // setdata(workmember);
-    // ['홍길동', 43.3, 85.8, 93.7],
-    // -> name, 총 근무시간(time, default 8), 8이상일경우 +, 출근&퇴근기록
+    // TODO : 분 단위로 표시
 
-    const worker = [];
+    const onwork = [];// 출근시간
+    const offwork = [];  // 퇴근시간
+    let workmember = [];
+    let hour = new Date().getHours();
+
     for (let i = 0; i < props.data.length; i++) {
-        if (props.data[i].onOffWork === true) {
-            worker.push(props.data[i]);
+        let count = 0;
+        for (let j = 0; j < props.data.length; j++) {
+            if (props.data[i].empno === props.data[j].empno) count += 1;
         }
-    }
-    console.log(worker);
-    let worktime = _.map(worker, 'totaltime'); // 정상 출근
-    console.log(worktime);
-    let overtimes; // 초과근무 배열
-    (overtimes = []).length = worktime.length;
-    overtimes.fill(0);
-    console.log(overtimes);
-    function overtime(n) {
-        for (let i = 0; i < overtimes.length; i++) {
-            console.log(n);
-            if (worktime[i] > 8) {
-                overtimes[i] = worktime[i]-8;
+        if (count > 1) {
+            if (offwork.length === 0) {
+                props.data[i].totaltime = 8;
+                offwork.push(props.data[i]);
+            }
+            if (offwork[offwork.length - 1].name === props.data[i].name) continue;
+            if (props.data[i].totaltime === null) {
+                props.data[i].totaltime = 8;
+                offwork.push(props.data[i]);
+            } else {
+                props.data[i].totaltime = 8;
+                offwork.push(props.data[i]);
+            }
+        } else if (count === 1) {
+            if (hour - props.data[i].onofftimenum < 0) {
+                props.data[i].totaltime = 0;
+                onwork.push(props.data[i]);
+            } else {
+                props.data[i].totaltime = hour - props.data[i].onofftimenum;
+                onwork.push(props.data[i]);
             }
         }
-        return overtimes;
     }
-    const overwork = _.map([8], overtime);
-    let workmember = [];
-    for (let j = 0; j < worker.length; j++) {
-        if (j == 0 ) workmember.push(['product', '총 근무시간', '초과근무시간']);
-        workmember.push([worker[j].name, worktime[j], overtimes[j]])
+    offwork.push(onwork[0]);
+    let overtimes; // 초과근무 배열
+    (overtimes = []).length = offwork.length;
+    overtimes.fill(0);
+    if (offwork.length !== 1) {
+        for (let i = 0; i < overtimes.length; i++) {
+            if (offwork[i].totaltime > 8) {
+                if (offwork[i].totaltime-8 < 0) {
+                    overtimes[i] = 0;
+                }
+                overtimes[i] = offwork[i].totaltime-8;
+            }
+        }
+        for (let j = 0; j < offwork.length; j++) {
+            if (j == 0 ) workmember.push(['product', '총 근무시간', '초과근무시간']);
+            workmember.push([offwork[j].name, offwork[j].totaltime, overtimes[j]]);
+        }
     }
 
     useEffect(() => {
         setdata([...workmember]);
     }, [])
-
-    // TODO : 출/퇴근 시간표시 -> bar 1개
-    // TODO : 총 근무시간 & 초과근무시간 표시 -> bar2개
 
     const [options, setOptions] = useState({
         tooltip: {
@@ -92,21 +109,21 @@ const DayWorkChat = (props) => {
             },
         ]
     });
-    // console.log(workmember);
-    // console.log(workmember);
+
     options.dataset.source = [...workmember];
-    console.log(options.dataset.source);
 
     return (
         <>
             {options.dataset.source.length !== 0 ?
+                <>
         <DayWorkChatStyle>
             <ECharts
                 option={options}
                 style={{width: "1000px", height:"800px"}}
             />
         </DayWorkChatStyle>
-            : <></> }
+                    <button onClick={() => navigate('/report/list', {state: options.dataset.source})}>목록형</button>
+          </>  : <></> }
         </>
     );
 }

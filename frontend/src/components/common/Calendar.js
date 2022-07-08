@@ -116,19 +116,27 @@ function Calendar() {
     const el = cal.current.calendarInst.getElement(id, calendarId);
 
     if (e.schedule.title !== "출근" && new Date() > e.schedule.start) {
-      const req = [];
+      const areq = [];
       console.log(e.schedule);
-      req.push(e.schedule.title);
-      req.push(e.schedule.start);
-      req.push(e.schedule.end);
-      // TODO : 이상근태가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
-      if (state !== null) {
+      areq.push(e.schedule.title);
+      areq.push(e.schedule.start);
+      areq.push(e.schedule.end);
+
+      let check = e.schedule.title,substring = "결제완료";
+
+      check.includes(substring)
+      // TODO : 이상근태 or 휴가가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
+      if (state === null && check.includes(substring) !== true) {
         navigate('/attendancereq', {
-          state: req,
+          state: areq,
         });
       }
-    } else {
-      console.log('non');
+    } else { // 신청한 휴가는 목록으로 이동
+      if (e.schedule.title !== "출근" && new Date() < e.schedule.start) {
+        let check2 = e.schedule.title,substring = "결제완료";
+        if (state === null && check2.includes(substring) !== true)
+        navigate('/leavelist');
+      }
     }
   }, []);
 

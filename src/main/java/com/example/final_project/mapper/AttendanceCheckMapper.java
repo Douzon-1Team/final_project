@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -26,7 +27,7 @@ public interface AttendanceCheckMapper {
     @Insert("INSERT INTO attendance_time (empno, dept_no, date, on_off_work, time) VALUES (#{empno}, #{deptNo}, #{date}, #{onOffWork}, #{time})")
     int attendanceCheck(AttendanceTime attendanceTime);
 
-    @Update("update attendance_status set ${columns} = #{values} where empno = #{empno} and date_format(date,'%Y-%m-%d') = #{date}")
+    @Update("update attendance_status_test set ${columns} = #{values} where empno = #{empno} and date_format(date,'%Y-%m-%d') = #{date}")
     int updateAttendanceStatus(AttendanceUpdateDto attendanceUpdateDto);
 
     @Select("select * from attendance_time where DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(#{date},'%y%m%d') and empno = #{empno} and on_off_work = #{onOffWork}")
@@ -52,5 +53,16 @@ public interface AttendanceCheckMapper {
 
     @Select("select * from attendance_req where req='시간연차' and DATE_FORMAT(vacation_start,'%y%m%d') = DATE_FORMAT(#{date},'%y%m%d') and accept=1 and empno = #{empno}")
     AttendanceReq timeVacation(String empno, LocalDateTime date);
+
+    //@Select("select a.empno from attendance_status_test a join manager_setting b join emp_info_comp c on a.dept_no = b.dept_no and a.empno = c.empno where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d')")
+    @Select("select empno from attendance_status_test where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d')")
+    List<String> findByNonAttendanceToday();
+
+    @Select("select a.empno, flexible, get_to_work_time_set,get_to_work_time_set_f,\n" +
+            "(select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = #{empno}) req\n" +
+            "from attendance_status_test a join manager_setting b join emp_info_comp c\n" +
+            "on a.dept_no = b.dept_no and a.empno = c.empno\n" +
+            "where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and a.empno = #{empno};")
+    AttendanceCheckDto tardyCheckPerHour(String empno);
 
 }

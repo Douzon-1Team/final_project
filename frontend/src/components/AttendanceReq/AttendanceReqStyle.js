@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const Container = styled.div`
   height: fit-content;
   width: 800px;
@@ -14,13 +15,6 @@ export const LeaveSort = styled.div`
   height: 40px;
 `;
 export const LeaveTerm = styled.div`
-  border-top: 1px solid black;
-  border-left: 0px;
-  border-right: 0px;
-  height: 40px;
-`;
-export const LeaveTime = styled.div`
-  display: ${({ timeValid }) => (timeValid === true ? "block" : "none")};
   border-top: 1px solid black;
   border-left: 0px;
   border-right: 0px;
@@ -56,14 +50,6 @@ export const TermTag = styled.div`
   font-weight: bolder;
   font-size: 17px;
 `;
-export const TimeTag = styled.div`
-  margin-top: 5px;
-  text-align: center;
-  width: 150px;
-  float: left;
-  font-weight: bolder;
-  font-size: 17px;
-`;
 export const NameTag = styled.div`
   margin-top: 5px;
   text-align: center;
@@ -86,11 +72,6 @@ export const SortContent = styled.div`
   float: left;
 `;
 export const TermContent = styled.div`
-  margin-top: 5px;
-  margin-left: 10px;
-  float: left;
-`;
-export const TimeContent = styled.div`
   margin-top: 5px;
   margin-left: 10px;
   float: left;
@@ -140,8 +121,8 @@ export const Button2_2 = styled.button`
 `;
 // ---------------------------------------------
 export const ButtonA = styled.button`
-  background-color: ${({ sortNum }) => (sortNum === 1 ? "#00aaff" : "")};
-  color: ${({ sortNum }) => (sortNum === 1 ? "#ffffff" : "")};
+  background-color: ${({sortNum}) => (sortNum === 1 ? "#00aaff" : "")};
+  color: ${({sortNum}) => (sortNum === 1 ? "#ffffff" : "")};
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 2px gray;
@@ -153,8 +134,8 @@ export const ButtonA = styled.button`
   font-weight: bolder;
 `;
 export const ButtonB = styled.button`
-  background-color: ${({ sortNum }) => (sortNum === 2 ? "#00aaff" : "")};
-  color: ${({ sortNum }) => (sortNum === 2 ? "#ffffff" : "")};
+  background-color: ${({sortNum}) => (sortNum === 2 ? "#00aaff" : "")};
+  color: ${({sortNum}) => (sortNum === 2 ? "#ffffff" : "")};
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 2px gray;
@@ -166,8 +147,8 @@ export const ButtonB = styled.button`
   font-weight: bolder;
 `;
 export const ButtonC = styled.button`
-  background-color: ${({ sortNum }) => (sortNum === 3 ? "#00aaff" : "")};
-  color: ${({ sortNum }) => (sortNum === 3 ? "#ffffff" : "")};
+  background-color: ${({sortNum}) => (sortNum === 3 ? "#00aaff" : "")};
+  color: ${({sortNum}) => (sortNum === 3 ? "#ffffff" : "")};
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 2px gray;
@@ -179,8 +160,8 @@ export const ButtonC = styled.button`
   font-weight: bolder;
 `;
 export const ButtonD = styled.button`
-  background-color: ${({ sortNum }) => (sortNum === 4 ? "#00aaff" : "")};
-  color: ${({ sortNum }) => (sortNum === 4 ? "#ffffff" : "")};
+  background-color: ${({sortNum}) => (sortNum === 4 ? "#00aaff" : "")};
+  color: ${({sortNum}) => (sortNum === 4 ? "#ffffff" : "")};
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 2px gray;
@@ -192,8 +173,8 @@ export const ButtonD = styled.button`
   font-weight: bolder;
 `;
 export const ButtonE = styled.button`
-  background-color: ${({ sortNum }) => (sortNum === 5 ? "#00aaff" : "")};
-  color: ${({ sortNum }) => (sortNum === 5 ? "#ffffff" : "")};
+  background-color: ${({sortNum}) => (sortNum === 5 ? "#00aaff" : "")};
+  color: ${({sortNum}) => (sortNum === 5 ? "#ffffff" : "")};
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 2px 2px 2px gray;
@@ -207,57 +188,38 @@ export const ButtonE = styled.button`
 // ---------------------------------------------
 export const TermSelect = styled.div`
   input {
-    width: 120px;
+    width: 110px;
     border: 1px solid black;
     border-radius: 2px;
     background-color: #eaeaea;
     cursor: pointer;
+    font-weight: bolder;
   }
+
   float: left;
-`;
-export const TimeSelect = styled.div`
-  input {
-    width: 120px;
-    border: 1px solid black;
-    border-radius: 2px;
-    background-color: #eaeaea;
-    cursor: pointer;
-  }
-  float: left;
-`;
-export const Text1 = styled.div`
-  float: left;
-  padding-top: 3px;
-  padding-right: 10px;
-  padding-left: 5px;
 `;
 // ---------------------------------------------
 export const style = {
-  Container,
-  LeaveSort,
-  LeaveTerm,
-  LeaveTime,
-  LeaveName,
-  LeaveReason,
-  SortTag,
-  TermTag,
-  TimeTag,
-  NameTag,
-  ReasonTag,
-  SortContent,
-  TermContent,
-  TimeContent,
-  NameContent,
-  ReasonContent,
-  ButtonBox,
-  Button2_1,
-  Button2_2,
-  ButtonA,
-  ButtonB,
-  ButtonC,
-  ButtonD,
-  ButtonE,
-  TermSelect,
-  TimeSelect,
-  Text1,
+    Container,
+    LeaveSort,
+    LeaveTerm,
+    LeaveName,
+    LeaveReason,
+    SortTag,
+    TermTag,
+    NameTag,
+    ReasonTag,
+    SortContent,
+    TermContent,
+    NameContent,
+    ReasonContent,
+    ButtonBox,
+    Button2_1,
+    Button2_2,
+    ButtonA,
+    ButtonB,
+    ButtonC,
+    ButtonD,
+    ButtonE,
+    TermSelect,
 };
