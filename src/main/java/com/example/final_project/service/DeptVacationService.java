@@ -1,5 +1,6 @@
 package com.example.final_project.service;
 
+import com.example.final_project.dto.ChartListDto;
 import com.example.final_project.dto.DeptVacationDto;
 import com.example.final_project.dto.DeptVacationStatusDto;
 import com.example.final_project.exception.EmpException;
@@ -32,5 +33,10 @@ public class DeptVacationService {
         String deptNo = empInfoCompMapper.findDeptNo(empno);
         List<DeptVacationStatusDto> dto = deptVacationMapper.findDeptVacationStatus(deptNo);
         return dto;
+    }
+
+    @Transactional
+    public List<ChartListDto> dVacationList(){
+        return deptVacationMapper.findDeptVacationHistory("01");
     }
 }
