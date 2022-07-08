@@ -19,14 +19,21 @@ public class ManagerSettingController {
         return ResponseEntity.ok().body(managerSettingDto);
     }
 
-    // 1. 근무(출/퇴근)시간 설정
+    // 1. 근무(출/퇴근)시간 선택
+    @PostMapping("/setting")
+    public ResponseEntity updateWorkTimeChoice(@RequestBody ManagerSettingDto managerSettingDto) {
+        managerSettingService.updateWorkTimeChoice(managerSettingDto);
+        return ResponseEntity.ok().build();
+    }
+
+    // 2. 근무(출/퇴근)시간 설정
     @PostMapping("/setting/time")
     public ResponseEntity updateWorkTime(@RequestBody ManagerSettingDto managerSettingDto) {
         managerSettingService.updateWorkTime(managerSettingDto);
         return ResponseEntity.ok().build();
     }
 
-    // 2. 페이지 보여주기 방식(차트/목록)
+    // 3. 페이지 보여주기 방식(차트/목록)
     @PostMapping("/setting/graph")
     public ResponseEntity updateGraph(@RequestBody ManagerSettingDto managerSettingDto) {
         managerSettingService.updateGraph(managerSettingDto);

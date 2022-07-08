@@ -1,8 +1,6 @@
 package com.example.final_project.controller;
 
-import com.amazonaws.Response;
 import com.example.final_project.dto.AcceptReqEmpNoDto;
-import com.example.final_project.mapper.AcceptReqEmpNoMapper;
 import com.example.final_project.service.AcceptReqEmpNoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -31,11 +31,14 @@ public interface EmployeeMapper {
     @Select("select dept_no from emp_info_comp where empno = #{empno}")
     String findDeptNoByempno(String empno);
 
+    @Select("SELECT empno FROM emp_info_comp WHERE empno NOT LIKE '%admin%' and dept_no = #{deptNo}")
+    List<String> findEmpNoByDept(String deptNo);
+
     @Select("select emp_name from employee where empno = #{empno}")
     String findNameByempno(String empno);
 
-    @Select("SELECT empno FROM emp_info_comp WHERE empno NOT LIKE '%admin%' and dept_no = #{deptNo}")
-    List<String> findEmpNoByDept(String deptNo);
+    @Select("select emp_profile from employee where empno = #{empno}")
+    String findProfileByempno(String empno);
 
     @UpdateProvider(type=SqlProvider.class, method="updateEmployee")
     int updateByEmpno(Employee employee);

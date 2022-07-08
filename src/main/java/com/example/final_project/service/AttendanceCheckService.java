@@ -33,7 +33,6 @@ public class AttendanceCheckService {
 
     public LocalTime onWorkTimeCheck(AttendanceCheckDto attendanceCheckDto){
         LocalTime onWorkTime;
-        log.info(attendanceCheckDto.getFlexible()+"");
         if(attendanceCheckDto.getFlexible() == 1){
             onWorkTime = attendanceCheckDto.getGetToWorkTimeSetF().toLocalTime();
         } else{
