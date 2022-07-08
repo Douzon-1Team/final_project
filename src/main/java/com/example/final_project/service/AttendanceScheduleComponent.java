@@ -4,22 +4,26 @@ import com.example.final_project.dto.AttendanceCheckDto;
 import com.example.final_project.dto.AttendanceUpdateDto;
 import com.example.final_project.mapper.AttendanceCheckMapper;
 import com.example.final_project.mapper.EmployeeMapper;
+import com.example.final_project.model.AttendanceReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class AttendanceScheduleComponent {
-
     private final AttendanceCheckMapper attendanceCheckMapper;
     private final EmployeeMapper employeeMapper;
+
+
 
     @Scheduled(cron = "0 55 23 * * ?")
     public void scheduleTomorrow(){
@@ -33,9 +37,15 @@ public class AttendanceScheduleComponent {
     }
     @Scheduled(cron="0/10 * * * * *")
     public void scheduledTest(){
+        tardyCheckPerHour();
 //        createStatus();
 //        checkUnregisteredOff();
-//        log.info("스케줄러");
+        log.info("스케줄러");
+    }
+
+    @Scheduled(cron="0 0 0/1 * * *")
+    public void schedulePerHour(){
+        tardyCheckPerHour();
     }
 
     public void createStatus(){
@@ -48,6 +58,7 @@ public class AttendanceScheduleComponent {
         }
     }
 
+    @Transactional
     public void checkUnregisteredOff(){
         List<String> empnoList = employeeMapper.findAllEmpNo();
         LocalDate yesterday = LocalDate.now().minusDays(1);
@@ -71,8 +82,35 @@ public class AttendanceScheduleComponent {
             }
         }
     }
-    public void tardyCheckPerTime(){
+
+    @Transactional
+    public void tardyCheckPerHour(){
         //한시간마다 출석하지 않은 직원에 대하여 지각확인
+        List<String> empnoList = attendanceCheckMapper.findByNonAttendanceToday();
+        for (String empno : empnoList) {
+            AttendanceCheckDto attendanceCheckDto = attendanceCheckMapper.tardyCheckPerHour(empno);
+            LocalTime onWorkTime;
+            if(attendanceCheckDto.getFlexible() == 1){
+                onWorkTime = attendanceCheckDto.getGetToWorkTimeSetF().toLocalTime();
+            } else{
+                onWorkTime = attendanceCheckDto.getGetToWorkTimeSet().toLocalTime();
+            }
+            if("오전반차".equals(attendanceCheckDto.getReq())){
+                onWorkTime = onWorkTime.plusHours(4);
+            } else if ("시간연차".equals(attendanceCheckDto.getReq())) {
+                AttendanceReq attendanceReq = attendanceCheckMapper.timeVacation(attendanceCheckDto.getEmpno(),LocalDateTime.now());
+                if(onWorkTime == attendanceReq.getVacationStart().toLocalTime()){
+                    onWorkTime = attendanceReq.getVacationEnd().toLocalTime();
+                }
+            }
+            if (LocalTime.now().isAfter(onWorkTime)){
+                log.info(onWorkTime.toString());
+                attendanceCheckMapper.updateAttendanceStatus(
+                        AttendanceUpdateDto.builder()
+                                .empno(empno).date(LocalDate.now()).columns("tardy").values("1").build());
+            }
+
+        }
     }
 
     public void attendanceStatusUpdate(String empno, String column, String value, LocalDate date){

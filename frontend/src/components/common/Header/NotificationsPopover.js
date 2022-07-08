@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { set, sub } from 'date-fns';
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 // @mui
 import {
   Box,
@@ -15,7 +15,7 @@ import {
   ListItemText,
   ListSubheader,
   ListItemAvatar,
-  ListItemButton,
+  ListItemButton, ListItemIcon, ListItem,
 } from '@mui/material';
 // utils
 import { fToNow } from './formatTime';
@@ -23,54 +23,39 @@ import { fToNow } from './formatTime';
 import Iconify from './Iconify';
 import Scrollbar from './Scrollbar';
 import MenuPopover from './MenuPopover';
-
+import {MemberImg} from "../../../styles/NotificationStyle";
 // ----------------------------------------------------------------------
 
 const NOTIFICATIONS = [
   {
     id: '1',
-    title: 'Your order is placed',
-    description: 'waiting for shipping',
-    avatar: null,
-    type: 'order_placed',
-    createdAt: set(new Date(), { hours: 10, minutes: 30 }),
-    isUnRead: true,
+    name: '임지영',
+    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
+    time: null,
   },
   {
     id: '2',
-    title: 'aet',
-    description: 'answered to your comment on the Minimal',
-    avatar: '/static/mock-images/avatars/avatar_2.jpg',
-    type: 'friend_interactive',
-    createdAt: sub(new Date(), { hours: 3, minutes: 30 }),
-    isUnRead: true,
+    name: '이지은',
+    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg" ,
+    time: null,
   },
   {
     id: '3',
-    title: 'You have new message',
-    description: '5 unread messages',
-    avatar: null,
-    type: 'chat_message',
-    createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
-    isUnRead: false,
+    name: '이한용',
+    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
+    time: "9:12:00",
   },
   {
     id: '4',
-    title: 'You have new mail',
-    description: 'sent from Guido Padberg',
-    avatar: null,
-    type: 'mail',
-    createdAt: sub(new Date(), { days: 2, hours: 3, minutes: 30 }),
-    isUnRead: false,
+    name: '신중호',
+    avatar: 'https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg',
+    time: "9:10:00",
   },
   {
     id: '5',
-    title: 'Delivery processing',
-    description: 'Your order is being shipped',
-    avatar: null,
-    type: 'order_shipped',
-    createdAt: sub(new Date(), { days: 3, hours: 3, minutes: 30 }),
-    isUnRead: false,
+    name: '주승범',
+    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
+    time: null,
   },
 ];
 
@@ -79,7 +64,7 @@ export default function NotificationsPopover() {
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
+  const tardy = notifications.filter((item) => item.time === null).length;
 
   const [open, setOpen] = useState(null);
 
@@ -91,15 +76,6 @@ export default function NotificationsPopover() {
     setOpen(null);
   };
 
-  const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
-        ...notification,
-        isUnRead: false,
-      }))
-    );
-  };
-
   return (
     <>
       <IconButton
@@ -108,7 +84,7 @@ export default function NotificationsPopover() {
         onClick={handleOpen}
         sx={{ width: 40, height: 40 }}
       >
-        <Badge badgeContent={totalUnRead} color="error">
+        <Badge badgeContent={tardy} color="error">
           <Iconify icon="eva:bell-fill" width={20} height={20} />
         </Badge>
       </IconButton>
@@ -121,58 +97,22 @@ export default function NotificationsPopover() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">Notifications</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              You have {totalUnRead} unread messages
-            </Typography>
+            <Typography variant="subtitle1">근태 이상자</Typography>
           </Box>
-
-          {totalUnRead > 0 && (
-            <Tooltip title=" Mark all as read">
-              <IconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Iconify icon="eva:done-all-fill" width={20} height={20} />
-              </IconButton>
-            </Tooltip>
-          )}
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}>
-          <List
-            disablePadding
-            subheader={
-              <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                New
-              </ListSubheader>
-            }
-          >
-            {notifications.slice(0, 2).map((notification) => (
+          <List disablePadding>
+            {notifications.slice(0, NOTIFICATIONS.length).map((notification) => (
               <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
 
-          <List
-            disablePadding
-            subheader={
-              <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                Before that
-              </ListSubheader>
-            }
-          >
-            {notifications.slice(2, 5).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
-            ))}
-          </List>
         </Scrollbar>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple>
-            View All
-          </Button>
-        </Box>
       </MenuPopover>
     </>
   );
@@ -182,18 +122,14 @@ export default function NotificationsPopover() {
 
 NotificationItem.propTypes = {
   notification: PropTypes.shape({
-    createdAt: PropTypes.instanceOf(Date),
     id: PropTypes.string,
-    isUnRead: PropTypes.bool,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    type: PropTypes.string,
+    name: PropTypes.string,
     avatar: PropTypes.any,
   }),
 };
 
 function NotificationItem({ notification }) {
-  const { avatar, title } = renderContent(notification);
+  const { avatar, name } = renderContent(notification);
 
   return (
     <ListItemButton
@@ -201,31 +137,19 @@ function NotificationItem({ notification }) {
         py: 1.5,
         px: 2.5,
         mt: '1px',
-        ...(notification.isUnRead && {
+        ...(notification.time === null && {
           bgcolor: 'action.selected',
         }),
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        <MemberImg src = {notification.avatar} />
       </ListItemAvatar>
       <ListItemText
-        primary={title}
-        secondary={
-          <Typography
-            variant="caption"
-            sx={{
-              mt: 0.5,
-              display: 'flex',
-              alignItems: 'center',
-              color: 'text.disabled',
-            }}
-          >
-            <Iconify icon="eva:clock-outline" sx={{ mr: 0.5, width: 16, height: 16 }} />
-            {fToNow(notification.createdAt)}
-          </Typography>
-        }
+        primary={notification.name}
+        secondary={notification.time ===null ? "미출근" : notification.time }
       />
+
     </ListItemButton>
   );
 }
@@ -233,41 +157,17 @@ function NotificationItem({ notification }) {
 // ----------------------------------------------------------------------
 
 function renderContent(notification) {
-  const title = (
+  const name = (
     <Typography variant="subtitle2">
-      {notification.title}
+      {notification.name}
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
         &nbsp;
       </Typography>
     </Typography>
   );
 
-  if (notification.type === 'order_placed') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_package.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'order_shipped') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_shipping.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'mail') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_mail.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'chat_message') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_chat.svg" />,
-      title,
-    };
-  }
   return {
-    avatar: notification.avatar ? <img alt={notification.title} src={notification.avatar} /> : null,
-    title,
+    avatar: notification.avatar ? <img alt={notification.name} src={notification.avatar} /> : null,
+    name,
   };
 }
