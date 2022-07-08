@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -7,6 +7,7 @@ import {getAttendance} from "../apis/AttendanceApi";
 import _ from "lodash";
 import DayWorkChat from "./DayWorkChat";
 import {useNavigate} from 'react-router-dom'
+import AttendanceDept from "./AttendanceDept";
 
 const AttendanceProblem = (props) => {
     const navigate = useNavigate();
@@ -41,18 +42,49 @@ const AttendanceProblem = (props) => {
     // prettier-ignore
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
-    const changeData = [];
     const [view, setView] = useState('list');
+    const [handleView, sethandleView] = useState(false);
+    const [deptmem, setdeptmem] = useState([]);
+    const [deptdata, setdeptdata] = useState([]);
+    let uniqueArr = [];
+    let x = [];
+    let deptName;
+
+
 
     const handleChange = (event, nextView) => {
+        console.log(event);
+        console.log(nextView);
         setView(nextView);
     };
 
     useEffect(() => {
-        console.log(props.data[0]);
-        setemp(props.data[0]);
-        setdata(props.data[1]);
+        if (handleView === false) {
+            setemp(props.data[0]);
+            setdata(props.data[1]);
+        }
     })
+    console.log(deptmem);
+
+    useEffect(() => {
+        console.log(handleView);
+        if (handleView === true) {
+            deptName = _.map(props.data[2] , 'deptName');
+            const setData = new Set(deptName);
+            const uniqueArr = [...setData];
+            // let dept = uniqueArr;
+            let x = new Array(props.data[2].length);
+            for (let i = 0; i < x.length; i++) {
+                for (let j = 1; j < 13; j++) {
+                    if (props.data[2][i].m === j) {
+                        x[i] = [props.data[2][i].m, props.data[2][i].deptNo, props.data[2][i].count]
+                    }
+                }
+            }
+            setdeptdata(x);
+            setdeptmem(uniqueArr);
+        }
+    }, [handleView])
 
     const [options, setOptions] = useState({
         tooltip: {
@@ -103,39 +135,153 @@ const AttendanceProblem = (props) => {
         ]
     });
 
-    options.yAxis.data = [...emp];
-    options.series[0].data= [...data];
+    const [option, setOption] = useState({
+        tooltip: {
+
+        },
+        grid: {
+            height: '75%',
+            width: '75%',
+            top: 'center'
+        },
+        xAxis: {
+            type: 'category',
+            data: month,
+            splitArea: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: [],
+            splitArea: {
+                show: true
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 10,
+            calculable: true,
+            orient: 'vertical',
+            right: '5%',
+            bottom: 'center'
+        },
+        series: [
+            {
+                name: '이상근태 빈도',
+                type: 'heatmap',
+                data: [],
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 20,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    });
+
+
+    if (handleView === false) {
+        options.yAxis.data = [...emp];
+        options.series[0].data= [...data];
+    } else if(handleView === true) {
+        // setOptions({
+        //     tooltip: {
+        //
+        //     },
+        //     grid: {
+        //         height: '75%',
+        //         width: '75%',
+        //         top: 'center'
+        //     },
+        //     xAxis: {
+        //         type: 'category',
+        //         data: month,
+        //         splitArea: {
+        //             show: true
+        //         }
+        //     },
+        //     yAxis: {
+        //         type: 'category',
+        //         data: [...deptmem],
+        //         splitArea: {
+        //             show: true
+        //         }
+        //     },
+        //     visualMap: {
+        //         min: 0,
+        //         max: 10,
+        //         calculable: true,
+        //         orient: 'vertical',
+        //         right: '5%',
+        //         bottom: 'center'
+        //     },
+        //     series: [
+        //         {
+        //             name: '이상근태 빈도',
+        //             type: 'heatmap',
+        //             data: [...deptdata],
+        //             label: {
+        //                 show: true
+        //             },
+        //             emphasis: {
+        //                 itemStyle: {
+        //                     shadowBlur: 20,
+        //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+        //                 }
+        //             }
+        //         }
+        //     ]
+        // })
+        option.yAxis.data = [...deptmem];
+        option.series[0].data= [...deptdata];
+    }
 
     return (
         <>
-        {emp.length === 0 ? <></> :
-            <>
-                <ComponentContainer>
-                    <div>
-                        <ToggleButtonGroup
-                            orientation="vertical"
-                            value={view}
-                            exclusive
-                            onChange={handleChange}
-                        >
-                            <ToggleButton value="list" aria-label="list" style={{height: "150px"}}>
-                                <ToggleText>사원별</ToggleText>
-                            </ToggleButton>
-                            <ToggleButton value="module" aria-label="module" style={{height: "150px"}}>
-                                <ToggleText>부서별</ToggleText>
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
-                    <ChartContainer>
-                        <ECharts
-                            option={options}
-                            style={{width: "1000px", height:"800px"}}
-                        />
-                    </ChartContainer>
-                </ComponentContainer>
-                <button onClick={() => navigate('/report/att')}>목록형</button>
-            </>
-        }
+            {emp.length === 0 ? <></> :
+                <>
+                    <ComponentContainer>
+                        <div>
+                            <ToggleButtonGroup
+                                orientation="vertical"
+                                value={view}
+                                exclusive
+                                onChange={handleChange}
+                            >
+                                <ToggleButton onClick={() => sethandleView(false)} value="list" aria-label="list" style={{height: "150px"}}>
+                                    <ToggleText>사원별</ToggleText>
+                                </ToggleButton>
+                                <ToggleButton onClick={() => sethandleView(true)} value="module" aria-label="module" style={{height: "150px"}}>
+                                    <ToggleText>부서별</ToggleText>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                        </div>
+                        <ChartContainer>
+                            {handleView === false ?
+                                <ECharts
+                                    option={options}
+                                    style={{width: "1000px", height:"800px"}}
+                                />
+                            :
+                                <>
+                                {deptmem.length !== 0 ?
+                                <ECharts
+                                    option={option}
+                                    style={{width: "1000px", height:"800px"}}
+                                />
+                                    : <></> }
+                                </>
+                                }
+                        </ChartContainer>
+                    </ComponentContainer>
+                    <button onClick={() => navigate('/report/att')}>목록형</button>
+                </>
+            }
         </>
     );
 }

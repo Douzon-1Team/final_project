@@ -28,8 +28,11 @@ public class ReportController {
 
         List<ReportDto> DayWorkList = reportMapper.findDayWork(empno);
 
+        List<ReportDto> DeptAttendance = reportMapper.findAllDeptAttendance();
+
         Attendancereport.addAll(DeptMemberList);
         Attendancereport.addAll(DayWorkList);
+        Attendancereport.addAll(DeptAttendance);
 
         return ResponseEntity.ok().body(Attendancereport);
     }

@@ -15,12 +15,15 @@ public class ReportDto {
     private String empno;
     private String name;
     private String rank;
-    private String deptNo;
+    private int deptNo;
     private String etc;
     private int m;
     private int count;
     private int sort;
     private String onofftime;
+    private int onofftimenum;
     private int totaltime;
     private boolean onOffWork;
+    private String deptName;
+
 }
