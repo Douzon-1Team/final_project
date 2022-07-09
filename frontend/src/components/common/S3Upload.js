@@ -3,6 +3,9 @@ import { v4 } from 'uuid';
 import axios from 'axios';
 import {useSelector} from "react-redux";
 import {FileTypeError, ImgUploadSuccess} from "./alert/alert";
+import {FcEditImage} from 'react-icons/fc';
+import {IconBox} from '../../styles/profile';
+
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const S3Upload = () => {
@@ -28,22 +31,15 @@ const S3Upload = () => {
                 event.target.value = null;
             } else {
                 if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') {
-                    // console.log(file);
-                    // ReactS3Client.uploadFile(file, 'profile_'+file.name)
                     ReactS3Client.uploadFile(file, `profile-${empNo}-`+newFileName)
                         .then((data) => {
                             axios.post('/profile/updateImg', { empno: `${empNo}`, profile: data.location }, imagePatchConfig)
                                 .then((res) => {
-                                    console.log(res);
-                                    console.log(data);
-                                    console.log('이미지 전송 완료'); //res.data, '~~'
                                     localStorage.setItem('profile', res.data);
                                     ImgUploadSuccess();
                                     window.location.reload();
                                 }).catch((err) => { console.log(err, '이미지 변경 안됨'); });
-                        }).catch(
-                        console.log(file));
-                    // (err) => console.log(err));// 여기
+                        }).catch( console.log(file));
                 } else {
                     FileTypeError();
                     event.target.value = null;
@@ -51,7 +47,17 @@ const S3Upload = () => {
             }
         }
     };
-    return <input type='file' accept='image/*' onChange={handleClick} />
+    return (
+      <>
+          <input id='icon' type='file' accept='image/*' onChange={handleClick} hidden />
+          <label htmlFor='icon'>
+            <IconBox>
+              <FcEditImage size="20px" />
+            </IconBox>
+          </label>
+      </>
+    );
 };
+
 
 export default S3Upload;

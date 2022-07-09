@@ -108,6 +108,7 @@ const LeftContainer = styled.div`
     float: left;
     box-sizing: border-box;
     background: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const RightContainer = styled.div`

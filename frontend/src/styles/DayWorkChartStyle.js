@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 const DayWorkChartStyle = styled.div`
-    display : inline-flex;
-    margin-top : 30px;
+    margin-top : 100px;
     
     .dw{
         z-index: 10;
@@ -14,15 +13,15 @@ const DayWorkChartStyle = styled.div`
     .ap{
         z-index: 10;
         position: relative;
-        left: 900px;
-        top: -35px;
+        left: 800px;
+        top: -55px;
     }
     
     .vg{
         z-index: 10;
         position: relative;
-        left: 900px;
-        top: 30px;
+        left: 600px;
+        top: -50px
     }
     
     .hour{

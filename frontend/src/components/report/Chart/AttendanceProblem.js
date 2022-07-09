@@ -4,21 +4,17 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import {ToggleText, ComponentContainer, ChartContainer} from "../../../styles/graphStyle";
 import _ from "lodash";
-import {useNavigate} from 'react-router-dom'
 import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 import Button from '@mui/material/Button';
 import {useLocation} from "react-router";
-
+import CollapseList from "../List/CollapseList";
 const AttendanceProblem = () => {
-    const navigate = useNavigate();
     const {state} = useLocation();
-    // prettier-ignore
+    const [status, setStatus] = useState(true);
     const month = [
         '1월', '2월', '3월', '4월', '5월', '6월',
         '7월', '8월', '9월', '10월', '11월','12월'
     ];
-
-    // prettier-ignore
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
     const [view, setView] = useState('list');
@@ -26,8 +22,6 @@ const AttendanceProblem = () => {
     const [deptmem, setdeptmem] = useState([]);
     const [deptdata, setdeptdata] = useState([]);
     let deptName;
-
-
 
     const handleChange = (event, nextView) => {
         console.log(event);
@@ -174,12 +168,14 @@ const AttendanceProblem = () => {
     }
 
     return (
-        <DayWorkChartStyle>
+        <DayWorkChartStyle style={{marginLeft:'8%'}}>
+            <h3>부서내 이상근태 현황</h3>
             <Button className="ap" variant = "outlined"
-                    onClick={() => navigate('/report/att', {state: "attendanceProblem"})}>목록형</Button>
-        {emp.length === 0 ? <></> :
-            <>
-                <ComponentContainer>
+                    onClick={() => setStatus((prev) => !prev)}>
+                {status ? "목록형" : "차트형"}
+            </Button>
+        {emp.length !== 0 && status?
+                <ComponentContainer style={{width:'60%'}}>
                     <div>
                         <ToggleButtonGroup
                             orientation="vertical"
@@ -199,21 +195,21 @@ const AttendanceProblem = () => {
                         {handleView === false ?
                             <ECharts
                                 option={options}
-                                style={{width: "1000px", height:"800px"}}
+                                style={{width: "900px", height:"720px"}}
                             />
                             :
                             <>
                                 {deptmem.length !== 0 ?
                                     <ECharts
                                         option={option}
-                                        style={{width: "1000px", height:"800px"}}
+                                        style={{width: "900px", height:"720px"}}
                                     />
                                     : <></> }
                             </>
                         }
                     </ChartContainer>
                 </ComponentContainer>
-            </>
+            : <CollapseList state="attendanceProblem"/>
         }
         </DayWorkChartStyle>
     );
