@@ -46,7 +46,6 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     const empInfo = useSelector((state) => state.EMP_INFO.empInfo);
-    console.log(empInfo);
     let empRole;
     if (empInfo[2] === "ROLE_MANAGER") {
         empRole = "근태관리자"
@@ -96,27 +95,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
                     </AccountStyle>
                 </Link>
             </Box>
-            {/* TODO : 사이드바 대체  */}
-            {/*<NavSection navConfig={navConfig} />*/}
-            {/*<List*/}
-            {/*    sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}*/}
-            {/*    component="nav"*/}
-            {/*>*/}
-            {/*  <ListItemButton onClick={handleClick}>*/}
-            {/*    <ListItemText primary="Inbox" />*/}
-            {/*    {open ? <ExpandLess /> : <ExpandMore />}*/}
-            {/*  </ListItemButton>*/}
-            {/*  <Collapse in={open} timeout="auto" unmountOnExit>*/}
-            {/*    <List component="div" disablePadding>*/}
-            {/*      <ListItemButton sx={{ pl: 4 }}>*/}
-            {/*        <ListItemText primary="월별보기" />*/}
-            {/*      </ListItemButton>*/}
-            {/*      <ListItemButton sx={{ pl: 4 }}>*/}
-            {/*        <ListItemText primary="주별보기" />*/}
-            {/*      </ListItemButton>*/}
-            {/*    </List>*/}
-            {/*  </Collapse>*/}
-            {/*</List>*/}
             <SideBar />
 
             <Box sx={{ flexGrow: 1 }} />
