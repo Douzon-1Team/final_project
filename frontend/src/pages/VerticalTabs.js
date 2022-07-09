@@ -106,12 +106,8 @@ export default function VerticalTabs() {
   return (
     <div className={classes.root}>
       <Tabs
-        orientation="vertical"
-        variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
       >
         <Tab label="개인정보" {...a11yProps(0)} />
         <Tab label="비밀번호 변경" {...a11yProps(1)} />

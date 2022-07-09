@@ -199,6 +199,9 @@ const RightContainer = styled.div`
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
+    .MuiButtonBase-root {
+        padding: 0px !important;
+    }
 `;
 
 const IconBox = styled.div` 

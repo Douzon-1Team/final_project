@@ -16,7 +16,7 @@ function Profile() {
         getProfile(empNo).then(response => {
             setEmp(response);
         })
-    }, []);
+    }, [emp]);
 
     return (
         <MainStyle>

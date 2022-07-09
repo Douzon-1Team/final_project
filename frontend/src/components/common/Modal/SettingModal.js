@@ -18,7 +18,8 @@ const style = {
   p: 4,
 };
 
-export default function SettingModal() {
+export default function SettingModal(props) {
+  console.log(props);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,7 +35,7 @@ export default function SettingModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <ModalTab />
+            <ModalTab setOpen={setOpen} />
           </Typography>
         </Box>
       </Modal>

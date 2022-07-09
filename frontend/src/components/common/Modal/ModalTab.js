@@ -35,7 +35,7 @@ function a11yProps(index) {
   return { d: `simple-tab-${index}`, 'aria-controls': `simple-tabpanel-${index}`, };
 }
 
-export default function ModalTab() {
+export default function ModalTab(props) {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2]);
   const [empDept, setEmpDept] = useState(
@@ -57,16 +57,13 @@ export default function ModalTab() {
   const onValidFlexible = async ({ empno, deptNo, flexible }) => {
     const response = await settingTimeChoice({ empno, deptNo, flexible });
     if (response.status) {
-      // TODO: alert modal z-index 변경 필요
-
       SettingSuccess();
-      // window.location.reload();
+      return props.setOpen(false);
     } else { SettingError(); }
   };
 
   // 02. 근무시간 설정
   const onValid = async ({ empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF }) => {
-    // TODO : return false 걸기
     if(getToWorkTimeSet >= getOffWorkTimeSet) {
       TimeSettingError();
       return false;
@@ -78,14 +75,15 @@ export default function ModalTab() {
     const response = await settingTime({ empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF });
     if (response.status) {
       SettingSuccess();
+      return props.setOpen(false);
     } else { SettingError(); }
   };
 
   const onValidGraph = async ({ empno, deptNo, graph }) => {
     const response = await settingGraph({ empno, deptNo, graph });
     if (response.status) {
-      // TODO: alert modal z-index 변경 필요
       SettingSuccess();
+      return props.setOpen(false);
     } else { SettingError(); }
   };
 
