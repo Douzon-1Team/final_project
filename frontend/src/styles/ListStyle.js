@@ -7,7 +7,6 @@ const ListStyle = styled.div`
     }
 
     width: 70%;
-    margin: auto;
 
     .MuiTable-root[aria-label="collapsible table"], .MuiTable-root[aria-label="simple table"]{
         margin-top: 10px;
@@ -16,7 +15,7 @@ const ListStyle = styled.div`
       border-collapse: separate;
       border-spacing: 0 8px;
       
-      tr:first-of-type{ width:10%; }
+      tr:first-of-type{ width:5%; }
       th{
         background: #00AAFF;
         color: white;

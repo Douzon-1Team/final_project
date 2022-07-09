@@ -7,7 +7,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
 import ListStyle from '../../../styles/ListStyle';
-import { useLocation } from 'react-router';
 import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
 
 function InnerRow({row, month}) {
@@ -82,10 +81,11 @@ function InnerRow({row, month}) {
     );
 }
 
-const CollapseList = () => {
+const CollapseList = (props) => {
     const rows = [];
     const [rows2, setrows] = useState([]);
-    const state = useLocation().state;
+    const state = props.state;
+    console.log(state);
     let tmp = true;
 
     let month;
@@ -114,8 +114,8 @@ const CollapseList = () => {
 
     async function dVacationHistory () {
         const response = await axios.get("http://localhost:8080/report/dvacation");
-        setrows(state.deptStatus);
-        state.deptStatus.map((item) => {
+        setrows(state);
+        state.map((item) => {
             item.history = [];
             response.data.map((i) => {
                 if(i.empno === item.empno){
@@ -134,20 +134,23 @@ const CollapseList = () => {
 
     return (
         <ListStyle>
-            <h2>부서별 휴가 사용</h2><hr/>
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <Header>
                         <TableCell style={{"width":"10%"}}/>
-                        <TableCell>사번</TableCell>
-                        <TableCell>이름</TableCell>
                         {state !== "attendanceProblem" ? <>
+                            <TableCell>사번</TableCell>
+                            <TableCell>이름</TableCell>
                             <TableCell>사용 연차</TableCell>
                             <TableCell>남은 연차</TableCell>
                             <TableCell>사용 시간</TableCell>
                             <TableCell>남은 시간</TableCell>
-                            </> : <TableCell>평균</TableCell>
+                            </> : <>
+                            <TableCell style={{width:'30%'}}>사번</TableCell>
+                            <TableCell style={{width:'30%'}}>이름</TableCell>
+                            <TableCell style={{width:'30%'}}>평균</TableCell>
+                        </>
                         }
                     </Header>
                 </TableHead>
@@ -159,8 +162,6 @@ const CollapseList = () => {
             </Table>
         </TableContainer> : <h1>loading</h1>}
         </ListStyle>)
-
 }
-
 
 export default CollapseList;

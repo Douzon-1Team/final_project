@@ -115,7 +115,8 @@ const DayWorkChart = () => {
     options.dataset.source = [...workmember];
 
     return (
-        <DayWorkChartStyle>
+        <DayWorkChartStyle style={{marginLeft:'8%'}}>
+            <h3>부서 주간 근무 현황</h3><hr/>
         {options.dataset.source.length !== 0 ?
             <ECharts
                 option={options}

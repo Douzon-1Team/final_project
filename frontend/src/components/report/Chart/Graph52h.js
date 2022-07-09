@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 
 const Graph52h = () => {
     let [attendanceWeek, setAttendance] = useState([]);
@@ -83,7 +84,8 @@ const Graph52h = () => {
     options.series[0].data = [...attendanceWeek];
 
     return (
-        <DayWorkChartStyle>
+        <DayWorkChartStyle style={{marginLeft: '17%'}}>
+            <h3>주간 근무시간 현황</h3><hr/>
             {name.length !== 0 ?
                 <ECharts
                     option={options}
