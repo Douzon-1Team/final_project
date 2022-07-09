@@ -3,12 +3,15 @@ import {getAttendance} from "../apis/AttendanceApi";
 import _ from "lodash";
 import {MainStyle} from "../styles/Globalstyle";
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useNavigate} from "react-router";
 import {ReportStyle} from "../styles/ReportStyle";
+import {IoMdStats} from 'react-icons/io';
+import {BiCalendarX} from 'react-icons/bi';
+import {BsBarChartSteps} from 'react-icons/bs';
+import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 
 const Report = () => {
     const navigate = useNavigate();
@@ -48,24 +51,27 @@ const Report = () => {
       <MainStyle>
         <ReportStyle>
             <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/52Gr")}>
+                <IoMdStats size={200} className="icon" />
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="div" className="font">
                         주 52시간 근태관리 차트
                     </Typography>
                 </CardContent>
             </Card>
             <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/weekworkGr", {
                 state: daywork,
-            })} className="test">
+            })}>
+                <StackedBarChartIcon sx={{ fontSize: 200, marginLeft: 8 }} />
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="div" className="font">
                         부서 주간 근무 현황
                     </Typography>
                 </CardContent>
             </Card>
             <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/vacationGr")}>
+                <BsBarChartSteps size={200} className="icon" />
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="div" className="font">
                         부서 연차사용 현황
                     </Typography>
                 </CardContent>
@@ -73,8 +79,9 @@ const Report = () => {
             <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/AttGr", {
                 state: [emp, data, deptattendance],
             })}>
+                <EventBusyIcon sx={{ fontSize: 200, marginLeft: 8 }} />
                 <CardContent>
-                    <Typography variant="h5" component="div">
+                    <Typography variant="h5" component="div" className="font">
                         부서/타부서 이상근태 현황
                     </Typography>
                 </CardContent>
@@ -83,8 +90,5 @@ const Report = () => {
       </MainStyle>
     )
 }
-// report/52Gr
-// report/dayworkGr
-// report/vacationGr
-// report/AttGr
+
 export default Report;
