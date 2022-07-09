@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {DayWorkChatStyle} from '../styles/DayWorkChatStyle'
-import _ from 'lodash';
-import {useNavigate} from 'react-router-dom';
-import Button from '@mui/material/Button';
 
 const DayWorkChat = (props) => {
     const [data, setdata] = useState([]);
-    const navigate = useNavigate();
 
     // TODO : 분 단위로 표시
 
@@ -115,10 +111,6 @@ const DayWorkChat = (props) => {
 
     return (
         <DayWorkChatStyle>
-            <Button className="dw" variant="outlined"
-                    onClick={() => navigate('/report/list',
-                        {state: {data:options.dataset.source, url:"dayWork"}}
-                    )}>목록형</Button>
             {options.dataset.source.length !== 0 ?
                 <ECharts
                     option={options}

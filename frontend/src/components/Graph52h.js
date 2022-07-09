@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {getGraph52hData} from "../apis/Graph52hApi";
 import {useSelector} from "react-redux";
-import Button from "@mui/material/Button";
 import {useNavigate} from 'react-router-dom';
 import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
 
 const Graph52h = () => {
-    const navigate = useNavigate();
     let [attendanceWeek, setAttendance] = useState([]);
     let [overtimeWeek, setOvertimeWeek] = useState([]);
     let [name, setName] = useState([]);
@@ -85,11 +83,6 @@ const Graph52h = () => {
     options.xAxis.data = [...name];
     options.series[1].data = [...overtimeWeek];
     options.series[0].data = [...attendanceWeek];
-
-    const data = [];
-    for(let i=0; i<name.length; i++){
-        data.push({name: name[i], attendance: attendanceWeek[i], overtime: overtimeWeek[i]});
-    }
 
     return (
         <DayWorkChatStyle>
