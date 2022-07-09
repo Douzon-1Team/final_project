@@ -93,10 +93,6 @@ const Graph52h = () => {
 
     return (
         <DayWorkChatStyle>
-            <Button className="hour" variant="outlined"
-                    onClick={() => navigate('/report/list',
-                        {state: {data: data, url: "52hour"}})}
-            >목록형</Button>
             {name.length !== 0 ?
                 <ECharts
                     option={options}

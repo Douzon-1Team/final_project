@@ -2,21 +2,21 @@ import React, {useEffect, useState} from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
 import ListStyle from '../styles/ListStyle';
 import { useLocation } from 'react-router';
+import {Header, Row, EtcButton} from './admin/EmpTableStyle';
 
-function Row({row, month}) {
+function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
     console.log(row)
 
     return (
         <>
-            <TableRow>
+            <Row>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -36,14 +36,14 @@ function Row({row, month}) {
                         <TableCell>{row.remainHour}</TableCell>
                     </> : <TableCell>{(row.count / month).toFixed(2)}</TableCell>
                 }
-            </TableRow>
+            </Row>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: 0}} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit style={{paddingLeft: '20%'}}>
                         <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <h3 style={{"marginLeft":"10px", "textAlign":"initial"}}>
                                 상세 이력
-                            </Typography>
+                            </h3>
                             <Table size="small" aria-label="detail-history">
                                 <TableHead>
                                     {month ?
@@ -63,14 +63,14 @@ function Row({row, month}) {
                                 </TableHead>
                                 <TableBody>
                                     {row.history.map((historyRow) => (
-                                        <TableRow>
+                                        <Row>
                                             {month === null ? null : <TableCell>{historyRow.date}</TableCell>}
                                             <TableCell>
-                                                <button className={`${historyRow.etc}`}>{historyRow.etc}</button>
+                                                <EtcButton className={`${historyRow.etc}`}>{historyRow.etc}</EtcButton>
                                             </TableCell>
                                             <TableCell>{historyRow.start}</TableCell>
                                             <TableCell>{historyRow.end}</TableCell>
-                                        </TableRow>
+                                        </Row>
                                     ))}
                                 </TableBody>
                             </Table>
@@ -134,10 +134,11 @@ const AttendanceProblemList = () => {
 
     return (
         <ListStyle>
+            <h2>부서별 휴가 사용</h2><hr/>
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
-                    <TableRow>
+                    <Header>
                         <TableCell style={{"width":"10%"}}/>
                         <TableCell>사번</TableCell>
                         <TableCell>이름</TableCell>
@@ -148,11 +149,11 @@ const AttendanceProblemList = () => {
                             <TableCell>남은 시간</TableCell>
                             </> : <TableCell>평균</TableCell>
                         }
-                    </TableRow>
+                    </Header>
                 </TableHead>
                 <TableBody>
                     {rows2.map((row) => (
-                        <Row key={row.empName} row={row} month={month}/>
+                        <InnerRow key={row.empName} row={row} month={month}/>
                     ))}
                 </TableBody>
             </Table>
