@@ -7,11 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
+import ListStyle from '../styles/ListStyle';
+import { useLocation } from 'react-router';
 
-function Row(props) {
-    const { row } = props;
+function Row({row, month}) {
     const [open, setOpen] = React.useState(false);
-
+    console.log(row)
 
     return (
         <>
@@ -26,8 +27,15 @@ function Row(props) {
                     </IconButton>
                 </TableCell>
                 <TableCell>{row.empno}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>평균</TableCell>
+                <TableCell>{row.empName}</TableCell>
+                {month === null ?
+                    <>
+                        <TableCell>{15 - row.remainDay}</TableCell>
+                        <TableCell>{row.remainDay}</TableCell>
+                        <TableCell>{120 - row.remainHour}</TableCell>
+                        <TableCell>{row.remainHour}</TableCell>
+                    </> : <TableCell>{(row.count / month).toFixed(2)}</TableCell>
+                }
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -38,18 +46,28 @@ function Row(props) {
                             </Typography>
                             <Table size="small" aria-label="detail-history">
                                 <TableHead>
-                                    <TableRow>
-                                        <TableCell>날짜</TableCell>
-                                        <TableCell>근태구분</TableCell>
-                                        <TableCell>출근시간</TableCell>
-                                        <TableCell>퇴근시간</TableCell>
-                                    </TableRow>
+                                    {month ?
+                                        <TableRow>
+                                            <TableCell>날짜</TableCell>
+                                            <TableCell>근태구분</TableCell>
+                                            <TableCell>출근시간</TableCell>
+                                            <TableCell>퇴근시간</TableCell>
+                                        </TableRow> :
+                                        <TableRow>
+                                            <TableCell>연차구분</TableCell>
+                                            <TableCell>시작 날짜</TableCell>
+                                            <TableCell>종료 날짜</TableCell>
+                                        </TableRow>
+                                    }
+
                                 </TableHead>
                                 <TableBody>
                                     {row.history.map((historyRow) => (
                                         <TableRow>
-                                            <TableCell>{historyRow.date}</TableCell>
-                                            <TableCell>{historyRow.etc}</TableCell>
+                                            {month === null ? null : <TableCell>{historyRow.date}</TableCell>}
+                                            <TableCell>
+                                                <button className={`${historyRow.etc}`}>{historyRow.etc}</button>
+                                            </TableCell>
                                             <TableCell>{historyRow.start}</TableCell>
                                             <TableCell>{historyRow.end}</TableCell>
                                         </TableRow>
@@ -64,43 +82,28 @@ function Row(props) {
     );
 }
 
-// Row.propTypes = {
-//     row: PropTypes.shape({
-//         calories: PropTypes.number.isRequired,
-//         carbs: PropTypes.number.isRequired,
-//         fat: PropTypes.number.isRequired,
-//         history: PropTypes.arrayOf(
-//             PropTypes.shape({
-//                 amount: PropTypes.number.isRequired,
-//                 customerId: PropTypes.string.isRequired,
-//                 date: PropTypes.string.isRequired,
-//             }),
-//         ).isRequired,
-//         name: PropTypes.string.isRequired,
-//         price: PropTypes.number.isRequired,
-//         protein: PropTypes.number.isRequired,
-//     }).isRequired,
-// };
-
 const CollapseList = () => {
-    // const [raw, setRaw] = useState([]);
     const rows = [];
     const [rows2, setrows] = useState([]);
+    const state = useLocation().state;
     let tmp = true;
 
-    async function test () {
+    let month;
+    state !== "attendanceProblem" ? month = null : month = new Date().getMonth();
+
+    async function attendanceProblem(){
         const response = await axios.get("http://localhost:8080/report/list");
-        console.log(response.data)
         response.data.map((item) => {
             rows.map((i) => {
                 if (i.empno === item.empno) {
                     tmp = false;
+                    i.count = i.count+1;
                     i.history.push({date: item.date, etc: item.etc, start: item.start, end: item.end});
                 }
             })
             if(tmp) {
                 rows.push({
-                    empno: item.empno, name: item.name,
+                    empno: item.empno, empName: item.empName, count:1,
                     history: [{date: item.date, etc: item.etc, start: item.start, end: item.end}]
                 });
             }
@@ -109,35 +112,52 @@ const CollapseList = () => {
         setrows(rows);
     }
 
+    async function dVacationHistory () {
+        const response = await axios.get("http://localhost:8080/report/dvacation");
+        setrows(state.deptStatus);
+        state.deptStatus.map((item) => {
+            item.history = [];
+            response.data.map((i) => {
+                if(i.empno === item.empno){
+                    item.history.push({etc: i.etc, start: i.start, end: i.end})
+                }
+            })
+        })
+    }
+
     useEffect(( ) => {
         if (rows2.length === 0) {
-            test();
+            if(state === "attendanceProblem") attendanceProblem();
+            else dVacationHistory();
         }
     }, [rows2]);
-    console.log(rows2);
-
-    console.log(rows2);
 
     return (
-        <>
+        <ListStyle>
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
-                        <TableCell/>
+                        <TableCell style={{"width":"10%"}}/>
                         <TableCell>사번</TableCell>
                         <TableCell>이름</TableCell>
-                        <TableCell>평균</TableCell>
+                        {state !== "attendanceProblem" ? <>
+                            <TableCell>사용 연차</TableCell>
+                            <TableCell>남은 연차</TableCell>
+                            <TableCell>사용 시간</TableCell>
+                            <TableCell>남은 시간</TableCell>
+                            </> : <TableCell>평균</TableCell>
+                        }
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {rows2.map((row) => (
-                        <Row key={row.name} row={row} />
+                        <Row key={row.empName} row={row} month={month}/>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer> : <h1>loading</h1>}
-        </>)
+        </ListStyle>)
 
 }
 

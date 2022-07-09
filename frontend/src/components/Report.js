@@ -44,7 +44,6 @@ const Report = () => {
         chatData();
     }, [])
 
-
     return (
       <MainStyle>
         <ReportStyle>

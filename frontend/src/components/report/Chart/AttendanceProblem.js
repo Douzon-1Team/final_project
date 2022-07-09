@@ -7,6 +7,8 @@ import {getAttendance} from "../../../apis/AttendanceApi";
 import _ from "lodash";
 import DayWorkChat from "./DayWorkChart";
 import {useNavigate} from 'react-router-dom'
+import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
+import Button from '@mui/material/Button';
 import AttendanceDept from "./AttendanceDept";
 import {useLocation} from "react-router";
 
@@ -250,47 +252,37 @@ const AttendanceProblem = () => {
     }
 
     return (
-        <>
-            {emp.length === 0 ? <></> :
-                <>
-                    <ComponentContainer>
-                        <div>
-                            <ToggleButtonGroup
-                                orientation="vertical"
-                                value={view}
-                                exclusive
-                                onChange={handleChange}
-                            >
-                                <ToggleButton onClick={() => sethandleView(false)} value="list" aria-label="list" style={{height: "150px"}}>
-                                    <ToggleText>사원별</ToggleText>
-                                </ToggleButton>
-                                <ToggleButton onClick={() => sethandleView(true)} value="module" aria-label="module" style={{height: "150px"}}>
-                                    <ToggleText>부서별</ToggleText>
-                                </ToggleButton>
-                            </ToggleButtonGroup>
-                        </div>
-                        <ChartContainer>
-                            {handleView === false ?
-                                <ECharts
-                                    option={options}
-                                    style={{width: "1000px", height:"800px"}}
-                                />
-                            :
-                                <>
-                                {deptmem.length !== 0 ?
-                                <ECharts
-                                    option={option}
-                                    style={{width: "1000px", height:"800px"}}
-                                />
-                                    : <></> }
-                                </>
-                                }
-                        </ChartContainer>
-                    </ComponentContainer>
-                    <button onClick={() => navigate('/report/att')}>목록형</button>
-                </>
-            }
-        </>
+        <DayWorkChatStyle>
+            <Button className="ap" variant = "outlined"
+                    onClick={() => navigate('/report/att', {state: "attendanceProblem"})}>목록형</Button>
+        {emp.length === 0 ? <></> :
+            <>
+                <ComponentContainer>
+                    <div>
+                        <ToggleButtonGroup
+                            orientation="vertical"
+                            value={view}
+                            exclusive
+                            onChange={handleChange}
+                        >
+                            <ToggleButton value="list" aria-label="list" style={{height: "150px"}}>
+                                <ToggleText>사원별</ToggleText>
+                            </ToggleButton>
+                            <ToggleButton value="module" aria-label="module" style={{height: "150px"}}>
+                                <ToggleText>부서별</ToggleText>
+                            </ToggleButton>
+                        </ToggleButtonGroup>
+                    </div>
+                    <ChartContainer>
+                        <ECharts
+                            option={options}
+                            style={{width: "1000px", height:"800px"}}
+                        />
+                    </ChartContainer>
+                </ComponentContainer>
+            </>
+        }
+        </DayWorkChatStyle>
     );
 }
 

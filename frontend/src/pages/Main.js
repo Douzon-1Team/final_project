@@ -4,7 +4,6 @@ import ProgressBar52h from "../components/MainChart/ProgressBar52h";
 import AnnualLeaveUsage from "../components/MainChart/AnnualLeaveUsage";
 import { useSelector } from "react-redux";
 import { MainStyle } from "../styles/Globalstyle";
-import {Mainchats} from "../styles/Chartstyle";
 import AttendanceCard from "../components/MainChart/AttendanceCard";
 
 // redux 사번 받아오기

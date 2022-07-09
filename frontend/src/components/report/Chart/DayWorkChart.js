@@ -4,6 +4,7 @@ import {DayWorkChartStyle} from '../../../styles/DayWorkChartStyle'
 import _ from 'lodash';
 import {useNavigate} from 'react-router-dom';
 import {useLocation} from "react-router";
+import Button from '@mui/material/Button';
 
 const DayWorkChart = () => {
     const {state} = useLocation();
@@ -119,6 +120,10 @@ const DayWorkChart = () => {
 
     return (
         <>
+            <Button className="dw" variant="outlined"
+                    onClick={() => navigate('/report/list',
+                        {state: {data:options.dataset.source, url:"dayWork"}}
+                    )}>목록형</Button>
             {options.dataset.source.length !== 0 ?
                 <>
         <DayWorkChartStyle>
