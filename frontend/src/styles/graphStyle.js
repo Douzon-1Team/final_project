@@ -5,11 +5,14 @@ const ToggleText = styled.div`
     
 `
 const ComponentContainer = styled.div`
-    display : inline-flex;
+    width: 400px;
+    display : flex;
     margin:1%;
 `
 const ChartContainer = styled.div`
-    max-height : 500px;
+    .echarts-for-react {
+        width: 500px;
+    }
 `
 
 

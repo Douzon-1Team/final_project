@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { Grid } from '@mui/material';
-import {AttendanceCardTitle, AttendanceCardText, CardContent, TopLine} from "../styles/mainstyle";
+import {AttendanceCardTitle, AttendanceCardText, CardContent, TopLine, MainCards} from "../../styles/mainstyle";
 
 const cardAttendance = ({title,value,color}) => {
     return(
@@ -23,24 +23,26 @@ const cardAttendance = ({title,value,color}) => {
 
 const AttendanceCard = ({attendanceCount, tardyCount, absenteeismCount, vacationCount }) => {
     return (
+        <MainCards>
         <Card sx={{ maxWidth: 500 }}>
             <Grid container spacing="auto">
                 <Grid item xs={6}>
-                    <Card variant="outlined">{cardAttendance({title:"출근" , value:attendanceCount , color:"#0057b7"})}</Card>
+                    <Card className="card1" variant="outlined">{cardAttendance({title:"출근" , value:attendanceCount , color:"#03bd9e"})}</Card>
                 </Grid>
                 <Grid item xs={6}>
-                    <Card variant="outlined">{cardAttendance({title:"지각" , value:tardyCount , color: "#ffe65a"})}</Card>
+                    <Card className="card2" variant="outlined">{cardAttendance({title:"지각" , value:tardyCount , color: "#FFA500"})}</Card>
                 </Grid>
             </Grid>
             <Grid container spacing="auto">
                 <Grid item xs={6}>
-                    <Card variant="outlined">{cardAttendance({title:"휴가" , value:absenteeismCount, color: "#4baf4b"})}</Card>
+                    <Card className="card3" variant="outlined">{cardAttendance({title:"휴가" , value:absenteeismCount, color: "#00AAFF"})}</Card>
                 </Grid>
                 <Grid item xs={6}>
-                    <Card variant="outlined">{cardAttendance({title:"결근" , value:vacationCount, color: "#c9474f"})}</Card>
+                    <Card className="card4" variant="outlined">{cardAttendance({title:"결근" , value:vacationCount, color: "#FF0000"})}</Card>
                 </Grid>
             </Grid>
         </Card>
+        </MainCards>
     );
 }
 

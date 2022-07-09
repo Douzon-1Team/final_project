@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-const DayWorkChatStyle = styled.div`
+const DayWorkChartStyle = styled.div`
+    display : inline-flex;
     margin-top : 30px;
     
     .dw{
@@ -31,4 +32,4 @@ const DayWorkChatStyle = styled.div`
     }
 `
 
-export {DayWorkChatStyle};
+export {DayWorkChartStyle};

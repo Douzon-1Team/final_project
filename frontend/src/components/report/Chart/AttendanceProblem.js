@@ -2,17 +2,20 @@ import React, {useEffect, useLayoutEffect, useState} from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {ToggleText, ComponentContainer, ChartContainer} from "../styles/graphStyle";
-import {getAttendance} from "../apis/AttendanceApi";
+import {ToggleText, ComponentContainer, ChartContainer} from "../../../styles/graphStyle";
+import {getAttendance} from "../../../apis/AttendanceApi";
 import _ from "lodash";
-import DayWorkChat from "./DayWorkChat";
+import DayWorkChat from "./DayWorkChart";
 import {useNavigate} from 'react-router-dom'
-import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 import Button from '@mui/material/Button';
 import AttendanceDept from "./AttendanceDept";
+import {useLocation} from "react-router";
 
-const AttendanceProblem = (props) => {
+const AttendanceProblem = () => {
     const navigate = useNavigate();
+    const {state} = useLocation();
+    console.log(state);
     // prettier-ignore
     const month = [
         '1월', '2월', '3월', '4월', '5월', '6월',
@@ -62,27 +65,28 @@ const AttendanceProblem = (props) => {
 
     useEffect(() => {
         if (handleView === false) {
-            setemp(props.data[0]);
-            setdata(props.data[1]);
+            setemp(state[0]);
+            console.log(state[1]);
+            setdata(state[1]);
         }
     })
-    console.log(deptmem);
 
     useEffect(() => {
         console.log(handleView);
         if (handleView === true) {
-            deptName = _.map(props.data[2] , 'deptName');
+            deptName = _.map(state[2] , 'deptName');
             const setData = new Set(deptName);
             const uniqueArr = [...setData];
             // let dept = uniqueArr;
-            let x = new Array(props.data[2].length);
+            let x = new Array(state[2].length);
             for (let i = 0; i < x.length; i++) {
                 for (let j = 1; j < 13; j++) {
-                    if (props.data[2][i].m === j) {
-                        x[i] = [props.data[2][i].m, props.data[2][i].deptNo, props.data[2][i].count]
+                    if (state[2][i].m === j) {
+                        x[i] = [state[2][i].m-1, state[2][i].deptNo-1, state[2][i].count]
                     }
                 }
             }
+            console.log(x);
             setdeptdata(x);
             setdeptmem(uniqueArr);
         }
@@ -127,6 +131,9 @@ const AttendanceProblem = (props) => {
                 label: {
                     show: true
                 },
+                itemStyle:{
+                    color: '#626A8E',
+                },
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 20,
@@ -162,7 +169,7 @@ const AttendanceProblem = (props) => {
         },
         visualMap: {
             min: 0,
-            max: 10,
+            max: 40,
             calculable: true,
             orient: 'vertical',
             right: '5%',
@@ -239,12 +246,13 @@ const AttendanceProblem = (props) => {
         //         }
         //     ]
         // })
+        console.log(deptdata);
         option.yAxis.data = [...deptmem];
         option.series[0].data= [...deptdata];
     }
 
     return (
-        <DayWorkChatStyle>
+        <DayWorkChartStyle>
             <Button className="ap" variant = "outlined"
                     onClick={() => navigate('/report/att', {state: "attendanceProblem"})}>목록형</Button>
         {emp.length === 0 ? <></> :
@@ -274,7 +282,7 @@ const AttendanceProblem = (props) => {
                 </ComponentContainer>
             </>
         }
-        </DayWorkChatStyle>
+        </DayWorkChartStyle>
     );
 }
 

@@ -13,6 +13,7 @@ import {MainStyle} from "../../styles/Globalstyle"
 
 export const AttendanceReq = () => {
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 데이터
+    console.log(state);
     const selectedDate = (state == null) ? null : state._date;
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);

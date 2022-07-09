@@ -6,9 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
-import ListStyle from '../styles/ListStyle';
+import ListStyle from '../../../styles/ListStyle';
 import { useLocation } from 'react-router';
-import {Header, Row, EtcButton} from './admin/EmpTableStyle';
+import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
 
 function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
@@ -82,7 +82,7 @@ function InnerRow({row, month}) {
     );
 }
 
-const AttendanceProblemList = () => {
+const CollapseList = () => {
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = useLocation().state;
@@ -163,4 +163,4 @@ const AttendanceProblemList = () => {
 }
 
 
-export default AttendanceProblemList;
+export default CollapseList;

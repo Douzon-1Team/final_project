@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
-import {getGraph52hData} from "../apis/Graph52hApi";
+import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
-import {useNavigate} from 'react-router-dom';
-import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
 
 const Graph52h = () => {
     let [attendanceWeek, setAttendance] = useState([]);
@@ -85,14 +83,14 @@ const Graph52h = () => {
     options.series[0].data = [...attendanceWeek];
 
     return (
-        <DayWorkChatStyle>
+        <DayWorkChartStyle>
             {name.length !== 0 ?
                 <ECharts
                     option={options}
                     style={{width: '700px', height: '500px'}}
                 />
             : <></> }
-        </DayWorkChatStyle>
+        </DayWorkChartStyle>
     );
 }
 
