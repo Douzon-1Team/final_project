@@ -23,9 +23,6 @@ public class DeptMemberList {
     @GetMapping("/deptmember")
     public ResponseEntity<?> deptMemberList(@RequestParam("empno") String empno) {
         LocalDate date = LocalDate.now();
-        System.out.println(empno);
-        System.out.println(String.valueOf(date));
-        System.out.println(date);
 
         List<DeptMemberListDto> deptMemberList = deptMemberMapper.findDeptMemberList(empno, String.valueOf(date));
 

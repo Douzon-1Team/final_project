@@ -116,7 +116,7 @@ const DayWorkChart = () => {
 
     return (
         <DayWorkChartStyle style={{marginLeft:'8%'}}>
-            <h3>부서 주간 근무 현황</h3>
+            <h3>부서원 당일 근무 현황</h3>
         {options.dataset.source.length !== 0 ?
             <ECharts
                 option={options}

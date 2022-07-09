@@ -37,7 +37,7 @@ const AttendanceProblem = () => {
     })
 
     useEffect(() => {
-        console.log(handleView);
+        console.log(state);
         if (handleView === true) {
             deptName = _.map(state[2] , 'deptName');
             const setData = new Set(deptName);
@@ -169,7 +169,7 @@ const AttendanceProblem = () => {
 
     return (
         <DayWorkChartStyle style={{marginLeft:'8%'}}>
-            <h3>부서내 이상근태 현황</h3>
+            <h3>부서별 이상근태 현황</h3>
             <Button className="ap" variant = "outlined"
                     onClick={() => setStatus((prev) => !prev)}>
                 {status ? "목록형" : "차트형"}
