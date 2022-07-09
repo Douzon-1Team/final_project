@@ -3,6 +3,7 @@ import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {DayWorkChatStyle} from '../styles/DayWorkChatStyle'
 import _ from 'lodash';
 import {useNavigate} from 'react-router-dom';
+import Button from '@mui/material/Button';
 
 const DayWorkChat = (props) => {
     const [data, setdata] = useState([]);
@@ -113,18 +114,17 @@ const DayWorkChat = (props) => {
     options.dataset.source = [...workmember];
 
     return (
-        <>
-            {options.dataset.source.length !== 0 ?
-                <>
         <DayWorkChatStyle>
-            <ECharts
-                option={options}
-                style={{width: "1000px", height:"800px"}}
-            />
+            <Button className="dw" variant="outlined"
+                    onClick={() => navigate('/report/list',
+                        {state: {data:options.dataset.source, url:"dayWork"}}
+                    )}>목록형</Button>
+            {options.dataset.source.length !== 0 ?
+                <ECharts
+                    option={options}
+                    style={{width: "1000px", height:"800px"}}
+                /> : <></> }
         </DayWorkChatStyle>
-                    <button onClick={() => navigate('/report/list', {state: options.dataset.source})}>목록형</button>
-          </>  : <></> }
-        </>
     );
 }
 
