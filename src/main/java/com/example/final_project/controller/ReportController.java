@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,12 +20,14 @@ public class ReportController {
 
     @GetMapping("/report")
     public ResponseEntity<?> Report(@RequestParam("empno") String empno) {
+        System.out.println(empno);
+        LocalDate date = LocalDate.now();
 
         List<ReportDto> Attendancereport = reportMapper.findAttendance(empno);
 
         List<ReportDto> DeptMemberList = reportMapper.findAllDeptMemberList(empno);
 
-        List<ReportDto> DayWorkList = reportMapper.findDayWork(empno);
+        List<ReportDto> DayWorkList = reportMapper.findDayWork(empno, String.valueOf(date));
 
         List<ReportDto> DeptAttendance = reportMapper.findAllDeptAttendance();
 

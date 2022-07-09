@@ -20,7 +20,6 @@ import InsertChartIcon from '@mui/icons-material/InsertChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {useSelector} from "react-redux";
 export const SideBar = (props) => {
-  console.log(props);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
@@ -144,7 +143,7 @@ export const SideBar = (props) => {
                 <ListItemIcon>
                   <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="사원 목록" />
+                <ListItemText primary="부서원 목록" />
               </ListItemButton>
             </List>
             <List component="div" disablePadding>
