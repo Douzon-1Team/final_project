@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
-import Button from "@mui/material/Button";
-import {useNavigate} from 'react-router-dom';
 import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 
 const Graph52h = () => {
-    const navigate = useNavigate();
     let [attendanceWeek, setAttendance] = useState([]);
     let [overtimeWeek, setOvertimeWeek] = useState([]);
     let [name, setName] = useState([]);
@@ -86,17 +83,9 @@ const Graph52h = () => {
     options.series[1].data = [...overtimeWeek];
     options.series[0].data = [...attendanceWeek];
 
-    const data = [];
-    for(let i=0; i<name.length; i++){
-        data.push({name: name[i], attendance: attendanceWeek[i], overtime: overtimeWeek[i]});
-    }
-
     return (
-        <DayWorkChartStyle>
-            <Button className="hour" variant="outlined"
-                    onClick={() => navigate('/report/list',
-                        {state: {data: data, url: "52hour"}})}
-            >목록형</Button>
+        <DayWorkChartStyle style={{marginLeft: '17%'}}>
+            <h3>주간 근무시간 현황</h3><hr/>
             {name.length !== 0 ?
                 <ECharts
                     option={options}

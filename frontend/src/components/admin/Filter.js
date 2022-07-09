@@ -24,7 +24,7 @@ const SelectFilter = ({column}) => {
 
     return (
         <span>
-            <select style={{height: "22px", width: "50%"}}
+            <select style={{height: "22px", width: "75%"}}
                     onChange={e => setFilter(e.target.value)}>
                 <option value="">전체 선택</option>
                 {options.map(op => (
@@ -82,7 +82,7 @@ function RangeFilter({column: { filterValue = [], preFilteredRows, setFilter, id
 
     return (
         <div>
-            <input style={{width:"55%"}}
+            <input style={{width:"30%"}}
                 onChange={(e) => {
                     const val = e.target.value;
                     setFilter((old = []) => [val ? val : undefined, old[1]]);
@@ -91,7 +91,7 @@ function RangeFilter({column: { filterValue = [], preFilteredRows, setFilter, id
                 value={filterValue[0] || ""}
             />
             {" to "}
-            <input style={{width:"55%"}}
+            <input style={{width:"30%"}}
                 onChange={(e) => {
                     const val = e.target.value;
                     setFilter((old = []) => [

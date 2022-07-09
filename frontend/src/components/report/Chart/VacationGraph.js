@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {getDvacation} from "../../../apis/ApiService";
 import ECharts from 'echarts-for-react';
 import {useSelector} from "react-redux";
+import Button from "@mui/material/Button";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
+import CollapseList from "../List/CollapseList";
 
 function VacationGraph() {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -10,6 +13,9 @@ function VacationGraph() {
   const [remainday, setRemainDay] = useState([]);
   const [totremainhour, setTotReamainHour] = useState([]);
   const [remainhour, setRemainHour] = useState([]);
+
+  const [status, setStatus] = useState(true);
+  const [response, setResponse] = useState([]);
 
   const totalDay = 15;
   const totalHour = 120;
@@ -27,7 +33,7 @@ function VacationGraph() {
       // empno: "210108"
       // remainDay: "15"
       // remainHour: "120"
-      console.log(response);
+      setResponse(response);
       for (let i = 0; i < response.length; i++) {
         console.log(response[i].remainHour);
         console.log(totalDay-response[i].remainDay);
@@ -134,14 +140,19 @@ function VacationGraph() {
   options.series[3].data = [...remainhour];
 
   return (
-    <>
-    {remainhour.length !== 0 ?
+    <DayWorkChartStyle style={{marginLeft:'15%'}}>
+      <h3>부서내 연차 사용 현황</h3><hr/>
+      <Button className="vg" variant = "outlined"
+              onClick={() => setStatus((prev) => !prev)}>
+        {status ? "목록형" : "차트형"}
+      </Button>
+    {remainhour.length !== 0 && status ?
             <ECharts
               option={options}
               style={{width: '700px', height: '500px'}}
             />
-      : <></> }
-    </>
+      : <CollapseList state={response}/> }
+    </DayWorkChartStyle>
   );
 }
 

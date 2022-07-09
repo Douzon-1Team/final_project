@@ -2,21 +2,20 @@ import React, {useEffect, useState} from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
 import ListStyle from '../../../styles/ListStyle';
-import { useLocation } from 'react-router';
+import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
 
-function Row({row, month}) {
+function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
     console.log(row)
 
     return (
         <>
-            <TableRow>
+            <Row>
                 <TableCell>
                     <IconButton
                         aria-label="expand row"
@@ -36,14 +35,14 @@ function Row({row, month}) {
                         <TableCell>{row.remainHour}</TableCell>
                     </> : <TableCell>{(row.count / month).toFixed(2)}</TableCell>
                 }
-            </TableRow>
+            </Row>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: 0}} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit style={{paddingLeft: '20%'}}>
                         <Box sx={{ margin: 1 }}>
-                            <Typography variant="h6" gutterBottom component="div">
+                            <h3 style={{"marginLeft":"10px", "textAlign":"initial"}}>
                                 상세 이력
-                            </Typography>
+                            </h3>
                             <Table size="small" aria-label="detail-history">
                                 <TableHead>
                                     {month ?
@@ -63,14 +62,14 @@ function Row({row, month}) {
                                 </TableHead>
                                 <TableBody>
                                     {row.history.map((historyRow) => (
-                                        <TableRow>
+                                        <Row>
                                             {month === null ? null : <TableCell>{historyRow.date}</TableCell>}
                                             <TableCell>
-                                                <button className={`${historyRow.etc}`}>{historyRow.etc}</button>
+                                                <EtcButton className={`${historyRow.etc}`}>{historyRow.etc}</EtcButton>
                                             </TableCell>
                                             <TableCell>{historyRow.start}</TableCell>
                                             <TableCell>{historyRow.end}</TableCell>
-                                        </TableRow>
+                                        </Row>
                                     ))}
                                 </TableBody>
                             </Table>
@@ -82,10 +81,11 @@ function Row({row, month}) {
     );
 }
 
-const CollapseList = () => {
+const CollapseList = (props) => {
     const rows = [];
     const [rows2, setrows] = useState([]);
-    const state = useLocation().state;
+    const state = props.state;
+    console.log(state);
     let tmp = true;
 
     let month;
@@ -114,8 +114,8 @@ const CollapseList = () => {
 
     async function dVacationHistory () {
         const response = await axios.get("http://localhost:8080/report/dvacation");
-        setrows(state.deptStatus);
-        state.deptStatus.map((item) => {
+        setrows(state);
+        state.map((item) => {
             item.history = [];
             response.data.map((i) => {
                 if(i.empno === item.empno){
@@ -137,29 +137,31 @@ const CollapseList = () => {
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
-                    <TableRow>
+                    <Header>
                         <TableCell style={{"width":"10%"}}/>
-                        <TableCell>사번</TableCell>
-                        <TableCell>이름</TableCell>
                         {state !== "attendanceProblem" ? <>
+                            <TableCell>사번</TableCell>
+                            <TableCell>이름</TableCell>
                             <TableCell>사용 연차</TableCell>
                             <TableCell>남은 연차</TableCell>
                             <TableCell>사용 시간</TableCell>
                             <TableCell>남은 시간</TableCell>
-                            </> : <TableCell>평균</TableCell>
+                            </> : <>
+                            <TableCell style={{width:'30%'}}>사번</TableCell>
+                            <TableCell style={{width:'30%'}}>이름</TableCell>
+                            <TableCell style={{width:'30%'}}>평균</TableCell>
+                        </>
                         }
-                    </TableRow>
+                    </Header>
                 </TableHead>
                 <TableBody>
                     {rows2.map((row) => (
-                        <Row key={row.empName} row={row} month={month}/>
+                        <InnerRow key={row.empName} row={row} month={month}/>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer> : <h1>loading</h1>}
         </ListStyle>)
-
 }
-
 
 export default CollapseList;
