@@ -3,6 +3,7 @@ import {useTable} from "react-table";
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {style} from "./AcceptReqStyle"
+import {MainStyle} from "../../styles/Globalstyle"
 
 const AcceptReq = () => {
     const reqdata = [];
@@ -43,16 +44,15 @@ const AcceptReq = () => {
         if (loadingData) {
             getEmpNo();
         }
-        console.log(reqdata);
     }, [])
 
     for (let i = 0; i < data.length; i++) {
-        if(data[i].startFormat1==null) data[i].startFormat1='';
-        if(data[i].startFormat2==null) data[i].startFormat2='';
-        if(data[i].endFormat1==null) data[i].endFormat1='';
-        if(data[i].endFormat2==null) data[i].endFormat2='';
-        data[i].startFormat=data[i].startFormat1+data[i].startFormat2;
-        data[i].endFormat=data[i].endFormat1+data[i].endFormat2;
+        if (data[i].startFormat1 == null) data[i].startFormat1 = '';
+        if (data[i].startFormat2 == null) data[i].startFormat2 = '';
+        if (data[i].endFormat1 == null) data[i].endFormat1 = '';
+        if (data[i].endFormat2 == null) data[i].endFormat2 = '';
+        data[i].startFormat = data[i].startFormat1 + data[i].startFormat2;
+        data[i].endFormat = data[i].endFormat1 + data[i].endFormat2;
         data[i].accept = <input type='button' value='승인'
                                 style={{background: '#00aaff', color: 'white', border: '0px', cursor: 'pointer'}}
                                 onClick={() => acceptReq(data[i].reqid, data[i].startFormat, data[i].endFormat, data[i].req)}/>
@@ -115,18 +115,8 @@ const AcceptReq = () => {
         prepareRow,
     } = useTable({columns, data})
 
-    function modifySet(start, end, req) {
-        if ((req === '오전반차') || (req === '오후반차')) {
-            setMinusHours(4);
-        } else if (req === '휴가') {
-            setMinusHours(8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1));
-        } else { // 시간연차
-            setMinusHours((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60));
-        }
-    }
-
     async function acceptReq(reqid, start, end, req) {
-        if((req=='오전반차')||(req=='오후반차')||(req=='휴가')||(req=='시간연차')){
+        if ((req == '오전반차') || (req == '오후반차') || (req == '휴가') || (req == '시간연차')) {
             await axios
                 .post("http://localhost:8080/acceptreq", {
                     'reqid': reqid,
@@ -134,10 +124,18 @@ const AcceptReq = () => {
                     'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
                 })
                 .then((response) => {
-                    console.log("*신청서 승인됨");
                 })
-        }else{
-
+        } else {
+            await axios
+                .post("http://localhost:8080/acceptreq2", {
+                    'reqid': reqid,
+                    'empNo': empNo,
+                    'start': start,
+                    'end': end,
+                    'temp': end.substring(0, 10),
+                })
+                .then((response) => {
+                })
         }
         window.location.reload();
     }
@@ -149,15 +147,13 @@ const AcceptReq = () => {
                 'reason': reason,
             })
             .then((response) => {
-                console.log("*신청서 반려됨");
             })
         window.location.reload();
         setModal(!modal)
     }
 
-    // -----------------------------------
     return (
-        <>
+        <MainStyle>
             {modal && (
                 <Modal>
                     <ModalWindow>
@@ -214,7 +210,7 @@ const AcceptReq = () => {
                 })}
                 </tbody>
             </table>
-        </>
+        </MainStyle>
     )
 }
 const {Modal, ModalWindow, Title, Reason, Button1, Button2} = style;
