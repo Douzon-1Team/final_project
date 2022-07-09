@@ -63,8 +63,9 @@ function DeptMember() {
             MemberList();
         }, []);
     function handleEmpMember(event) {
+        console.log(event);
         navigate("/main", {
-            state: event.empno,
+            state: [event.empno, event.name],
         });
     }
         return (

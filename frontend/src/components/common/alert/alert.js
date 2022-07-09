@@ -12,7 +12,7 @@ MySwal.fire({
     html: <i>ALL IN ONE</i>,
     icon: 'success',
     confirmButtonColor: '#00AAFF',
-    // didOpen: () => { // TODO : 버튼 로딩인데 필요하신분 쓰세요
+    // didOpen: () => {
     // `MySwal` is a subclass of `Swal` with all the same instance & static methods
     // MySwal.showLoading()
     // },

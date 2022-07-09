@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import {TextContainer2, CardContainer, TitleContainer1} from "../styles/mainstyle";
+import {TextContainer2, CardContainer, TitleContainer1} from "../../styles/mainstyle";
 import {Grid} from "@mui/material";
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
+import {MainVaciton} from "../../styles/mainstyle";
 
 const AnnualLeaveUsage = ({totalAnnualLeave , remainingAnnualLeaveDay, remainingAnnualLeaveTime}) => {
 
@@ -92,10 +93,12 @@ const AnnualLeaveUsage = ({totalAnnualLeave , remainingAnnualLeaveDay, remaining
                     </CardContainer>
                 </Grid>
                 <Grid item xs={6}>
+                    <MainVaciton>
                     <ECharts
                         option={options}
                         style={{width: 'auto', height: '200px'}}
                     />
+                    </MainVaciton>
                 </Grid>
             </Grid>
         </Card>

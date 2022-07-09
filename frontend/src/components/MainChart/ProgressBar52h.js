@@ -7,7 +7,7 @@ import {
     CardContainer,
     progressValue,
     TitleContainer2
-} from "../styles/mainstyle";
+} from "../../styles/mainstyle";
 import {Grid} from "@mui/material";
 
 const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {

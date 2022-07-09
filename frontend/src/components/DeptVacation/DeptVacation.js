@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TUICalendar from "@toast-ui/react-calendar";
 import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
-import Chart from "../month/chart";
+import Chart from "../MonthChart/chart";
 import Button from "@mui/material/Button";
 import {DeptCalendarStyle} from "../../styles/Calendarstyle";
 import _ from "lodash";

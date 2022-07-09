@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import {ToggleText, ComponentContainer, ChartContainer} from "../styles/graphStyle";
+import {ToggleText, ComponentContainer, ChartContainer} from "../../../styles/graphStyle";
 import {useNavigate} from "react-router";
 
 const AttendanceDept = (props) => {
