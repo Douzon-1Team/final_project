@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import Calendar from "../components/common/Calendar";
-import ProgressBar52h from "../components/ProgressBar52h";
-import AnnualLeaveUsage from "../components/AnnualLeaveUsage";
+import ProgressBar52h from "../components/MainChart/ProgressBar52h";
+import AnnualLeaveUsage from "../components/MainChart/AnnualLeaveUsage";
 import { useSelector } from "react-redux";
 import { MainStyle } from "../styles/Globalstyle";
-import {Mainchats} from "../styles/Chatstyle";
-import AttendanceCard from "../components/AttendanceCard";
+import {Mainchats} from "../styles/Chartstyle";
+import AttendanceCard from "../components/MainChart/AttendanceCard";
 
 // redux 사번 받아오기
 function Main() {

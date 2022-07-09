@@ -82,7 +82,7 @@ function Row(props) {
 //     }).isRequired,
 // };
 
-const AttendanceProblemList = () => {
+const CollapseList = () => {
     // const [raw, setRaw] = useState([]);
     const rows = [];
     const [rows2, setrows] = useState([]);
@@ -142,4 +142,4 @@ const AttendanceProblemList = () => {
 }
 
 
-export default AttendanceProblemList;
+export default CollapseList;

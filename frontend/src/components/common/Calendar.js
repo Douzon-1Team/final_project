@@ -7,7 +7,7 @@ import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
-import Chart from "../month/chart";
+import Chart from "../MonthChart/chart";
 import Button from "@mui/material/Button";
 import {CalendarStyle} from "../../styles/Calendarstyle";
 import CardContent from '@mui/material/CardContent';

@@ -10,20 +10,22 @@ import LeaveReq from "./components/LeaveReq/LeaveReq";
 import Layout from "./components/common/Layout";
 import EmpList from "./components/admin/EmpList";
 import {useSelector} from "react-redux";
-import LeaveList from "./components/List/LeaveList";
-import AttendanceList from "./components/List/AttendanceList";
+import LeaveList from "./components/list/LeaveList";
+import AttendanceList from "./components/list/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
 import AcceptReq from "./components/AcceptReq/AcceptReq";
-import VacationGraph from "./components/VacationGraph";
+import VacationGraph from "./components/report/Chart/VacationGraph";
 import DeptMember from "./components/DeptMember/DeptMember";
-import AttendanceProblem from "./components/AttendanceProblem";
+import AttendanceProblem from "./components/report/Chart/AttendanceProblem";
 import Report from "./components/Report";
 import Page404 from "./pages/Page404";
 import { styled } from '@mui/material/styles';
-import ChartList from "./components/ChartList";
-import AttendanceProblemList from "./components/AttendanceProblemList";
+import SimpleList from "./components/report/List/SimpleList";
+import CollapseList from "./components/report/List/CollapseList";
+import Graph52h from "./components/report/Chart/Graph52h";
+import DayWorkChart from "./components/report/Chart/DayWorkChart";
 
 const RootStyle = styled('div')({
     display: 'flex',
@@ -38,7 +40,7 @@ function App() {
     return (
         <RootStyle>
             <Routes>
-                <Route path="/login" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
+                <Route path="/" element={ LoginChk === null ? <Login /> : <Navigate replace to="/main" /> } />
                 <Route element={ <> <Layout /> <PrivateRoute /> </>}>
                     <Route path="/main" element={<Main />} />
                     <Route path="/profile" element={ <Profile />}/>
@@ -56,9 +58,13 @@ function App() {
                     <Route path="/profile/new" element={empRole !== "ROLE_ADMIN" ? <Navigate replace to="*"/> : <UpdateEmp/>}/>
                     <Route path="/dvacation" element={<DeptVacation />}/>
                     <Route path="/acceptreq" element={<AcceptReq />} />
-                    <Route path="/report/list" element={<ChartList/>}/>
-                    <Route path="/report/att" element={<AttendanceProblemList/>}/>
+                    <Route path="/report/list" element={<SimpleList/>}/>
+                    <Route path="/report/att" element={<CollapseList/>}/>
                     <Route path="/dvacation-status" element={<VacationGraph />}/>
+                    <Route path="/report/52Gr" element={<Graph52h />} />
+                    <Route path="/report/weekworkGr" element={<DayWorkChart />} />
+                    <Route path="/report/vacationGr" element={<VacationGraph/>} />
+                    <Route path="/report/AttGr" element={<AttendanceProblem />} />
                 </Route>
 
                 {/* 404 page */}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
-import {TextContainer2, CardContainer, TitleContainer1} from "../styles/mainstyle";
+import {TextContainer2, CardContainer, TitleContainer1} from "../../styles/mainstyle";
 import {Grid} from "@mui/material";
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
-import {MainVaciton} from "../styles/mainstyle";
+import {MainVaciton} from "../../styles/mainstyle";
 
 const AnnualLeaveUsage = ({totalAnnualLeave , remainingAnnualLeaveDay, remainingAnnualLeaveTime}) => {
 

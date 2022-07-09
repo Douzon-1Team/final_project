@@ -24,12 +24,12 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
           response.data[i].title = "지각";
         } else { // 정상 출/퇴근 판단 -> 출근 또는 퇴근 기록이 없을수도 있음
           response.data[i].calendarId = "1";
-          response.data[i].title = "출근";
+          response.data[i].title = "- "+response.data[i].endwork+"근무";
         }
         // 출/퇴근 기록이 없는건 time : null표시
           _.merge(response.data[i], {category: "time", isVisible: true, id: i+1,
             body: response.data[i].context, start: response.data[i].onwork,
-            end: new Date(response.data[i].offwork)});
+            end: response.data[i].offwork}); // new Date() 없앰
       } else { // req && 결근(출/퇴근)
         // 반려&본인승인 제외
         if (response.data[i].agree == true && response.data[i].reject == true) continue;
@@ -40,36 +40,36 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
               if (response.data[i].title == "오전반차") {
                 if (response.data[i].accept == true) {
                   response.data[i].body = response.data[i].context;
-                  response.data[i].title = "오전반차 - 결제완료";
+                  response.data[i].title = "오전반차-결제완료";
                 } else {
                   response.data[i].body = response.data[i].context;
-                  response.data[i].title = "오전반차 - 결제 중";
+                  response.data[i].title = "오전반차-결제 중";
                 }
               } else {
                 if (response.data[i].accept == true) {
                   response.data[i].body = response.data[i].context;
-                  response.data[i].title = "오전반차 - 결제완료";
+                  response.data[i].title = "오전반차-결제완료";
                 } else {
                   response.data[i].body = response.data[i].context;
-                  response.data[i].title = "오전반차 - 결제 중";
+                  response.data[i].title = "오전반차-결제 중";
                 }
               }
             } else if (response.data[i].title == "시간연차") {
               if (response.data[i].accept == true) {
                 response.data[i].body = response.data[i].context;
-                response.data[i].title = "시간연차 - 결제완료";
+                response.data[i].title = "시간연차-결제완료";
               } else {
                 response.data[i].body = response.data[i].context;
-                response.data[i].title = "시간연차 - 결제 중";
+                response.data[i].title = "시간연차-결제 중";
               }
             }
              else if (response.data[i].title == "휴가") {
               if (response.data[i].accept == true) {
                 response.data[i].body = response.data[i].context;
-                response.data[i].title = "휴가 - 결제완료";
+                response.data[i].title = "휴가-결제완료";
               } else {
                 response.data[i].body = response.data[i].context;
-                response.data[i].title = "휴가 - 결제 중";
+                response.data[i].title = "휴가-결제 중";
               }
             }
             _.merge(response.data[i], {isVisible: true, id: i+1,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import { Grid } from '@mui/material';
-import {AttendanceCardTitle, AttendanceCardText, CardContent, TopLine, MainCards} from "../styles/mainstyle";
+import {AttendanceCardTitle, AttendanceCardText, CardContent, TopLine, MainCards} from "../../styles/mainstyle";
 
 const cardAttendance = ({title,value,color}) => {
     return(

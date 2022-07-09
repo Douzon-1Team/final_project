@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ChartList = () => {
+const SimpleList = () => {
     const location = useLocation();
     const data = location.state;
     const headers = data.splice(0,1)[0];
@@ -41,4 +41,4 @@ const ChartList = () => {
     )
 }
 
-export default ChartList
+export default SimpleList

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const DayWorkChatStyle = styled.div`
+const DayWorkChartStyle = styled.div`
     display : inline-flex;
 `
 
-export {DayWorkChatStyle};
+export {DayWorkChartStyle};
