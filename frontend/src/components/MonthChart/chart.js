@@ -4,7 +4,6 @@ import {MainchatStyle} from "../../styles/mainstyle";
 import Button from "@mui/material/Button";
 import Calendar from "../common/Calendar";
 import _ from "lodash";
-import {getMain} from "../../apis/CalendarApi";
 
 const Chart = (props) => {
     // TODO : 뒤로가기 버튼 누르면 달력으로 GO
@@ -18,13 +17,11 @@ const Chart = (props) => {
     const work = _.filter(props.data, 'normalwork');
 
     notwork.filter(function(test) {
-        console.log(test);
         nowork.splice(test.month.slice(1,2), 1, Number(test.count));
     })
     vacation.filter(function(test) {
         rest.splice(test.month.slice(1,2), 1, Number(test.count));
     })
-    console.log(rest);
 
     work.filter(function(test) {
         works.splice(test.month.slice(1,2), 1, Number(test.count));
