@@ -115,10 +115,8 @@ const Button = styled.button`
 `;
 
 const ProfileImg = styled.img`
-    width: 100%;
-    max-width: 300px;
-    height: 100%; 
-    max-height: 50vh; 
+    width: 300px;
+    height: 45vh; 
     border-radius: 20px;
 `;
 
@@ -158,6 +156,26 @@ const InfoBox = styled.div`
     align-items: center;
 `;
 
+const InfoBox2 = styled.input` 
+    position: relative; 
+    width: 100%;
+    min-width: 300px;
+    height: 100%;
+    min-height: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #00AAFF;
+    letter-spacing: 0.2vw; 
+    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;  
+    align-items: center;
+    text-align: center;
+`;
+
 const PwdBox = styled.input` 
     position: relative; 
     width: 100%;
@@ -193,6 +211,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`  
     width: 70%;
     height: 100%;
+    min-height: 70vh; 
     float: left;
     box-sizing: border-box;
     display: flex;
@@ -213,7 +232,7 @@ const IconBox = styled.div`
     align-items: center;
     float: left;
     margin-left: 23.5%;
-    bottom: 17vh;
+    bottom: 20vh;
     background: white;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
     padding: 10px;
@@ -241,11 +260,28 @@ const BtnBox = styled.div`
     justify-content: center; 
     align-items: center; 
     margin-top: 8%;
+    margin-right: 8%;
     float: right;
     background: white;
     left: 22%;
     &:hover { cursor: pointer; }
 `;
 
+const RedBtn = styled.button`
+    background: #ff7777;
+    border-radius: 10px;
+    width: 80%;
+    border: 0px;
+    margin: 5px 15px 15px 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    &.button{
+        text-align: center;
+    }
+`;
 
-export { TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer, InfoBox, PwdBox, TopContainer, QR, Title, Table, Input, Button, Form, ProfileImg, Line, TableBox};
+
+export { TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer,
+    InfoBox, InfoBox2, PwdBox, TopContainer, QR, Title, Table, Input, Button,
+    Form, ProfileImg, Line, TableBox, RedBtn};

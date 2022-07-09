@@ -5,12 +5,12 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {BtnBox, Button, InfoBox, Table, PwdBox, TableBox, TableBox2} from "../styles/profile";
+import {BtnBox, Button, InfoBox, Table, PwdBox, TableBox, TableBox2, QR, QrBox} from "../styles/profile";
 import {useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router";
 import {getProfile} from "../apis/ApiService";
-import { updatePwd} from "../apis/Users";
+import {updatePwd} from "../apis/Users";
 import SettingModal from "../components/common/Modal/SettingModal";
 import {PwdError, PwdNotCollect, PwdNotRight, PwdSuccess} from "../components/common/alert/alert";
 
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function VerticalTabs() {
+function VerticalTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -176,3 +176,5 @@ export default function VerticalTabs() {
     </div>
   );
 }
+
+export {TabPanel, a11yProps, useStyles, VerticalTabs}
