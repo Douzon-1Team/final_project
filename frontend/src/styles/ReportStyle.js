@@ -8,20 +8,30 @@ const ReportStyle = styled.p`
         .css-qpjsw6-MuiPaper-root-MuiCard-root {
             border: outset;
             float: left;
-            max-width: 300px;
+            max-width: 330px;
             border-radius: 20px;
         }
         .css-qpjsw6-MuiPaper-root-MuiCard-root {
-            height: 150px;
+            margin : 50px 20px 20px 20px;
+            height: 300px;
             &:hover {
-            background: gray;
+            background: #c8c8c8;
             }
         }
         .css-46bh2p-MuiCardContent-root {
             float:left;
         }
-        .test {
-            float:left;
+        .css-46bh2p-MuiCardContent-root:last-child {
+            margin-top: 40px;
+        }
+        .font {
+            font-weight: bold;
+        }
+        .material-icons {
+            font-size: 20px;
+        }
+        .icon {
+            margin-left: 50px;
         }
 `;
 
