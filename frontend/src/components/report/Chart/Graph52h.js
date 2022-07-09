@@ -85,7 +85,7 @@ const Graph52h = () => {
 
     return (
         <DayWorkChartStyle style={{marginLeft: '17%'}}>
-            <h3>주간 근무시간 현황</h3><hr/>
+            <h3>주간 근무시간 현황</h3>
             {name.length !== 0 ?
                 <ECharts
                     option={options}

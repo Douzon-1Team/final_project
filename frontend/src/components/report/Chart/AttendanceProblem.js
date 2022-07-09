@@ -177,7 +177,7 @@ const AttendanceProblem = () => {
 
     return (
         <DayWorkChartStyle style={{marginLeft:'8%'}}>
-            <h3>부서내 이상근태 현황</h3><hr/>
+            <h3>부서내 이상근태 현황</h3>
             <Button className="ap" variant = "outlined"
                     onClick={() => setStatus((prev) => !prev)}>
                 {status ? "목록형" : "차트형"}
