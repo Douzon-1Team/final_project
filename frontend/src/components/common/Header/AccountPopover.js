@@ -25,8 +25,8 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-    const empInfo = useSelector( (state) => state.EMP_INFO.empInfo );
-    const navigate = useNavigate();
+  const empInfo = useSelector( (state) => state.EMP_INFO.empInfo );
+  const navigate = useNavigate();
   const anchorRef = useRef(null);
 
   const [open, setOpen] = useState(null);
@@ -59,7 +59,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-          <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
+        <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
       </IconButton>
 
       <MenuPopover
