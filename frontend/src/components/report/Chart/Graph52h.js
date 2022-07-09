@@ -4,7 +4,7 @@ import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
 import Button from "@mui/material/Button";
 import {useNavigate} from 'react-router-dom';
-import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 
 const Graph52h = () => {
     const navigate = useNavigate();
@@ -92,7 +92,7 @@ const Graph52h = () => {
     }
 
     return (
-        <DayWorkChatStyle>
+        <DayWorkChartStyle>
             <Button className="hour" variant="outlined"
                     onClick={() => navigate('/report/list',
                         {state: {data: data, url: "52hour"}})}
@@ -103,7 +103,7 @@ const Graph52h = () => {
                     style={{width: '700px', height: '500px'}}
                 />
             : <></> }
-        </DayWorkChatStyle>
+        </DayWorkChartStyle>
     );
 }
 

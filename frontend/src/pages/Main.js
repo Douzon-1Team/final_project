@@ -5,6 +5,7 @@ import AnnualLeaveUsage from "../components/MainChart/AnnualLeaveUsage";
 import { useSelector } from "react-redux";
 import { MainStyle } from "../styles/Globalstyle";
 import AttendanceCard from "../components/MainChart/AttendanceCard";
+import {Mainchats} from "../styles/Chartstyle";
 
 // redux 사번 받아오기
 function Main() {

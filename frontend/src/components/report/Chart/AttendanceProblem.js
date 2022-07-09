@@ -7,7 +7,7 @@ import {getAttendance} from "../../../apis/AttendanceApi";
 import _ from "lodash";
 import DayWorkChat from "./DayWorkChart";
 import {useNavigate} from 'react-router-dom'
-import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 import Button from '@mui/material/Button';
 import AttendanceDept from "./AttendanceDept";
 import {useLocation} from "react-router";
@@ -252,7 +252,7 @@ const AttendanceProblem = () => {
     }
 
     return (
-        <DayWorkChatStyle>
+        <DayWorkChartStyle>
             <Button className="ap" variant = "outlined"
                     onClick={() => navigate('/report/att', {state: "attendanceProblem"})}>목록형</Button>
         {emp.length === 0 ? <></> :
@@ -282,7 +282,7 @@ const AttendanceProblem = () => {
                 </ComponentContainer>
             </>
         }
-        </DayWorkChatStyle>
+        </DayWorkChartStyle>
     );
 }
 
