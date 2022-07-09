@@ -10,10 +10,6 @@ const Layout = () => {
   const [open, setOpen] = useState(false);
   const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
   const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
-  const [sideView, setSideView] = useState(true); // 사이드바 개시 여부
-  const changeState = () => {
-    setSideView(!sideView);
-  };
 
   useEffect(() => {
     let chkRole = [...role];
@@ -27,16 +23,17 @@ const Layout = () => {
       chkRole[0] = empRole;
       setRole(0);
     }
-    return () => {};
   }, []);
+  console.log(role);
 
   return (
       <>
-        <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-        {/*<Logo role={role} />*/}
-        {/*<Header role={role} sideView={sideView} changeState={changeState} />*/}
-        {/*{sideView && <SideBar role={role} />}*/}
-        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+        {role !== null ?
+            <>
+        <DashboardNavbar onOpenSidebar={() => setOpen(true)} role2={role} />
+        <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} role2={role} />
+            </>
+            : <></> }
       </>
   );
 };

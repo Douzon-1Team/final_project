@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { style } from "./SideBarStyle";
 import { useNavigate } from "react-router-dom";
 // BsChevronDoubleUp
@@ -18,11 +18,16 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import PeopleIcon from '@mui/icons-material/People';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-export const SideBar = ({ role }) => {
+import {useSelector} from "react-redux";
+export const SideBar = (props) => {
+  console.log(props);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
+  let navigate = useNavigate();
+  const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2] );
+  const [role, setRole] = useState(""); // 0 일반 사용자, 1 담당자, 2 관리자
 
   const handleClick = () => {
     setOpen(!open);
@@ -37,7 +42,19 @@ export const SideBar = ({ role }) => {
     setOpen4(!open4);
   };
 
-  let navigate = useNavigate();
+  useEffect(() => {
+    let chkRole = [...role];
+    if (empRole === "ROLE_MANAGER") {
+      chkRole[1] = empRole;
+      setRole(1);
+    } else if (empRole === "ROLE_ADMIN") {
+      chkRole[2] = empRole;
+      setRole(2);
+    } else {
+      chkRole[0] = empRole;
+      setRole(0);
+    }
+  }, []);
 
   return (
       <>
@@ -101,6 +118,7 @@ export const SideBar = ({ role }) => {
       </List>
     </Collapse>
   </List>
+        {role !== 0 ?
         <List
             sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
             component="nav"
@@ -139,36 +157,39 @@ export const SideBar = ({ role }) => {
             </List>
           </Collapse>
         </List>
-        <List
-            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-            component="nav"
-        >
-          <ListItemButton onClick={handleClick4}>
-            <ListItemIcon>
-              <AdminPanelSettingsIcon />
-            </ListItemIcon>
-            <ListItemText primary="admin" />
-            {open4 ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={open4} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/profile")}>
+        : null}
+        {role === 2 ?
+            <List
+                sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}}
+                component="nav"
+            >
+              <ListItemButton onClick={handleClick4}>
                 <ListItemIcon>
-                  <PeopleIcon />
+                  <AdminPanelSettingsIcon/>
                 </ListItemIcon>
-                <ListItemText primary="사원 등록" />
+                <ListItemText primary="admin"/>
+                {open4 ? <ExpandLess/> : <ExpandMore/>}
               </ListItemButton>
+              <Collapse in={open4} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{pl: 4}} onClick={() => navigate("/profile")}>
+                    <ListItemIcon>
+                      <PeopleIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="사원 등록"/>
+                  </ListItemButton>
+                </List>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{pl: 4}} onClick={() => navigate("/admin/list")}>
+                    <ListItemIcon>
+                      <FormatListBulletedIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="사원 정보 조회"/>
+                  </ListItemButton>
+                </List>
+              </Collapse>
             </List>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/admin/list")}>
-                <ListItemIcon>
-                  <FormatListBulletedIcon />
-                </ListItemIcon>
-                <ListItemText primary="사원 정보 조회" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-        </List>
+        : null }
       </>
     // <BarBox>
     //   <Menu>

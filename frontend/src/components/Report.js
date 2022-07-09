@@ -12,8 +12,10 @@ import {BiCalendarX} from 'react-icons/bi';
 import {BsBarChartSteps} from 'react-icons/bs';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
+import {useSelector} from "react-redux";
 
 const Report = () => {
+    const empInfo = useSelector((state) => state.EMP_INFO.empInfo);
     const navigate = useNavigate();
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
@@ -23,7 +25,7 @@ const Report = () => {
 
     useEffect(() => {
         const chatData = async () => {
-            await getAttendance({empno: 220101}).then(res => {
+            await getAttendance({empno: empInfo[0]}).then(res => {
                 res.data.map(res => changeData.push(res.name));
                 const setData = new Set(changeData);
                 const uniqueArr = [...setData]; // set으로 정리하면서 뒤에 가져온 동일값(name)은 삭제됨 문제X

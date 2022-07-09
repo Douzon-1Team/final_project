@@ -11,13 +11,11 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
     // 넘어갔으므로 해당 날짜에 관한건 전부 req를 우선으로 출력
     // 2. req를 제외한 나머지를 먼저 판단하고 req테이블에서 중복날짜들 전부제외하고 출력
     const response = await getMain(empno);
-    console.log(response);
     for (var i = 1;  i < response.data.length; i++) {
       if (response.data[i].m != null || response.data[i].count != null || response.data[i].datediff != null) {
         continue; // 필요없는 데이터 제외
       }
       if (response.data[i].empno != null) { // 정상 출/퇴근, 지각 판단
-        console.log('gere');
         // 지각 판단
         if (response.data[i].tardy == true) {
           response.data[i].calendarId = "3";
@@ -35,7 +33,6 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
         if (response.data[i].agree == true && response.data[i].reject == true) continue;
         else { // 오직 휴가 && 결근(출/퇴근) 미등록 검증 -> 결근은 req 하던 말던 결제중 표시 X
           if (response.data[i].title != null) { // 휴가 data
-            console.log(response.data[i]);
             if (response.data[i].title == "오전반차" || response.data[i].title === "오후반차") {
               if (response.data[i].title == "오전반차") {
                 if (response.data[i].accept == true) {
@@ -86,7 +83,6 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
                 response.data[i].body = response.data[i].context;
                 response.data[i].title = "결근";
             }
-            console.log(response.data[i]);
             _.merge(response.data[i], {isVisible: true, id: i+1,
               category: "time",
               start: new Date(response.data[i].date),

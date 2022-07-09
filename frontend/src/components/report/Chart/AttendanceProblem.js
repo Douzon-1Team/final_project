@@ -8,25 +8,19 @@ import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 import Button from '@mui/material/Button';
 import {useLocation} from "react-router";
 import CollapseList from "../List/CollapseList";
-
 const AttendanceProblem = () => {
     const {state} = useLocation();
-    console.log(state);
     const [status, setStatus] = useState(true);
-    // prettier-ignore
     const month = [
         '1월', '2월', '3월', '4월', '5월', '6월',
         '7월', '8월', '9월', '10월', '11월','12월'
     ];
-
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
     const [view, setView] = useState('list');
     const [handleView, sethandleView] = useState(false);
     const [deptmem, setdeptmem] = useState([]);
     const [deptdata, setdeptdata] = useState([]);
-    let uniqueArr = [];
-    let x = [];
     let deptName;
 
     const handleChange = (event, nextView) => {
@@ -38,7 +32,6 @@ const AttendanceProblem = () => {
     useEffect(() => {
         if (handleView === false) {
             setemp(state[0]);
-            console.log(state[1]);
             setdata(state[1]);
         }
     })
@@ -170,7 +163,6 @@ const AttendanceProblem = () => {
         options.yAxis.data = [...emp];
         options.series[0].data= [...data];
     } else if(handleView === true) {
-        console.log(deptdata);
         option.yAxis.data = [...deptmem];
         option.series[0].data= [...deptdata];
     }
@@ -191,19 +183,30 @@ const AttendanceProblem = () => {
                             exclusive
                             onChange={handleChange}
                         >
-                            <ToggleButton value="list" aria-label="list">
+                            <ToggleButton onClick={() => sethandleView(false)} value="list" aria-label="list" style={{height: "150px"}}>
                                 <ToggleText>사원별</ToggleText>
                             </ToggleButton>
-                            <ToggleButton value="module" aria-label="module">
+                            <ToggleButton onClick={() => sethandleView(true)} value="module" aria-label="module" style={{height: "150px"}}>
                                 <ToggleText>부서별</ToggleText>
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </div>
                     <ChartContainer>
-                        <ECharts
-                            option={options}
-                            style={{width: "900px", height:"720px"}}
-                        />
+                        {handleView === false ?
+                            <ECharts
+                                option={options}
+                                style={{width: "900px", height:"720px"}}
+                            />
+                            :
+                            <>
+                                {deptmem.length !== 0 ?
+                                    <ECharts
+                                        option={option}
+                                        style={{width: "900px", height:"720px"}}
+                                    />
+                                    : <></> }
+                            </>
+                        }
                     </ChartContainer>
                 </ComponentContainer>
             : <CollapseList state="attendanceProblem"/>
