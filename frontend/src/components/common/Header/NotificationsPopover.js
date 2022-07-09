@@ -1,72 +1,51 @@
 import PropTypes from 'prop-types';
-import { set, sub } from 'date-fns';
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 // @mui
 import {
   Box,
   List,
   Badge,
-  Button,
-  Avatar,
-  Tooltip,
   Divider,
   Typography,
   IconButton,
   ListItemText,
-  ListSubheader,
   ListItemAvatar,
-  ListItemButton, ListItemIcon, ListItem,
+  ListItemButton,
 } from '@mui/material';
-// utils
-import { fToNow } from './formatTime';
 // components
-import Iconify from './Iconify';
+import { AiFillBell } from 'react-icons/ai';
 import Scrollbar from './Scrollbar';
 import MenuPopover from './MenuPopover';
 import {MemberImg} from "../../../styles/NotificationStyle";
+
+import {getNotificationTardyList, NotificationTardyList} from "../../../apis/NotifiactionApi";
+
+
 // ----------------------------------------------------------------------
 
-const NOTIFICATIONS = [
-  {
-    id: '1',
-    name: '임지영',
-    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
-    time: null,
-  },
-  {
-    id: '2',
-    name: '이지은',
-    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg" ,
-    time: null,
-  },
-  {
-    id: '3',
-    name: '이한용',
-    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
-    time: "9:12:00",
-  },
-  {
-    id: '4',
-    name: '신중호',
-    avatar: 'https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg',
-    time: "9:10:00",
-  },
-  {
-    id: '5',
-    name: '주승범',
-    avatar: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg",
-    time: null,
-  },
-];
+let NOTIFICATIONS = [];
 
 export default function NotificationsPopover() {
+
   const anchorRef = useRef(null);
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
-  const tardy = notifications.filter((item) => item.time === null).length;
+  const tardy = notifications.filter((item) => item.approve === false).length;
 
   const [open, setOpen] = useState(null);
+
+  const getTardyList = async () => {
+    await getNotificationTardyList({empno:220101}).then(res =>{
+      NOTIFICATIONS =res.data;
+      setNotifications(NOTIFICATIONS);
+    }).catch(console.log('수신 실패'))
+  }
+
+
+  useEffect(() => {
+    getTardyList();
+  }, []);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -85,7 +64,7 @@ export default function NotificationsPopover() {
         sx={{ width: 40, height: 40 }}
       >
         <Badge badgeContent={tardy} color="error">
-          <Iconify icon="eva:bell-fill" width={20} height={20} />
+          <AiFillBell size={27} />
         </Badge>
       </IconButton>
 
@@ -106,7 +85,7 @@ export default function NotificationsPopover() {
         <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}>
           <List disablePadding>
             {notifications.slice(0, NOTIFICATIONS.length).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
+                <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
 
@@ -121,33 +100,35 @@ export default function NotificationsPopover() {
 // ----------------------------------------------------------------------
 
 NotificationItem.propTypes = {
-  notification: PropTypes.shape({
+    notification: PropTypes.shape({
     id: PropTypes.string,
+    empno: PropTypes.string,
     name: PropTypes.string,
-    avatar: PropTypes.any,
+    profile: PropTypes.string,
+    date: PropTypes.string,
+    approve: PropTypes.bool,
   }),
 };
 
 function NotificationItem({ notification }) {
-  const { avatar, name } = renderContent(notification);
-
+  const { profile, name } = renderContent(notification);
   return (
     <ListItemButton
       sx={{
         py: 1.5,
         px: 2.5,
         mt: '1px',
-        ...(notification.time === null && {
+        ...(notification.date === null && {
           bgcolor: 'action.selected',
         }),
       }}
     >
       <ListItemAvatar>
-        <MemberImg src = {notification.avatar} />
+        <MemberImg src = {notification.profile} />
       </ListItemAvatar>
       <ListItemText
-        primary={notification.name}
-        secondary={notification.time ===null ? "미출근" : notification.time }
+        primary={notification.name + "(" + notification.empno + ")"}
+        secondary={notification.date === null ? "미출근" : notification.date }
       />
 
     </ListItemButton>
@@ -167,7 +148,7 @@ function renderContent(notification) {
   );
 
   return {
-    avatar: notification.avatar ? <img alt={notification.name} src={notification.avatar} /> : null,
+    profile: notification.profile ? <img alt={notification.name} src={notification.profile} /> : null,
     name,
   };
 }

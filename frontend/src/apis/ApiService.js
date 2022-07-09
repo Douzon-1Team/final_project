@@ -21,8 +21,8 @@ export const getSetting = function GetDeptNo(empno) {
         .catch( error => console.log("error : " + error));
 }
 
-export const getDvacation = function GetDeptNo(empNo) {
-  return fetch(URL_DEPT_VACATION+`${empNo}`)
+export const getDvacation = function GetDeptNo(empno) {
+  return fetch(URL_DEPT_VACATION+`${empno}`)
     .then( response => {
       return response.json(); })
     .then( emp => { return emp; })

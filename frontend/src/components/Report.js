@@ -1,11 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import DayWorkChat from "./DayWorkChat";
-import AttendanceProblem from "./AttendanceProblem";
 import {getAttendance} from "../apis/AttendanceApi";
 import _ from "lodash";
 import {MainStyle} from "../styles/Globalstyle";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import {useNavigate} from "react-router";
+import {ReportStyle} from "../styles/ReportStyle";
+import {IoMdStats} from 'react-icons/io';
+import {BiCalendarX} from 'react-icons/bi';
+import {BsBarChartSteps} from 'react-icons/bs';
+import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
+import EventBusyIcon from '@mui/icons-material/EventBusy';
 
 const Report = () => {
+    const navigate = useNavigate();
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
     const [daywork, setdaywork] = useState([]);
@@ -15,7 +24,6 @@ const Report = () => {
     useEffect(() => {
         const chatData = async () => {
             await getAttendance({empno: 220101}).then(res => {
-                // TODO : 이상근태 발생한 애들 제일 밑에 넣어주고 SET으로 중복제거
                 res.data.map(res => changeData.push(res.name));
                 const setData = new Set(changeData);
                 const uniqueArr = [...setData]; // set으로 정리하면서 뒤에 가져온 동일값(name)은 삭제됨 문제X
@@ -39,12 +47,47 @@ const Report = () => {
         chatData();
     }, [])
 
-
     return (
-        <MainStyle>
-            <DayWorkChat data={daywork} />
-            <AttendanceProblem data={[emp, data, deptattendance]} />
-        </MainStyle>
+      <MainStyle>
+        <ReportStyle>
+            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/52Gr")}>
+                <IoMdStats size={200} className="icon" />
+                <CardContent>
+                    <Typography variant="h5" component="div" className="font">
+                        주 52시간 근태관리 차트
+                    </Typography>
+                </CardContent>
+            </Card>
+            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/weekworkGr", {
+                state: daywork,
+            })}>
+                <StackedBarChartIcon sx={{ fontSize: 200, marginLeft: 8 }} />
+                <CardContent>
+                    <Typography variant="h5" component="div" className="font">
+                        부서 주간 근무 현황
+                    </Typography>
+                </CardContent>
+            </Card>
+            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/vacationGr")}>
+                <BsBarChartSteps size={200} className="icon" />
+                <CardContent>
+                    <Typography variant="h5" component="div" className="font">
+                        부서 연차사용 현황
+                    </Typography>
+                </CardContent>
+            </Card>
+            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/AttGr", {
+                state: [emp, data, deptattendance],
+            })}>
+                <EventBusyIcon sx={{ fontSize: 200, marginLeft: 8 }} />
+                <CardContent>
+                    <Typography variant="h5" component="div" className="font">
+                        부서/타부서 이상근태 현황
+                    </Typography>
+                </CardContent>
+            </Card>
+        </ReportStyle>
+      </MainStyle>
     )
 }
 

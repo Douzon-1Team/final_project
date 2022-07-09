@@ -37,10 +37,10 @@ public class AttendanceScheduleComponent {
     }
     @Scheduled(cron="0/10 * * * * *")
     public void scheduledTest(){
-        tardyCheckPerHour();
+  //      tardyCheckPerHour();
 //        createStatus();
 //        checkUnregisteredOff();
-        log.info("스케줄러");
+   //     log.info("스케줄러");
     }
 
     @Scheduled(cron="0 0 0/1 * * *")
@@ -109,7 +109,6 @@ public class AttendanceScheduleComponent {
                         AttendanceUpdateDto.builder()
                                 .empno(empno).date(LocalDate.now()).columns("tardy").values("1").build());
             }
-
         }
     }
 

@@ -7,10 +7,12 @@ import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
 // import "tui-date-picker/dist/tui-date-picker.css";
 // import "tui-time-picker/dist/tui-time-picker.css";
-import Chart from "../month/chart";
+import Chart from "../MonthChart/chart";
 import Button from "@mui/material/Button";
 import {CalendarStyle} from "../../styles/Calendarstyle";
+import CardContent from '@mui/material/CardContent';
 import _ from "lodash";
+import Card from '@mui/material/Card';
 import {
   BsFillArrowLeftSquareFill,
   BsFillArrowRightSquareFill,
@@ -22,6 +24,7 @@ import {useLocation, useNavigate} from "react-router";
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
   const { state } = useLocation(); // TODO : 사원목록 탭에서 넘어온 사원 데이터
+  console.log(state);
   const navigate = useNavigate();
   const start = new Date();
   const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -40,18 +43,9 @@ function Calendar() {
       dragBgColor: "#03bd9e",
       borderColor: "#03bd9e",
     },
-    // 조퇴
-    {
-      id: "2",
-      name: "조퇴",
-      color: "#ffffff",
-      bgColor: "#00a9ff",
-      dragBgColor: "#00a9ff",
-      borderColor: "#00a9ff",
-    },
     // 결근
     {
-      id: "3",
+      id: "2",
       name: "결근",
       color: "#ffffff",
       bgColor: "#FF0000",
@@ -60,7 +54,7 @@ function Calendar() {
     },
     // 지각
     {
-      id: "4",
+      id: "3",
       name: "지각",
       color: "#ffffff",
       bgColor: "#FFA500",
@@ -69,11 +63,11 @@ function Calendar() {
     },
     // 결제진행/결제완료? #00AAFF
     {
-      id: "5",
+      id: "4",
       name: "연차",
       color: "#ffffff",
       bgColor: "#00AAFF",
-      borderColor: "#FF0000",
+      borderColor: "#00AAFF",
     },
   ];
   // const [inputValue, setInputValue] = useState("");
@@ -103,7 +97,7 @@ function Calendar() {
     // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
     // TODO : 새로고침시 사라지지 않고 메인 버튼을 누르거나 뒤로가기를 해야 STATE가 사라짐
     if (state !== null) {
-      dispatch(getList({empno : state}));
+      dispatch(getList({empno : state[0]}));
     } else {
       dispatch(getList({empno : empno.empInfo[0]}));
     }
@@ -125,7 +119,7 @@ function Calendar() {
       let check = e.schedule.title,substring = "결제완료";
 
       check.includes(substring)
-      // TODO : 이상근태 or 휴가가 본인 승인 OR 결제완료시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
+      // TODO : 이상근태 or 휴가가 본인 승인시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
       if (state === null && check.includes(substring) !== true) {
         navigate('/attendancereq', {
           state: areq,
@@ -282,18 +276,24 @@ function Calendar() {
   };
   return (
       <>
-
-        {chartview == false ?
+        {chartview === false ?
             <CalendarStyle>
+              {state !== null ?
+              <Card sx={{ maxWidth: 360, fontWeight: 'bold' }}>
+                <CardContent>
+                  {state[0]} {state[1]} 사원의 근태관리 정보입니다.
+                </CardContent>
+              </Card>
+              : <></>}
               <div className="calendar_header">
                 <div className="calbutton">
-                  <Button variant="contained" type="button" onClick={handleMonthClick}>
+                  <Button className="mon" variant="contained" type="button" onClick={handleMonthClick}>
                     월별
                   </Button>
-                  <Button variant="contained" type="button" onClick={handleWeekClick}>
+                  <Button className="week" variant="contained" type="button" onClick={handleWeekClick}>
                     주별
                   </Button>
-                  <Button variant="contained" type="button" onClick={handleDayClick}>
+                  <Button className="day" variant="contained" type="button" onClick={handleDayClick}>
                     일별
                   </Button>
                 </div>

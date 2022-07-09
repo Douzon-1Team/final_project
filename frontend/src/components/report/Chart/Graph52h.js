@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
-import {getGraph52hData} from "../apis/Graph52hApi";
+import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
+import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 
 const Graph52h = () => {
     let [attendanceWeek, setAttendance] = useState([]);
@@ -11,6 +12,9 @@ const Graph52h = () => {
     const attendanceWeeks=[]
     const overtimeWeeks = []
     const empno = useSelector((state) => state.EMP_INFO);
+
+    const [response, setRes] = useState();
+
     const getJsonData = async () => {
         await getGraph52hData({empno : empno.empInfo[0]}).then((res) => {
             console.log(res.data[0].attendanceWeek)
@@ -24,7 +28,7 @@ const Graph52h = () => {
             setName(names);
             setAttendance(attendanceWeeks);
             setOvertimeWeek(overtimeWeeks);
-
+            setRes(res.data);
             }
         );
     }
@@ -79,16 +83,16 @@ const Graph52h = () => {
     options.series[1].data = [...overtimeWeek];
     options.series[0].data = [...attendanceWeek];
 
-
     return (
-        <>
+        <DayWorkChartStyle style={{marginLeft: '17%'}}>
+            <h3>주간 근무시간 현황</h3>
             {name.length !== 0 ?
                 <ECharts
                     option={options}
                     style={{width: '700px', height: '500px'}}
                 />
             : <></> }
-        </>
+        </DayWorkChartStyle>
     );
 }
 

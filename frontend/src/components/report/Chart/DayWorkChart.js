@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
-import {DayWorkChatStyle} from '../styles/DayWorkChatStyle'
-import _ from 'lodash';
-import {useNavigate} from 'react-router-dom';
+import {DayWorkChartStyle} from '../../../styles/DayWorkChartStyle'
+import {useLocation} from "react-router";
 
-const DayWorkChat = (props) => {
+const DayWorkChart = () => {
+    const {state} = useLocation();
+    console.log(state);
     const [data, setdata] = useState([]);
-    const navigate = useNavigate();
 
     // TODO : 분 단위로 표시
 
@@ -15,31 +15,31 @@ const DayWorkChat = (props) => {
     let workmember = [];
     let hour = new Date().getHours();
 
-    for (let i = 0; i < props.data.length; i++) {
+    for (let i = 0; i < state.length; i++) {
         let count = 0;
-        for (let j = 0; j < props.data.length; j++) {
-            if (props.data[i].empno === props.data[j].empno) count += 1;
+        for (let j = 0; j < state.length; j++) {
+            if (state[i].empno === state[j].empno) count += 1;
         }
         if (count > 1) {
             if (offwork.length === 0) {
-                props.data[i].totaltime = 8;
-                offwork.push(props.data[i]);
+                state[i].totaltime = 8;
+                offwork.push(state[i]);
             }
-            if (offwork[offwork.length - 1].name === props.data[i].name) continue;
-            if (props.data[i].totaltime === null) {
-                props.data[i].totaltime = 8;
-                offwork.push(props.data[i]);
+            if (offwork[offwork.length - 1].name === state[i].name) continue;
+            if (state[i].totaltime === null) {
+                state[i].totaltime = 8;
+                offwork.push(state[i]);
             } else {
-                props.data[i].totaltime = 8;
-                offwork.push(props.data[i]);
+                state[i].totaltime = 8;
+                offwork.push(state[i]);
             }
         } else if (count === 1) {
-            if (hour - props.data[i].onofftimenum < 0) {
-                props.data[i].totaltime = 0;
-                onwork.push(props.data[i]);
+            if (hour - state[i].onofftimenum < 0) {
+                state[i].totaltime = 0;
+                onwork.push(state[i]);
             } else {
-                props.data[i].totaltime = hour - props.data[i].onofftimenum;
-                onwork.push(props.data[i]);
+                state[i].totaltime = hour - state[i].onofftimenum;
+                onwork.push(state[i]);
             }
         }
     }
@@ -99,6 +99,7 @@ const DayWorkChat = (props) => {
                 emphasis: {
                     focus: 'series'
                 },
+                itemStyle: {color: '#64CD3C'},
             },
             {
                 type: 'bar',
@@ -106,6 +107,7 @@ const DayWorkChat = (props) => {
                 emphasis: {
                     focus: 'series'
                 },
+                itemStyle: {color: '#00AAFF'},
             },
         ]
     });
@@ -113,19 +115,16 @@ const DayWorkChat = (props) => {
     options.dataset.source = [...workmember];
 
     return (
-        <>
-            {options.dataset.source.length !== 0 ?
-                <>
-        <DayWorkChatStyle>
+        <DayWorkChartStyle style={{marginLeft:'8%'}}>
+            <h3>부서 주간 근무 현황</h3>
+        {options.dataset.source.length !== 0 ?
             <ECharts
                 option={options}
                 style={{width: "1000px", height:"800px"}}
-            />
-        </DayWorkChatStyle>
-                    <button onClick={() => navigate('/report/list', {state: options.dataset.source})}>목록형</button>
-          </>  : <></> }
-        </>
+            /> : <></>
+        }
+        </DayWorkChartStyle>
     );
 }
 
-export default DayWorkChat;
+export default DayWorkChart;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {style} from "./LeaveReqStyle";
+import {style} from "../../styles/LeaveReqStyle";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {ko} from "date-fns/esm/locale";

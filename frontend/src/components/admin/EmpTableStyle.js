@@ -1,7 +1,28 @@
 import styled from 'styled-components';
 
-const Table = styled.table`
+const Container = styled.div`
   width: 80%;
+  margin-top: 90px;
+  
+  h3 {
+    display : inline;
+    padding-left: 30px
+  }
+  
+  span{
+    margin-left: 10px;
+    color: darkgray;
+    fontWeight: bold;
+  }
+  
+  .select-row{
+    margin-top: 6px;
+    margin-right: 50px;
+    float: right
+  }
+`;
+
+const Table = styled.table`
   table-layout: fixed;
   padding: 0 8px;
   border-spacing: 0 8px;
@@ -15,9 +36,9 @@ const Header = styled.tr`
   color: darkgray;
   text-align: center;
   
-  td:first-child {
-    width: 8%;
-  }
+  :first-of-type {
+    width: 12%;
+   }
 `;
 
 const Button = styled.button`
@@ -52,15 +73,17 @@ const Row = styled.tr`
 const Cell = styled.td`
   overflow: hidden;
   text-overflow: ellipsis;
-  border-bottom: 0.5px solid #edf1f9;
-  border-top: 0.5px solid #edf1f9;
+  border-bottom: 0.5px solid #adb1b9;
+  border-top: 0.5px solid #adb1b9;
+  
   :first-of-type {
-    border-left: 0.5px solid #edf1f9;
+    border-left: 0.5px solid #adb1b9;
     border-radius: 15px 0 0 15px;
   }
   :last-of-type {
+    padding-right: 15px;
     overflow: initial;
-    border-right: 0.5px solid #edf1f9;
+    border-right: 0.5px solid #adb1b9;
     border-radius: 0 15px 15px 0;
     :hover {
       cursor: pointer;
@@ -91,4 +114,23 @@ const Pagination = styled.div`
   }
 `;
 
-export {Table, Header, Button, Row, Cell, Order, Pagination};
+const EtcButton = styled.button`
+        border-radius: 10px;
+        border: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    
+    &.지각{background: #ffa500;}
+    &.결근{
+        background: #ff0000;
+        color: white;
+    }
+    &.휴가{background: #86d3fb;}
+    &.오전반차{background: #Fbe086;}
+    &.오후반차{background: #Fbc386;}
+    &.시간연차{background: #Abea9b;}
+`;
+
+export {Container, Table, Header, Button, Row, Cell, Order, Pagination, EtcButton};

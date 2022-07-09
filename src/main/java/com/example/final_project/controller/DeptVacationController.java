@@ -1,5 +1,6 @@
 package com.example.final_project.controller;
 
+import com.example.final_project.dto.ChartListDto;
 import com.example.final_project.dto.DeptVacationDto;
 import com.example.final_project.dto.DeptVacationStatusDto;
 import com.example.final_project.service.DeptVacationService;
@@ -29,5 +30,10 @@ public class DeptVacationController {
     public ResponseEntity<List<DeptVacationStatusDto>> getDeptVacationStatus(@PathVariable String empno) {
         List<DeptVacationStatusDto> deptVacationStatus = deptVacationService.getDeptVacationStatus(empno);
         return ResponseEntity.ok().body(deptVacationStatus);
+    }
+
+    @GetMapping("/report/dvacation")
+    public ResponseEntity<List<ChartListDto>> dVacationList(){
+        return ResponseEntity.ok().body(deptVacationService.dVacationList());
     }
 }

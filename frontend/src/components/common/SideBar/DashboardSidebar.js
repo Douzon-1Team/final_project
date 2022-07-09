@@ -13,7 +13,7 @@ import Scrollbar from '../Header/Scrollbar';
 import NavSection from './NavSection';
 //
 import navConfig from './NavConfig';
-import {LogoImgbox} from "../Logo/LogoStyle";
+import {LogoImgbox, UserImg} from "../Logo/LogoStyle";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 import SideBar from "./SideBar";
@@ -84,7 +84,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Box sx={{ mb: 5, mx: 2.5 }}>
                 <Link underline="none" component={RouterLink} to="#">
                     <AccountStyle>
-                        <Avatar alt="photoURL" />
+                        <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                                 {empInfo[1]}({empInfo[0]})

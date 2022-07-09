@@ -12,7 +12,7 @@ MySwal.fire({
     html: <i>ALL IN ONE</i>,
     icon: 'success',
     confirmButtonColor: '#00AAFF',
-    // didOpen: () => { // TODO : 버튼 로딩인데 필요하신분 쓰세요
+    // didOpen: () => {
     // `MySwal` is a subclass of `Swal` with all the same instance & static methods
     // MySwal.showLoading()
     // },
@@ -21,7 +21,34 @@ MySwal.fire({
 
 export const LoginFail = () => {
     MySwal.fire({
-        title: <p>로그인 실패! 사번과 비밀번호를 다시 확인하세요</p>,
+        title: <p>로그인 실패! 사번과 비밀번호를 다시 확인하세요.</p>,
+        html: <i>ALL IN ONE</i>,
+        icon: 'error',
+        confirmButtonColor: '#00AAFF',
+    })
+}
+
+export const LogoutSuccess = () => {
+    MySwal.fire({
+        title: <p>로그아웃 되었습니다.</p>,
+        html: <i>ALL IN ONE</i>,
+        icon: 'success',
+        confirmButtonColor: '#00AAFF',
+    })
+}
+
+export const LogoutFail = () => {
+    MySwal.fire({
+        title: <p>로그아웃에 실패했습니다.</p>,
+        html: <i>ALL IN ONE</i>,
+        icon: 'error',
+        confirmButtonColor: '#00AAFF',
+    })
+}
+
+export const PrivateAlert = () => {
+    MySwal.fire({
+        title: <p>로그인 후 이용해주십시오.</p>,
         html: <i>ALL IN ONE</i>,
         icon: 'error',
         confirmButtonColor: '#00AAFF',
@@ -76,6 +103,82 @@ export const MainCalendarError2 = () => {
 export const DeptVacationError = () => {
     MySwal.fire({
         title: <p>시스템 에러입니다. 관리자에게 문의 해주세요.</p>,
+        html: <i>ALL IN ONE</i>,
+        icon: 'error',
+        confirmButtonColor: '#00AAFF',
+    })
+}
+
+export const TimeSettingError = () => {
+    MySwal.fire({
+        title: <p>출근시간이 퇴근시간보다 늦어서는 안됩니다.</p>,
+        html: <i>ALL IN ONE</i>,
+        icon: 'error',
+        confirmButtonColor: '#00AAFF',
+    })
+}
+
+// export const SettingSuccess = () => {
+//     MySwal.fire(
+//       {
+//         title: <p>성공적으로 반영되었습니다.</p>,
+//         html: <i>ALL IN ONE</i>,
+//         icon: 'success',
+//         confirmButtonColor: '#00AAFF',
+//     })
+// }
+
+export const PwdSuccess = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호 변경이 완료되었습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'success',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+
+export const PwdError = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호 변경에 실패했습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+export const PwdNotRight = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호를 올바르게 입력해주세요.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+export const PwdNotCollect = () => {
+    MySwal.fire(
+      {
+          title: <p>새 비밀번호가 일치하지 않습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+
+export const SettingSuccess = () => {
+    MySwal.fire(
+      {
+          title: <p>성공적으로 반영되었습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'success',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+
+export const SettingError = () => {
+    MySwal.fire({
+        title: <p>변경에 실패했습니다.</p>,
         html: <i>ALL IN ONE</i>,
         icon: 'error',
         confirmButtonColor: '#00AAFF',

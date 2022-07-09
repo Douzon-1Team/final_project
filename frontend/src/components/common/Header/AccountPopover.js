@@ -59,11 +59,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-          {/* TODO : 둘 중 어떤거 쓸지 정해야함 */}
-          {/* 1. 기존 유저 이미지 */}
-          <UserImg />
-        {/*  2. material ui에서 가져온거 여기에 src만 넣어주면 ok임 */}
-        {/*<Avatar alt="photoURL" />*/}
+          <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
       </IconButton>
 
       <MenuPopover

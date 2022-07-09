@@ -1,16 +1,21 @@
 import styled from 'styled-components';
+
 const ToggleText = styled.div`
-    writing-mode: tb-rl;
-    
-    
+    writing-mode: tb-rl;  
 `
 const ComponentContainer = styled.div`
-    display : inline-flex;
-    margin:1%;
+    width: 400px;
+    display : flex;
+    
+    button{
+        margin-left: 10%;
+        margin-top: 50px;
+    }
 `
 const ChartContainer = styled.div`
-    max-height : 500px;
+    .echarts-for-react {
+        width: 500px;
+    }
 `
-
 
 export {ToggleText, ComponentContainer, ChartContainer}
