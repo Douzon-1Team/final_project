@@ -17,12 +17,12 @@ function Logout(){
         // TODO : 1. dispatch | 2. /logout 시 서버 통신
         LogoutSuccess();
         localStorage.removeItem("LoginChk");
-        return navigate("/login");
+        return navigate("/");
     } else {
         LogoutFail();
         return false;
     }
-    return <Link to="/login" />
+    return <Link to="/" />
 }
 
 export default Logout;

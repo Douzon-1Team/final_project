@@ -10,7 +10,7 @@ export default function PrivateRoute() {
 
     if (isAuth === 'Failed') {
         PrivateAlert();
-        return <Navigate to="/login" state={{from: location}} />
+        return <Navigate to="/" state={{from: location}} />
     }
     return <Outlet />
 }

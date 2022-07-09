@@ -7,31 +7,44 @@ const Title = styled.p`
     display: block;  
     margin-left: auto; 
     margin-right: auto;
-    text-align: center; 
+    text-align: center;  
 `;
 
-const Table = styled.table`
-    border: 3px solid #bcbcbc;
-    width: 80%;
-    font-weight: bold;
-    display: block; 
-    margin-top: 8vh;
-    margin-left: auto; 
-    margin-right: auto; 
-    text-align: center;
-    margin-bottom: 0.5%; 
+const TableBox = styled.div` 
+    position: relative;
+    width: 100%;
+    margin-left: 22%; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
 `;
 
-// const PwdTable = styled.table`
-//     // border: 3px solid #bcbcbc;
-//     width: 80%;
-//     font-weight: bold;
-//     display: block;
-//     margin-left: auto;
-//     margin-right: auto;
-// `;
+const TableBox2 = styled.div` 
+    position: relative;
+    width: 100%;
+    margin-left: 22%; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 12%;
+`;
 
-const Form = styled.form`
+const Table = styled.table`    
+    font-weight: bold;  
+    text-align: center;  
+    td {  
+        width: 70%;
+        height: 5vh;
+        letter-spacing: 0.7vw;
+    } 
+    align-items: center;
+`;
+
+const Form = styled.form`  
     border: 3px solid #bcbcbc;
     width: 78%; 
     font-weight: bold;
@@ -41,59 +54,72 @@ const Form = styled.form`
     padding: 1%;
 `;
 
-const Input = styled.input`
+const Input = styled.input` 
     position: relative;
-    margin-top: 7%;
+    // margin-top: 7%;
     width: 80%;
-    height: 5vh;
+    // height: 5vh;
     font-size: 1.1em;
     font-weight: bold;
     border: none;
     background: lightgray;
     border-radius: 4px;
     padding-left: 20px;
-    &::placeholder{
+    &::placeholder {
         color: white;
     }
 `;
 
-const Button = styled.button`
-    position: relative; 
-    width: 15%;
-    height: 3.5vh;
-    margin-left: 1%; 
-    background-color: gray;
-    border: none;
-    border-radius: 3px;
-    font-weight: bold;
-    color: white;
-    font-size: 1.1em;
-    &:hover { cursor: pointer; }
-    margin-top: 5vh;
-    float: right; 
-`;
-
 const QR = styled.button` 
-    width: 12%;
+    width: 20%;
     height: 3.5vh; 
-    background-color: gray;
+    background-color: #00AAFF;
     border: none;
-    border-radius: 3px;
+    border-radius: 8px;
     font-weight: bold;
     color: white;
-    font-size: 1.1em;
-    &:hover { cursor: pointer; }
+    font-size: 1.1rem;
     float: right;
-    margin-right: 10vw;
+    bottom: 50vh;
+    max-width: 120px;
+    min-width: 120px;  
+    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    &:hover { cursor: pointer; } 
 `;
 
-const Img = styled.img`
-    width: 45vw;
+const Button = styled.button`   
+    height: 3.5vh; 
+    background-color: #00AAFF;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    font-size: 1.1rem;
+    float: right;
+    bottom: 50vh; 
+    max-width: 200px;
+    min-width: 200px;   
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    &:hover { cursor: pointer; } 
+`;
+
+const ProfileImg = styled.img`
+    width: 100%;
     max-width: 300px;
-    min-width: 300px;
-    height: 47vh; 
-    max-height: 300px;
-    min-height: 300px;
+    height: 100%; 
+    max-height: 50vh; 
+    border-radius: 20px;
 `;
 
 const Line = styled.div`
@@ -101,4 +127,125 @@ const Line = styled.div`
     margin-bottom: 0.5%; 
 `;
 
-export {Title, Table, Input, Button, Form, Img, QR, Line};
+const TopContainer = styled.div` 
+    width: 100%;
+    height: 50%;
+    max-height: 50vh;
+    min-height: 50vh;  
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+`;
+
+const InfoBox = styled.div` 
+    position: relative; 
+    width: 100%;
+    min-width: 300px;
+    height: 100%;
+    min-height: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #00AAFF;
+    letter-spacing: 0.2vw; 
+    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;  
+    align-items: center;
+`;
+
+const PwdBox = styled.input` 
+    position: relative; 
+    width: 100%;
+    min-width: 220px;
+    // margin-top: 15%;
+    height: 100%;
+    min-height: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #00AAFF;
+    letter-spacing: 0.2vw; 
+    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center; 
+`;
+
+const LeftContainer = styled.div`  
+    width: 30%;
+    height: 100%;
+    float: left; 
+    min-height: 70vh; 
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;  
+    align-items: center; 
+`;
+
+const RightContainer = styled.div`  
+    width: 70%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+`;
+
+const IconBox = styled.div` 
+    position: relative;
+    width: 40px;
+    border: 2px solid none;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    float: left;
+    margin-left: 23.5%;
+    bottom: 17vh;
+    background: white;
+    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    &:hover { cursor: pointer; } 
+`;
+
+const QrBox = styled.div` 
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    float: right;
+    bottom: 8vh;
+    background: white;
+    &:hover { cursor: pointer; }
+`;
+
+const BtnBox = styled.div` 
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 8%;
+    float: right;
+    background: white;
+    left: 22%;
+    &:hover { cursor: pointer; }
+`;
+
+
+export { TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer, InfoBox, PwdBox, TopContainer, QR, Title, Table, Input, Button, Form, ProfileImg, Line, TableBox};

@@ -58,6 +58,7 @@ export default function ModalTab() {
     const response = await settingTimeChoice({ empno, deptNo, flexible });
     if (response.status) {
       // TODO: alert modal z-index 변경 필요
+
       SettingSuccess();
       // window.location.reload();
     } else { SettingError(); }

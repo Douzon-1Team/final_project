@@ -118,13 +118,62 @@ export const TimeSettingError = () => {
     })
 }
 
+// export const SettingSuccess = () => {
+//     MySwal.fire(
+//       {
+//         title: <p>성공적으로 반영되었습니다.</p>,
+//         html: <i>ALL IN ONE</i>,
+//         icon: 'success',
+//         confirmButtonColor: '#00AAFF',
+//     })
+// }
+
+export const PwdSuccess = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호 변경이 완료되었습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'success',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+
+export const PwdError = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호 변경에 실패했습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+export const PwdNotRight = () => {
+    MySwal.fire(
+      {
+          title: <p>비밀번호를 올바르게 입력해주세요.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+export const PwdNotCollect = () => {
+    MySwal.fire(
+      {
+          title: <p>새 비밀번호가 일치하지 않습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'error',
+          confirmButtonColor: '#00AAFF',
+      })
+}
+
 export const SettingSuccess = () => {
-    MySwal.fire({
-        title: <p>성공적으로 반영되었습니다.</p>,
-        html: <i>ALL IN ONE</i>,
-        icon: 'success',
-        confirmButtonColor: '#00AAFF',
-    })
+    MySwal.fire(
+      {
+          title: <p>성공적으로 반영되었습니다.</p>,
+          html: <i>ALL IN ONE</i>,
+          icon: 'success',
+          confirmButtonColor: '#00AAFF',
+      })
 }
 
 export const SettingError = () => {

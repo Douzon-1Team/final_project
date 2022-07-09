@@ -16,7 +16,6 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 public class ManagerSettingService {
 
-    private final EmployeeMapper employeeMapper;
     private final EmpInfoCompMapper empInfoCompMapper;
     private final ManagerSettingMapper managerSettingMapper;
 
@@ -26,7 +25,6 @@ public class ManagerSettingService {
         return dto;
     }
 
-    // 1. 근무시간 선택
     @Transactional
     public void updateWorkTimeChoice(ManagerSettingDto managerSettingDto){
         String empno = managerSettingDto.getEmpno();
@@ -34,33 +32,21 @@ public class ManagerSettingService {
         empInfoCompMapper.updateFlexible(empno, flexible);
     }
 
-    // 2. 근무시간 설정
     @Transactional
     public void updateWorkTime(ManagerSettingDto managerSettingDto) {
-        String empno = managerSettingDto.getEmpno();
-//        String roleChk = employeeMapper.findByUserRole(empno);
+        LocalTime WORK_START = managerSettingDto.getGetToWorkTimeSet();
+        LocalTime WORK_END = managerSettingDto.getGetOffWorkTimeSet();
+        LocalTime WORK_START_F = managerSettingDto.getGetToWorkTimeSetF();
+        LocalTime WORK_END_F = managerSettingDto.getGetOffWorkTimeSetF();
 
-//        System.out.println(empno + roleChk);
-//        if (!roleChk.equals("ROLE_USER")) {
-            LocalTime WORK_START = managerSettingDto.getGetToWorkTimeSet();
-            LocalTime WORK_END = managerSettingDto.getGetOffWorkTimeSet();
-            LocalTime WORK_START_F = managerSettingDto.getGetToWorkTimeSetF();
-            LocalTime WORK_END_F = managerSettingDto.getGetOffWorkTimeSetF();
+        Time start = Time.valueOf(WORK_START);
+        Time end = Time.valueOf(WORK_END);
+        Time startFlex = Time.valueOf(WORK_START_F);
+        Time endFlex = Time.valueOf(WORK_END_F);
 
-            Time start = Time.valueOf(WORK_START);
-            Time end = Time.valueOf(WORK_END);
-            Time startFlex = Time.valueOf(WORK_START_F);
-            Time endFlex = Time.valueOf(WORK_END_F);
-
-            ManagerSetting ms = ManagerSettingDto.toTimeSetting(managerSettingDto, start, end, startFlex, endFlex);
-            System.out.println(ms);
-            managerSettingMapper.updateTime(ms);
-//        } else {
-//            String flexible = managerSettingDto.getFlexible();
-//            empInfoCompMapper.updateFlexible(empno, flexible);
-//            System.out.println(flexible);
-//        }
-//        System.out.println("끝");
+        ManagerSetting ms = ManagerSettingDto.toTimeSetting(managerSettingDto, start, end, startFlex, endFlex);
+        System.out.println(ms);
+        managerSettingMapper.updateTime(ms);
     }
 
     @Transactional
