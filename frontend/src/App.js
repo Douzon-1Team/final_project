@@ -10,8 +10,8 @@ import LeaveReq from "./components/LeaveReq/LeaveReq";
 import Layout from "./components/common/Layout";
 import EmpList from "./components/admin/EmpList";
 import {useSelector} from "react-redux";
-import LeaveList from './components/List/LeaveList'
-import AttendanceList from "./components/List/AttendanceList";
+import LeaveList from './components/list/LeaveList'
+import AttendanceList from "./components/list/AttendanceList";
 import {AttendanceReq} from "./components/AttendanceReq/AttendanceReq";
 import UpdateEmp from "./components/admin/UpdateEmp"
 import DeptVacation from "./components/DeptVacation/DeptVacation";
