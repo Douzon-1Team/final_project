@@ -141,7 +141,7 @@ function VacationGraph() {
 
   return (
     <DayWorkChartStyle style={{marginLeft:'15%'}}>
-      <h3>부서내 연차 사용 현황</h3><hr/>
+      <h3>부서내 연차 사용 현황</h3>
       <Button className="vg" variant = "outlined"
               onClick={() => setStatus((prev) => !prev)}>
         {status ? "목록형" : "차트형"}
