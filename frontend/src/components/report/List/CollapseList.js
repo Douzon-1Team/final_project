@@ -82,7 +82,7 @@ function Row({row, month}) {
     );
 }
 
-const AttendanceProblemList = () => {
+const CollapseList = () => {
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = useLocation().state;
@@ -162,4 +162,4 @@ const AttendanceProblemList = () => {
 }
 
 
-export default AttendanceProblemList;
+export default CollapseList;

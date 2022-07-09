@@ -28,11 +28,8 @@ public class CalendarController {
 
     @GetMapping("/main")
     public ResponseEntity<?> maincalendar(@RequestParam("empno") String empno, HttpServletResponse response) throws IOException {
-        System.out.println(empno);
         LocalDate now = LocalDate.now();
         String year = String.valueOf(now.getYear());
-        // TODO : 달력으로부터 올해 날짜 받아오게
-        System.out.println(year);
 
         List<CalendarResponseDto> Calendarwork = calendarMapper.findUserVacation(empno);
 
@@ -60,6 +57,7 @@ public class CalendarController {
         Usermain.addAll(Monthdate);
         Usermain.addAll(Vacation);
         Usermain.addAll(Nonwork);
+        System.out.println(Usermain);
 
 
         return ResponseEntity.ok().headers(headers).body(Usermain);

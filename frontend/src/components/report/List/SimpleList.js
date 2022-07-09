@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     }
 });
 
-const ChartList = () => {
+const SimpleList = () => {
     const location = useLocation();
     const url = location.state.url;
     const data = location.state.data;
@@ -61,4 +61,4 @@ const ChartList = () => {
     )
 }
 
-export default ChartList
+export default SimpleList

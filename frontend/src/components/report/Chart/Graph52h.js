@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ECharts, { EChartsReactProps } from 'echarts-for-react';
-import {getGraph52hData} from "../apis/Graph52hApi";
+import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
 import Button from "@mui/material/Button";
 import {useNavigate} from 'react-router-dom';
