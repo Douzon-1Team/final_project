@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import S3Upload from "../components/common/S3Upload";
 import { QrBox, QR, ProfileImg, LeftContainer, RightContainer} from '../styles/profile';
 import { MainStyle } from "../styles/Globalstyle";
-import VerticalTabs from "./VerticalTabs";
+import {VerticalTabs} from "./VerticalTabs";
 
 function Profile() {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -27,7 +27,7 @@ function Profile() {
               <VerticalTabs />
             </RightContainer>
             <QrBox>
-              <a href={ emp.qrPath }><QR>QR code</QR></a>
+                <a href={ emp.qrPath }><QR>QR code</QR></a>
             </QrBox>
             <S3Upload/>
         </MainStyle>

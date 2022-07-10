@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 80%;
-  margin-top: 90px;
+  width: 75%;
+  margin: auto;
+  padding-top: 120px;
   
   h3 {
     display : inline;
