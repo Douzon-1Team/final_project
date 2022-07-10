@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {getProfile} from "../../apis/ApiService";
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
@@ -25,6 +25,7 @@ import {TabPanel, a11yProps, useStyles} from '../../pages/VerticalTabs'
 import {MainStyle} from "../../styles/Globalstyle";
 import {FcEditImage} from 'react-icons/fc';
 import {useSelector} from "react-redux";
+import {ResignConfirm, DeleteConfirm} from "../common/alert/alert";
 
 function Profile() {
     const classes = useStyles();
@@ -35,28 +36,42 @@ function Profile() {
     const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const isNew = empNo ? false : true;
     const [emp, setEmp] = useState(
-        { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, resigned: null }
+        { deptName: null, name: null, extensionNum: null, rankName: null, resigned: null }
     );
+    const [profile, setProfile] = useState(null);
+    const submit = useRef(null);
     const { register, handleSubmit, setValue, watch } = useForm();
+
+    useEffect(() => {
+        if(!isNew){
+            getProfile(empNo).then(response => {
+                setEmp(response);
+                setProfile(response.profilePath);
+            });
+        }
+    }, [])
+
+    useEffect(() => {
+        if(!isNew){
+            setValue('deptName', emp.deptName);
+            setValue('name', emp.name);
+            setValue('extensionNum', emp.extensionNum);
+            setValue('rankName', emp.rankName);
+        }
+    }, [emp]);
+
     const avatar = watch('image');
     const handleChange = (event, newValue) => {
         setValues(newValue);
     };
 
     useEffect(() => {
-        if(!isNew){
-            getProfile(empNo).then(response => {
-                setEmp(response);
-            })
-        }
-    }, []);
-
-    useEffect(() => {
         if (avatar && avatar.length > 0) {
             const file = avatar[0];
-            setEmp({profilePath: URL.createObjectURL(file)});
+            setProfile(URL.createObjectURL(file));
         }
     }, [avatar]);
+
 
     const updateInfo = async ({ deptName, name, rankName, extensionNum, role, image, resigned}) => {
         const data = {
@@ -109,16 +124,27 @@ function Profile() {
     }
 
     const deleteInfo = async () => {
-        const response = axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
-            {headers: {Authorization: accessToken}});
-        navigate("/admin/list");
+        if (DeleteConfirm(function (isConfirm){
+            const response = axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
+                {headers: {Authorization: accessToken}});
+            navigate("/admin/list");
+        }));
+    }
+
+    const resign = () => {
+        ResignConfirm(function (isConfirm){
+            if(isConfirm){
+                setValue("resigned", true);
+                submit.current.click();
+            }
+        });
     }
 
     return (
         <MainStyle>
         <form onSubmit={handleSubmit(onSubmit)}>
             <LeftContainer>
-                {emp.profilePath ? <ProfileImg src={emp.profilePath}/> : <ProfileImg src={defaultImg}/>}
+                {profile ? <ProfileImg src={profile}/> : <ProfileImg src={defaultImg}/>}
                 <label htmlFor="icon">
                     <IconBox style={{bottom:'50px', left:'110px'}}>
                         <FcEditImage size="20px"/>
@@ -146,7 +172,7 @@ function Profile() {
 
                 <Tab label="개인정보" {...a11yProps(0)} />
                 {!isNew && <Tab label="비밀번호 변경" {...a11yProps(1)} /> }
-                {!isNew && <RedBtn {...register('resigned')} onClick={setValue("resigned", true)}>퇴사자 등록</RedBtn> }
+                {!isNew && <RedBtn type="button" {...register('resigned')} onClick={() => {resign()}}>퇴사자 등록</RedBtn> }
                 {!isNew && <RedBtn onClick={deleteInfo}>사원 정보 삭제</RedBtn> }
             </Tabs>
 
@@ -162,19 +188,19 @@ function Profile() {
                 </tr>}
                 <tr>
                     <td>부서</td>
-                    <InfoBox2 {...register('deptName')} type="text" defaultValue={emp.deptName}/>
+                    <InfoBox2 {...register('deptName')} type="text"/>
                 </tr>
                 <tr>
                     <td>이름</td>
-                    <InfoBox2 {...register('name')} type="text" defaultValue={emp.name}/>
+                    <InfoBox2 {...register('name')} type="text"/>
                 </tr>
                 <tr>
                     <td>직급</td>
-                    <InfoBox2 {...register('rankName')} type="text" defaultValue={emp.rankName}/>
+                    <InfoBox2 {...register('rankName')} type="text"/>
                 </tr>
                 <tr>
                     <td>내선번호</td>
-                    <InfoBox2 {...register('extensionNum')} type="text" defaultValue={emp.extensionNum}/>
+                    <InfoBox2 {...register('extensionNum')} type="text"/>
                 </tr>
                 {isNew && <div style={{marginTop:'20px'}}>
                     <input style={{marginLeft:'20px'}} type="radio" name="role" value="ROLE_USER" {...register('role')}/> 사원
@@ -201,17 +227,15 @@ function Profile() {
                 }
             </TabPanel>
 
-                <input {...register('empno')} type="text" defaultValue={empNo} hidden />
+                <input {...register('empno')} type="text" value={empNo} hidden />
 
         </div></RightContainer>
             <BtnBox style={{marginTop:'-50px', marginRight:'300px'}}>
-                <Button type="submit">저장</Button>
-                <Button type="reset" onClick={(e) => {e.preventDefault(); navigate("/admin/list")}}>취소</Button>
+                <Button type="submit" ref={submit}>저장</Button>
+                <Button type="button" onClick={(e) => {navigate("/admin/list")}}>취소</Button>
             </BtnBox>
         </form></MainStyle>
     );
 }
-
-
 
 export default Profile;
