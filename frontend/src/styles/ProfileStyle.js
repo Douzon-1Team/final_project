@@ -113,7 +113,8 @@ const Button = styled.button`
     font-size: 1.1rem;
     float: right;
     bottom: 50vh; 
-    max-width: 150px;
+    width: 20%;
+    // max-width: 150px;
     min-width: 107px;   
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
     &:hover { cursor: pointer; } 
@@ -143,14 +144,14 @@ const TopContainer = styled.div`
     align-items: center;
 `;
 
-const TabBox = styled.div`
-    border-right: 4mm ridge rgba(47, 138, 241, .6);  
+const TabBox = styled.div` 
+    display: flex;
     width: 21%;
     height: 100%;
     float: left; 
     min-height: 50vh; 
     box-sizing: border-box;
-    display: flex;
+    border-right: 1px solid #E5E5E5;
     flex-direction: column;
 `;
 
@@ -160,7 +161,7 @@ const InfoBox = styled.div`
     font-size: 1.1rem;
     font-weight: bold; 
     border-bottom: 2px solid #00AAFF;
-    letter-spacing: 0.1vw;  
+    letter-spacing: 0.3vw;  
 `;
 
 const InfoBox2 = styled.input`  
@@ -267,9 +268,17 @@ const BtnBox = styled.div`
 `;
 
 const TabTitle = styled.p`
+    width: 100%;
+    border: none;
+    background: none;
     font-size: 1rem;
     font-weight: bold;
-    &:hover { cursor: pointer; }
+    min-height: 40px;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: left;
+    &:hover { cursor: pointer; } 
 `;
 
 const RedBtn = styled.button`
