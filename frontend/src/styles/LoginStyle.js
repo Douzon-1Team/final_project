@@ -35,8 +35,6 @@ const Input = styled.input`
     } 
 `;
 
-
-
 const Button = styled.button`
     position: relative;
     width: 70%;

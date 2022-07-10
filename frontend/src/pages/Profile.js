@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {getProfile} from "../apis/ApiService";
 import {useSelector} from "react-redux";
 import S3Upload from "../components/common/S3Upload";
-import { QrBox, QR, ProfileImg, LeftContainer, RightContainer} from '../styles/profile';
+import { QrBox, QR, ProfileImg, LeftContainer, RightContainer, ProfileBox} from '../styles/ProfileStyle';
 import { MainStyle } from "../styles/Globalstyle";
-import VerticalTabs from "./VerticalTabs";
+import ProfileTab from "../components/profile/ProfileTab";
 
 function Profile() {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
@@ -24,7 +24,10 @@ function Profile() {
               <ProfileImg src={ emp.profilePath } />
             </LeftContainer>
             <RightContainer>
-              <VerticalTabs />
+              <ProfileBox>
+                <ProfileTab />
+              </ProfileBox>
+              {/*<VerticalTabs />*/}
             </RightContainer>
             <QrBox>
               <a href={ emp.qrPath }><QR>QR code</QR></a>

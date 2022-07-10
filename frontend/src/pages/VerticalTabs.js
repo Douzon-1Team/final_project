@@ -5,7 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {BtnBox, Button, InfoBox, Table, PwdBox, TableBox, TableBox2} from "../styles/profile";
+import {BtnBox, Button, InfoBox, Table, PwdBox, TableBox, TableBox2} from "../styles/ProfileStyle";
 import {useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router";
@@ -13,6 +13,8 @@ import {getProfile} from "../apis/ApiService";
 import { updatePwd} from "../apis/Users";
 import SettingModal from "../components/common/Modal/SettingModal";
 import {PwdError, PwdNotCollect, PwdNotRight, PwdSuccess} from "../components/common/alert/alert";
+
+// TODO: 삭제 예정 (components > profile 디렉토리에서 분리시켰음)
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

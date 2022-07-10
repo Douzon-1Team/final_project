@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
-import {Title, Table, Button, Form, Img, Line} from '../../styles/profile';
+import {Title, Table, Button, Form, Img, Line} from '../../styles/ProfileStyle';
 import axios from 'axios';
 import defaultImg from "../../assets/img/defualt_profile.png";
 import {getProfile} from "../../apis/ApiService";
