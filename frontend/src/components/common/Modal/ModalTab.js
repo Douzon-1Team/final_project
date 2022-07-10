@@ -91,7 +91,7 @@ export default function ModalTab() {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={time} onChange={handleChange} variant="scrollable" scrollButtons="on" indicatorColor="primary" textColor="primary" >
+        <Tabs value={time} onChange={handleChange} variant="scrollable" scrollButtons="on" indicatorColor="primary" textColor="primary">
           <Tab label="근무시간 선택" icon={<FaUserClock/>} {...a11yProps(0)} />
           { empRole !== "ROLE_USER" ? <Tab label="부서 근무시간 설정" icon={<WiTime9/>} {...a11yProps(1)} /> : null }
           { empRole !== "ROLE_USER" ? <Tab label="페이지 보기 방식" icon={<GoGraph/>} {...a11yProps(2)} /> : null }

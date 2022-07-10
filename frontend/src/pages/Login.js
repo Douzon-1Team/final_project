@@ -46,7 +46,6 @@ function Login() {
             <Input {...register('empno')} type="text" placeholder="사번을 입력해주세요." />
           </LoginContent>
             <Text>비 밀 번 호</Text>
-          {/*<LoginContent>*/}
           <LoginContent>
             <Input {...register('password')} type="password" placeholder="비밀번호를 입력해주세요." />
           </LoginContent>

@@ -69,7 +69,6 @@ const Text = styled.p`
     font-size: 1rem;  
 `;
 
-
 const LeftContainer = styled.div`
     position: relative; 
     margin-top: 5%;
@@ -112,17 +111,6 @@ const TimeRightContainer = styled.div`
     padding: 3%
 `;
 
-const GraphBox = styled.div`
-    position: relative;
-    border-radius: 10px;
-    border-style: 1px solid black;
-    display: flex;
-    flex-direction: row; 
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-`;
-
 const TimeBox = styled.div`  
     position: relative; 
     border-radius: 10px;
@@ -152,4 +140,4 @@ const TimeChoiceBox = styled.div`
 `;
 
 
-export {Radio, TimeRightContainer, TimeContainer, Input, Button, Title, Text, LeftContainer, RightContainer, GraphBox, TimeBox, TimeChoiceBox, };
+export {Radio, TimeRightContainer, TimeContainer, Input, Button, Title, Text, LeftContainer, RightContainer, TimeBox, TimeChoiceBox, };

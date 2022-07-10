@@ -3,10 +3,7 @@ import {getProfile} from "../../apis/ApiService";
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import {
-    BtnBox,
+import {BtnBox,
     Button,
     InfoBox,
     InfoBox2,
@@ -17,15 +14,16 @@ import {
     ProfileImg,
     LeftContainer,
     RightContainer,
-    IconBox, RedBtn
-} from "../../styles/profile";
+    IconBox, RedBtn} from '../../styles/profile';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import axios from 'axios';
 import defaultImg from "../../assets/img/defualt_profile.png";
-import {TabPanel, a11yProps, useStyles} from '../../pages/VerticalTabs'
 import {MainStyle} from "../../styles/Globalstyle";
 import {FcEditImage} from 'react-icons/fc';
 import {useSelector} from "react-redux";
 import {ResignConfirm, DeleteConfirm} from "../common/alert/alert";
+import {a11yProps, useStyles, TabPanel} from "../../pages/VerticalTabs";
 
 function Profile() {
     const classes = useStyles();

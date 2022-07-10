@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useSelector} from "react-redux";
 import {FileTypeError, ImgUploadSuccess} from "./alert/alert";
 import {FcEditImage} from 'react-icons/fc';
-import {IconBox} from '../../styles/profile';
+import {IconBox} from '../../styles/ProfileStyle';
 
 window.Buffer = window.Buffer || require("buffer").Buffer;
 

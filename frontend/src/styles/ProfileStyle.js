@@ -10,15 +10,18 @@ const Title = styled.p`
     text-align: center;  
 `;
 
-const TableBox = styled.div` 
-    position: relative;
-    width: 100%;
-    margin-left: 22%; 
+const TableBox = styled.div`  
+    width: 79%;
+    height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column; 
     justify-content: center; 
     align-items: center; 
+    height: 100%;
+    float: right; 
+    min-height: 50vh;    
+    border-radius: 20px; 
 `;
 
 const TableBox2 = styled.div` 
@@ -34,14 +37,19 @@ const TableBox2 = styled.div`
 `;
 
 const Table = styled.table`    
-    font-weight: bold;  
-    text-align: center;  
+    padding: 0; 
+    width: 80%;
+    height: 50%; 
     td {  
-        width: 70%;
+        font-weight: bold;   
+        width: 50%;
         height: 5vh;
-        letter-spacing: 0.7vw;
-    } 
+        letter-spacing: 0.5vw;   
+    }  
+    text-align: center;
     align-items: center;
+    min-height: 250px;
+    // margin-top: 5%;
 `;
 
 const Form = styled.form`  
@@ -55,19 +63,17 @@ const Form = styled.form`
 `;
 
 const Input = styled.input` 
-    position: relative;
-    // margin-top: 7%;
-    width: 80%;
-    // height: 5vh;
+    position: relative; 
+    width: 80%; 
     font-size: 1.1em;
     font-weight: bold;
     border: none;
-    background: lightgray;
     border-radius: 4px;
     padding-left: 20px;
     &::placeholder {
         color: white;
     }
+    background: lightgray;
 `;
 
 const QR = styled.button` 
@@ -82,18 +88,22 @@ const QR = styled.button`
     float: right; 
     bottom: 50vh;
     max-width: 120px;
-    min-width: 120px; 
-    
+    min-width: 120px;  
     box-sizing: border-box;
     display: flex;
     flex-direction: row; 
     justify-content: center; 
     align-items: center;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  
     &:hover { cursor: pointer; } 
 `;
 
 const Button = styled.button`   
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center;
     height: 3.5vh; 
     background-color: #00AAFF;
     border: none;
@@ -105,19 +115,17 @@ const Button = styled.button`
     bottom: 50vh; 
     max-width: 150px;
     min-width: 107px;   
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: center;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
     &:hover { cursor: pointer; } 
 `;
 
 const ProfileImg = styled.img`
-    width: 300px;
-    height: 45vh; 
+    width: 100%;
+    max-width: 300px;
+    height: 100%; 
+    max-height: 50vh; 
     border-radius: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);   
 `;
 
 const Line = styled.div`
@@ -137,62 +145,34 @@ const TopContainer = styled.div`
     align-items: center;
 `;
 
-const InfoBox = styled.div` 
-    position: relative; 
-    width: 100%;
-    min-width: 300px;
+const TabBox = styled.div`
+    border-right: 4mm ridge rgba(47, 138, 241, .6);  
+    width: 21%;
     height: 100%;
-    min-height: 50px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-bottom: 2px solid #00AAFF;
-    letter-spacing: 0.2vw; 
-    
+    float: left; 
+    min-height: 50vh; 
     box-sizing: border-box;
     display: flex;
-    flex-direction: row; 
-    justify-content: center;  
-    align-items: center;
+    flex-direction: column;
 `;
 
-const InfoBox2 = styled.input` 
-    position: relative; 
-    width: 100%;
-    min-width: 300px;
-    height: 100%;
-    min-height: 50px;
+const InfoBox = styled.div`  
+    margin-top: 5%;
+    text-align: center;   
     font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
+    font-weight: bold; 
     border-bottom: 2px solid #00AAFF;
-    letter-spacing: 0.2vw; 
-    
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row; 
-    justify-content: center;  
-    align-items: center;
-    text-align: center;
+    letter-spacing: 0.1vw;  
 `;
 
 const PwdBox = styled.input` 
-    position: relative; 
-    width: 100%;
-    min-width: 220px;
-    // margin-top: 15%;
-    height: 100%;
-    min-height: 50px;
-    font-size: 1.1rem;
-    font-weight: bold;
     border: none;
+    margin-top: 11%;
+    text-align: center;   
+    font-size: 1.1rem;
+    font-weight: bold; 
     border-bottom: 2px solid #00AAFF;
-    letter-spacing: 0.2vw;  
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: center; 
+    letter-spacing: 0.1vw;   
 `;
 
 const LeftContainer = styled.div`  
@@ -210,13 +190,30 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`  
     width: 68%;
     height: 100%;
-    min-height: 70vh; 
     float: left;
     box-sizing: border-box;
     display: flex;
     flex-direction: column; 
     justify-content: center; 
     align-items: center;
+`;
+
+const ContentBox = styled.div`  
+    width: 100%;
+    height: 100%;
+    float: left; 
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  
+    border-radius: 20px;
+`;
+
+const ProfileBox = styled.div`
+    position: static;
+    width: 100%;  
+    height: 100%; 
+    max-height: 50vh; 
+    border-radius: 20px;
+    float: left;
+    // box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 `;
 
 const IconBox = styled.div` 
@@ -231,11 +228,11 @@ const IconBox = styled.div`
     align-items: center;
     float: left;
     margin-left: 23.5%;
-    bottom: 20vh;
-    background: white;
-    box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
+    bottom: 17vh;
+    background: white; 
     padding: 10px;
     &:hover { cursor: pointer; } 
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  
 `;
 
 const QrBox = styled.div` 
@@ -256,32 +253,17 @@ const BtnBox = styled.div`
     position: relative;
     box-sizing: border-box;
     display: flex;
-    flex-direction: row; 
-    justify-content: center; 
-    align-items: center; 
-    margin-top: 8%;
-    margin-right: 8%;
     float: right;
     background: white;
-    left: 20%;
+    right: 0px;
     &:hover { cursor: pointer; }
 `;
 
-const RedBtn = styled.button`
-    background: #ff7777;
-    border-radius: 10px;
-    width: 80%;
-    border: 0px;
-    margin: 5px 15px 15px 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    
-    &.button{
-        text-align: center;
-    }
+const TabTitle = styled.p`
+    font-size: 1rem;
+    font-weight: bold;
+    &:hover { cursor: pointer; }
 `;
 
 
-export { TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer,
-  InfoBox, InfoBox2, PwdBox, TopContainer, QR, Title, Table, Input, Button,
-  Form, ProfileImg, Line, TableBox, RedBtn};
+export {TabTitle, ContentBox, TabBox, ProfileBox, TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer, InfoBox, PwdBox, TopContainer, QR, Title, Table, Input, Button, Form, ProfileImg, Line, TableBox};

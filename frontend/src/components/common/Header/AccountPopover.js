@@ -8,19 +8,24 @@ import MenuPopover from './MenuPopover';
 import {useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import { UserImg } from "../../common/Logo/LogoStyle"
+import SettingModal from "../Modal/SettingModal";
+import {ImProfile} from "react-icons/im"
+import {TbLogout} from "react-icons/tb"
+import {AiFillSetting} from "react-icons/ai"
+
 
 // ----------------------------------------------------------------------
 
-const MENU_OPTIONS = [
-  {
-    label: '마이프로필',
-    linkTo: '/profile',
-  },
-  {
-    label: '환경설정',
-    linkTo: '#',
-  },
-];
+// const MENU_OPTIONS = [
+//   {
+//     label: '마이프로필',
+//     linkTo: '/profile',
+//   },
+//   {
+//     label: '환경설정',
+//     linkTo: '#',
+//   },
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -83,21 +88,19 @@ export default function AccountPopover() {
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack>
+        <MenuItem onClick={() => { return navigate("/profile") }}
+                  sx={{ m: 1 }}>
+          <ImProfile style={{marginRight: '7px'}}/>마이페이지
+        </MenuItem>
+        <MenuItem onClick={() => { return <SettingModal/> }}
+                  sx={{ m: 1 }}>
+          <AiFillSetting /><SettingModal/>
+        </MenuItem>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <MenuItem onClick={() => {
-            return navigate("/logout")
-        }} sx={{ m: 1 }}>
-          로그아웃
+        <MenuItem onClick={() => { return navigate("/logout") }}
+                  sx={{ m: 1 }}>
+          <TbLogout style={{marginRight: '7px'}} />로그아웃
         </MenuItem>
       </MenuPopover>
     </>

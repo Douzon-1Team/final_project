@@ -25,7 +25,9 @@ export default function SettingModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>환경설정</Button>
+      <Button onClick={handleOpen}>
+        <span style={{color: '#4F4F4F'}}>환경설정</span>
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
