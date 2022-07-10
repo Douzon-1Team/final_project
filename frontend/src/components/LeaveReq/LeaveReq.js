@@ -10,6 +10,7 @@ import axios from "axios";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router";
 import {MainStyle} from "../../styles/Globalstyle";
+import { AiOutlineWarning } from "react-icons/ai";
 
 export const LeaveReq = () => {
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
@@ -69,6 +70,7 @@ export const LeaveReq = () => {
 
         if (sortNum === para) {
             setSortNum(0);
+            setAvail(false)
         } else {
             setSortNum(para);
             if (para !== 4) { // 휴가, 반차
@@ -132,10 +134,12 @@ export const LeaveReq = () => {
 
     // ---------------------------------------------------------------------------------
     function sendData(sortNum) {
-        if (sortNum === 0) {
-            setModalSwitch(true);
-        } else {
-            setSendBefore(true);
+        if (avail === true) {
+            if (sortNum === 0) {
+                setModalSwitch(true);
+            } else {
+                setSendBefore(true);
+            }
         }
     }
 
@@ -158,6 +162,24 @@ export const LeaveReq = () => {
         f1();
         navigate("/main");
     }
+
+    const [useHour, setUseHour] = useState();
+    useEffect(() => {
+        if (sortNum === 1) {
+            setUseHour((Math.floor((Date.parse(endDate) - Date.parse(startDate)) / (1000 * 60 * 60 * 24)) + 1) * 8)
+        } else if ((sortNum === 2) || (sortNum === 3)) {
+            setUseHour(4);
+        } else if (sortNum === 4) {
+            setUseHour(((Date.parse(endDate) - Date.parse(startDate)) / (1000 * 60 * 60)))
+        }
+    }, [startDate, endDate, sortNum])
+
+    const [avail, setAvail] = useState(false);
+    useEffect(() => {
+        if (sortNum !== 0) {
+            (useHour > remain) ? setAvail(false) : setAvail(true)
+        }
+    }, [remain, useHour])
 
     return (
         <MainStyle>
@@ -204,8 +226,8 @@ export const LeaveReq = () => {
             <Container>
                 <Title> 휴가 신청서 </Title>
                 <Div1>
-                    사용 가능한 연차 시간 : [
-                    <Hours> {remain} </Hours>
+                    사용가능 연차시간 : [
+                    <Hours> {remain} H </Hours>
                     ]
                 </Div1>
                 <LeaveSort>
@@ -306,6 +328,14 @@ export const LeaveReq = () => {
                         </TimeSelect2>
                         <Text1> 까지 </Text1>
                     </TimeContent>
+                    {avail && (
+                        <UseInfo avail={avail}>
+                            소모 연차시간 : [
+                            <UseHour avail={avail}> {useHour} H </UseHour>
+                            ]
+                        </UseInfo>
+                    )}
+                    {!avail && (<UseInfo avail={avail}><AiOutlineWarning/> 사용가능 연차시간이 부족합니다!</UseInfo>)}
                 </LeaveTime>
                 {/* ------------------------- */}
                 <LeaveName>
@@ -319,7 +349,7 @@ export const LeaveReq = () => {
                 </LeaveReason>
                 {/* ------------------------- */}
                 <ButtonBox>
-                    <Button2_1 onClick={() => sendData(sortNum)}>신 청</Button2_1>
+                    <Button2_1 avail={avail} onClick={() => sendData(sortNum)}>신 청</Button2_1>
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
@@ -359,6 +389,8 @@ const {
     HalfLeaveSet,
     Div1,
     Hours,
+    UseInfo,
+    UseHour,
 } = style;
 
 const {Modal, ModalWindow, ModalTitle, YesButton, NoButton} = modalStyle;
