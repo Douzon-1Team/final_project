@@ -4,8 +4,11 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import {style} from "./AcceptReqStyle"
 import {MainStyle} from "../../styles/Globalstyle"
+import {useLocation} from "react-router";
 
 const AcceptReq = () => {
+    const {state} = useLocation();
+    const merge = (state == null) ? null : state._date;
     const reqdata = [];
     const [loadingData, setLoadingData] = useState(true);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
@@ -14,10 +17,12 @@ const AcceptReq = () => {
     const handleChangeReason = (e) => {
         setReason(e.target.value);
     }
-    const [minusHours, setMinusHours] = useState(0);
     const [modal, setModal] = useState(false);
     const [targetReqId, setTargetReqId] = useState('');
 
+    useEffect(()=>{
+        console.log(merge);
+    },[merge])
     useEffect(() => {
         async function getEmpNo() {
             await axios
@@ -62,6 +67,15 @@ const AcceptReq = () => {
                                     setModal(!modal);
                                     setTargetReqId(data[i].reqid)
                                 }}/>
+        console.log(i,"는 ",data[i].rank)
+
+        if(data[i].rank==='STAFF')data[i].rank='사원';
+        else if(data[i].rank==='SENIOR_STAFF')data[i].rank='주임';
+        else if(data[i].rank==='ASSISTANT_MANAGER')data[i].rank='대리';
+        else if(data[i].rank==='GENERAL_MANAGER')data[i].rank='과장';
+        else if(data[i].rank==='DEPUTY_MANAGER')data[i].rank='차장';
+        else if(data[i].rank==='SUPERVISOR')data[i].rank='부임';
+        else if(data[i].rank==='EXECUTIVE')data[i].rank='임원';
     }
 
     const columns = React.useMemo(
