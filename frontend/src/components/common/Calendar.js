@@ -24,7 +24,6 @@ import {useLocation, useNavigate} from "react-router";
 // TODO : 얘네 두개는 필요없을듯
 function Calendar() {
   const { state } = useLocation(); // TODO : 사원목록 탭에서 넘어온 사원 데이터
-  console.log(state);
   const navigate = useNavigate();
   const start = new Date();
   const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -84,13 +83,10 @@ function Calendar() {
   // leave_early(조퇴여부(0 -> 1(조퇴))) unregistered(퇴근 미등록(0 -> 1(미등록)))
 
   const empno = useSelector((state) => state.EMP_INFO);
-  console.log(empno.empInfo[0]);
   const dispatch = useDispatch();
   const mainData = useSelector((state) => state.calendarReducer);
   let calendarList = _.filter(mainData, 'title');
   let work = _.filter(mainData, 'm');
-  console.log(mainData);
-  console.log(work);
   schedules.push(...calendarList);
 
   useEffect(() => {
@@ -111,7 +107,6 @@ function Calendar() {
 
     if (e.schedule.title !== "출근" && new Date() > e.schedule.start) {
       const areq = [];
-      console.log(e.schedule);
       areq.push(e.schedule.title);
       areq.push(e.schedule.start);
       areq.push(e.schedule.end);
@@ -162,19 +157,6 @@ function Calendar() {
       }
     }
   };
-
-  // const onBeforeUpdateSchedule = useCallback((e) => { // 수정 팝업창
-  //     console.log(e);
-  //
-  //     const { schedule, changes } = e;
-  //
-  //     cal.current.calendarInst.updateSchedule(
-  //         schedule.id,
-  //         schedule.calendarId,
-  //         changes
-  //     );
-  // }, []);
-
   function _getFormattedTime(time) {
     // start 시간 설정
     // TODO : END 시간도 표시해줄까?
@@ -226,7 +208,6 @@ function Calendar() {
     const month = cal?.current?.calendarInst.getDate().getMonth();
     const year = cal?.current?.calendarInst.getDate().getFullYear();
     setDate(`${year}년 ${month + 1}월`);
-    console.log(cal);
   }, []);
 
   function onClickPrev() {

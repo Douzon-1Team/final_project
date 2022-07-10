@@ -35,26 +35,31 @@ export const LeaveReq = () => {
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const [loadingData, setLoadingData] = useState(true);
-    const [startTime,setStartTime]=useState(9);
-    const [endTime,setEndTime]=useState(18);
+    const [startTime, setStartTime] = useState(9);
+    const [endTime, setEndTime] = useState(18);
+    const [remain, setRemain] = useState(0);
     useEffect(() => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/getvacationdata", {params: {'empNo': empNo}})
                 .then((res) => {
-                    console.log(res.data)
                     setLoadingData(false);
-                    setStartTime(res.data[0].workStart.substr(0,2));
-                    setEndTime(res.data[0].workEnd.substr(0,2));
-                })
-                .catch((res) => {
-                    console.log("수신실패 : ", res);
+                    if (res.data[0].flex == 0) {
+                        setStartTime(res.data[0].workStart.substr(0, 2));
+                        setEndTime(res.data[0].workEnd.substr(0, 2));
+                    } else if (res.data[0].flex == 1) {
+                        setStartTime(res.data[0].workStartf.substr(0, 2));
+                        setEndTime(res.data[0].workEndf.substr(0, 2));
+                    }
+                    setRemain(res.data[0].remain);
                 })
         }
+
         if (loadingData) {
             getData();
         }
     }, [])
+
     // -------------------------------------------
     function onSet(para) {
         if (para === 1) setReq("휴가");
@@ -75,11 +80,21 @@ export const LeaveReq = () => {
                     setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
                     setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime, 0, 0))
                 } else if (para == 2) {
-                    setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
-                    setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime-5, 0, 0))
+                    if (startTime >= 10) {
+                        setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
+                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime - 4, 0, 0))
+                    } else {
+                        setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
+                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime - 5, 0, 0))
+                    }
                 } else if (para == 3) {
-                    setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime-4, 0, 0))
-                    setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime, 0, 0))
+                    if (endTime <= 17) {
+                        setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime - 5, 0, 0))
+                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime, 0, 0))
+                    } else {
+                        setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime - 4, 0, 0))
+                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime, 0, 0))
+                    }
                 }
             } else { // 시간연차
                 if (state == null) {
@@ -94,6 +109,7 @@ export const LeaveReq = () => {
             }
         }
     }
+
     // ---------------------------------------------------------------------------------
     useEffect(() => {
         if (sortNum == 4) {
@@ -122,6 +138,7 @@ export const LeaveReq = () => {
             setSendBefore(true);
         }
     }
+
     // ---------------------------------------------------------------------------------
     let navigate = useNavigate();
     const f1 = async () => {
@@ -134,7 +151,6 @@ export const LeaveReq = () => {
                 comment: comment,
             })
             .then((response) => {
-                console.log("전달완료");
             })
     };
 
@@ -142,8 +158,9 @@ export const LeaveReq = () => {
         f1();
         navigate("/main");
     }
+
     return (
-        <>
+        <MainStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -185,6 +202,12 @@ export const LeaveReq = () => {
                 </Modal>
             )}
             <Container>
+                <Title> 휴가 신청서 </Title>
+                <Div1>
+                    사용 가능한 연차 시간 : [
+                    <Hours> {remain} </Hours>
+                    ]
+                </Div1>
                 <LeaveSort>
                     <SortTag>휴가구분</SortTag>
                     <SortContent>
@@ -217,7 +240,7 @@ export const LeaveReq = () => {
                                     if (sortNum == 1) {
                                         setEndDate(new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime, 0, 0))
                                     } else if (sortNum == 2) {
-                                        setEndDate(new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime+4, 0, 0))
+                                        setEndDate(new Date(date.getFullYear(), date.getMonth(), date.getDate(), startTime + 4, 0, 0))
                                     } else if (sortNum == 3) {
                                         setEndDate(new Date(date.getFullYear(), date.getMonth(), date.getDate(), endTime, 0, 0))
                                     } else if (sortNum == 4) {
@@ -291,7 +314,7 @@ export const LeaveReq = () => {
                 </LeaveName>
                 {/* ------------------------- */}
                 <LeaveReason>
-                    <ReasonTag>사유</ReasonTag>
+                    <ReasonTag>사 유</ReasonTag>
                     <ReasonContent name="comment" onChange={handleChangeComment}/>
                 </LeaveReason>
                 {/* ------------------------- */}
@@ -300,11 +323,12 @@ export const LeaveReq = () => {
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
-        </>
+        </MainStyle>
     );
 };
 
 const {
+    Title,
     Container,
     LeaveSort,
     LeaveTerm,
@@ -333,6 +357,8 @@ const {
     TimeSelect2,
     Text1,
     HalfLeaveSet,
+    Div1,
+    Hours,
 } = style;
 
 const {Modal, ModalWindow, ModalTitle, YesButton, NoButton} = modalStyle;

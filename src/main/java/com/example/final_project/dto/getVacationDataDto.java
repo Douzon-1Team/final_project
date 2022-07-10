@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 public class getVacationDataDto {
     private String workStart;
     private String workEnd;
+    private String workStartf;
+    private String workEndf;
+    private int flex;
+    private int remain;
 }

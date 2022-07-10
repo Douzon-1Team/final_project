@@ -25,6 +25,7 @@ const AttendanceCard = ({attendanceCount, tardyCount, absenteeismCount, vacation
     return (
         <MainCards>
         <Card sx={{ maxWidth: 500 }}>
+            <p className="title">월간 근태 현황</p>
             <Grid container spacing="auto">
                 <Grid item xs={6}>
                     <Card className="card1" variant="outlined">{cardAttendance({title:"출근" , value:attendanceCount , color:"#03bd9e"})}</Card>

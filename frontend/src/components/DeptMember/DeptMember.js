@@ -14,40 +14,25 @@ import {getDeptMember} from "../../apis/DeptMemberApi";
 import {DeptMemberList, MemberImg} from "../../styles/DeptMemberstyle";
 import {useNavigate} from "react-router";
 import {MainStyle} from "../../styles/Globalstyle";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     }
 });
-// axios data 받아오기
-// const response () =
 
 function DeptMember() {
+    const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const classes = useStyles();
     const [deptmember, setdeptmember] = useState([]);
     const MemberList = async () => {
-        // TODO : axios 데이터가 들어왔음
-        // agree: false
-        // attendance: true
-        // date: "2022-06-29"
-        // deptNo: "01"
-        // empProfile: "https://dzfinal.s3-ap-northeast-2.amazonaws.com/profile-220102-54e9edbd-10b6-4b03-8924-c288f68f3b91.jpeg"
-        // empno: "220102"
-        // etc: "퇴근미등록"
-        // extensionNum: "070-1601-3892"
-        // name: "이지은"
-        // rank: {name: '사원'}
-        // tardy: false
-        // unregistered: false
-        await getDeptMember({empno: 220101}).then(res => {
+        await getDeptMember({empno: empNo}).then(res => {
 
             const MList = res.data;
+            console.log(MList);
             for (let i = 0; i < MList.length; i++) {
-                // 쿼리문에서 출근 etc는 null값임 -> 때문에 etc에 특정값이라도 주어야 데이터를 가져오는데
-                // null값일때 출근으로 만들었더니 출근을 하지 않은 녀석들도 출근으로 나와서 조건문 처리했음
-                // 쿼리문에서 case쓰기는 좀
                 if (MList[i].etc === '출근' & MList[i].attendance === false) {
                     MList[i].etc = '출근미등록'
                 }
