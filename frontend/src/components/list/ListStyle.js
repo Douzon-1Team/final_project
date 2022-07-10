@@ -17,7 +17,7 @@ export const DeleteButton = styled.button`
 `;
 
 export const Title = styled.div`
-  width: 25%;
+  width: 30%;
   font-size: 32px;
   font-weight: bolder;
   border-bottom: 2px solid black;

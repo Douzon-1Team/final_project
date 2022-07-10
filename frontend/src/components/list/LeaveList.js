@@ -52,37 +52,27 @@ const LeaveList = () => {
                 accessor: 'check',
             },
             {
-                Header: 'No',
-                Cell: ({row}) => {
-                    return row.index + 1
-                }
-            },
-            {
-                Header: '부서',
-                accessor: 'deptName',
-            },
-            {
                 Header: '이름',
                 accessor: 'name',
             },
             {
-                Header: '근태구분',
+                Header: '근태',
                 accessor: 'req',
             },
             {
-                Header: '신청기간 (시작)',
+                Header: '시작 기간',
                 accessor: 'vacationstart',
             },
             {
-                Header: '신청기간 (종료)',
+                Header: '종료 기간',
                 accessor: 'vacationend',
             },
             {
-                Header: '신청시간',
+                Header: '시간',
                 accessor: 'hours',
             },
             {
-                Header: '신청일수',
+                Header: '일수',
                 accessor: 'days',
             },
             {
@@ -90,7 +80,7 @@ const LeaveList = () => {
                 accessor: 'context',
             },
             {
-                Header: '진행현황',
+                Header: '상태',
                 accessor: 'condition',
             },
             {
