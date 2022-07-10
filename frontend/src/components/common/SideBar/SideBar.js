@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { style } from "./SideBarStyle";
 import { useNavigate } from "react-router-dom";
-// BsChevronDoubleUp
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -19,6 +17,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {useSelector} from "react-redux";
+
 export const SideBar = (props) => {
   console.log(props);
   const [open, setOpen] = useState(false);
@@ -75,7 +74,7 @@ export const SideBar = (props) => {
               <ListItemIcon>
                 <BorderColorIcon />
               </ListItemIcon>
-              <ListItemText primary="휴가 신청" />
+              <ListItemText primary="내 휴가 신청" />
             </ListItemButton>
           </List>
           <List component="div" disablePadding>
@@ -83,7 +82,7 @@ export const SideBar = (props) => {
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
-              <ListItemText primary="휴가 신청 목록" />
+              <ListItemText primary="내 휴가 신청 목록" />
             </ListItemButton>
           </List>
         </Collapse>
@@ -105,7 +104,7 @@ export const SideBar = (props) => {
           <ListItemIcon>
             <BorderColorIcon />
           </ListItemIcon>
-          <ListItemText primary="근태조정 신청" />
+          <ListItemText primary="내 근태조정 신청" />
         </ListItemButton>
       </List>
       <List component="div" disablePadding>
@@ -113,7 +112,7 @@ export const SideBar = (props) => {
           <ListItemIcon>
             <FormatListBulletedIcon />
           </ListItemIcon>
-          <ListItemText primary="근태조정 신청 목록" />
+          <ListItemText primary="내 근태조정 신청 목록" />
         </ListItemButton>
       </List>
     </Collapse>
@@ -191,97 +190,6 @@ export const SideBar = (props) => {
             </List>
         : null }
       </>
-    // <BarBox>
-    //   <Menu>
-    //     <SideMenuForm onClick={() => setSecondMenu2(!secondMenu2)}>
-    //       <MenuTextBox>{sideMenu[0].menu}</MenuTextBox>
-    //       <SideMenuBox>
-    //         {secondMenu2 === true ? (
-    //           <BsChevronCompactUp />
-    //         ) : (
-    //           <BsChevronCompactDown />
-    //         )}
-    //       </SideMenuBox>
-    //     </SideMenuForm>
-    //     {secondMenu2 === true ? (
-    //       <SmallSide>
-    //         {/*휴가 신청*/}
-    //         <SmallSideMenu onClick={() => navigate("/leavereq")}>
-    //           {SideMenu2[0].menu}
-    //         </SmallSideMenu>
-    //         {/*휴가 신청 목록*/}
-    //         <SmallSideMenu onClick={() => navigate("/leavelist")}>{SideMenu2[1].menu}</SmallSideMenu>
-    //       </SmallSide>
-    //     ) : null}
-    //     {/* ---------------------------------------- */}
-    //     <SideMenuForm onClick={() => setSecondMenu3(!secondMenu3)}>
-    //       <MenuTextBox>{sideMenu[1].menu}</MenuTextBox>
-    //       <SideMenuBox>
-    //         {secondMenu3 === true ? (
-    //           <BsChevronCompactUp />
-    //         ) : (
-    //           <BsChevronCompactDown />
-    //         )}
-    //       </SideMenuBox>
-    //     </SideMenuForm>
-    //     {secondMenu3 === true ? (
-    //       <SmallSide>
-    //         {/*근태 신청*/}
-    //         <SmallSideMenu onClick={() => navigate("/attendancereq")}>{SideMenu3[0].menu}</SmallSideMenu>
-    //         {/*근태 목록*/}
-    //         <SmallSideMenu onClick={() => navigate("/attendancelist")}>{SideMenu3[1].menu}</SmallSideMenu>
-    //       </SmallSide>
-    //     ) : null}
-    //     {/* ---------------------------------------- */}
-    //     {role !== 0 ? (
-    //       <SideMenuForm onClick={() => setSecondMenu4(!secondMenu4)}>
-    //         <MenuTextBox>{sideMenu[2].menu}</MenuTextBox>
-    //         <SideMenuBox>
-    //           {secondMenu4 === true ? (
-    //             <BsChevronCompactUp />
-    //           ) : (
-    //             <BsChevronCompactDown />
-    //           )}
-    //         </SideMenuBox>
-    //       </SideMenuForm>
-    //     ) : null}
-    //     {secondMenu4 === true ? (
-    //       <SmallSide>
-    //         <SmallSideMenu onClick={() => navigate("/acceptreq")}>{SideMenu4[0].menu}</SmallSideMenu>
-    //         <SmallSideMenu onClick={() => navigate("/deptmember")}>{SideMenu4[1].menu}</SmallSideMenu>
-    //         <SmallSideMenu onClick={() => navigate("/report")}>{SideMenu4[2].menu}</SmallSideMenu>
-    //       </SmallSide>
-    //     ) : null}
-    //     {/* ---------------------------------------- */}
-    //     {role === 2 ? (
-    //         <SideMenuForm onClick={() => setSecondMenu5(!secondMenu5)}>
-    //           <MenuTextBox>{sideMenu[3].menu}</MenuTextBox>
-    //           <SideMenuBox>
-    //             {secondMenu5 === true ? (
-    //                 <BsChevronCompactUp />
-    //             ) : (
-    //                 <BsChevronCompactDown />
-    //             )}
-    //           </SideMenuBox>
-    //         </SideMenuForm>
-    //     ) : null}
-    //     {secondMenu5 === true ? (
-    //         <SmallSide>
-    //           <SmallSideMenu onClick={() => navigate("/profile/new")}>{SideMenu5[0].menu}</SmallSideMenu>
-    //           <SmallSideMenu onClick={() => navigate("/admin/list")}>{SideMenu5[1].menu}</SmallSideMenu>
-    //         </SmallSide>
-    //     ) : null}
-    //   </Menu>
-    // </BarBox>
   );
 };
-const {
-  BarBox,
-  Menu,
-  SideMenuForm,
-  MenuTextBox,
-  SideMenuBox,
-  SmallSide,
-  SmallSideMenu,
-} = style;
 export default SideBar;

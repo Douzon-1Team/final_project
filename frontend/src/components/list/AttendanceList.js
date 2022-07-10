@@ -27,12 +27,6 @@ const LeaveList = () => {
                 accessor: 'check',
             },
             {
-                Header: 'No',
-                Cell: ({row}) => {
-                    return row.index + 1
-                }
-            },
-            {
                 Header: '부서',
                 accessor: 'deptName',
             },
@@ -53,15 +47,11 @@ const LeaveList = () => {
                 accessor: 'vacationend',
             },
             {
-                Header: '신청시간',
-                accessor: 'hours',
-            },
-            {
-                Header: '신청사유',
+                Header: '사유',
                 accessor: 'context',
             },
             {
-                Header: '진행현황',
+                Header: '상태',
                 accessor: 'condition',
             },
             {
@@ -75,9 +65,6 @@ const LeaveList = () => {
         if (data[i].reject === 1) data[i].condition = "반려됨";
         else if (data[i].accept === 1) data[i].condition = "승인";
         else data[i].condition = "결제 대기중";
-    }
-    for (let i = 0; i < data.length; i++) {
-        data[i].hours = (Date.parse(data[i].vacationend) - Date.parse(data[i].vacationstart)) / (1000 * 60 * 60);
     }
     useEffect(() => {
         async function getData() {

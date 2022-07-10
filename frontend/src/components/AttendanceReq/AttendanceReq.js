@@ -14,13 +14,23 @@ import {BsArrowReturnRight} from "react-icons/bs";
 
 export const AttendanceReq = () => {
     const {state} = useLocation();
-    const selectedDate = (state == null) ? null : state._date;
+    const selectedDate = (state == null) ? null : state[1]._date;
+    const [sortNum, setSortNum] = useState((state == null) ? 0 : state[0] === '지각' ? 1 : state[0] === '결근' ? 3 : state[0] === '출근미등록' ? 4 : state[0] === '퇴근미등록' ? 5 : '');
+    const [statusColor, setStatusColor] = useState((state !== null));
+    const [acceptShow, setAcceptShow] = useState((state !== null));
+    const [status, setStatus] = useState(state == null ? "수정할 데이터 없음" : state[0]);
+    const [req, setReq] = useState(state == null ? "" : state[0]);
+
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const [loadingData, setLoadingData] = useState(true);
     const [startTime, setStartTime] = useState(9);
     const [endTime, setEndTime] = useState(18);
-    const [acceptShow, setAcceptShow] = useState(false);
+
+    useEffect(() => {
+        console.log("statusColor", statusColor);
+        console.log("status", status);
+    }, [statusColor, status])
 
     useEffect(() => {
         async function getData() {
@@ -28,10 +38,10 @@ export const AttendanceReq = () => {
                 .get("http://localhost:8080/getvacationdata", {params: {'empNo': empNo}})
                 .then((res) => {
                     setLoadingData(false);
-                    if (res.data[0].flex == 0) {
+                    if (res.data[0].flex === 0) {
                         setStartTime(res.data[0].workStart.substr(0, 2));
                         setEndTime(res.data[0].workEnd.substr(0, 2));
-                    } else if (res.data[0].flex == 1) {
+                    } else if (res.data[0].flex === 1) {
                         setStartTime(res.data[0].workStartf.substr(0, 2));
                         setEndTime(res.data[0].workEndf.substr(0, 2));
                     }
@@ -55,8 +65,6 @@ export const AttendanceReq = () => {
             .then((response) => {
             })
     };
-
-    const [sortNum, setSortNum] = useState(0);
     const today = new Date();
     const [startDate, setStartDate] = useState(state == null ? today : new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), startTime, 0, 0));
     const [endDate, setEndDate] = useState(state == null ? today : new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), endTime, 0, 0));
@@ -64,7 +72,6 @@ export const AttendanceReq = () => {
     const [modalSwitch, setModalSwitch] = useState(false);
     const [sendBefore, setSendBefore] = useState(false);
     const [sendAfter, setSendAfter] = useState(false);
-    const [req, setReq] = useState("");
     const start = dayjs(startDate);
     const end = dayjs(endDate)
     let startFormat;
@@ -75,26 +82,28 @@ export const AttendanceReq = () => {
     let endFormat;
     endFormat = end.format("YYYY-MM-DD HH:00:00");
     const [loadingDate, setLoadingDate] = useState(true);
-    const [status, setStatus] = useState("수정할 데이터 없음");
-    const [statusColor, setStatusColor] = useState(false);
     const [attstatid, setAttstatid] = useState(null);
+
     useEffect(() => {
         async function getDate() {
             await axios
                 .get("http://localhost:8080/gettargetdate", {params: {'empNo': empNo, 'date': startFormat}})
                 .then((res) => {
                     setAttstatid(res.data[0].attstatid);
-                    if (((res.data[0].etc == "지각") || (res.data[0].etc == "결근") || (res.data[0].etc == "출근미등록") || (res.data[0].etc == "퇴근미등록")) && (req == res.data[0].etc)) {
-                        if (res.data[0].agree == 1) {
+                    if (((res.data[0].etc === "지각") || (res.data[0].etc === "결근") || (res.data[0].etc === "출근미등록") || (res.data[0].etc === "퇴근미등록")) && (req === res.data[0].etc)) {
+                        if (res.data[0].agree === 1) {
                             setStatusColor(false);
                             setStatus("근태이상 (처리됨)");
+                            console.log("!");
                         } else {
                             setStatusColor(true);
                             setStatus("근태이상 (" + req + ")");
+                            console.log("!!");
                         }
                     } else {
-                        setStatus("수정할 데이터 없음")
-                        setStatusColor(false);
+                            setStatus("수정할 데이터 없음")
+                            setStatusColor(false);
+                            console.log("!!!");
                     }
                 })
         }
@@ -103,6 +112,7 @@ export const AttendanceReq = () => {
             getDate();
         }
     }, [startFormat, req])
+
 
     async function acceptAttendance() {
         await axios
@@ -119,11 +129,11 @@ export const AttendanceReq = () => {
     function onSet(para) {
         if (para === 1) {
             setReq("지각");
-        } else if (para == 3) {
+        } else if (para === 3) {
             setReq("결근");
-        } else if (para == 4) {
+        } else if (para === 4) {
             setReq("출근미등록");
-        } else if (para == 5) {
+        } else if (para === 5) {
             setReq("퇴근미등록");
         }
 
@@ -154,7 +164,7 @@ export const AttendanceReq = () => {
     };
 
     function sendData(sortNum) {
-        if (statusColor == true) {
+        if (statusColor === true) {
             if (sortNum === 0) {
                 setModalSwitch(true);
             } else {
