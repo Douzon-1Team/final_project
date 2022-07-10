@@ -121,10 +121,10 @@ export const ButtonBox = styled.div`
   width: fit-content;
 `;
 export const Button2_1 = styled.button`
+  background-color: ${({avail}) => (avail === true ? "#00aaff" : "gray")};
   margin-left: 300px;
   border: 0px;
-  cursor: pointer;
-  background-color: #00aaff;
+  cursor: ${({avail}) => (avail === true ? "pointer" : "")};
   color: #ffffff;
   border-radius: 30px;
   height: 30px;
@@ -250,7 +250,7 @@ export const Text1 = styled.div`
 `;
 export const HalfLeaveSet = styled.div`
   display: ${({sortNum}) =>
-          sortNum === 2 || sortNum === 3 || sortNum === 4 ? "none" : "block"};
+    sortNum === 2 || sortNum === 3 || sortNum === 4 ? "none" : "block"};
   width: 380px;
   height: 30px;
 `;
@@ -262,6 +262,20 @@ export const Div1 = styled.div`
 export const Hours = styled.div`
   font-weight: bolder;
   display: inline;
+  color: #00aaff;
+`;
+export const UseInfo = styled.div`
+  width:fit-content;
+  float:left;
+  margin-top:13px;
+  margin-left:${({avail}) => (avail === true ? "150px" : "100px")};
+  color: ${({avail}) => (avail === true ? "black" : "red")};
+  font-weight: ${({avail}) => (avail === true ? "" : "bolder")};
+`;
+export const UseHour = styled.div`
+  color: red;
+  font-weight: bolder;
+  display:inline;
 `;
 export const style = {
     Title,
@@ -295,4 +309,6 @@ export const style = {
     HalfLeaveSet,
     Div1,
     Hours,
+    UseInfo,
+    UseHour,
 };
