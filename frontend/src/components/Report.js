@@ -12,8 +12,10 @@ import {BiCalendarX} from 'react-icons/bi';
 import {BsBarChartSteps} from 'react-icons/bs';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import EventBusyIcon from '@mui/icons-material/EventBusy';
+import {useSelector} from "react-redux";
 
 const Report = () => {
+    const empInfo = useSelector((state) => state.EMP_INFO.empInfo);
     const navigate = useNavigate();
     const [data, setdata] = useState([[]]);
     const [emp, setemp] = useState([]);
@@ -23,11 +25,16 @@ const Report = () => {
 
     useEffect(() => {
         const chatData = async () => {
-            await getAttendance({empno: 220101}).then(res => {
+            await getAttendance({empno: empInfo[0]}).then(res => {
                 res.data.map(res => changeData.push(res.name));
+                console.log(changeData);
                 const setData = new Set(changeData);
                 const uniqueArr = [...setData]; // set으로 정리하면서 뒤에 가져온 동일값(name)은 삭제됨 문제X
-                setemp(uniqueArr);
+                const newArr =
+                    uniqueArr.filter(
+                        (e, i) => e != null
+                    );
+                setemp(newArr);
                 const attendance = _.filter(res.data, 'etc'); // 얘에서 뽑은 이름들 제거하고 앞에서부터 순서대로 박아주기
                 const daydata = _.filter(res.data, 'onofftime'); // TODO : 막대그래프 데이터\
                 const deptatt = _.filter(res.data, 'deptName');
@@ -54,7 +61,7 @@ const Report = () => {
                 <IoMdStats size={200} className="icon" />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
-                        주 52시간 근태관리 차트
+                        주간 근무시간 현황
                     </Typography>
                 </CardContent>
             </Card>
@@ -64,7 +71,7 @@ const Report = () => {
                 <StackedBarChartIcon sx={{ fontSize: 200, marginLeft: 8 }} />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
-                        부서 주간 근무 현황
+                        부서원 당일 근무 현황
                     </Typography>
                 </CardContent>
             </Card>
@@ -72,7 +79,7 @@ const Report = () => {
                 <BsBarChartSteps size={200} className="icon" />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
-                        부서 연차사용 현황
+                        부서원 연차 사용 현황
                     </Typography>
                 </CardContent>
             </Card>
@@ -82,7 +89,7 @@ const Report = () => {
                 <EventBusyIcon sx={{ fontSize: 200, marginLeft: 8 }} />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
-                        부서/타부서 이상근태 현황
+                        부서별 이상근태 현황
                     </Typography>
                 </CardContent>
             </Card>

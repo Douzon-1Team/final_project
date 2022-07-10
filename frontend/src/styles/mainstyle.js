@@ -112,6 +112,11 @@ const TopLine = styled.div`
 `
 
 const MainCards = styled.div`
+    .title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
     @media screen and (max-width: 2000px) {
         margin-top: 40px;
         max-width: 400px;

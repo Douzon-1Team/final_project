@@ -24,7 +24,7 @@ const TableBox = styled.div`
 const TableBox2 = styled.div` 
     position: relative;
     width: 100%;
-    margin-left: 22%; 
+    margin-left: 20%; 
     box-sizing: border-box;
     display: flex;
     flex-direction: column; 
@@ -79,10 +79,10 @@ const QR = styled.button`
     font-weight: bold;
     color: white;
     font-size: 1.1rem;
-    float: right;
+    float: right; 
     bottom: 50vh;
     max-width: 120px;
-    min-width: 120px;  
+    min-width: 120px; 
     
     box-sizing: border-box;
     display: flex;
@@ -103,8 +103,8 @@ const Button = styled.button`
     font-size: 1.1rem;
     float: right;
     bottom: 50vh; 
-    max-width: 200px;
-    min-width: 200px;   
+    max-width: 150px;
+    min-width: 107px;   
     box-sizing: border-box;
     display: flex;
     flex-direction: row; 
@@ -187,8 +187,7 @@ const PwdBox = styled.input`
     font-weight: bold;
     border: none;
     border-bottom: 2px solid #00AAFF;
-    letter-spacing: 0.2vw; 
-    
+    letter-spacing: 0.2vw;  
     box-sizing: border-box;
     display: flex;
     flex-direction: row; 
@@ -209,7 +208,7 @@ const LeftContainer = styled.div`
 `;
 
 const RightContainer = styled.div`  
-    width: 70%;
+    width: 68%;
     height: 100%;
     min-height: 70vh; 
     float: left;
@@ -247,6 +246,7 @@ const QrBox = styled.div`
     justify-content: center; 
     align-items: center;
     float: right;
+    margin-right: 2%;
     bottom: 8vh;
     background: white;
     &:hover { cursor: pointer; }
@@ -263,7 +263,7 @@ const BtnBox = styled.div`
     margin-right: 8%;
     float: right;
     background: white;
-    left: 22%;
+    left: 20%;
     &:hover { cursor: pointer; }
 `;
 

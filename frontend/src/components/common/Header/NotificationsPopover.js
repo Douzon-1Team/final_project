@@ -42,7 +42,6 @@ export default function NotificationsPopover() {
     }).catch(console.log('수신 실패'))
   }
 
-
   useEffect(() => {
     getTardyList();
   }, []);
