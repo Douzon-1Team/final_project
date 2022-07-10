@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="161312c5-7062-4c50-a5b1-2f173cef4f0c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project" beforeDir="false" afterPath="$PROJECT_DIR$/final_project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project/frontend/src/components/DeptVacation/DeptVacation.js" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/frontend/src/components/DeptVacation/DeptVacation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/frontend/src/components/LeaveReq/LeaveReq.js" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/frontend/src/components/LeaveReq/LeaveReq.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/frontend/src/components/common/Header/DashboardNavbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/frontend/src/components/common/Header/DashboardNavbar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/frontend/src/components/common/Modal/ModalStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/frontend/src/components/common/Modal/ModalStyle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/frontend/src/styles/LeaveReqStyle.js" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/frontend/src/styles/LeaveReqStyle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/FinalProjectApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/FinalProjectApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/mapper/AcceptReqMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/mapper/AcceptReqMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/mapper/AcceptReqMapper2.java" beforeDir="false" afterPath="$PROJECT_DIR$/final_project/src/main/java/com/example/final_project/mapper/AcceptReqMapper2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +45,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/final_project" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -52,6 +58,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Git.Branch.Popup.ShowAllRemotes": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -68,7 +75,8 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2022.1\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external"
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
@@ -143,7 +151,7 @@
       <updated>1657455300298</updated>
       <workItem from="1657455301684" duration="1444000" />
       <workItem from="1657456795734" duration="49000" />
-      <workItem from="1657456864964" duration="2532000" />
+      <workItem from="1657456864964" duration="7601000" />
     </task>
     <servers />
   </component>
