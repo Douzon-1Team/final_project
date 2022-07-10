@@ -1,6 +1,7 @@
 package com.example.final_project.mapper;
 
 import com.example.final_project.dto.ChartListDto;
+import com.example.final_project.dto.DeptVacationStatusDto;
 import com.example.final_project.dto.ReportDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -35,6 +36,23 @@ public interface ReportMapper {
             "(select date from attendance_time where on_off_work = 1 and date(date) = date(s.date) and empno = s.empno) as start, " +
             "(select date from attendance_time where on_off_work = 0 and date(date) = date(s.date) and empno = s.empno) as end " +
             "from attendance_status s inner join employee e on s.empno = e.empno " +
-            "where etc REGEXP '지각|결근|퇴근미등록|출근미등록' and e.empno like '__01%' order by s.date;")
+            "where etc REGEXP '지각|결근|퇴근미등록|출근미등록' and e.empno like '__${deptNo}%' order by s.date;")
     List<ChartListDto> findAttendanceProblem(String deptNo);
+
+    @Select("SELECT dept_no, " +
+            "       e.empno, " +
+            "       e.emp_name, " +
+            "       CONVERT((remaining_annual_leave)/8, INTEGER) AS 'remain_day', " +
+            "       remaining_annual_leave AS 'remain_hour' " +
+            "FROM attendance_req a " +
+            "    LEFT OUTER JOIN employee e ON a.empno = e.empno " +
+            "    LEFT OUTER JOIN emp_info_comp c ON a.empno = c.empno " +
+            "GROUP BY empno " +
+            "WHERE dept_no=#{deptNo}")
+    List<DeptVacationStatusDto> findDeptVacationStatus(String deptNo);
+
+    @Select("select e.empno, e.emp_name, a.req as etc, a.vacation_start as date, a.vacation_start as start, a.vacation_end as end " +
+            "from attendance_req a  inner join employee e on a.empno = e.empno " +
+            "where a.accept = 1 and e.empno like '__01%' and req REGEXP '시간연차|오전반차|오후반차|휴가'")
+    List<ChartListDto> findDeptVacationHistory(String deptNo);
 }

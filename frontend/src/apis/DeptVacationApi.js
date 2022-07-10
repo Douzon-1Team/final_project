@@ -6,7 +6,7 @@ export const getMain = async ( {empno} ) => {
     try {
         console.log(empno);
         return await axios.get(
-            "http://localhost:8080/dvacation",
+            "http://localhost:8080/main/dvacation",
             {
                 params: {empno}
             }

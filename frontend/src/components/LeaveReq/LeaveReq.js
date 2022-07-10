@@ -41,7 +41,7 @@ export const LeaveReq = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/getvacationdata", {params: {'empNo': empNo}})
+                .get("http://localhost:8080/vacation/data", {params: {'empNo': empNo}})
                 .then((res) => {
                     setLoadingData(false);
                     if (res.data[0].flex == 0) {
@@ -143,7 +143,7 @@ export const LeaveReq = () => {
     let navigate = useNavigate();
     const f1 = async () => {
         await axios
-            .post("/vacationreq", {
+            .post("/vacation/req", {
                 empNo: empNo,
                 req: req,
                 startFormat: startFormat,

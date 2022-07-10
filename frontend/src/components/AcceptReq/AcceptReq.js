@@ -26,11 +26,11 @@ const AcceptReq = () => {
     useEffect(() => {
         async function getEmpNo() {
             await axios
-                .get("http://localhost:8080/deptno", {params: {'empno': empNo}})
+                .get("http://localhost:8080/manager/deptno", {params: {'empno': empNo}})
                 .then((res) => {
                     for (let i = 0; i < res.data.length; i++) {
                         axios
-                            .get("http://localhost:8080/reqlist", {params: {'empno': res.data[i].coEmpNo}})
+                            .get("http://localhost:8080/attendance/reqlist", {params: {'empno': res.data[i].coEmpNo}})
                             .then((res2) => {
                                 if (res2.data.length != 0) {
                                     for (let j = 0; j < res2.data.length; j++) {
@@ -132,7 +132,7 @@ const AcceptReq = () => {
     async function acceptReq(reqid, start, end, req) {
         if ((req == '오전반차') || (req == '오후반차') || (req == '휴가') || (req == '시간연차')) {
             await axios
-                .post("http://localhost:8080/acceptreq", {
+                .post("http://localhost:8080/accept/vacation", {
                     'reqid': reqid,
                     'empNo': empNo,
                     'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
@@ -141,7 +141,7 @@ const AcceptReq = () => {
                 })
         } else {
             await axios
-                .post("http://localhost:8080/acceptreq2", {
+                .post("http://localhost:8080/accept/attendance", {
                     'reqid': reqid,
                     'empNo': empNo,
                     'start': start,
@@ -156,7 +156,7 @@ const AcceptReq = () => {
 
     async function rejectReq() {
         await axios
-            .post("http://localhost:8080/rejectreq", {
+            .post("http://localhost:8080/attendance/rejectreq", {
                 'reqid': targetReqId,
                 'reason': reason,
             })

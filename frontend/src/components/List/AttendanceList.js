@@ -69,7 +69,7 @@ const LeaveList = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/attendancelist", {params: {'empno': empNo}})
+                .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -100,7 +100,7 @@ const LeaveList = () => {
         setModalSwitch(false);
         for (let i = 0; i < checkedReqId.length; i++) {
             axios
-                .post("/delattendancereq", {
+                .post("/attendance/delattendancereq", {
                     reqId: checkedReqId[i],
                 })
                 .then((res) => {

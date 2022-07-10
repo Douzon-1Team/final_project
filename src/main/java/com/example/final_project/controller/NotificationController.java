@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationController {
     private final NotificationService notificationService;
-    @GetMapping("/notification")
+    @GetMapping("/main/notification")
     public ResponseEntity<?> tardyList(@RequestParam("empno") String empno){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

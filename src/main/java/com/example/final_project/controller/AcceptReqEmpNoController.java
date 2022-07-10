@@ -15,9 +15,9 @@ import java.util.List;
 public class AcceptReqEmpNoController {
     private final AcceptReqEmpNoService acceptReqEmpNoService;
 
-    @GetMapping("/deptno")
+    @GetMapping("/manager/deptno")
     public ResponseEntity coEmpNo(@RequestParam String empno){
-        List<AcceptReqEmpNoDto> dto=acceptReqEmpNoService.coEmpNo(empno);
+        List<AcceptReqEmpNoDto> dto = acceptReqEmpNoService.coEmpNo(empno);
         return ResponseEntity.ok().body(dto);
     }
 }

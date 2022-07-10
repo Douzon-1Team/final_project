@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -82,6 +83,7 @@ function InnerRow({row, month}) {
 }
 
 const CollapseList = (props) => {
+    const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = props.state;
@@ -92,7 +94,10 @@ const CollapseList = (props) => {
     state !== "attendanceProblem" ? month = null : month = new Date().getMonth();
 
     async function attendanceProblem(){
-        const response = await axios.get("http://localhost:8080/report/list");
+        const response = await axios.get("http://localhost:8080/report/list",
+            {
+                params: {empno}
+            });
         response.data.map((item) => {
             rows.map((i) => {
                 if (i.empno === item.empno) {
@@ -113,7 +118,10 @@ const CollapseList = (props) => {
     }
 
     async function dVacationHistory () {
-        const response = await axios.get("http://localhost:8080/report/dvacation");
+        const response = await axios.get("http://localhost:8080/report/dvacation",
+            {
+                params: {empno}
+            });
         setrows(state);
         state.map((item) => {
             item.history = [];
