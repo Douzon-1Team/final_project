@@ -118,16 +118,6 @@ export const TimeSettingError = () => {
     })
 }
 
-// export const SettingSuccess = () => {
-//     MySwal.fire(
-//       {
-//         title: <p>성공적으로 반영되었습니다.</p>,
-//         html: <i>ALL IN ONE</i>,
-//         icon: 'success',
-//         confirmButtonColor: '#00AAFF',
-//     })
-// }
-
 export const PwdSuccess = () => {
     MySwal.fire(
       {
@@ -182,5 +172,47 @@ export const SettingError = () => {
         html: <i>ALL IN ONE</i>,
         icon: 'error',
         confirmButtonColor: '#00AAFF',
+    })
+}
+
+export const ResignConfirm = (callback) => {
+    MySwal.fire({
+        title:'정말 퇴사자로 등록하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#00AAFF',
+        cancelButtonColor: 'red',
+        confirmButtonText: '등록',
+        cancelButtonText: '취소'
+    }).then(result => {
+        if(result.isConfirmed){
+            Swal.fire(
+                '성공',
+                '퇴사자 등록이 완료되었습니다',
+                'success'
+            );
+        }
+        callback(result.isConfirmed);
+    })
+}
+
+export const DeleteConfirm = (callback) => {
+    MySwal.fire({
+        title:'정말 해당 사원을 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#00AAFF',
+        cancelButtonColor: 'red',
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소'
+    }).then(result => {
+        if(result.isConfirmed){
+            Swal.fire(
+                '성공',
+                '사원 삭제 완료되었습니다',
+                'success'
+            )
+        }
+        callback(result.isConfirmed);
     })
 }

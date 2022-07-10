@@ -30,7 +30,7 @@ function Profile() {
               {/*<VerticalTabs />*/}
             </RightContainer>
             <QrBox>
-              <a href={ emp.qrPath }><QR>QR code</QR></a>
+                <a href={ emp.qrPath }><QR>QR code</QR></a>
             </QrBox>
             <S3Upload/>
         </MainStyle>
