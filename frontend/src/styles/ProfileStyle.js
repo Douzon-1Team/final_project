@@ -120,10 +120,8 @@ const Button = styled.button`
 `;
 
 const ProfileImg = styled.img`
-    width: 100%;
-    max-width: 300px;
-    height: 100%; 
-    max-height: 50vh; 
+    width: 300px;
+    height: 50vh; 
     border-radius: 20px;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);   
 `;
@@ -157,6 +155,15 @@ const TabBox = styled.div`
 `;
 
 const InfoBox = styled.div`  
+    margin-top: 5%;
+    text-align: center;   
+    font-size: 1.1rem;
+    font-weight: bold; 
+    border-bottom: 2px solid #00AAFF;
+    letter-spacing: 0.1vw;  
+`;
+
+const InfoBox2 = styled.input`  
     margin-top: 5%;
     text-align: center;   
     font-size: 1.1rem;
@@ -265,5 +272,20 @@ const TabTitle = styled.p`
     &:hover { cursor: pointer; }
 `;
 
+const RedBtn = styled.button`
+ background: #ff7777;
+ font-weight: bold;
+    border-radius: 10px;
+    width: 80%;
+    border: 0px;
+    margin: 0px 0px 15px 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    &.button{
+        text-align: center;
+    }
+`;
 
-export {TabTitle, ContentBox, TabBox, ProfileBox, TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer, InfoBox, PwdBox, TopContainer, QR, Title, Table, Input, Button, Form, ProfileImg, Line, TableBox};
+
+export {InfoBox2, RedBtn, TabTitle, ContentBox, TabBox, ProfileBox, TableBox2, BtnBox, QrBox, IconBox, LeftContainer, RightContainer, InfoBox, PwdBox, TopContainer, QR, Title, Table, Input, Button, Form, ProfileImg, Line, TableBox};
