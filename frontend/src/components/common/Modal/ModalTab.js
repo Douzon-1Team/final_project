@@ -14,7 +14,7 @@ import {GoGraph} from 'react-icons/go';
 import {WiTime9} from 'react-icons/wi';
 import {getSetting} from "../../../apis/ApiService";
 import {SettingError, SettingSuccess, TimeSettingError} from "../alert/alert";
-import { Input, Button, Text, Title, TimeBox, LeftContainer, RightContainer, GraphBox, TimeChoiceBox } from "../../../styles/ModalStyle";
+import { Radio, TimeRightContainer, TimeContainer, Input, Button, Text, Title, TimeBox, LeftContainer, RightContainer, TimeChoiceBox } from "../../../styles/ModalStyle";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,7 +43,7 @@ export default function ModalTab() {
                 getToWorkTimeSet: null, getOffWorkTimeSet: null,
                 getToWorkTimeSetF: null, getOffWorkTimeSetF: null }
   );
-  const [time, setTime] = useState(['0']);
+  const [time, setTime] = useState([]);
   const { register, handleSubmit } = useForm();
   const handleChange = (event, newTime) => { setTime(newTime); };
 
@@ -58,7 +58,6 @@ export default function ModalTab() {
     const response = await settingTimeChoice({ empno, deptNo, flexible });
     if (response.status) {
       // TODO: alert modal z-index 변경 필요
-
       SettingSuccess();
       // window.location.reload();
     } else { SettingError(); }
@@ -106,25 +105,25 @@ export default function ModalTab() {
           <input {...register('deptNo')} type="text" defaultValue={empDept.deptNo} hidden />
           <LeftContainer>
             <TimeChoiceBox>
-              출근 시간 <br/>
-              { empDept.getToWorkTimeSet } <br/>
-              퇴근 시간 <br/>
+              <Text>출근 시간</Text>
+              { empDept.getToWorkTimeSet }
+              <Text>퇴근 시간</Text>
               { empDept.getOffWorkTimeSet }
             </TimeChoiceBox>
             <Title>일반 근무시간</Title>
-            <Input {...register('flexible')} type="radio" defaultValue="0" />
+            <Radio {...register('flexible')} type="radio" defaultValue="0" />
           </LeftContainer>
           <RightContainer>
             <TimeChoiceBox>
-              출근 시간 <br/>
-              { empDept.getToWorkTimeSetF }<br/>
-              퇴근 시간 <br/>
+              <Text>출근 시간</Text>
+              { empDept.getToWorkTimeSetF }
+              <Text>퇴근 시간</Text>
               { empDept.getOffWorkTimeSetF }
             </TimeChoiceBox>
             <Title>유연 근무시간</Title>
-            <Input {...register('flexible')} type="radio" defaultValue="1" />
+            <Radio {...register('flexible')} type="radio" defaultValue="1" />
           </RightContainer>
-          <Button type="submit">저장</Button>
+          <Button type="submit">저 장</Button>
         </form>
       </TabPanel>
 
@@ -134,24 +133,20 @@ export default function ModalTab() {
           <input {...register('empno')} type="text" defaultValue={empNo} hidden />
           <input {...register('deptNo')} type="text" defaultValue={empDept.deptNo} hidden />
           <TimeBox>
-            <LeftContainer>일반 근무시간</LeftContainer>
-            <RightContainer>
-              <Text>출근 시간 설정</Text>
-              <Input {...register('getToWorkTimeSet')} type="time" min="07:00" max="11:00" />
-              <Text>퇴근 시간 설정</Text>
-              <Input {...register('getOffWorkTimeSet')} type="time" min="16:00" max="23:00" />
-            </RightContainer>
+            <TimeContainer>일반 근무시간</TimeContainer>
+            <TimeRightContainer>
+              출근 시간 설정 <Input {...register('getToWorkTimeSet')} type="time" min="07:00" max="11:00" /><br/>
+              퇴근 시간 설정 <Input {...register('getOffWorkTimeSet')} type="time" min="16:00" max="23:00" />
+            </TimeRightContainer>
           </TimeBox>
           <TimeBox>
-            <LeftContainer>유연 근무시간</LeftContainer>
-            <RightContainer>
-              <Text>출근 시간 설정</Text>
-              <Input {...register('getToWorkTimeSetF')} type="time" min="07:00" max="11:00" />
-              <Text>퇴근 시간 설정</Text>
-              <Input {...register('getOffWorkTimeSetF')} type="time" min="16:00" max="23:00" />
-            </RightContainer>
+            <TimeContainer>유연 근무시간</TimeContainer>
+            <TimeRightContainer>
+              출근 시간 설정<Input {...register('getToWorkTimeSetF')} type="time" min="07:00" max="11:00" /><br/>
+              퇴근 시간 설정<Input {...register('getOffWorkTimeSetF')} type="time" min="16:00" max="23:00" />
+            </TimeRightContainer>
           </TimeBox>
-          <Button type="submit">저장</Button>
+          <Button type="submit">저 장</Button>
         </form>
       </TabPanel>
 
@@ -161,20 +156,20 @@ export default function ModalTab() {
             <input {...register('empno')} type="text" defaultValue={empNo} hidden />
             <input {...register('deptNo')} type="text" defaultValue={empDept.deptNo} hidden />
             <LeftContainer>
-              <GraphBox>
-                <FcComboChart size={"230%"} />
-              </GraphBox>
+              <TimeChoiceBox>
+                <FcComboChart size={"100%"} />
+              </TimeChoiceBox>
               <Title>차트형</Title>
-              <Input {...register('graph')} type="radio" value="chart" />
+              <Radio {...register('graph')} type="radio" value="chart" />
             </LeftContainer>
             <RightContainer>
-              <GraphBox>
-                <FcList size={"230%"} />
-              </GraphBox>
+              <TimeChoiceBox>
+                <FcList size={"100%"} />
+              </TimeChoiceBox>
               <Title>목록형</Title>
-              <Input {...register('graph')} type="radio" value="list" />
+              <Radio {...register('graph')} type="radio" value="list" />
             </RightContainer>
-            <Button type="submit">저장</Button>
+            <Button type="submit">저 장</Button>
           </form>
       </TabPanel>
     </Box>
