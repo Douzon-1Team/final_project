@@ -23,7 +23,7 @@ function EmpInfo() {
   return (
     <>
       <TableBox>
-        <Table>
+        <Table style={{marginRight: '15%', minHeight: '38vh'}}>
         {/*<table>*/}
           <tr>
             <td>회사</td>
