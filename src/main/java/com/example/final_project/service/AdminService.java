@@ -72,8 +72,6 @@ public class AdminService {
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
 
-        System.out.println(updateDto.getName());
-
         if(updateDto.getName() != null || profileUrl != null || password != null || updateDto.getRole() != null || updateDto.isResigned())
             employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password, profileUrl));
 

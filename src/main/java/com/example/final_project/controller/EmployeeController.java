@@ -45,7 +45,6 @@ public class EmployeeController {
 
     @GetMapping("/")
     public void logoutSuccess(){
-        System.out.println("로그아웃 성공");
     }
 
 }

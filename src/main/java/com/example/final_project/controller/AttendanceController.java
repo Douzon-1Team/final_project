@@ -27,7 +27,6 @@ public class AttendanceController {
 
     @PostMapping("/attendance/delattendancereq")
     public ResponseEntity delAttendance(@RequestBody DeleteAttendanceDto dto){
-        System.out.println(dto.getReqId());
         attendanceService.attendance(dto);
         return ResponseEntity.ok().build();
     }

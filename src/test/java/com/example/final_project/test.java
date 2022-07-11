@@ -32,7 +32,6 @@ public class test {
         AttendanceCheckDto b = attendanceCheckMapper.timeCheck("220101", LocalDateTime.now());
         //then
         //assertThat(total).isEqualTo(4);
-        System.out.println("Tlqkffusk"+b.getGetToWorkTimeSet());
 
     }
 }
