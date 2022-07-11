@@ -21,9 +21,6 @@ const AcceptReq = () => {
     const [modal, setModal] = useState(false);
     const [targetReqId, setTargetReqId] = useState('');
 
-    useEffect(()=>{
-        console.log(merge);
-    },[merge])
     useEffect(() => {
         async function getEmpNo() {
             await axios

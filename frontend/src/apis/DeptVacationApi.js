@@ -4,7 +4,6 @@ import {DeptVacationError} from "../components/common/alert/alert";
 
 export const getMain = async ( {empno, accessToken} ) => {
     try {
-        console.log(empno);
         return await axios.get(
             "http://localhost:8080/main/dvacation",
             {

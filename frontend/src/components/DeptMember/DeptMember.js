@@ -32,15 +32,12 @@ function DeptMember() {
         await getDeptMember({empno: empNo, accessToken}).then(res => {
 
             const MList = res.data;
-            console.log(MList);
             for (let i = 0; i < MList.length; i++) {
                 if (MList[i].etc === '출근' & MList[i].attendance === false) {
                     MList[i].etc = '출근미등록'
                 }
             }
-            console.log(res.data);
             setdeptmember(MList);
-            console.log(deptmember);
 
         }).catch(console.log('error'));
     }
@@ -49,7 +46,6 @@ function DeptMember() {
             MemberList();
         }, []);
     function handleEmpMember(event) {
-        console.log(event);
         navigate("/main", {
             state: [event.empno, event.name],
         });

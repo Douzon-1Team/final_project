@@ -12,7 +12,6 @@ import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
 
 function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
-    console.log(row)
 
     return (
         <>
@@ -88,7 +87,6 @@ const CollapseList = (props) => {
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = props.state;
-    console.log(state);
     let tmp = true;
 
     let month;

@@ -80,7 +80,6 @@ const Graph52h = () => {
             }
         ]
     });
-    console.log(name.length)
     options.xAxis.data = [...name];
     options.series[1].data = [...overtimeWeek];
     options.series[0].data = [...attendanceWeek];

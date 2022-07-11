@@ -30,9 +30,6 @@ function VacationGraph() {
       let hour = [];
       setResponse(response.data);
       for (let i = 0; i < response.data.length; i++) {
-        console.log(response.data[i].remainHour);
-        console.log(totalDay-response.data[i].remainDay);
-        console.log(totalDay-response.data[i].remainDay);
         totday.push(totalDay-response.data[i].remainDay);
         tothour.push(totalHour-response.data[i].remainHour);
         name.push(response.data[i].empName);
@@ -46,10 +43,6 @@ function VacationGraph() {
       setRemainHour([...hour]);
     })
   }, []);
-  console.log(totremainday);
-  console.log(remainday);
-  console.log(totremainhour);
-  console.log(remainhour);
 
   const [options, setOptionss] = useState( {
     tooltip: {
@@ -128,7 +121,6 @@ function VacationGraph() {
     ]
   })
   options.yAxis.data = [...name];
-  console.log(options.series);
   options.series[0].data = [...totremainday];
   options.series[1].data = [...remainday];
   options.series[2].data = [...totremainhour];

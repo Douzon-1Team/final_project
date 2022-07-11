@@ -28,7 +28,6 @@ const Report = () => {
         const chatData = async () => {
             await getAttendance({empno: empInfo[0], accessToken}).then(res => {
                 res.data.map(res => changeData.push(res.name));
-                console.log(changeData);
                 const setData = new Set(changeData);
                 const uniqueArr = [...setData]; // set으로 정리하면서 뒤에 가져온 동일값(name)은 삭제됨 문제X
                 const newArr =

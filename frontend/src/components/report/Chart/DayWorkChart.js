@@ -5,7 +5,6 @@ import {useLocation} from "react-router";
 
 const DayWorkChart = () => {
     const {state} = useLocation();
-    console.log("STATE", state);
     const [data, setdata] = useState([]);
 
     // TODO : 분 단위로 표시
@@ -53,7 +52,6 @@ const DayWorkChart = () => {
     (overtimes = []).length = offwork.length;
     overtimes.fill(0);
     if (offwork.length !== 1) {
-        console.log("OFF", offwork);
         for (let i = 0; i < overtimes.length; i++) {
             if (offwork[i].totaltime > 8) {
                 if (offwork[i].totaltime-8 < 0) {

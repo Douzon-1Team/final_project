@@ -21,13 +21,8 @@ function EmpPwd() {
     }
 
     const response = await updatePwd({ empno, pwd, newPwd, chkPwd, accessToken });
-    // console.log(accessToken.accessToken)
-    console.log(accessToken)
-
     if (response) {
-      console.log(response)
       PwdSuccess();
-      // return navigate('/main');
     } else {
       PwdError();
     }

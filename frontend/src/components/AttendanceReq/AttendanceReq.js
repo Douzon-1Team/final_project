@@ -28,11 +28,6 @@ export const AttendanceReq = () => {
     const [endTime, setEndTime] = useState(18);
 
     useEffect(() => {
-        console.log("statusColor", statusColor);
-        console.log("status", status);
-    }, [statusColor, status])
-
-    useEffect(() => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/vacation/data", {
@@ -100,16 +95,13 @@ export const AttendanceReq = () => {
                         if (res.data[0].agree === 1) {
                             setStatusColor(false);
                             setStatus("근태이상 (처리됨)");
-                            console.log("!");
                         } else {
                             setStatusColor(true);
                             setStatus("근태이상 (" + req + ")");
-                            console.log("!!");
                         }
                     } else {
                             setStatus("수정할 데이터 없음")
                             setStatusColor(false);
-                            console.log("!!!");
                     }
                 })
         }

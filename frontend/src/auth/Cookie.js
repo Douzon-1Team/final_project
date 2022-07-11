@@ -12,7 +12,6 @@ export const setRefreshToken = (refreshToken) => {
     const today = new Date();
     const expireDate = today.setDate(today.getDate() + 15); // 유효기간 : 15일 후 만료로 설정
 
-    console.log(cookies)
     return cookies.set('refresh_token', refreshToken,
         {
             sameSite: 'strict',

@@ -48,7 +48,6 @@ function DeptVacation() {
         const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
         await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                console.log(vacation);
                 if (vacation.length != 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno.empInfo[0]) {
@@ -64,7 +63,6 @@ function DeptVacation() {
                         });
                     }
                     setschedules(vacation);
-                    console.log(schedules);
                 } else {
                     // error
                 }
@@ -143,7 +141,6 @@ function DeptVacation() {
         const month = cal?.current?.calendarInst.getDate().getMonth();
         const year = cal?.current?.calendarInst.getDate().getFullYear();
         setDate(`${year}년 ${month + 1}월`);
-        console.log(cal);
     }, []);
 
     function onClickPrev() {

@@ -237,15 +237,11 @@ function Calendar() {
     cal.current.calendarInst.changeView("month", true);
   }, []);
 
-  const handleWeekClick = useCallback(() => {
-    // cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 4}}, true);
-    // cal.current.calendarInst.changeView('month', true);
-    console.log(cal.current.calendarInst.changeView("week"));
-  }, []);
-
-  const handleDayClick = useCallback(() => {
-    console.log(cal.current.calendarInst.changeView("day"));
-  }, []);
+  // const handleWeekClick = useCallback(() => {
+  // }, []);
+  //
+  // const handleDayClick = useCallback(() => {
+  // }, []);
   // TODO : Today 추가
   function dVcationPage() {
     return navigate("/dvacation");
