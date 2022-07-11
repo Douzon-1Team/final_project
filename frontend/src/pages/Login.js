@@ -6,10 +6,12 @@ import {SET_EMP_INFO} from "../store/modules/Reducer/EmpAuth";
 import {LoginFail, LoginSuccess} from "../components/common/alert/alert";
 import {LeftContainer, RightContainer, Header, Footer, Content, LoginHeader, LoginFooter, LoginContent, Logo, Input, Button, Text} from '../styles/LoginStyle';
 import {loginUser} from "../apis/ApiServices";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
   const dispatch = useDispatch();
   const { register, setValue, handleSubmit, } = useForm();
+  const navigate = useNavigate();
 
   const onValid = async ({ empno, password }) => {
     if (empno.valueOf() === '' || password.valueOf() === '') {
@@ -22,6 +24,7 @@ function Login() {
       dispatch(SET_EMP_INFO(response.data));
       localStorage.setItem("LoginChk", "true");
       LoginSuccess();
+      return navigate('/main');
     } else {
       LoginFail();
     }

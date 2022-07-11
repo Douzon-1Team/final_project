@@ -22,16 +22,9 @@ export const loginUser = async ( {empno, password} ) => {
 };
 
 // 회원 로그아웃
-export const logoutUser = async ( { accessToken } ) => {
+export const logoutUser = async () => {
   return await axios.post(
     URL_LOGOUT,
-    // { },
-    { accessToken: accessToken },
-    {
-      headers: {
-        'Access-Control-Allow-Origin': `${URL_LOGOUT}`
-      }
-    }
   ).then ((response) => {
     return response;
   }).catch(errors => { console.log(errors); });
