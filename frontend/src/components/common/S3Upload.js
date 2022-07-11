@@ -10,6 +10,7 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const S3Upload = () => {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const imagePatchConfig = {
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +34,8 @@ const S3Upload = () => {
                 if (file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg') {
                     ReactS3Client.uploadFile(file, `profile-${empNo}-`+newFileName)
                         .then((data) => {
-                            axios.post('/profile/updateImg', { empno: `${empNo}`, profile: data.location }, imagePatchConfig)
+                            axios.post('/profile/updateImg', { empno: `${empNo}`, profile: data.location }, imagePatchConfig,
+                                {headers: {Authorization: accessToken}})
                                 .then((res) => {
                                     localStorage.setItem('profile', res.data);
                                     ImgUploadSuccess();

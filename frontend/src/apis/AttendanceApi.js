@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {useSelector} from "react-redux";
 
 export const getAttendance = async ( {empno} ) => {
     console.log(empno);

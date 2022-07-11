@@ -84,6 +84,7 @@ function InnerRow({row, month}) {
 
 const CollapseList = (props) => {
     const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = props.state;
@@ -96,7 +97,8 @@ const CollapseList = (props) => {
     async function attendanceProblem(){
         const response = await axios.get("http://localhost:8080/report/list",
             {
-                params: {empno}
+                params: {empno},
+                headers: {Authorization: accessToken}
             });
         response.data.map((item) => {
             rows.map((i) => {
@@ -120,7 +122,8 @@ const CollapseList = (props) => {
     async function dVacationHistory () {
         const response = await axios.get("http://localhost:8080/report/dvacation",
             {
-                params: {empno}
+                params: {empno},
+                headers: {Authorization: accessToken}
             });
         setrows(state);
         state.map((item) => {
