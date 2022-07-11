@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getDvacation} from "../apis/ApiService";
+import {getDvacation} from "../apis/ApiServices";
 import ECharts from 'echarts-for-react';
 import {useSelector} from "react-redux";
 import Button from "@mui/material/Button";
@@ -9,13 +9,14 @@ import {DayWorkChatStyle} from "../styles/DayWorkChatStyle";
 function VacationGraph() {
   const navigate = useNavigate();
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
   const [deptStatus, setDeptStatus] = useState(false);
   const totalDay = 15;
   const totalHour = 120;
 
   useEffect(() => {
-    getDvacation(empNo).then(response => {
-      setDeptStatus(response)
+    getDvacation({empNo, accessToken}).then(response => {
+      setDeptStatus(response.data)
     })
   }, []);
 

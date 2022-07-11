@@ -10,11 +10,15 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 const S3Upload = () => {
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+
     const imagePatchConfig = {
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': accessToken,
         },
     };
+
     const handleClick = (event) => {
         const file = event.target.files[0];
         const newFileName = v4();
@@ -38,7 +42,7 @@ const S3Upload = () => {
                                     localStorage.setItem('profile', res.data);
                                     ImgUploadSuccess();
                                     window.location.reload();
-                                }).catch((err) => { console.log(err, '이미지 변경 안됨'); });
+                                }).catch((err) => { console.log(err, '이미지 변경 error'); });
                         }).catch( console.log(file));
                 } else {
                     FileTypeError();
@@ -47,6 +51,7 @@ const S3Upload = () => {
             }
         }
     };
+
     return (
       <>
           <input id='icon' type='file' accept='image/*' onChange={handleClick} hidden />

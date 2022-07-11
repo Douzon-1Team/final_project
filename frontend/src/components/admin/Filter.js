@@ -1,5 +1,4 @@
 import React, {useMemo} from 'react';
-import GetProfile from "../../apis/ApiService";
 
 const SearchFilter = ({column}) => {
     const { setFilter } = column;
