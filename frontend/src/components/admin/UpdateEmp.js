@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {getProfile} from "../../apis/ApiService";
+import {getProfile} from "../../apis/ApiServices";
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
@@ -36,9 +36,9 @@ function Profile() {
 
     useEffect(() => {
         if(!isNew){
-            getProfile(empNo).then(response => {
-                setEmp(response);
-                setProfile(response.profilePath);
+            getProfile({empNo, accessToken}).then(response => {
+                setEmp(response.data);
+                setProfile(response.data.profilePath);
             });
         }
     }, [])

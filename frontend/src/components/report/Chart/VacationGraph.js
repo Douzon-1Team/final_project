@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getDvacation} from "../../../apis/ApiService";
+import {getDvacation} from "../../../apis/ApiServices";
 import ECharts from 'echarts-for-react';
 import {useSelector} from "react-redux";
 import Button from "@mui/material/Button";
@@ -33,7 +33,7 @@ function VacationGraph() {
       // empno: "210108"
       // remainDay: "15"
       // remainHour: "120"
-      setResponse(response);
+      setResponse(response.data);
       for (let i = 0; i < response.length; i++) {
         console.log(response[i].remainHour);
         console.log(totalDay-response[i].remainDay);

@@ -1,22 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector} from "react-redux";
-import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router";
-import {getProfile} from "../../apis/ApiService";
+import {getProfile} from "../../apis/ApiServices";
 import {InfoBox, Table, TableBox} from "../../styles/ProfileStyle";
 
-// 사원 정보를 읽어오는 component
 function EmpInfo() {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
   const [emp, setEmp] = useState(
     { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, qrPath: null }
   );
-  const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    getProfile(empNo).then(response => {
-      setEmp(response);
+    getProfile({empNo, accessToken}).then(response => {
+      setEmp(response.data);
     })
   }, []);
 
@@ -24,7 +20,6 @@ function EmpInfo() {
     <>
       <TableBox>
         <Table style={{marginRight: '15%', minHeight: '38vh'}}>
-        {/*<table>*/}
           <tr>
             <td>회사</td>
             <InfoBox>더존비즈온</InfoBox>
@@ -47,7 +42,7 @@ function EmpInfo() {
           </tr>
           <tr>
             <td>내선번호</td>
-            <InfoBox> { emp.extensionNum } </InfoBox>
+            <InfoBox>{ emp.extensionNum }</InfoBox>
           </tr>
         </Table>
       </TableBox>

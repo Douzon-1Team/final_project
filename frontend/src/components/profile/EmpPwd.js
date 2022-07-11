@@ -1,16 +1,15 @@
 import React from 'react';
 import {BtnBox, Button, PwdBox, Table, TableBox} from "../../styles/ProfileStyle";
 import {PwdError, PwdNotCollect, PwdNotRight, PwdSuccess} from "../common/alert/alert";
-import {updatePwd} from "../../apis/Users";
 import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
+import {updatePwd} from "../../apis/ApiServices";
 
 // 사원 비밀번호를 변경하는 component
 function EmpPwd() {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
-  const { register, handleSubmit } = useForm();
-  const navigate = useNavigate();
+  const { register, handleSubmit, setValue } = useForm();
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
   const onValid = async ({ empno, pwd, newPwd, chkPwd }) => {
     if (pwd.valueOf() === '' || newPwd.valueOf() === '' || chkPwd.valueOf() === '') {
@@ -21,12 +20,20 @@ function EmpPwd() {
       return false;
     }
 
-    const response = await updatePwd({ empno, pwd, newPwd, chkPwd });
-    if (response.status) {
+    const response = await updatePwd({ empno, pwd, newPwd, chkPwd, accessToken });
+    // console.log(accessToken.accessToken)
+    console.log(accessToken)
+
+    if (response) {
+      console.log(response)
       PwdSuccess();
-      window.location.reload();
-      return navigate('/profile');
-    } else { PwdError(); }
+      // return navigate('/main');
+    } else {
+      PwdError();
+    }
+    setValue('pwd', '');
+    setValue('newPwd', '');
+    setValue('chkPwd', '');
   };
 
   return (
