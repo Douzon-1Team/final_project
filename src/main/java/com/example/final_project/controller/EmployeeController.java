@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +41,11 @@ public class EmployeeController {
             return ResponseEntity.status(ErrorCode.EXPIRED_TOKEN.getCode()).body(ErrorCode.EXPIRED_TOKEN.getMessage());
 
         return ResponseEntity.ok().body(accessToken);
+    }
+
+    @GetMapping("/")
+    public void logoutSuccess(){
+        System.out.println("로그아웃 성공");
     }
 
 }
