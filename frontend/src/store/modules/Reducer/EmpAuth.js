@@ -7,7 +7,7 @@ export const empSlice = createSlice({
     },
     reducers: {
         SET_EMP_INFO: (state, action) => {
-            state.empInfo = [action.payload.empno, action.payload.name, action.payload.role];
+            state.empInfo = [action.payload.empno, action.payload.name, action.payload.role, action.payload.profile];
         },
         DELETE_EMP_INFO: (state) => {
             state.empInfo = false;

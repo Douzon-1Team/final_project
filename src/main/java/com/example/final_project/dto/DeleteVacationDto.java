@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DeleteVacationDto {
     private String reqId;
+    private String empNo;
+    private int grossHours;
 }

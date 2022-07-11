@@ -57,10 +57,7 @@ public class ProfileService {
         String originPwd = employeeMapper.findPasswordByEmpno(empno)
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
 
-        System.out.println(empno);
         if(!passwordEncoder.matches(pwd, originPwd)) {
-            System.out.println(passwordEncoder.encode(pwd));
-            System.out.println(originPwd);
             throw new PasswordException(ErrorCode.WRONG_PASSWORD);
         }
         if(!newPwd.equals(chkPwd))

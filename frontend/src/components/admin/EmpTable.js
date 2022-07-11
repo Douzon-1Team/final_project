@@ -2,7 +2,7 @@ import React, {useState, useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useTable, useSortBy, usePagination, useFilters} from "react-table";
 import {SearchFilter, SelectFilter, RangeFilter, dateBetweenFilter} from './Filter'
-import {Table, Header, Button, Row, Cell, Order, Pagination} from "./EmpTableStyle";
+import {Container, Table, Header, Button, Row, Cell, Order, Pagination} from "./EmpTableStyle";
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -20,7 +20,6 @@ function EmpTable(props) {
 
     const columns = useMemo(
         () => [
-            {Header: 'NO', Cell: ({row}) => {return row.index+1}},
             {Header: '사번', accessor: 'empno', Filter: SearchFilter},
             {Header: '권한', accessor: 'roleName', Filter: SelectFilter},
             {Header: '부서', accessor: 'deptName', Filter: SelectFilter },
@@ -30,7 +29,7 @@ function EmpTable(props) {
             {Header: '입사일', accessor: 'hireDate', Filter: RangeFilter, filter: dateBetweenFilter,
                 Cell: ({value}) => {return value.slice(0,10)}
             },
-            {Header: '정보관리', Cell: ({row}) => {return <Button onClick={(e) => toUpdateEmp(e, row.original.empno)}>수정</Button> }}
+            {Header: ' ', Cell: ({row}) => {return <Button onClick={(e) => toUpdateEmp(e, row.original.empno)}>수정</Button> }}
 
         ],[]);
 
@@ -48,11 +47,10 @@ function EmpTable(props) {
     const {pageIndex, pageSize} = state;
 
     return (
-        <>
-            <h3 style={{display : "inline"}}>사원 정보 테이블</h3>
-            <span style={{marginLeft: "10px", color: "darkgray", fontWeight: "bold"}}>{num}</span>
-            <select style={{marginTop:"10px", marginRight:"50px", float:"right"}}
-                    value={pageSize}
+        <Container>
+            <h3>사원 정보 테이블</h3>
+            <span>{num}</span>
+            <select className="select-row" value={pageSize}
                     onChange={e => setPageSize(Number(e.target.value))}>
                 {[5, 10, 25, 50].map(pageSize => (
                     <option key={pageSize} value={pageSize}>
@@ -106,7 +104,7 @@ function EmpTable(props) {
                                      onClick={() => nextPage()}
                                      disabled={!canNextPage}/>
             </Pagination>
-        </>
+        </Container>
     )
 }
 

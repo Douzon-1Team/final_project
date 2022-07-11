@@ -1,15 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import EmpTable from "./EmpTable";
-import Layout from "../common/Layout";
+import {useSelector} from "react-redux";
 
 function EmpList() {
     const [loading,setLoading] =useState(true);
     const [rowData, setRowData] = useState([]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
     useEffect(() => {
         async function fetchData() {
-            const res = await axios.get("http://localhost:8080/list").then((res) => {return res});
+            const res = await axios.get("http://localhost:8080/admin/list",
+                {headers: {Authorization: accessToken}}).then((res) => {return res});
             setRowData(res.data);
             setLoading(false);
         }

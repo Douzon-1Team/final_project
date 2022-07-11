@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -19,12 +20,12 @@ public class DeptMemberList {
     private final DeptMemberListMapper deptMemberMapper;
 
 
-    @GetMapping("/deptmember")
+    //사원목록에서 부서원들
+    @GetMapping("/manager/deptmember")
     public ResponseEntity<?> deptMemberList(@RequestParam("empno") String empno) {
-        System.out.println(empno);
+        LocalDate date = LocalDate.now();
 
-        List<DeptMemberListDto> deptMemberList = deptMemberMapper.findDeptMemberList(empno);
-        System.out.println(deptMemberList);
+        List<DeptMemberListDto> deptMemberList = deptMemberMapper.findDeptMemberList(empno, String.valueOf(date));
 
         return ResponseEntity.ok().body(deptMemberList);
     }

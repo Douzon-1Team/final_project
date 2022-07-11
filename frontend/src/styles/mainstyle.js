@@ -23,6 +23,9 @@ const TextContainer = styled.div`
     margin-bottom: 3%;
     margin-top: 3%;
     font-size: 18px;
+    @media screen and (max-width: 2000px) {
+        font-size: 15px;
+    }
 `
 
 const TextContainer2 = styled.div`
@@ -30,12 +33,17 @@ const TextContainer2 = styled.div`
     margin-bottom: 7%;
     margin-top: 3%;
     font-size: 18px;
+    @media screen and (max-width: 2000px) {
+        font-size: 15px;
+        width: 160px;
+    }
 `
 const CardContainer = styled.div`
     padding-top: 4%;
     padding-bottom: 4%;
     padding-right: 6%;
     padding-left: 6%;
+    
 `
 const progressValue = styled.div`
     minWidth: 35;
@@ -49,6 +57,9 @@ const TitleContainer2 = styled.div`
     margin-top: 4%;
     text-align: center;
     font-weight: bold;
+    @media screen and (max-width: 2000px) {
+        font-size: 23px;
+    }
 `
 
 const TitleContainer1 = styled.div`
@@ -56,6 +67,9 @@ const TitleContainer1 = styled.div`
     margin-top: 4%;
     text-align: center;
     font-weight: bold;
+    @media screen and (max-width: 2000px) {
+        font-size: 23px;
+    }
 `
 
 const MainStyles = styled.div`
@@ -69,12 +83,18 @@ const MainchatStyle = styled.div`
     width: 1000px !important;
     height: 700px !important;
     }
+    @media screen and (max-width: 2000px) {
+            width: 900px;
+    }
 `
 
 const AttendanceCardTitle = styled.div`
     font-size: 30px;
     margin-top: 4%;
     text-align: center;
+    @media screen and (max-width: 2000px) {
+        font-size: 20px;
+    }
 `
 const AttendanceCardText = styled.div`
     font-size: 60px;
@@ -91,4 +111,48 @@ const TopLine = styled.div`
 
 `
 
-export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles, AttendanceCardTitle, AttendanceCardText, CardContent, TopLine};
+const MainCards = styled.div`
+    .title {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
+    @media screen and (max-width: 2000px) {
+        margin-top: 40px;
+        max-width: 400px;
+        .card1 {
+            height: 180px;
+            div {
+            width: 200px;
+            }
+        }
+        .card2 {
+            height: 180px;
+            div {
+            width: 200px;
+            }
+        }
+        .card3 {
+            height: 180px;
+            div {
+            width: 200px;
+            }
+        }
+        .card4 {
+            height: 180px;
+            div {
+            width: 200px;
+            }
+        }
+    }
+`
+
+const MainVaciton = styled.div`
+    .echarts-for-react {
+      @media screen and (max-width: 2000px) {
+        height: 150px !important;
+        }  
+    } 
+`
+
+export {BorderLinearProgress, PbContainer, TextContainer, TextContainer2, CardContainer, progressValue, TitleContainer1,TitleContainer2, MainchatStyle, MainStyles, AttendanceCardTitle, AttendanceCardText, CardContent, TopLine, MainCards, MainVaciton};

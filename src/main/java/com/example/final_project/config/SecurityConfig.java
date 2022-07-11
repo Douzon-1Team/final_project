@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.filter.CorsFilter;
 
@@ -62,23 +63,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이기에 세션 사용하지 않음 설정
 
                 .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .deleteCookies("refreshToken")
-
-                .and()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-
+                .addFilterBefore(corsFilter, LogoutFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
 
                 .and()
                 .authorizeRequests()  // 요청에 대한 사용권한 체크
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/manager/**").hasRole("MANAGER")
-                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/report/**", "/setting/**", "/accept/**", "/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                .antMatchers("/attendance/**", "/vacation/**", "/profile/**","/main/**", "/user/**").hasAnyRole("USER", "MANAGER", "ADMIN")
                 .antMatchers("/**").permitAll()  // 그외 나머지 경로 요청은 누구나 접근 가능함
+
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .deleteCookies("refreshToken")
+                .permitAll()
 
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)

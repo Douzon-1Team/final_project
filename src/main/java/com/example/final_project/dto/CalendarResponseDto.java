@@ -49,4 +49,5 @@ public class CalendarResponseDto { // client에게 응답
     private int tardyCount;
     private int absenteeismCount;
     private int vacationCount;
+    private String endwork;
 }

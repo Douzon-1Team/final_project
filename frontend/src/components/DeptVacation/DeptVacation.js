@@ -1,23 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useRef, useState } from "react";
 import TUICalendar from "@toast-ui/react-calendar";
-import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
-import Chart from "../month/chart";
 import Button from "@mui/material/Button";
 import {DeptCalendarStyle} from "../../styles/Calendarstyle";
 import _ from "lodash";
 import {
     BsFillArrowLeftSquareFill,
     BsFillArrowRightSquareFill,
-    BsDot,
 } from "react-icons/bs";
 import {useNavigate} from "react-router";
 import {getMain} from "../../apis/DeptVacationApi";
-import {MainStyle} from "../../styles/Globalstyle"
+import {MainStyle} from "../../styles/Globalstyle";
+import {useSelector} from "react-redux";
 
 // TODO : 얘네 두개는 필요없을듯
 function DeptVacation() {
+    const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -30,26 +28,25 @@ function DeptVacation() {
         {
             id: "1",
             name: "내 휴가",
-            color: "#03bd9e",
-            bgColor: "#03bd9e",
-            dragBgColor: "#03bd9e",
-            borderColor: "#03bd9e",
+            color: "#ffffff",
+            bgColor: "#00AAFF",
+            dragBgColor: "#00AAFF",
+            borderColor: "#00AAFF",
         },
         // 조퇴
         {
             id: "2",
             name: "다른 부서원 휴가",
             color: "#ffffff",
-            bgColor: "#00a9ff",
-            dragBgColor: "#00a9ff",
-            borderColor: "#00a9ff",
+            bgColor: "#ffcfa0",
+            dragBgColor: "#ff9f40",
+            borderColor: "#ff9f40",
         },
     ];
 
-    const empno = useSelector((state) => state.EMP_INFO);
-
     const getvacation = async () => {
-        await getMain({empno: 220102}).then((res) => {
+        const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+        await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
                 if (vacation.length != 0) {
                     for (let i = 0; i < vacation.length; i++) {
@@ -66,12 +63,11 @@ function DeptVacation() {
                         });
                     }
                     setschedules(vacation);
-                    console.log(schedules);
                 } else {
                     // error
                 }
             }
-        ).catch(console.log('실패야 이녀석아'));
+        ).catch(console.log('error'));
     }
 
 
@@ -145,7 +141,6 @@ function DeptVacation() {
         const month = cal?.current?.calendarInst.getDate().getMonth();
         const year = cal?.current?.calendarInst.getDate().getFullYear();
         setDate(`${year}년 ${month + 1}월`);
-        console.log(cal);
     }, []);
 
     function onClickPrev() {

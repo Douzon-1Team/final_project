@@ -72,7 +72,7 @@ public class AdminService {
             password = passwordEncoder.encode(updateDto.getNewPwd());
         }
 
-        if(!updateDto.getName().isEmpty() || profileUrl != null || password != null || updateDto.getRole() != null || updateDto.isResigned())
+        if(updateDto.getName() != null || profileUrl != null || password != null || updateDto.getRole() != null || updateDto.isResigned())
             employeeMapper.updateByEmpno(EmpUpdateDto.toEmployee(updateDto, password, profileUrl));
 
         if(!updateDto.getDeptName().isEmpty() || !updateDto.getRankName().isEmpty()) {

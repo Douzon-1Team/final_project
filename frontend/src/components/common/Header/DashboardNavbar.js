@@ -7,6 +7,7 @@ import Iconify from './Iconify';
 //
 import AccountPopover from './AccountPopover';
 import NotificationsPopover from './NotificationsPopover';
+import { GiHamburgerMenu } from "react-icons/gi";
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +15,7 @@ const DRAWER_WIDTH = 280;
 const APPBAR_DESKTOP = 92;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
-    boxShadow: 'none',
+    boxShadow: '0 5 10 0 rgba(0, 0, 0, 0.5)',
     backdropFilter: 'blur(6px)',
     WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
     backgroundColor: alpha(theme.palette.background.default, 0.72),
@@ -27,7 +28,8 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
     [theme.breakpoints.up('lg')]: {
         minHeight: APPBAR_DESKTOP,
         padding: theme.spacing(0, 5),
-    },
+   },
+    img: {width: '30px', height: '20px'}
 }));
 
 // ----------------------------------------------------------------------
@@ -41,7 +43,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
         <RootStyle>
             <ToolbarStyle>
                 <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
-                    <Iconify icon="eva:menu-2-fill" >hambuger</Iconify>
+                    <GiHamburgerMenu />
                 </IconButton>
 
                 <Box sx={{ flexGrow: 1 }} />

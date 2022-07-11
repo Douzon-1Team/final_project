@@ -13,14 +13,14 @@ import Scrollbar from '../Header/Scrollbar';
 import NavSection from './NavSection';
 //
 import navConfig from './NavConfig';
-import {LogoImgbox} from "../Logo/LogoStyle";
+import {LogoImgbox, UserImg} from "../Logo/LogoStyle";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 import SideBar from "./SideBar";
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 300;
 
 const RootStyle = styled('div')(({ theme }) => ({
     [theme.breakpoints.up('lg')]: {
@@ -46,7 +46,6 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     const empInfo = useSelector((state) => state.EMP_INFO.empInfo);
-    console.log(empInfo);
     let empRole;
     if (empInfo[2] === "ROLE_MANAGER") {
         empRole = "근태관리자"
@@ -84,7 +83,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Box sx={{ mb: 5, mx: 2.5 }}>
                 <Link underline="none" component={RouterLink} to="#">
                     <AccountStyle>
-                        <Avatar alt="photoURL" />
+                        <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                                 {empInfo[1]}({empInfo[0]})
@@ -96,27 +95,6 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
                     </AccountStyle>
                 </Link>
             </Box>
-            {/* TODO : 사이드바 대체  */}
-            {/*<NavSection navConfig={navConfig} />*/}
-            {/*<List*/}
-            {/*    sx={{ width: '100%', maxWidth: 200, bgcolor: 'background.paper' }}*/}
-            {/*    component="nav"*/}
-            {/*>*/}
-            {/*  <ListItemButton onClick={handleClick}>*/}
-            {/*    <ListItemText primary="Inbox" />*/}
-            {/*    {open ? <ExpandLess /> : <ExpandMore />}*/}
-            {/*  </ListItemButton>*/}
-            {/*  <Collapse in={open} timeout="auto" unmountOnExit>*/}
-            {/*    <List component="div" disablePadding>*/}
-            {/*      <ListItemButton sx={{ pl: 4 }}>*/}
-            {/*        <ListItemText primary="월별보기" />*/}
-            {/*      </ListItemButton>*/}
-            {/*      <ListItemButton sx={{ pl: 4 }}>*/}
-            {/*        <ListItemText primary="주별보기" />*/}
-            {/*      </ListItemButton>*/}
-            {/*    </List>*/}
-            {/*  </Collapse>*/}
-            {/*</List>*/}
             <SideBar />
 
             <Box sx={{ flexGrow: 1 }} />

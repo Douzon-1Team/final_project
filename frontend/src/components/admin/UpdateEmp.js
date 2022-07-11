@@ -1,38 +1,66 @@
-import React, {useEffect, useState} from 'react';
-// import GetProfile from "../../apis/ApiService"
+import React, {useEffect, useState, useRef} from 'react';
+import {getProfile} from "../../apis/ApiServices";
 import {useNavigate} from "react-router";
 import {useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
-import {Title, Table, Button, Form, Img, Line} from '../../styles/profile';
 import axios from 'axios';
 import defaultImg from "../../assets/img/defualt_profile.png";
-import {getProfile} from "../../apis/ApiService";
+import {MainStyle} from "../../styles/Globalstyle";
+import {FcEditImage} from 'react-icons/fc';
+import {useSelector} from "react-redux";
+import {ResignConfirm, DeleteConfirm} from "../common/alert/alert";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import {
+    TabBox,
+    ContentBox,
+    TabTitle,
+    LeftContainer,
+    ProfileImg,
+    IconBox,
+    RightContainer, TableBox, InfoBox, InfoBox2, Table, RedBtn, TableBox2, PwdBox, BtnBox, Button, ProfileBox
+} from '../../styles/ProfileStyle';
 
 function Profile() {
+    const [index, setIndex] = useState(0);
     const navigate = useNavigate();
     const param = useParams();
     const empNo = param.empno;
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const isNew = empNo ? false : true;
     const [emp, setEmp] = useState(
-        { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, resigned: null }
+        { deptName: null, name: null, extensionNum: null, rankName: null, resigned: null }
     );
+    const [profile, setProfile] = useState(null);
+    const submit = useRef(null);
     const { register, handleSubmit, setValue, watch } = useForm();
-    const avatar = watch('image');
 
     useEffect(() => {
         if(!isNew){
-            getProfile(empNo).then(response => {
-                setEmp(response);
-            })
+            getProfile({empNo, accessToken}).then(response => {
+                setEmp(response.data);
+                setProfile(response.data.profilePath);
+            });
         }
-    }, []);
+    }, [])
+
+    useEffect(() => {
+        if(!isNew){
+            setValue('deptName', emp.deptName);
+            setValue('name', emp.name);
+            setValue('extensionNum', emp.extensionNum);
+            setValue('rankName', emp.rankName);
+        }
+    }, [emp]);
+
+    const avatar = watch('image');
 
     useEffect(() => {
         if (avatar && avatar.length > 0) {
             const file = avatar[0];
-            setEmp({profilePath: URL.createObjectURL(file)});
+            setProfile(URL.createObjectURL(file));
         }
     }, [avatar]);
+
 
     const updateInfo = async ({ deptName, name, rankName, extensionNum, role, image, resigned}) => {
         const data = {
@@ -49,8 +77,8 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpUpdateDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        const response = await axios.patch('http://localhost:8080/update', form,
-                {header: {ContentType: 'application/json; charset=UTF-8'}});
+        const response = await axios.patch('http://localhost:8080/admin/update', form,
+                {headers: {ContentType: 'application/json; charset=UTF-8', Authorization: accessToken}});
 
         navigate("/admin/list");
     };
@@ -73,8 +101,8 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpInfoDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        const response = await axios.post('http://localhost:8080/register', form,
-            {header: {ContentType: 'multipart/form-data'}});
+        const response = await axios.post('http://localhost:8080/admin/register', form,
+            {headers: {ContentType: 'multipart/form-data', Authorization: accessToken}});
 
         navigate("/admin/list");
     }
@@ -85,91 +113,108 @@ function Profile() {
     }
 
     const deleteInfo = async () => {
-        const response = axios.delete(`http://localhost:8080/remove/${empNo}`);
-        navigate("/admin/list");
+        if(DeleteConfirm(function (isConfirm){
+            const response = axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
+                {headers: {Authorization: accessToken}});
+            navigate("/admin/list");
+        }));
+    }
+
+    const resign = () => {
+        ResignConfirm(function (isConfirm){
+            if(isConfirm){
+                setValue("resigned", true);
+                submit.current.click();
+            }
+        });
     }
 
     return (
-        <>
-            {isNew ? <Title>사원 정보 등록</Title> : <Title>사원 정보 수정</Title>}
-            <Form onSubmit={handleSubmit(onSubmit)}>
-            <Table>
-                <tr>
-                    <td rowSpan="6">
-                        {emp.profilePath ? <img src={emp.profilePath} style={{display:"block"}}/> : <img src={defaultImg} style={{display:"block"}}/>}
-                        <label
-                            htmlFor="image"
-                        >파일 선택
-                        <input
-                            {...register("image")}
-                            id="image"
-                            type="file"
-                            accept="image/*"
-                            style={{visibility:"hidden"}}
-                        />
-                        </label>
-                    </td>
-                    <td>회사</td>
-                    <td>더존비즈온</td>
-                </tr>
-                {!isNew &&<tr>
-                    <td>사번</td>
-                    <td>{empNo}</td>
-                </tr>}
-                <tr>
-                    <td>부서</td>
-                    <input {...register('deptName')} type="text" placeholder={emp.deptName}/>
-                </tr>
-                <tr>
-                    <td>이름</td>
-                    <input {...register('name')} type="text" placeholder={emp.name}/>
-                </tr>
-                <tr>
-                    <td>직급</td>
-                    <input {...register('rankName')} type="text" placeholder={emp.rankName}/>
-                </tr>
-                <tr>
-                    <td>내선번호</td>
-                    <input {...register('extensionNum')} type="text" placeholder={emp.extensionNum}/>
-                </tr>
-            </Table>
-                {!isNew &&
-                <>
-                <tr>
-                    <td>새 비밀번호</td>
-                    <td>
-                        <input {...register('newPwd')} type="password"/>
-                    </td>
-                </tr>
-                <tr>
-                <td>새 비밀번호 확인 </td>
-                <td>
-                <input {...register('chkPwd')} type="password" />
-                </td>
-                </tr>
-                </>
-            }
-                <input {...register('empno')} type="text" defaultValue={empNo} hidden />
-                <Button type="reset" onClick={(e) => {e.preventDefault(); navigate("/admin/list")}}>취소</Button>
-                <Button type="submit">저장</Button>
-                {!isNew &&
-                    <Line>
-                        <p>* 현재 비밀번호로의 변경은 불가능합니다.</p>
-                    </Line>
-                }
+        <MainStyle>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <LeftContainer>
+                {profile ? <ProfileImg src={profile}/> : <ProfileImg src={defaultImg}/>}
+                <label htmlFor="icon">
+                    <IconBox style={{bottom:'50px', left:'110px'}}>
+                        <FcEditImage size="20px"/>
+                    </IconBox>
+                    <input
+                        {...register("image")}
+                        id="icon"
+                        type="file"
+                        accept="image/*"
+                        hidden
+                    />
+                </label>
+            </LeftContainer>
 
-                <input type="radio" name="role" value="ROLE_USER" {...register('role')}/> 사원
-                <input type="radio" name="role" value="ROLE_MANAGER" {...register('role')}/> 담당자
+            <RightContainer><ProfileBox style={{marginTop:'50px'}}>
+            {/*{isNew ? <Title>사원 정보 등록</Title> : <Title>사원 정보 수정</Title>}*/}
 
-                {!isNew &&
-                <>
-                <button {...register('resigned')} onClick={setValue("resigned", true)}>퇴사자 등록</button>
-                <button onClick={deleteInfo}>사원 정보 삭제</button>
-                </>
-            }
-            </Form>
-            </>
-            );
-            }
+             <Tabs selectedIndex={index} onSelect={index => setIndex(index)}><ContentBox>
+                 <TabBox><TabList>
+                     <Tab><TabTitle>개인정보</TabTitle></Tab>
+                     {!isNew && <Tab><TabTitle>비밀번호 변경</TabTitle></Tab>}
+                     {!isNew &&<RedBtn type="button" {...register('resigned')} onClick={() => {resign()}}>퇴사자 등록</RedBtn> }
+                     {!isNew && <RedBtn onClick={deleteInfo}>사원 삭제</RedBtn>}
+                 </TabList></TabBox>
+
+                 <TabPanel><TableBox>
+                     <Table>
+                         <tr>
+                             <td>회사</td>
+                             <InfoBox>더존비즈온</InfoBox>
+                         </tr>
+                         {!isNew &&<tr>
+                             <td>사번</td>
+                             <InfoBox>{empNo}</InfoBox>
+                         </tr>}
+                         <tr>
+                             <td>부서</td>
+                             <InfoBox2 {...register('deptName')} type="text"/>
+                         </tr>
+                         <tr>
+                             <td>이름</td>
+                             <InfoBox2 {...register('name')} type="text"/>
+                         </tr>
+                         <tr>
+                             <td>직급</td>
+                             <InfoBox2 {...register('rankName')} type="text"/>
+                         </tr>
+                         <tr>
+                             <td>내선번호</td>
+                             <InfoBox2 {...register('extensionNum')} type="text"/>
+                         </tr>
+                         {isNew && <div style={{marginTop:'20px'}}>
+                             <input style={{marginLeft:'20px'}} type="radio" name="role" value="ROLE_USER" {...register('role')}/> 사원
+                             <input style={{marginLeft:'20px'}} type="radio" name="role" value="ROLE_MANAGER" {...register('role')}/> 담당자
+                         </div>}
+                     </Table></TableBox></TabPanel>
+
+                 <TabPanel>
+                     {!isNew ?
+                         <TableBox><Table>
+                             <tr>
+                                 <td>새 비밀번호</td>
+                                 <PwdBox {...register('newPwd')} type="password"/>
+                             </tr>
+                             <tr>
+                                 <td>새 비밀번호 확인 </td>
+                                 <PwdBox {...register('chkPwd')} type="password" />
+                             </tr>
+                         </Table></TableBox> : null
+                     }
+                 </TabPanel>
+                 <input {...register('empno')} type="text" value={empNo} hidden />
+
+             </ContentBox></Tabs>
+            </ProfileBox></RightContainer>
+            <BtnBox style={{marginTop:'1%', marginRight:'3%'}}>
+                <Button type="submit" ref={submit}>저장</Button>
+                <Button type="button" onClick={(e) => {navigate("/admin/list")}}>취소</Button>
+            </BtnBox>
+        </form></MainStyle>
+    );
+}
 
 export default Profile;

@@ -1,87 +1,52 @@
 import PropTypes from 'prop-types';
-import { set, sub } from 'date-fns';
-import { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 // @mui
 import {
   Box,
   List,
   Badge,
-  Button,
-  Avatar,
-  Tooltip,
   Divider,
   Typography,
   IconButton,
   ListItemText,
-  ListSubheader,
   ListItemAvatar,
   ListItemButton,
 } from '@mui/material';
-// utils
-import { fToNow } from './formatTime';
 // components
-import Iconify from './Iconify';
+import { AiFillBell } from 'react-icons/ai';
 import Scrollbar from './Scrollbar';
 import MenuPopover from './MenuPopover';
+import {MemberImg} from "../../../styles/NotificationStyle";
+
+import {getNotificationTardyList, NotificationTardyList} from "../../../apis/NotifiactionApi";
+import {useSelector} from "react-redux";
+
 
 // ----------------------------------------------------------------------
 
-const NOTIFICATIONS = [
-  {
-    id: '1',
-    title: 'Your order is placed',
-    description: 'waiting for shipping',
-    avatar: null,
-    type: 'order_placed',
-    createdAt: set(new Date(), { hours: 10, minutes: 30 }),
-    isUnRead: true,
-  },
-  {
-    id: '2',
-    title: 'aet',
-    description: 'answered to your comment on the Minimal',
-    avatar: '/static/mock-images/avatars/avatar_2.jpg',
-    type: 'friend_interactive',
-    createdAt: sub(new Date(), { hours: 3, minutes: 30 }),
-    isUnRead: true,
-  },
-  {
-    id: '3',
-    title: 'You have new message',
-    description: '5 unread messages',
-    avatar: null,
-    type: 'chat_message',
-    createdAt: sub(new Date(), { days: 1, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: '4',
-    title: 'You have new mail',
-    description: 'sent from Guido Padberg',
-    avatar: null,
-    type: 'mail',
-    createdAt: sub(new Date(), { days: 2, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-  {
-    id: '5',
-    title: 'Delivery processing',
-    description: 'Your order is being shipped',
-    avatar: null,
-    type: 'order_shipped',
-    createdAt: sub(new Date(), { days: 3, hours: 3, minutes: 30 }),
-    isUnRead: false,
-  },
-];
+let NOTIFICATIONS = [];
 
 export default function NotificationsPopover() {
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const anchorRef = useRef(null);
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
 
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
+  const tardy = notifications.filter((item) => item.approve === false).length;
 
   const [open, setOpen] = useState(null);
+
+  const getTardyList = async () => {
+    await getNotificationTardyList({empno, accessToken}).then(res =>{
+      NOTIFICATIONS =res.data;
+      setNotifications(NOTIFICATIONS);
+    }).catch(console.log('수신 실패'))
+  }
+
+  useEffect(() => {
+    getTardyList();
+  }, []);
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -89,15 +54,6 @@ export default function NotificationsPopover() {
 
   const handleClose = () => {
     setOpen(null);
-  };
-
-  const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
-        ...notification,
-        isUnRead: false,
-      }))
-    );
   };
 
   return (
@@ -108,8 +64,8 @@ export default function NotificationsPopover() {
         onClick={handleOpen}
         sx={{ width: 40, height: 40 }}
       >
-        <Badge badgeContent={totalUnRead} color="error">
-          <Iconify icon="eva:bell-fill" width={20} height={20} />
+        <Badge badgeContent={tardy} color="error">
+          <AiFillBell size={27} />
         </Badge>
       </IconButton>
 
@@ -121,58 +77,22 @@ export default function NotificationsPopover() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">Notifications</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              You have {totalUnRead} unread messages
-            </Typography>
+            <Typography variant="subtitle1">근태 이상자</Typography>
           </Box>
-
-          {totalUnRead > 0 && (
-            <Tooltip title=" Mark all as read">
-              <IconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Iconify icon="eva:done-all-fill" width={20} height={20} />
-              </IconButton>
-            </Tooltip>
-          )}
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Scrollbar sx={{ height: { xs: 340, sm: 'auto' } }}>
-          <List
-            disablePadding
-            subheader={
-              <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                New
-              </ListSubheader>
-            }
-          >
-            {notifications.slice(0, 2).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
+          <List disablePadding>
+            {notifications.slice(0, NOTIFICATIONS.length).map((notification) => (
+                <NotificationItem key={notification.id} notification={notification} />
             ))}
           </List>
 
-          <List
-            disablePadding
-            subheader={
-              <ListSubheader disableSticky sx={{ py: 1, px: 2.5, typography: 'overline' }}>
-                Before that
-              </ListSubheader>
-            }
-          >
-            {notifications.slice(2, 5).map((notification) => (
-              <NotificationItem key={notification.id} notification={notification} />
-            ))}
-          </List>
         </Scrollbar>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple>
-            View All
-          </Button>
-        </Box>
       </MenuPopover>
     </>
   );
@@ -181,51 +101,37 @@ export default function NotificationsPopover() {
 // ----------------------------------------------------------------------
 
 NotificationItem.propTypes = {
-  notification: PropTypes.shape({
-    createdAt: PropTypes.instanceOf(Date),
+    notification: PropTypes.shape({
     id: PropTypes.string,
-    isUnRead: PropTypes.bool,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    type: PropTypes.string,
-    avatar: PropTypes.any,
+    empno: PropTypes.string,
+    name: PropTypes.string,
+    profile: PropTypes.string,
+    date: PropTypes.string,
+    approve: PropTypes.bool,
   }),
 };
 
 function NotificationItem({ notification }) {
-  const { avatar, title } = renderContent(notification);
-
+  const { profile, name } = renderContent(notification);
   return (
     <ListItemButton
       sx={{
         py: 1.5,
         px: 2.5,
         mt: '1px',
-        ...(notification.isUnRead && {
+        ...(notification.date === null && {
           bgcolor: 'action.selected',
         }),
       }}
     >
       <ListItemAvatar>
-        <Avatar sx={{ bgcolor: 'background.neutral' }}>{avatar}</Avatar>
+        <MemberImg src = {notification.profile} />
       </ListItemAvatar>
       <ListItemText
-        primary={title}
-        secondary={
-          <Typography
-            variant="caption"
-            sx={{
-              mt: 0.5,
-              display: 'flex',
-              alignItems: 'center',
-              color: 'text.disabled',
-            }}
-          >
-            <Iconify icon="eva:clock-outline" sx={{ mr: 0.5, width: 16, height: 16 }} />
-            {fToNow(notification.createdAt)}
-          </Typography>
-        }
+        primary={notification.name + "(" + notification.empno + ")"}
+        secondary={notification.date === null ? "미출근" : notification.date }
       />
+
     </ListItemButton>
   );
 }
@@ -233,41 +139,17 @@ function NotificationItem({ notification }) {
 // ----------------------------------------------------------------------
 
 function renderContent(notification) {
-  const title = (
+  const name = (
     <Typography variant="subtitle2">
-      {notification.title}
+      {notification.name}
       <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
         &nbsp;
       </Typography>
     </Typography>
   );
 
-  if (notification.type === 'order_placed') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_package.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'order_shipped') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_shipping.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'mail') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_mail.svg" />,
-      title,
-    };
-  }
-  if (notification.type === 'chat_message') {
-    return {
-      avatar: <img alt={notification.title} src="/static/icons/ic_notification_chat.svg" />,
-      title,
-    };
-  }
   return {
-    avatar: notification.avatar ? <img alt={notification.title} src={notification.avatar} /> : null,
-    title,
+    profile: notification.profile ? <img alt={notification.name} src={notification.profile} /> : null,
+    name,
   };
 }
