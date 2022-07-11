@@ -13,7 +13,6 @@ function Login() {
   const { register, setValue, handleSubmit, } = useForm();
   const navigate = useNavigate();
 
-
   const onValid = async ({ empno, password }) => {
     if (empno.valueOf() === '' || password.valueOf() === '') {
       LoginFail();

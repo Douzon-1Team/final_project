@@ -1,24 +1,24 @@
 import { useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { DELETE_TOKEN } from '../store/modules/Reducer/TokenAuth';
 import { DELETE_EMP_INFO } from "../store/modules/Reducer/EmpAuth";
-import {LogoutFail} from "../components/common/alert/alert";
-import {useEffect} from "react";
+import {LogoutFail, LogoutSuccess} from "../components/common/alert/alert";
 import {logoutUser} from "../apis/ApiServices";
+import {useEffect} from "react";
 
 function Logout(){
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     async function logout(){
-        const response = await logoutUser({ accessToken });
+        const response = await logoutUser();
 
         if(response){
             dispatch(DELETE_TOKEN());
             dispatch(DELETE_EMP_INFO());
             localStorage.removeItem("LoginChk");
+            LogoutSuccess();
             return navigate("/");
         } else {
             LogoutFail();
