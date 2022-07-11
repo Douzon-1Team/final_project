@@ -14,7 +14,6 @@ public class ManagerSettingController {
 
     @GetMapping("/setting/{empno}")
     public ResponseEntity<ManagerSettingDto> getWorkTime(@PathVariable String empno){
-        System.out.println(empno);
         ManagerSettingDto managerSettingDto = managerSettingService.getWorkTime(empno);
         return ResponseEntity.ok().body(managerSettingDto);
     }

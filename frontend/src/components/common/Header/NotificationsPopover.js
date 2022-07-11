@@ -19,6 +19,7 @@ import MenuPopover from './MenuPopover';
 import {MemberImg} from "../../../styles/NotificationStyle";
 
 import {getNotificationTardyList, NotificationTardyList} from "../../../apis/NotifiactionApi";
+import {useSelector} from "react-redux";
 
 
 // ----------------------------------------------------------------------
@@ -26,7 +27,8 @@ import {getNotificationTardyList, NotificationTardyList} from "../../../apis/Not
 let NOTIFICATIONS = [];
 
 export default function NotificationsPopover() {
-
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const anchorRef = useRef(null);
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
@@ -36,7 +38,7 @@ export default function NotificationsPopover() {
   const [open, setOpen] = useState(null);
 
   const getTardyList = async () => {
-    await getNotificationTardyList({empno:220101}).then(res =>{
+    await getNotificationTardyList({empno, accessToken}).then(res =>{
       NOTIFICATIONS =res.data;
       setNotifications(NOTIFICATIONS);
     }).catch(console.log('수신 실패'))

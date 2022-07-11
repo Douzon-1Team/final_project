@@ -9,7 +9,7 @@ const URL_UPDATE_PWD = `${BASE_URL}/profile/updatePwd`;
 const URL_UPDATE_WORKTIME_CHOICE = `${BASE_URL}/setting`;
 const URL_UPDATE_WORKTIME_SETTING = `${BASE_URL}/setting/time`;
 const URL_UPDATE_GRAPH_SETTING = `${BASE_URL}/setting/graph`;
-const URL_DEPT_VACATION = `${BASE_URL}/dvacation-status/`;
+const URL_DEPT_VACATION = `${BASE_URL}/report/dvacation-status`;
 
 // 회원 로그인
 export const loginUser = async ( {empno, password} ) => {
@@ -57,10 +57,11 @@ export const getSetting = async ({empNo, accessToken} ) => {
 };
 
 // 부서원 연차 현황
-export const getDvacation = async ( {empNo, accessToken} ) => {
+export const getDvacation = async ( {empno, accessToken} ) => {
   return await axios.get(
-    URL_DEPT_VACATION+`${empNo}`,
+    URL_DEPT_VACATION,
     {
+        params: {empno},
       headers: {
         'Authorization': accessToken
       }}

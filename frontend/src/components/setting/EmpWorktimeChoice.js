@@ -22,7 +22,6 @@ function EmpWorktimeChoice() {
   const onValidFlexible = async ({ empno, deptNo, flexible }) => {
     const response = await settingTimeChoice({ empno, deptNo, flexible, accessToken });
     if (response) {
-      console.log(response)
       SettingSuccess();
     } else { SettingError(); }
   };

@@ -2,15 +2,13 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import _ from "lodash";
 import { getMain } from "../apis/CalendarApi";
 import {MainCalendarError2} from "../components/common/alert/alert";
+import {useSelector} from "react-redux";
 
 export const getList = createAsyncThunk("GET_TODO", async (empno) => {
-  // TODO : 본인 승인시 detail 페이지 접근 불가
-  // TODO : 근태신청 목록에서 삭제하면 -> req에서도 delete
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+
   try {
-    // 1. 동일한 날짜에 req 데이터가 존재한다면 이상근태 신청으로
-    // 넘어갔으므로 해당 날짜에 관한건 전부 req를 우선으로 출력
-    // 2. req를 제외한 나머지를 먼저 판단하고 req테이블에서 중복날짜들 전부제외하고 출력
-    const response = await getMain(empno);
+    const response = await getMain({empno, accessToken});
     for (var i = 1;  i < response.data.length; i++) {
       if (response.data[i].m != null || response.data[i].count != null || response.data[i].datediff != null) {
         continue; // 필요없는 데이터 제외
@@ -91,15 +89,8 @@ export const getList = createAsyncThunk("GET_TODO", async (empno) => {
         }
       }
     }
-    // TODO : req와 status 동일한 데이터 존재할시 req를 우선으로 뿌려주기
     return response.data;
   } catch (e) {
-    MainCalendarError2();
+    console.log(e);
   }
-
-  // 1. 휴가 req, reject, accept, vacation_start, vacation_end
-
-  // 2. 출근 date(날짜), onwork(출근시간), attendance(출근(1)/결근(default 0)여부), offwork(퇴근시간), tardy(지각여부(0 -> 1(지각))),
-  // leave_early(조퇴여부(0 -> 1(조퇴))) unregistered(퇴근 미등록(0 -> 1(미등록)))
-  // -> 우선 1.출근/2.결근/3.조퇴/4.지각 여부 결정
 });

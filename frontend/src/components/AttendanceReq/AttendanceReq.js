@@ -20,7 +20,7 @@ export const AttendanceReq = () => {
     const [acceptShow, setAcceptShow] = useState((state !== null));
     const [status, setStatus] = useState(state == null ? "수정할 데이터 없음" : state[0]);
     const [req, setReq] = useState(state == null ? "" : state[0]);
-
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const [loadingData, setLoadingData] = useState(true);
@@ -28,14 +28,11 @@ export const AttendanceReq = () => {
     const [endTime, setEndTime] = useState(18);
 
     useEffect(() => {
-        console.log("statusColor", statusColor);
-        console.log("status", status);
-    }, [statusColor, status])
-
-    useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/getvacationdata", {params: {'empNo': empNo}})
+                .get("http://localhost:8080/vacation/data", {
+                    params: {'empNo': empNo},
+                headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setLoadingData(false);
                     if (res.data[0].flex === 0) {
@@ -55,12 +52,14 @@ export const AttendanceReq = () => {
 
     const f1 = () => {
         axios
-            .post("/vacationreq2", {
+            .post("/attendance/req", {
                 empNo: empNo,
                 req: req,
                 startFormat: startFormat2,
                 endFormat: endFormat,
                 comment: comment,
+            },{
+                headers:{'Authorization': accessToken}
             })
             .then((response) => {
             })
@@ -87,23 +86,22 @@ export const AttendanceReq = () => {
     useEffect(() => {
         async function getDate() {
             await axios
-                .get("http://localhost:8080/gettargetdate", {params: {'empNo': empNo, 'date': startFormat}})
+                .get("http://localhost:8080/gettargetdate", {
+                    params: {'empNo': empNo, 'date': startFormat},
+                headers:{'Authorization': accessToken}})
                 .then((res) => {
                     setAttstatid(res.data[0].attstatid);
                     if (((res.data[0].etc === "지각") || (res.data[0].etc === "결근") || (res.data[0].etc === "출근미등록") || (res.data[0].etc === "퇴근미등록")) && (req === res.data[0].etc)) {
                         if (res.data[0].agree === 1) {
                             setStatusColor(false);
                             setStatus("근태이상 (처리됨)");
-                            console.log("!");
                         } else {
                             setStatusColor(true);
                             setStatus("근태이상 (" + req + ")");
-                            console.log("!!");
                         }
                     } else {
                             setStatus("수정할 데이터 없음")
                             setStatusColor(false);
-                            console.log("!!!");
                     }
                 })
         }
@@ -116,9 +114,11 @@ export const AttendanceReq = () => {
 
     async function acceptAttendance() {
         await axios
-            .post("http://localhost:8080/acceptatt", {
+            .post("http://localhost:8080/attendance/acceptatt", {
                 'attstatid': attstatid,
                 'empNo': empNo,
+            },{
+                headers:{'Authorization': accessToken}
             })
             .then((res) => {
                 setStatus("근태이상 (처리됨)");

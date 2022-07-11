@@ -24,8 +24,6 @@ const AttendanceProblem = () => {
     let deptName;
 
     const handleChange = (event, nextView) => {
-        console.log(event);
-        console.log(nextView);
         setView(nextView);
     };
 
@@ -37,7 +35,6 @@ const AttendanceProblem = () => {
     })
 
     useEffect(() => {
-        console.log(state);
         if (handleView === true) {
             deptName = _.map(state[2] , 'deptName');
             const setData = new Set(deptName);
@@ -51,7 +48,6 @@ const AttendanceProblem = () => {
                     }
                 }
             }
-            console.log(x);
             setdeptdata(x);
             setdeptmem(uniqueArr);
         }

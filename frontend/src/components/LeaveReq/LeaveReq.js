@@ -14,6 +14,7 @@ import { AiOutlineWarning } from "react-icons/ai";
 
 export const LeaveReq = () => {
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const selectedDate = (state == null) ? null : state._date;
     const [sortNum, setSortNum] = useState(state == null ? 0 : 1); // 휴가구분
     const today = new Date();
@@ -42,7 +43,8 @@ export const LeaveReq = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/getvacationdata", {params: {'empNo': empNo}})
+                .get("http://localhost:8080/vacation/data", {params: {'empNo': empNo},
+                headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setLoadingData(false);
                     if (res.data[0].flex == 0) {
@@ -147,12 +149,14 @@ export const LeaveReq = () => {
     let navigate = useNavigate();
     const f1 = async () => {
         await axios
-            .post("/vacationreq", {
+            .post("/vacation/req", {
                 empNo: empNo,
                 req: req,
                 startFormat: startFormat,
                 endFormat: endFormat,
                 comment: comment,
+            },{
+                headers:{'Authorization':accessToken}
             })
             .then((response) => {
             })

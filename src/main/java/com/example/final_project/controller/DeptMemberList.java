@@ -20,7 +20,8 @@ public class DeptMemberList {
     private final DeptMemberListMapper deptMemberMapper;
 
 
-    @GetMapping("/deptmember")
+    //사원목록에서 부서원들
+    @GetMapping("/manager/deptmember")
     public ResponseEntity<?> deptMemberList(@RequestParam("empno") String empno) {
         LocalDate date = LocalDate.now();
 

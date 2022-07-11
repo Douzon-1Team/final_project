@@ -16,7 +16,6 @@ function Profile() {
 
   useEffect(() => {
       getProfile({empNo, accessToken}).then(response => {
-        console.log(response.data);
         setEmp(response.data);
       })
     }, []);

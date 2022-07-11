@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { useSelector } from 'react-redux';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -11,7 +12,6 @@ import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
 
 function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
-    console.log(row)
 
     return (
         <>
@@ -82,17 +82,22 @@ function InnerRow({row, month}) {
 }
 
 const CollapseList = (props) => {
+    const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const rows = [];
     const [rows2, setrows] = useState([]);
     const state = props.state;
-    console.log(state);
     let tmp = true;
 
     let month;
     state !== "attendanceProblem" ? month = null : month = new Date().getMonth();
 
     async function attendanceProblem(){
-        const response = await axios.get("http://localhost:8080/report/list");
+        const response = await axios.get("http://localhost:8080/report/list",
+            {
+                params: {empno},
+                headers: {Authorization: accessToken}
+            });
         response.data.map((item) => {
             rows.map((i) => {
                 if (i.empno === item.empno) {
@@ -113,7 +118,11 @@ const CollapseList = (props) => {
     }
 
     async function dVacationHistory () {
-        const response = await axios.get("http://localhost:8080/report/dvacation");
+        const response = await axios.get("http://localhost:8080/report/dvacation",
+            {
+                params: {empno},
+                headers: {Authorization: accessToken}
+            });
         setrows(state);
         state.map((item) => {
             item.history = [];

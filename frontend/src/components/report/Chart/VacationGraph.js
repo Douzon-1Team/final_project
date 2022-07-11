@@ -7,7 +7,8 @@ import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
 import CollapseList from "../List/CollapseList";
 
 function VacationGraph() {
-  const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+  const empno = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
   const [name, setName] = useState([]);
   const [totremainday, setTotRemainDay] = useState([]);
   const [remainday, setRemainDay] = useState([]);
@@ -21,28 +22,19 @@ function VacationGraph() {
   const totalHour = 120;
 
   useEffect(() => {
-    console.log(empNo);
-    getDvacation(empNo).then(response => {
+    getDvacation({empno, accessToken}).then(response => {
       let totday = [];
       let tothour = [];
       let name = [];
       let day = [];
       let hour = [];
-      // deptNo: "01"
-      // empName: "강우혁"
-      // empno: "210108"
-      // remainDay: "15"
-      // remainHour: "120"
       setResponse(response.data);
-      for (let i = 0; i < response.length; i++) {
-        console.log(response[i].remainHour);
-        console.log(totalDay-response[i].remainDay);
-        console.log(totalDay-response[i].remainDay);
-        totday.push(totalDay-response[i].remainDay);
-        tothour.push(totalHour-response[i].remainHour);
-        name.push(response[i].empName);
-        day.push(response[i].remainDay);
-        hour.push(response[i].remainHour);
+      for (let i = 0; i < response.data.length; i++) {
+        totday.push(totalDay-response.data[i].remainDay);
+        tothour.push(totalHour-response.data[i].remainHour);
+        name.push(response.data[i].empName);
+        day.push(response.data[i].remainDay);
+        hour.push(response.data[i].remainHour);
       }
       setName([...name]);
       setTotRemainDay([...totday]);
@@ -51,10 +43,6 @@ function VacationGraph() {
       setRemainHour([...hour]);
     })
   }, []);
-  console.log(totremainday);
-  console.log(remainday);
-  console.log(totremainhour);
-  console.log(remainhour);
 
   const [options, setOptionss] = useState( {
     tooltip: {
@@ -133,7 +121,6 @@ function VacationGraph() {
     ]
   })
   options.yAxis.data = [...name];
-  console.log(options.series);
   options.series[0].data = [...totremainday];
   options.series[1].data = [...remainday];
   options.series[2].data = [...totremainhour];

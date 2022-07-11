@@ -16,7 +16,6 @@ function EmpPageSetting() {
 
   useEffect(() => {
     getSetting({empNo, accessToken}).then(response => {
-      console.log(response.data)
       setEmpDept(response.data);
     })
   }, []);

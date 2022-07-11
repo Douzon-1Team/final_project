@@ -1,15 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState } from "react";
 import TUICalendar from "@toast-ui/react-calendar";
-import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
-import Chart from "../MonthChart/chart";
 import Button from "@mui/material/Button";
 import {DeptCalendarStyle} from "../../styles/Calendarstyle";
 import _ from "lodash";
 import {
     BsFillArrowLeftSquareFill,
     BsFillArrowRightSquareFill,
-    BsDot,
 } from "react-icons/bs";
 import {useNavigate} from "react-router";
 import {getMain} from "../../apis/DeptVacationApi";
@@ -48,9 +45,9 @@ function DeptVacation() {
     ];
 
     const getvacation = async () => {
-        await getMain(empno).then((res) => {
+        const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+        await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                console.log(vacation);
                 if (vacation.length != 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno.empInfo[0]) {
@@ -66,7 +63,6 @@ function DeptVacation() {
                         });
                     }
                     setschedules(vacation);
-                    console.log(schedules);
                 } else {
                     // error
                 }
@@ -145,7 +141,6 @@ function DeptVacation() {
         const month = cal?.current?.calendarInst.getDate().getMonth();
         const year = cal?.current?.calendarInst.getDate().getFullYear();
         setDate(`${year}년 ${month + 1}월`);
-        console.log(cal);
     }, []);
 
     function onClickPrev() {

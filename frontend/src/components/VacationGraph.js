@@ -20,7 +20,6 @@ function VacationGraph() {
     })
   }, []);
 
-  console.log(deptStatus)
   return (
       <>
         { deptStatus === false ? null :<DayWorkChatStyle>

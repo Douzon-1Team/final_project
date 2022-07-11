@@ -238,13 +238,11 @@ function Calendar() {
   }, []);
 
   const handleWeekClick = useCallback(() => {
-    // cal.current.calendarInst.setOptions({month: {visibleWeeksCount: 4}}, true);
-    // cal.current.calendarInst.changeView('month', true);
-    console.log(cal.current.calendarInst.changeView("week"));
+    cal.current.calendarInst.changeView("week");
   }, []);
 
   const handleDayClick = useCallback(() => {
-    console.log(cal.current.calendarInst.changeView("day"));
+    cal.current.calendarInst.changeView("day");
   }, []);
   // TODO : Today 추가
   function dVcationPage() {

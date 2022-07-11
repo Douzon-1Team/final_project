@@ -45,7 +45,6 @@ public class ManagerSettingService {
         Time endFlex = Time.valueOf(WORK_END_F);
 
         ManagerSetting ms = ManagerSettingDto.toTimeSetting(managerSettingDto, start, end, startFlex, endFlex);
-        System.out.println(ms);
         managerSettingMapper.updateTime(ms);
     }
 

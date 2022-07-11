@@ -13,8 +13,6 @@ const statusError = {
 };
 
 const requestPromise = (url, option) => {
-    // const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
-    // console.log(accessToken)
 
     return fetch(url, option);
 };

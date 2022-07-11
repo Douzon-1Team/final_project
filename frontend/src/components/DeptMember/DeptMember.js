@@ -23,32 +23,29 @@ const useStyles = makeStyles({
 });
 
 function DeptMember() {
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const classes = useStyles();
     const [deptmember, setdeptmember] = useState([]);
     const MemberList = async () => {
-        await getDeptMember({empno: empNo}).then(res => {
+        await getDeptMember({empno: empNo, accessToken}).then(res => {
 
             const MList = res.data;
-            console.log(MList);
             for (let i = 0; i < MList.length; i++) {
                 if (MList[i].etc === '출근' & MList[i].attendance === false) {
                     MList[i].etc = '출근미등록'
                 }
             }
-            console.log(res.data);
             setdeptmember(MList);
-            console.log(deptmember);
 
-        }).catch(console.log('실패야 인마 잘좀해~'));
+        }).catch(console.log('error'));
     }
 
         useEffect(() => {
             MemberList();
         }, []);
     function handleEmpMember(event) {
-        console.log(event);
         navigate("/main", {
             state: [event.empno, event.name],
         });

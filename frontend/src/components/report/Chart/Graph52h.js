@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ECharts, { EChartsReactProps } from 'echarts-for-react';
+import ECharts from 'echarts-for-react';
 import {getGraph52hData} from "../../../apis/Graph52hApi";
 import {useSelector} from "react-redux";
 import {DayWorkChartStyle} from "../../../styles/DayWorkChartStyle";
@@ -12,21 +12,23 @@ const Graph52h = () => {
     const attendanceWeeks=[]
     const overtimeWeeks = []
     const empno = useSelector((state) => state.EMP_INFO);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
     const [response, setRes] = useState();
 
     const getJsonData = async () => {
-        await getGraph52hData({empno : empno.empInfo[0]}).then((res) => {
-            console.log(res.data[0].attendanceWeek)
+        await getGraph52hData({empno : empno.empInfo[0], accessToken}).then((res) => {
                 for (let i = 9; i < 14; i++) {
                     names.push(res.data[i].name);
                     attendanceWeeks.push(res.data[i].attendanceWeek);
                     overtimeWeeks.push(res.data[i].overtimeWeek);
                 }
-            console.log(name)
-            console.log(attendanceWeeks);
+            const attdanceWeeks =
+                attendanceWeeks.filter(
+                    (e, i) => e != null
+                );
             setName(names);
-            setAttendance(attendanceWeeks);
+            setAttendance(attdanceWeeks);
             setOvertimeWeek(overtimeWeeks);
             setRes(res.data);
             }
@@ -78,7 +80,6 @@ const Graph52h = () => {
             }
         ]
     });
-    console.log(name.length)
     options.xAxis.data = [...name];
     options.series[1].data = [...overtimeWeek];
     options.series[0].data = [...attendanceWeek];
