@@ -170,7 +170,7 @@ export const SideBar = (props) => {
               </ListItemButton>
               <Collapse in={open4} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItemButton sx={{pl: 4}} onClick={() => navigate("/profile")}>
+                  <ListItemButton sx={{pl: 4}} onClick={() => navigate("/profile/new")}>
                     <ListItemIcon>
                       <PeopleIcon/>
                     </ListItemIcon>
