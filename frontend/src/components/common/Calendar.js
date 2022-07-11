@@ -237,11 +237,13 @@ function Calendar() {
     cal.current.calendarInst.changeView("month", true);
   }, []);
 
-  // const handleWeekClick = useCallback(() => {
-  // }, []);
-  //
-  // const handleDayClick = useCallback(() => {
-  // }, []);
+  const handleWeekClick = useCallback(() => {
+    cal.current.calendarInst.changeView("week");
+  }, []);
+
+  const handleDayClick = useCallback(() => {
+    cal.current.calendarInst.changeView("day");
+  }, []);
   // TODO : Today 추가
   function dVcationPage() {
     return navigate("/dvacation");
