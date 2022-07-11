@@ -235,7 +235,7 @@ const IconBox = styled.div`
     justify-content: center; 
     align-items: center;
     float: left;
-    margin-left: 23.5%;
+    margin-left: 22%;
     bottom: 17vh;
     background: white; 
     padding: 10px;

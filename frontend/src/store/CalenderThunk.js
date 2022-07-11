@@ -4,9 +4,7 @@ import { getMain } from "../apis/CalendarApi";
 import {MainCalendarError2} from "../components/common/alert/alert";
 import {useSelector} from "react-redux";
 
-export const getList = createAsyncThunk("GET_TODO", async (empno) => {
-  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
-
+export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken}) => {
   try {
     const response = await getMain({empno, accessToken});
     for (var i = 1;  i < response.data.length; i++) {

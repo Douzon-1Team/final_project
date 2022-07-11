@@ -39,9 +39,10 @@ export default function NotificationsPopover() {
 
   const getTardyList = async () => {
     await getNotificationTardyList({empno, accessToken}).then(res =>{
+        console.log(empno);
       NOTIFICATIONS =res.data;
       setNotifications(NOTIFICATIONS);
-    })
+    }).catch()
   }
 
   useEffect(() => {
@@ -102,7 +103,7 @@ export default function NotificationsPopover() {
 
 NotificationItem.propTypes = {
     notification: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.string,
     empno: PropTypes.string,
     name: PropTypes.string,
     profile: PropTypes.string,
