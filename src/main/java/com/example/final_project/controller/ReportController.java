@@ -38,8 +38,8 @@ public class ReportController {
         return ResponseEntity.ok().body(reportService.dVacationList(empno));
     }
 
-    @GetMapping("/report/dvacation-status/{empno}")
-    public ResponseEntity<List<DeptVacationStatusDto>> getDeptVacationStatus(@PathVariable String empno) {
+    @GetMapping("/report/dvacation-status")
+    public ResponseEntity<List<DeptVacationStatusDto>> getDeptVacationStatus(@RequestParam String empno) {
         List<DeptVacationStatusDto> deptVacationStatus = reportService.getDeptVacationStatus(empno);
         return ResponseEntity.ok().body(deptVacationStatus);
     }

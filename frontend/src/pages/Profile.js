@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {getProfile} from "../apis/ApiService";
+import {getProfile} from "../apis/ApiServices";
 import {useSelector} from "react-redux";
 import S3Upload from "../components/common/S3Upload";
-import { QrBox, QR, ProfileImg, LeftContainer, RightContainer, ProfileBox} from '../styles/ProfileStyle';
+import { QrBox, QR, ProfileImg, LeftContainer, RightContainer, ProfileBox } from '../styles/ProfileStyle';
 import { MainStyle } from "../styles/Globalstyle";
 import ProfileTab from "../components/profile/ProfileTab";
 
@@ -11,11 +11,14 @@ function Profile() {
     const [emp, setEmp] = useState(
       { deptName: null, name: null, extensionNum: null, rankName: null, profilePath: null, qrPath: null }
     );
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
-    useEffect(() => {
-        getProfile(empNo).then(response => {
-            setEmp(response);
-        })
+
+  useEffect(() => {
+      getProfile({empNo, accessToken}).then(response => {
+        console.log(response.data);
+        setEmp(response.data);
+      })
     }, []);
 
     return (
@@ -27,7 +30,6 @@ function Profile() {
               <ProfileBox>
                 <ProfileTab />
               </ProfileBox>
-              {/*<VerticalTabs />*/}
             </RightContainer>
             <QrBox>
                 <a href={ emp.qrPath }><QR>QR code</QR></a>

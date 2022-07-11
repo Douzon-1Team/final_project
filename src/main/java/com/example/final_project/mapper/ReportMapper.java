@@ -47,8 +47,8 @@ public interface ReportMapper {
             "FROM attendance_req a " +
             "    LEFT OUTER JOIN employee e ON a.empno = e.empno " +
             "    LEFT OUTER JOIN emp_info_comp c ON a.empno = c.empno " +
-            "GROUP BY empno " +
-            "WHERE dept_no=#{deptNo}")
+            "WHERE dept_no=#{deptNo} " +
+            "GROUP BY empno")
     List<DeptVacationStatusDto> findDeptVacationStatus(String deptNo);
 
     @Select("select e.empno, e.emp_name, a.req as etc, a.vacation_start as date, a.vacation_start as start, a.vacation_end as end " +

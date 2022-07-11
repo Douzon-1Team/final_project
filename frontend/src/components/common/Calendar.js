@@ -248,7 +248,7 @@ function Calendar() {
   }, []);
   // TODO : Today 추가
   function dVcationPage() {
-    return navigate("/main/dvacation");
+    return navigate("/dvacation");
   }
   const [open, setOpen] = React.useState(true);
 

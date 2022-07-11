@@ -23,12 +23,13 @@ const useStyles = makeStyles({
 });
 
 function DeptMember() {
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const classes = useStyles();
     const [deptmember, setdeptmember] = useState([]);
     const MemberList = async () => {
-        await getDeptMember({empno: empNo}).then(res => {
+        await getDeptMember({empno: empNo, accessToken}).then(res => {
 
             const MList = res.data;
             console.log(MList);
@@ -41,7 +42,7 @@ function DeptMember() {
             setdeptmember(MList);
             console.log(deptmember);
 
-        }).catch(console.log('실패야 인마 잘좀해~'));
+        }).catch(console.log('error'));
     }
 
         useEffect(() => {

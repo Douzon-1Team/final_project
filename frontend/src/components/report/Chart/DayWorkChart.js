@@ -5,13 +5,14 @@ import {useLocation} from "react-router";
 
 const DayWorkChart = () => {
     const {state} = useLocation();
-    console.log(state);
+    console.log("STATE", state);
     const [data, setdata] = useState([]);
 
     // TODO : 분 단위로 표시
 
     const onwork = [];// 출근시간
-    const offwork = [];  // 퇴근시간
+    let offwork = [];  // 퇴근시간
+    const offworks = [];
     let workmember = [];
     let hour = new Date().getHours();
 
@@ -21,17 +22,17 @@ const DayWorkChart = () => {
             if (state[i].empno === state[j].empno) count += 1;
         }
         if (count > 1) {
-            if (offwork.length === 0) {
+            if (offworks.length === 0) {
                 state[i].totaltime = 8;
-                offwork.push(state[i]);
+                offworks.push(state[i]);
             }
-            if (offwork[offwork.length - 1].name === state[i].name) continue;
+            if (offworks[offworks.length - 1].name === state[i].name) continue;
             if (state[i].totaltime === null) {
                 state[i].totaltime = 8;
-                offwork.push(state[i]);
+                offworks.push(state[i]);
             } else {
                 state[i].totaltime = 8;
-                offwork.push(state[i]);
+                offworks.push(state[i]);
             }
         } else if (count === 1) {
             if (hour - state[i].onofftimenum < 0) {
@@ -43,11 +44,16 @@ const DayWorkChart = () => {
             }
         }
     }
-    offwork.push(onwork[0]);
+    offworks.push(onwork[0]);
+    offwork =
+        offworks.filter(
+            (e, i) => e != null
+        );
     let overtimes; // 초과근무 배열
     (overtimes = []).length = offwork.length;
     overtimes.fill(0);
     if (offwork.length !== 1) {
+        console.log("OFF", offwork);
         for (let i = 0; i < overtimes.length; i++) {
             if (offwork[i].totaltime > 8) {
                 if (offwork[i].totaltime-8 < 0) {

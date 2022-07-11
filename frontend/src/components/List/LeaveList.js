@@ -17,6 +17,7 @@ const LeaveList = () => {
     const [checkedReqId, setCheckedReqId] = useState([]);
     const today = dayjs(new Date());
     let todayFormat = today.format("YYYY-MM-DD hh:mm:00");
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
     function onClickChecked(reqid, start, end, accept, req) {
         let hours = 0;
@@ -111,7 +112,8 @@ const LeaveList = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/vacation/list", {params: {'empno': empNo}})
+                .get("http://localhost:8080/vacation/list", {params: {'empno': empNo},
+                headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -141,7 +143,7 @@ const LeaveList = () => {
         setModalSwitch(false);
         for (let i = 0; i < checkedReqId.length; i++) {
             axios
-                .delete("/vacation/delete", {
+                .post("/vacation/delete", {
                     reqId: checkedReqId[i],
                     empNo: empNo,
                     grossHours: grossHours,

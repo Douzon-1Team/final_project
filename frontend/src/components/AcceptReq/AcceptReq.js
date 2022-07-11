@@ -8,6 +8,7 @@ import {useLocation} from "react-router";
 
 const AcceptReq = () => {
     const {state} = useLocation();
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const merge = (state == null) ? null : state._date;
     const reqdata = [];
     const [loadingData, setLoadingData] = useState(true);
@@ -26,11 +27,16 @@ const AcceptReq = () => {
     useEffect(() => {
         async function getEmpNo() {
             await axios
-                .get("http://localhost:8080/manager/deptno", {params: {'empno': empNo}})
+                .get("http://localhost:8080/manager/deptno", {
+                     params: {'empno': empNo} ,
+                    headers :  {'Authorization' : accessToken}})
                 .then((res) => {
                     for (let i = 0; i < res.data.length; i++) {
                         axios
-                            .get("http://localhost:8080/attendance/reqlist", {params: {'empno': res.data[i].coEmpNo}})
+                            .get("http://localhost:8080/attendance/reqlist",
+                                {params: {'empno': res.data[i].coEmpNo},
+                                    headers :  {'Authorization' : accessToken}}
+                            )
                             .then((res2) => {
                                 if (res2.data.length != 0) {
                                     for (let j = 0; j < res2.data.length; j++) {
@@ -67,7 +73,6 @@ const AcceptReq = () => {
                                     setModal(!modal);
                                     setTargetReqId(data[i].reqid)
                                 }}/>
-        console.log(i,"는 ",data[i].rank)
 
         if(data[i].rank==='STAFF')data[i].rank='사원';
         else if(data[i].rank==='SENIOR_STAFF')data[i].rank='주임';

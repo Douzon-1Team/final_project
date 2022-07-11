@@ -30,7 +30,7 @@ public class VacationController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/vacation/delete")
+    @PostMapping("/vacation/delete")
     public ResponseEntity delVacation(@RequestBody DeleteVacationDto dto){
 
         vacationService.vacation(dto);

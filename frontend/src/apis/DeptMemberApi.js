@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-export const getDeptMember = async ( {empno} ) => {
-    console.log(empno);
+export const getDeptMember = async ( {empno, accessToken} ) => {
     try {
         return await axios.get(
-            "http://localhost:8080/deptmember",
+            "http://localhost:8080/manager/deptmember",
             {
-                params: {empno}
+                params: {empno},
+                headers: {'Authorization': accessToken}
             }
         );
     } catch (error) {

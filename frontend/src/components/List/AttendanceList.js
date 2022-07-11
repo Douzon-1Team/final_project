@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useTable} from 'react-table';
 import {useSelector} from "react-redux";
 import axios from "axios";
-import Layout from "../common/Layout";
 import {style} from "./ListStyle"
 import {Modal, ModalTitle, ModalWindow, NoButton, YesButton} from "../common/Modal/ModalStyle";
 import {MainStyle} from "../../styles/Globalstyle"
@@ -11,6 +10,7 @@ const LeaveList = () => {
     const [loadingData, setLoadingData] = useState(true);
     const [data, setData] = useState([]);
     const [checkedReqId, setCheckedReqId] = useState([]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
     function onClickChecked(target) {
         checkedReqId.includes(target) ? checkedReqId.splice(checkedReqId.indexOf(target), 1) : checkedReqId.push(target);
@@ -69,7 +69,8 @@ const LeaveList = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo}})
+                .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo},
+                headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -102,6 +103,8 @@ const LeaveList = () => {
             axios
                 .post("/attendance/delattendancereq", {
                     reqId: checkedReqId[i],
+                },{
+                    headers:{'Authorization':accessToken}
                 })
                 .then((res) => {
                 })
