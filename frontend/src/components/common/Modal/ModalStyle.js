@@ -42,7 +42,7 @@ export const YesButton = styled.div`
             ? "25%"
             : sendAfter === true
                 ? "30%"
-                : ""};
+                : "35%"};
   &:hover {
     font-size: 22px;
     font-weight: bolder;

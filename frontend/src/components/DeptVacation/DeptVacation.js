@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import TUICalendar from "@toast-ui/react-calendar";
 import { calendarReducer, getList } from "../../store/CalenderThunk";
 import "tui-calendar/dist/tui-calendar.css";
@@ -14,10 +13,12 @@ import {
 } from "react-icons/bs";
 import {useNavigate} from "react-router";
 import {getMain} from "../../apis/DeptVacationApi";
-import {MainStyle} from "../../styles/Globalstyle"
+import {MainStyle} from "../../styles/Globalstyle";
+import {useSelector} from "react-redux";
 
 // TODO : 얘네 두개는 필요없을듯
 function DeptVacation() {
+    const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -46,10 +47,8 @@ function DeptVacation() {
         },
     ];
 
-    const empno = useSelector((state) => state.EMP_INFO);
-
     const getvacation = async () => {
-        await getMain({empno: 220102}).then((res) => {
+        await getMain(empno).then((res) => {
                 const vacation = res.data;
                 console.log(vacation);
                 if (vacation.length != 0) {

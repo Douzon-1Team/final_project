@@ -28,7 +28,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
     [theme.breakpoints.up('lg')]: {
         minHeight: APPBAR_DESKTOP,
         padding: theme.spacing(0, 5),
-        backgroundColor:'#00aaff',
    },
     img: {width: '30px', height: '20px'}
 }));
