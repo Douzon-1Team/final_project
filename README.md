@@ -9,10 +9,11 @@
 - DataBase : MariaDB
 
 ## 프로젝트 구조도
+<img width="600" height="400" alt="Struct" src="hhttps://github.com/Douzon-1Team/final_project/issues/95#issue-1301241659">
 
-가
+
 ## ERD
-
+<img width="600" height="500" alt="ERD" src="https://github.com/Douzon-1Team/final_project/issues/96#issue-1301242456">
 
 ## 기능 요구 사항
 1. QR코드를 이용한 출퇴근 관리
