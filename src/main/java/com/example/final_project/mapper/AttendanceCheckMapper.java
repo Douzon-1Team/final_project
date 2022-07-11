@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -35,7 +36,7 @@ public interface AttendanceCheckMapper {
     @Select("select * from attendance_time where DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(#{date},'%y%m%d') and empno = #{empno} and on_off_work = #{onOffWork}")
     Optional<AttendanceTime> findAttendanceTimeByEmpnoForTest(String empno, int onOffWork, LocalDateTime date);
 
-    @Insert("insert into attendance_status_test (empno, dept_no, etc, date) values (#{empno},#{deptNo},#{etc},#{date})")
+    @Insert("insert into attendance_status (empno, dept_no, etc, date) values (#{empno},#{deptNo},#{etc},#{date})")
     int attendanceStatusCreate(AttendanceCheckDto attendanceCheckDto);
 
     @Select("select * from attendance_status where empno = #{empno} and date like '${date}%'")
@@ -52,5 +53,15 @@ public interface AttendanceCheckMapper {
 
     @Select("select * from attendance_req where req='시간연차' and DATE_FORMAT(vacation_start,'%y%m%d') = DATE_FORMAT(#{date},'%y%m%d') and accept=1 and empno = #{empno}")
     AttendanceReq timeVacation(String empno, LocalDateTime date);
+
+    @Select("select a.empno from attendance_status a join manager_setting b join emp_info_comp c on a.dept_no = b.dept_no and a.empno = c.empno where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d')")
+    List<String> findByNonAttendanceToday();
+
+    @Select("select a.empno, flexible, get_to_work_time_set,get_to_work_time_set_f,\n" +
+            "(select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATEDIFF(vacation_start,now()) <= 0 and req REGEXP '휴가|오전반차|오후반차|시간연차' and  accept=1 and empno = #{empno}) req\n" +
+            "from attendance_status a join manager_setting b join emp_info_comp c\n" +
+            "on a.dept_no = b.dept_no and a.empno = c.empno\n" +
+            "where attendance=0 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and a.empno = #{empno};")
+    AttendanceCheckDto tardyCheckPerHour(String empno);
 
 }
