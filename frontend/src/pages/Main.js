@@ -10,7 +10,6 @@ import {Mainchats} from "../styles/Chartstyle";
 // redux 사번 받아오기
 function Main() {
     const subComponentData = useSelector((state) => state.calendarReducer[0]);
-
   return (
       <MainStyle>
           {subComponentData !== undefined ?

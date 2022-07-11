@@ -13,7 +13,7 @@ public interface NotificationMapper {
     List<String> findTardyMemberByDept(String deptNo);
 
     @Select("select date from attendance_time where DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and on_off_work = 1 and empno = #{empno}")
-    LocalDateTime findOnWorkTimeByempno(String empno);
+    Optional<LocalDateTime> findOnWorkTimeByempno(String empno);
 
     @Select("select * from attendance_status where agree = 1 and DATE_FORMAT(date,'%y%m%d') = DATE_FORMAT(now(),'%y%m%d') and empno=#{empno}")
     Optional<AttendanceStatus> findAgreeByempno(String empno);

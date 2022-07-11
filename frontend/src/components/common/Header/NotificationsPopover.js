@@ -41,7 +41,7 @@ export default function NotificationsPopover() {
     await getNotificationTardyList({empno, accessToken}).then(res =>{
       NOTIFICATIONS =res.data;
       setNotifications(NOTIFICATIONS);
-    }).catch(console.log('수신 실패'))
+    })
   }
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function NotificationsPopover() {
 
 NotificationItem.propTypes = {
     notification: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     empno: PropTypes.string,
     name: PropTypes.string,
     profile: PropTypes.string,
