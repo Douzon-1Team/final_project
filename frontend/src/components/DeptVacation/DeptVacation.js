@@ -13,16 +13,15 @@ import {getMain} from "../../apis/DeptVacationApi";
 import {MainStyle} from "../../styles/Globalstyle";
 import {useSelector} from "react-redux";
 
-// TODO : 얘네 두개는 필요없을듯
 function DeptVacation() {
     const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
     const [schedules, setschedules] = useState([]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
 
-    // TODO : 본인 휴가 색깔과 다른 부서원 색깔 정하기
     const calendars = [
         // 정상출근
         {
@@ -45,12 +44,12 @@ function DeptVacation() {
     ];
 
     const getvacation = async () => {
-        const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
         await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                if (vacation.length != 0) {
+                console.log(empno);
+                if (vacation.length !== 0) {
                     for (let i = 0; i < vacation.length; i++) {
-                        if (vacation[i].empno === empno.empInfo[0]) {
+                        if (vacation[i].empno === empno) {
                             vacation[i].calendarId = "1";
                         } else {
                             vacation[i].calendarId = "2";
@@ -72,7 +71,6 @@ function DeptVacation() {
 
 
     useEffect(() => {
-        // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
         getvacation();
     }, []);
     const cal = useRef(null);
