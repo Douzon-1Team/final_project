@@ -5,6 +5,7 @@ import axios from "axios";
 import {style} from "./AcceptReqStyle"
 import {MainStyle} from "../../styles/Globalstyle"
 import {useLocation} from "react-router";
+import {Table, Header, Row, Cell, Order, Continaer} from '../admin/EmpTableStyle'
 
 const AcceptReq = () => {
     const {state} = useLocation();
@@ -180,16 +181,16 @@ const AcceptReq = () => {
                     </ModalWindow>
                 </Modal>
             )}
-            <table {...getTableProps()}
+            <Table {...getTableProps()}
                    style={{
                        textAlign: 'center',
                    }}
             >
                 <thead>
                 {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                    <Header {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <th
+                            <Order
                                 {...column.getHeaderProps()}
                                 style={{
                                     padding: '5px 20px 5px 20px',
@@ -199,33 +200,33 @@ const AcceptReq = () => {
                                 }}
                             >
                                 {column.render('Header')}
-                            </th>
+                            </Order>
                         ))}
-                    </tr>
+                    </Header>
                 ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
                 {rows.map(row => {
                     prepareRow(row)
                     return (
-                        <tr {...row.getRowProps()}>
+                        <Row {...row.getRowProps()}>
                             {row.cells.map(cell => {
                                 return (
-                                    <td
+                                    <Cell
                                         {...cell.getCellProps()}
                                         style={{
                                             padding: '5px 20px 5px 20px',
                                         }}
                                     >
                                         {cell.render('Cell')}
-                                    </td>
+                                    </Cell>
                                 )
                             })}
-                        </tr>
+                        </Row>
                     )
                 })}
                 </tbody>
-            </table>
+            </Table>
         </MainStyle>
     )
 }

@@ -129,9 +129,14 @@ const EtcButton = styled.button`
         color: white;
     }
     &.휴가{background: #86d3fb;}
+    
     &.오전반차{background: #Fbe086;}
     &.오후반차{background: #Fbc386;}
     &.시간연차{background: #Abea9b;}
+    
+    &.승인{background: #5dbb63; color: white;}
+    &.대기중{background: #f2d06b; color: white;}
+    &.반려{background: #ff7a7b; color: white;}
 `;
 
 export {Container, Table, Header, Button, Row, Cell, Order, Pagination, EtcButton};
