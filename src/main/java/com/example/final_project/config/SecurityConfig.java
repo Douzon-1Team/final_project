@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .requiresChannel()
-                .antMatchers("/logout", "/")
+                .antMatchers("/")
                 .requiresSecure()
 
                 .and()

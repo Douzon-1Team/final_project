@@ -3,6 +3,13 @@ import styled from 'styled-components';
 const ReportStyle = styled.div`
         cursor: pointer;
         display: flex;
+        .css-1byr0tz {
+            margin-top: 200px;
+        }
+        .css-pdfc6u {
+            width: 600px;
+            margin: 20px;
+        }
         
         .css-1t6e9jv-MuiCardActions-root {
             display: contents;
