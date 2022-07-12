@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken}) => {
   try {
     const response = await getMain({empno, accessToken});
+    console.log(response.data);
     for (var i = 1;  i < response.data.length; i++) {
       if (response.data[i].m != null || response.data[i].count != null || response.data[i].datediff != null) {
         continue; // 필요없는 데이터 제외

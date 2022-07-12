@@ -277,6 +277,7 @@ const TabTitle = styled.p`
 `;
 
 const RedBtn = styled.button`
+    cursor: pointer;
     background: #ff7777;
     font-weight: bold;
     border-radius: 10px;
