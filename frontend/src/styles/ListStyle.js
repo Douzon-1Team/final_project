@@ -69,13 +69,17 @@ const ListHeader = styled.tr`
     color: white;
     font-weight: bold;
     
-    :not(:first-child){
+    td:not(:first-child){
         min-width: 8rem;
+    }
+    td:first-child{
+        padding-left: 20px;
     }
 `;
 
 const ListHead = styled.td`
     height: 3rem;
+    
 `;
 
 export {ListStyle, ListHeader, ListHead};
