@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: fit-content;
   float: left;
-  width: 800px;
-  margin-left: 1vw;
-  margin-top: 1vh;
+  width: 900px;
+  margin-left: 200px;
+  margin-top: 50px;
 `;
 export const Title = styled.div`
   width: 40%;
@@ -101,7 +101,7 @@ export const ButtonBox = styled.div`
   width: fit-content;
 `;
 export const Button2_1 = styled.button`
-  margin-left: 300px;
+  margin-left: 350px;
   border: 0px;
   cursor: ${({statusColor}) => (statusColor === true ? "pointer" : "no-drop")};
   background-color: ${({statusColor}) => (statusColor === true ? "#00aaff" : "gray")};

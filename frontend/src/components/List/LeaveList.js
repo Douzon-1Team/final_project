@@ -27,7 +27,7 @@ const LeaveList = () => {
             if ((req === '오전반차') || (req === '오후반차')) {
                 hours = 4;
             } else if (req === '휴가') {
-                hours = 8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1);
+                hours = 8*Math.ceil((Date.parse(end) - Date.parse(start))/(1000*60*60*24));
             } else {
                 hours = (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60);
             }
@@ -146,6 +146,7 @@ const LeaveList = () => {
     }
 
     function DeleteEx(checkedReqId) {
+        console.log(checkedReqId)
         setModalSwitch(false);
         for (let i = 0; i < checkedReqId.length; i++) {
             axios

@@ -7,14 +7,6 @@ const LeavereqStyle = styled.div`
         margin-top: 50px;
     }
 `
-
-const LeavelistStyle = styled.div`
-    .jLZRpI {
-        margin-left: 120px;
-        margin-top: 50px;
-    }
-`
-
 const AttendancereqStyle = styled.div`
     .gNsbHS {
         width: 900px;
@@ -23,18 +15,8 @@ const AttendancereqStyle = styled.div`
     }
 `
 
-const AttendancelistStyle = styled.div`
-    .jLZRpI {
-        margin-left: 120px;
-        margin-top: 50px;
-    }
-`
-
 const AcceptreqStyle = styled.div`
-    .jLZRpI {
-        margin-left: 120px;
-        margin-top: 50px;
-    }
+    width: 2000px;
 `
 
-export {LeavereqStyle, LeavelistStyle, AttendancereqStyle, AttendancelistStyle, AcceptreqStyle};
+export const style2= {LeavereqStyle, AttendancereqStyle, AcceptreqStyle};

@@ -14,8 +14,8 @@ import {MainStyle} from "../../styles/Globalstyle";
 import {useSelector} from "react-redux";
 
 function DeptVacation() {
-    const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));

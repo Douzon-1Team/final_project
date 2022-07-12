@@ -6,6 +6,7 @@ export const Modal = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
+  overflow: hidden;
 `;
 export const ModalWindow = styled.div`
   height: 150px;
@@ -14,9 +15,8 @@ export const ModalWindow = styled.div`
   position: absolute;
   border-radius: 3%;
   border: 1px solid #ffffff;
-
-  top: 50%;
-  left: 50%;
+  top: 35%;
+  left: 40%;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);

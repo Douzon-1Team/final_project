@@ -11,6 +11,7 @@ import {useLocation} from "react-router";
 import {useSelector} from "react-redux";
 import {MainStyle} from "../../styles/Globalstyle"
 import {BsArrowReturnRight} from "react-icons/bs";
+import {LeaveReqSuccess} from "../common/alert/alert";
 
 export const AttendanceReq = () => {
     const {state} = useLocation();
@@ -50,7 +51,10 @@ export const AttendanceReq = () => {
         }
     }, [])
 
+    let navigate = useNavigate();
+
     const f1 = () => {
+        tempset();
         axios
             .post("/attendance/req", {
                 empNo: empNo,
@@ -63,14 +67,13 @@ export const AttendanceReq = () => {
             })
             .then((response) => {
             })
+        LeaveReqSuccess();
+        navigate("/main");
     };
     const today = new Date();
     const [startDate, setStartDate] = useState(state == null ? today : new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), startTime, 0, 0));
     const [endDate, setEndDate] = useState(state == null ? today : new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), endTime, 0, 0));
 
-    const [modalSwitch, setModalSwitch] = useState(false);
-    const [sendBefore, setSendBefore] = useState(false);
-    const [sendAfter, setSendAfter] = useState(false);
     const start = dayjs(startDate);
     const end = dayjs(endDate)
     let startFormat;
@@ -153,73 +156,15 @@ export const AttendanceReq = () => {
         setEndDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime, 0))
     }
 
-    function completed() {
-        f1();
-        navigate("/main");
-    }
-
     const [comment, setComment] = useState("");
     const handleChangeComment = (e) => {
         setComment(e.target.value);
     };
 
-    function sendData(sortNum) {
-        if (statusColor === true) {
-            if (sortNum === 0) {
-                setModalSwitch(true);
-            } else {
-                setSendBefore(true);
-            }
-        }
-    }
-
-    let navigate = useNavigate();
-
     return (
         <MainStyle>
             <Container>
                 <Title> 근태조정 신청서 </Title>
-                {modalSwitch && (
-                    <Modal>
-                        <ModalWindow>
-                            <ModalTitle>근태 구분을 선택해주세요</ModalTitle>
-                            <YesButton
-                                onClick={() => setModalSwitch(false)}
-                                modalSwitch={modalSwitch}
-                            >
-                                확 인
-                            </YesButton>
-                        </ModalWindow>
-                    </Modal>
-                )}
-                {sendBefore && (
-                    <Modal>
-                        <ModalWindow>
-                            <ModalTitle>신청서를 제출하시겠습니까?</ModalTitle>
-                            <YesButton
-                                onClick={() => {
-                                    tempset();
-                                    setSendAfter(true);
-                                    setSendBefore(false)
-                                }}
-                                sendBefore={sendBefore}
-                            >
-                                확 인
-                            </YesButton>
-                            <NoButton onClick={() => setSendBefore(false)}>취 소</NoButton>
-                        </ModalWindow>
-                    </Modal>
-                )}
-                {sendAfter && (
-                    <Modal>
-                        <ModalWindow>
-                            <ModalTitle>성공적으로 신청되었습니다.</ModalTitle>
-                            <YesButton onClick={() => completed()}>
-                                확 인
-                            </YesButton>
-                        </ModalWindow>
-                    </Modal>
-                )}
                 <LeaveSort>
                     <SortTag>근태구분</SortTag>
                     <SortContent>
@@ -277,7 +222,7 @@ export const AttendanceReq = () => {
                 </LeaveReason>
                 {/* ------------------------- */}
                 <ButtonBox>
-                    <Button2_1 statusColor={statusColor} onClick={() => sendData(sortNum)}>신 청</Button2_1>
+                    <Button2_1 statusColor={statusColor} onClick={() => f1()}>신 청</Button2_1>
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>

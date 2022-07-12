@@ -216,3 +216,13 @@ export const DeleteConfirm = (callback) => {
         callback(result.isConfirmed);
     })
 }
+
+export const LeaveReqSuccess = () => {
+    MySwal.fire(
+        {
+            title: <p>신청이 완료되었습니다.</p>,
+            html: <i>ALL IN ONE</i>,
+            icon: 'success',
+            confirmButtonColor: '#00AAFF',
+        })
+}
