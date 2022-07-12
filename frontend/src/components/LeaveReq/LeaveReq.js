@@ -10,9 +10,8 @@ import axios from "axios";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router";
 import {MainStyle} from "../../styles/Globalstyle";
-import {AiOutlineWarning} from "react-icons/ai";
-import {LeaveReqSuccess} from "../common/alert/alert";
-
+import { AiOutlineWarning } from "react-icons/ai";
+import {LeavereqStyle} from "../../styles/reqStyle";
 
 export const LeaveReq = () => {
 
@@ -32,6 +31,10 @@ export const LeaveReq = () => {
     };
     const [pointerAble1, setPointerAble1] = useState(false);
     const [pointerAble2, setPointerAble2] = useState(false);
+    // -------------------------------------------
+    const [modalSwitch, setModalSwitch] = useState(false);
+    const [sendBefore, setSendBefore] = useState(false);
+    const [sendAfter, setSendAfter] = useState(false);
     // -------------------------------------------
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
@@ -140,6 +143,18 @@ export const LeaveReq = () => {
     endFormat = end.format("YYYY-MM-DD HH:mm:0");
 
     // ---------------------------------------------------------------------------------
+    function sendData(sortNum) {
+        if (avail === true) {
+            if (sortNum === 0) {
+                setModalSwitch(true);
+            } else {
+                setSendBefore(true);
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------------------
+    let navigate = useNavigate();
     const f1 = async () => {
         await axios
             .post("/vacation/req", {
@@ -152,12 +167,13 @@ export const LeaveReq = () => {
                 headers: {'Authorization': accessToken}
             })
             .then((response) => {
-                LeaveReqSuccess();
-                let navigate = useNavigate();
             })
     };
-    // ---------------------------------------------------------------------------------
-    let navigate = useNavigate();
+
+    function completed() {
+        f1();
+        navigate("/main");
+    }
 
     const [useHour, setUseHour] = useState();
     useEffect(() => {
@@ -179,6 +195,47 @@ export const LeaveReq = () => {
 
     return (
         <MainStyle>
+            <LeavereqStyle>
+            {modalSwitch && (
+                <Modal>
+                    <ModalWindow>
+                        <ModalTitle>휴가 구분을 선택해주세요</ModalTitle>
+                        <YesButton
+                            onClick={() => setModalSwitch(false)}
+                            modalSwitch={modalSwitch}
+                        >
+                            확 인
+                        </YesButton>
+                    </ModalWindow>
+                </Modal>
+            )}
+            {sendBefore && (
+                <Modal>
+                    <ModalWindow>
+                        <ModalTitle>신청서를 제출하시겠습니까?</ModalTitle>
+                        <YesButton
+                            onClick={() => {
+                                setSendAfter(true);
+                                setSendBefore(false)
+                            }}
+                            sendBefore={sendBefore}
+                        >
+                            확 인
+                        </YesButton>
+                        <NoButton onClick={() => setSendBefore(false)}>취 소</NoButton>
+                    </ModalWindow>
+                </Modal>
+            )}
+            {sendAfter && (
+                <Modal>
+                    <ModalWindow>
+                        <ModalTitle>성공적으로 신청되었습니다.</ModalTitle>
+                        <YesButton onClick={() => completed()}>
+                            확 인
+                        </YesButton>
+                    </ModalWindow>
+                </Modal>
+            )}
             <Container>
                 <Title> 휴가 신청서 </Title>
                 <Div1>
@@ -305,7 +362,7 @@ export const LeaveReq = () => {
                 </LeaveReason>
                 {/* ------------------------- */}
                 <ButtonBox>
-                    <Button2_1 avail={avail} onClick={() => f1()}>신 청</Button2_1>
+                    <Button2_1 avail={avail} onClick={() => sendData(sortNum)}>신 청</Button2_1>
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
