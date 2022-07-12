@@ -153,7 +153,7 @@ export const LeaveReq = () => {
             })
             .then((response) => {
                 LeaveReqSuccess();
-                let navigate = useNavigate();
+                navigate("/main");
             })
     };
     // ---------------------------------------------------------------------------------
