@@ -52,6 +52,7 @@ public class AttendanceController {
 
     @GetMapping("/attendance/gettargetdate")
     public ResponseEntity<?> gettargetdate(@RequestParam String empNo, String date){
+        System.out.println(date);
         List<GetTargetDateDto> dto = attendanceService.getTargetDate(empNo, date);
         return ResponseEntity.ok().body(dto);
     }
