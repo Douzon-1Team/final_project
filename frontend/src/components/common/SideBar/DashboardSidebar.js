@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -17,6 +17,7 @@ import {LogoImgbox, UserImg} from "../Logo/LogoStyle";
 import {useNavigate} from "react-router";
 import {useSelector} from "react-redux";
 import SideBar from "./SideBar";
+import {getProfile} from "../../../apis/ApiServices";
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +46,16 @@ DashboardSidebar.propTypes = {
 };
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+    const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const [emp, setEmp] = useState({ profilePath: null } );
+
+    useEffect(() => {
+        getProfile({empNo, accessToken}).then(response => {
+            setEmp(response.data);
+        })
+    }, []);
+
     const empInfo = useSelector((state) => state.EMP_INFO.empInfo);
     let empRole;
     if (empInfo[2] === "ROLE_MANAGER") {
@@ -83,7 +94,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Box sx={{ mb: 5, mx: 2.5 }}>
                 <Link underline="none" component={RouterLink} to="#">
                     <AccountStyle>
-                        <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
+                        <UserImg style={{height: '50px', width: '50px'}} src = {emp.profilePath} />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                                 {empInfo[1]}({empInfo[0]})
