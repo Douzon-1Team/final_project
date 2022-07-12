@@ -11,6 +11,5 @@ export const getNotificationTardyList = async ( {empno, accessToken} ) => {
             }
         );
     } catch (error) {
-        MainCalendarError();
     }
 };

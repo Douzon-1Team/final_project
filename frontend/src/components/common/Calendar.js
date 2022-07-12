@@ -21,9 +21,8 @@ import {
 import {useLocation, useNavigate} from "react-router";
 
 
-// TODO : 얘네 두개는 필요없을듯
 function Calendar() {
-  const { state } = useLocation(); // TODO : 사원목록 탭에서 넘어온 사원 데이터
+  const { state } = useLocation();
   const navigate = useNavigate();
   const start = new Date();
   const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -69,33 +68,22 @@ function Calendar() {
       borderColor: "#00AAFF",
     },
   ];
-  // const [inputValue, setInputValue] = useState("");
 
-  // 1. 휴가 req, reject, accept, vacation_start, vacation_end
-
-  // 2. 출석 empno, dept_no, onwork, offwork, on_off_work, time,
-  //        attendance, tardy, leave_early, vacation, unregistered, date
-  // 정상출근 -> 출근O, 결근X, 지각X, 조퇴X, 퇴근O, vacation은 상관X
-  // 지각 -> 출근O, 지각O
-  // 조퇴 -> 조퇴O
-  // 결근 -> 출/퇴근 QR data X
-  // date(날짜), onwork(출근시간), attendance(출근(1)/결근(default 0)여부), offwork(퇴근시간), tardy(지각여부(0 -> 1(지각))),
-  // leave_early(조퇴여부(0 -> 1(조퇴))) unregistered(퇴근 미등록(0 -> 1(미등록)))
-
-  const empno = useSelector((state) => state.EMP_INFO);
+  let empno = useSelector((state) => state.EMP_INFO);
   const dispatch = useDispatch();
   const mainData = useSelector((state) => state.calendarReducer);
   let calendarList = _.filter(mainData, 'title');
   let work = _.filter(mainData, 'm');
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
   schedules.push(...calendarList);
 
   useEffect(() => {
-    // TODO : 관리자가 들어올경우 props로 받은 데이터를 활용
-    // TODO : 새로고침시 사라지지 않고 메인 버튼을 누르거나 뒤로가기를 해야 STATE가 사라짐
     if (state !== null) {
-      dispatch(getList({empno : state[0]}));
+      empno = state[0]
+      dispatch(getList({empno, accessToken}));
     } else {
-      dispatch(getList({empno : empno.empInfo[0]}));
+      empno = empno.empInfo[0]
+      dispatch(getList({empno, accessToken}));
     }
   }, []);
   const cal = useRef(null);
@@ -114,7 +102,6 @@ function Calendar() {
       let check = e.schedule.title,substring = "결제완료";
 
       check.includes(substring)
-      // TODO : 이상근태 or 휴가가 본인 승인시 근태조정 신청으로 넘어가지 않게 조건 걸기 -> 어캐걸지..
       if (state === null && check.includes(substring) !== true) {
         navigate('/attendancereq', {
           state: areq,
@@ -144,7 +131,6 @@ function Calendar() {
     var dateEnd = year + "-" + month + "-" + day;
 
     if (new Date() > scheduleData.start) {
-      // TODO : 오늘 이전 연차신청목록 클릭시 -> 아무일 없음
     } else {
       // 금일 이후 달력 클릭시 휴가신청 페이지로 넘어감
       if (state === null) {
@@ -158,8 +144,6 @@ function Calendar() {
     }
   };
   function _getFormattedTime(time) {
-    // start 시간 설정
-    // TODO : END 시간도 표시해줄까?
     const date = new Date(time);
     let h = date.getHours();
     let m = date.getMinutes();
@@ -244,7 +228,6 @@ function Calendar() {
   const handleDayClick = useCallback(() => {
     cal.current.calendarInst.changeView("day");
   }, []);
-  // TODO : Today 추가
   function dVcationPage() {
     return navigate("/dvacation");
   }
@@ -321,8 +304,6 @@ function Calendar() {
                   month={{
                     daynames: ["일", "월", "화", "수", "목", "금", "토"],
                   }}
-                  // onBeforeDeleteSchedule={onBeforeDeleteSchedule}
-                  // onBeforeUpdateSchedule={onBeforeUpdateSchedule}
               />
             </CalendarStyle>
             : <Chart data={work} /> }

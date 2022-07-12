@@ -39,9 +39,10 @@ export default function NotificationsPopover() {
 
   const getTardyList = async () => {
     await getNotificationTardyList({empno, accessToken}).then(res =>{
+        console.log(empno);
       NOTIFICATIONS =res.data;
       setNotifications(NOTIFICATIONS);
-    }).catch(console.log('수신 실패'))
+    }).catch()
   }
 
   useEffect(() => {

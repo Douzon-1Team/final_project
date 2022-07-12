@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
@@ -12,11 +12,24 @@ import SettingModal from "../Modal/SettingModal";
 import {ImProfile} from "react-icons/im"
 import {TbLogout} from "react-icons/tb"
 import {AiFillSetting} from "react-icons/ai"
+import {getProfile} from "../../../apis/ApiServices";
 
 export default function AccountPopover() {
   const empInfo = useSelector( (state) => state.EMP_INFO.empInfo );
   const navigate = useNavigate();
   const anchorRef = useRef(null);
+
+  const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+  const [emp, setEmp] = useState({ profilePath: null } );
+
+  useEffect(() => {
+    getProfile({empNo, accessToken}).then(response => {
+      setEmp(response.data);
+    })
+  }, []);
+  //add
+
 
   const [open, setOpen] = useState(null);
 
@@ -48,7 +61,8 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />
+        {/*<UserImg style={{height: '50px', width: '50px'}} src = {empInfo[3]} />*/}
+        <UserImg style={{height: '50px', width: '50px'}} src = {emp.profilePath} />
       </IconButton>
 
       <MenuPopover

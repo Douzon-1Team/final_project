@@ -29,21 +29,21 @@ const ProgressBar52h = ({ attendanceWeek, overtimeWeek, todayWorkTime}) => {
                 <PbContainer>
                     <Grid container spacing={1}>
                     <Grid item xs={10}>
-                    <BorderLinearProgress variant="determinate" value={100*(attendanceWeek/52)} />
+                    <BorderLinearProgress variant="determinate" value={attendanceWeek == null ? "0" : 100*(attendanceWeek/52)} />
                     </Grid>
                     <Grid item xs={2}>
-                    <progressValue> {(100*(attendanceWeek/52)).toFixed(2)}% </progressValue>
+                    <progressValue> { attendanceWeek == null ? "0 %" : (100*(attendanceWeek/52)).toFixed(2) + "%"} </progressValue>
                     </Grid>
                     </Grid>
                 </PbContainer>
                 <TextContainer>
-                    누적 근무시간 : {attendanceWeek} H
+                    누적 근무시간 : {attendanceWeek == null ? "0 H" : attendanceWeek + "H"}
                 </TextContainer>
                 <TextContainer>
-                    초과 근무시간 : {overtimeWeek} H
+                    초과 근무시간 : {overtimeWeek == null ? "0 H" : overtimeWeek + "H"}
                 </TextContainer>
                 <TextContainer>
-                    금일 근무시간 : {todayWorkTime+time} H
+                    금일 근무시간 : {todayWorkTime == null ? "미출근" : todayWorkTime+time + "H"}
                 </TextContainer>
             </CardContainer>
         </Card>

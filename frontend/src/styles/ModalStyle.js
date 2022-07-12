@@ -130,7 +130,7 @@ const TimeChoiceBox = styled.div`
     border-radius: 10px;
     border-style: 1px solid black;
     width: 100%; 
-    min-height: 170px; 
+    min-height: 200px; 
     display: flex;
     flex-direction: column;  
     justify-content: center;

@@ -14,7 +14,7 @@ function Profile() {
     const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
 
-  useEffect(() => {
+    useEffect(() => {
       getProfile({empNo, accessToken}).then(response => {
         setEmp(response.data);
       })
@@ -33,7 +33,7 @@ function Profile() {
             <QrBox>
                 <a href={ emp.qrPath }><QR>QR code</QR></a>
             </QrBox>
-            <S3Upload/>
+            <S3Upload />
         </MainStyle>
     );
 }

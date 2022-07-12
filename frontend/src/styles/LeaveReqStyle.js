@@ -24,6 +24,7 @@ export const LeaveSort = styled.div`
   height: 50px;
 `;
 export const LeaveTerm = styled.div`
+  display: ${({sortNum}) => (sortNum === 0 ? "none" : "")};
   border-top: 1px solid black;
   border-left: 0px;
   border-right: 0px;

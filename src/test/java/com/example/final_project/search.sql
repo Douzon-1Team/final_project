@@ -218,6 +218,9 @@ select req from attendance_req where DATEDIFF(vacation_end,now()) >= 0 and DATED
 select *
 from employee;
 
+select hour(date)
+from attendance_time;
+
 select *
 from emp_info_comp
 where dept_no = 01;
