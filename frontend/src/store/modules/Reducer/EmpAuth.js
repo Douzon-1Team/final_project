@@ -15,5 +15,5 @@ export const empSlice = createSlice({
     }
 })
 
-export const { SET_EMP_INFO, DELETE_EMP_INFO } = empSlice.actions;
+export const { SET_EMP_INFO, SET_EMP_PROFILE, DELETE_EMP_INFO } = empSlice.actions;
 export default empSlice.reducer;
