@@ -5,7 +5,8 @@ import axios from "axios";
 import {style} from "./AcceptReqStyle"
 import {MainStyle} from "../../styles/Globalstyle"
 import {useLocation} from "react-router";
-import {Table, Header, Row, Cell, Order, Continaer} from '../admin/EmpTableStyle'
+import {Row, Cell} from '../admin/EmpTableStyle'
+import {ListHead, ListHeader, ListStyle} from "../../styles/ListStyle";
 
 const AcceptReq = () => {
     const {state} = useLocation();
@@ -62,10 +63,10 @@ const AcceptReq = () => {
         if (data[i].endFormat2 == null) data[i].endFormat2 = '';
         data[i].startFormat = data[i].startFormat1 + data[i].startFormat2;
         data[i].endFormat = data[i].endFormat1 + data[i].endFormat2;
-        data[i].accept = <input type='button' value='승인'
+        data[i].accept = <Button3 type='button' value='승인'
                                 style={{background: '#00aaff', color: 'white', border: '0px', cursor: 'pointer'}}
                                 onClick={() => acceptReq(data[i].reqid, data[i].startFormat, data[i].endFormat, data[i].req)}/>
-        data[i].reject = <input type='button' value='반려'
+        data[i].reject = <Button3 type='button' value='반려'
                                 style={{background: 'red', color: 'white', border: '0px', cursor: 'pointer'}}
                                 onClick={() => {
                                     setModal(!modal);
@@ -181,28 +182,22 @@ const AcceptReq = () => {
                     </ModalWindow>
                 </Modal>
             )}
-            <Table {...getTableProps()}
-                   style={{
-                       textAlign: 'center',
-                   }}
+            <ListStyle>
+                <Title> 부서원 근태 관리 </Title>
+            <table
+                {...getTableProps()}
+                className="MuiTable-root" aria-label="simple table"
+                style={{"marginTop":'10px'}}
             >
                 <thead>
                 {headerGroups.map(headerGroup => (
-                    <Header {...headerGroup.getHeaderGroupProps()}>
+                    <ListHeader {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map(column => (
-                            <Order
-                                {...column.getHeaderProps()}
-                                style={{
-                                    padding: '5px 20px 5px 20px',
-                                    background: 'aliceblue',
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                }}
-                            >
+                            <ListHead {...column.getHeaderProps()}>
                                 {column.render('Header')}
-                            </Order>
+                            </ListHead>
                         ))}
-                    </Header>
+                    </ListHeader>
                 ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
@@ -214,6 +209,7 @@ const AcceptReq = () => {
                                 return (
                                     <Cell
                                         {...cell.getCellProps()}
+                                        className="line "
                                         style={{
                                             padding: '5px 20px 5px 20px',
                                         }}
@@ -226,9 +222,10 @@ const AcceptReq = () => {
                     )
                 })}
                 </tbody>
-            </Table>
+            </table>
+            </ListStyle>
         </MainStyle>
     )
 }
-const {Modal, ModalWindow, Title, Reason, Button1, Button2} = style;
+const {Modal, ModalWindow, Title, Reason, Button1, Button2, Button3} = style;
 export default AcceptReq;
