@@ -32,7 +32,6 @@ public class VacationController {
 
     @PostMapping("/vacation/delete")
     public ResponseEntity delVacation(@RequestBody DeleteVacationDto dto){
-
         vacationService.vacation(dto);
         return ResponseEntity.ok().build();
     }

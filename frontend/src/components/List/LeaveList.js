@@ -21,7 +21,7 @@ const LeaveList = () => {
 
     function onClickChecked(reqid, start, end, accept, req) {
         let hours = 0;
-        if ((start >= todayFormat) && (accept == 1)) {
+        if ((start >= todayFormat) && (accept === 1)) {
             if ((req === '오전반차') || (req === '오후반차')) {
                 hours = 4;
             } else if (req === '휴가') {
@@ -147,6 +147,8 @@ const LeaveList = () => {
                     reqId: checkedReqId[i],
                     empNo: empNo,
                     grossHours: grossHours,
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((res) => {
                 })

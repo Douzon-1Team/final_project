@@ -20,7 +20,6 @@ function DeptVacation() {
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
     const [schedules, setschedules] = useState([]);
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
 
     const calendars = [
