@@ -137,7 +137,9 @@ const AcceptReq = () => {
                 .post("http://localhost:8080/accept/vacation", {
                     'reqid': reqid,
                     'empNo': empNo,
-                    'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
+                    'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8*Math.ceil((Date.parse(end) - Date.parse(start))/(1000*60*60*24)) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -149,6 +151,8 @@ const AcceptReq = () => {
                     'start': start,
                     'end': end,
                     'temp': end.substring(0, 10),
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -161,6 +165,8 @@ const AcceptReq = () => {
             .post("http://localhost:8080/attendance/rejectreq", {
                 'reqid': targetReqId,
                 'reason': reason,
+            },{
+                headers:{'Authorization': accessToken}
             })
             .then((response) => {
             })
