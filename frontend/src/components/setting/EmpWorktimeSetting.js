@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {getSetting, settingTime} from "../../apis/ApiServices";
 
-function EmpWorktimeSetting() {
+function EmpWorktimeSetting(props) {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const [empDept, setEmpDept] = useState(
     { empno: null, deptNo: null,
@@ -32,6 +32,7 @@ function EmpWorktimeSetting() {
     }
     const response = await settingTime({ empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF, accessToken });
     if (response) {
+      props.close(false);
       SettingSuccess();
     } else { SettingError(); }
   };

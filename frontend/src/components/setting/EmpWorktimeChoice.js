@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {getSetting, settingTimeChoice} from "../../apis/ApiServices";
 
-function EmpWorktimeChoice() {
+function EmpWorktimeChoice(props) {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const [empDept, setEmpDept] = useState(
     { empno: null, deptNo: null, flexible: null }
@@ -22,6 +22,7 @@ function EmpWorktimeChoice() {
   const onValidFlexible = async ({ empno, deptNo, flexible }) => {
     const response = await settingTimeChoice({ empno, deptNo, flexible, accessToken });
     if (response) {
+      props.close(false);
       SettingSuccess();
     } else { SettingError(); }
   };
