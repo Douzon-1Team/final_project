@@ -10,11 +10,13 @@ import axios from "axios";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router";
 import {MainStyle} from "../../styles/Globalstyle";
-import { AiOutlineWarning } from "react-icons/ai";
+import {AiOutlineWarning} from "react-icons/ai";
 
 export const LeaveReq = () => {
+
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const accessToken = useSelector((state) => state.ACCESS_TOKEN.accessToken);
+    const [req, setReq] = useState((state == null) ? null : "휴가");
     const selectedDate = (state == null) ? null : state._date;
     const [sortNum, setSortNum] = useState(state == null ? 0 : 1); // 휴가구분
     const today = new Date();
@@ -32,7 +34,6 @@ export const LeaveReq = () => {
     const [modalSwitch, setModalSwitch] = useState(false);
     const [sendBefore, setSendBefore] = useState(false);
     const [sendAfter, setSendAfter] = useState(false);
-    const [req, setReq] = useState("");
     // -------------------------------------------
     const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
@@ -43,16 +44,22 @@ export const LeaveReq = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/vacation/data", {params: {'empNo': empNo},
-                headers:{'Authorization':accessToken}})
+                .get("http://localhost:8080/vacation/data", {
+                    params: {'empNo': empNo},
+                    headers: {'Authorization': accessToken}
+                })
                 .then((res) => {
                     setLoadingData(false);
-                    if (res.data[0].flex == 0) {
+                    if (res.data[0].flex === 0) {
                         setStartTime(res.data[0].workStart.substr(0, 2));
                         setEndTime(res.data[0].workEnd.substr(0, 2));
-                    } else if (res.data[0].flex == 1) {
+                        setStartTime(Number(startTime))
+                        setEndTime(Number(endTime))
+                    } else if (res.data[0].flex === 1) {
                         setStartTime(res.data[0].workStartf.substr(0, 2));
                         setEndTime(res.data[0].workEndf.substr(0, 2));
+                        setStartTime(Number(startTime))
+                        setEndTime(Number(endTime))
                     }
                     setRemain(res.data[0].remain);
                 })
@@ -80,16 +87,16 @@ export const LeaveReq = () => {
                 setEndDate(tomorrow);
                 setPointerAble1(false);
                 setPointerAble2(false);
-                if (para == 1) {
+                if (para === 1) {
                     setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
                     setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime, 0, 0))
-                } else if (para == 2) {
+                } else if (para === 2) {
                     if (startTime >= 10) {
                         setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
-                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime - 4, 0, 0))
+                        setEndDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime - 4, 0, 0))
                     } else {
                         setStartDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startTime, 0, 0))
-                        setEndDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), endTime - 5, 0, 0))
+                        setEndDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), endTime - 5, 0, 0))
                     }
                 } else if (para == 3) {
                     if (endTime <= 17) {
@@ -116,8 +123,8 @@ export const LeaveReq = () => {
 
     // ---------------------------------------------------------------------------------
     useEffect(() => {
-        if (sortNum == 4) {
-            if ((startDate.getFullYear() == today.getFullYear()) && (startDate.getMonth() == today.getMonth()) && (startDate.getDate() == today.getDate())) {
+        if (sortNum === 4) {
+            if ((startDate.getFullYear() === today.getFullYear()) && (startDate.getMonth() === today.getMonth()) && (startDate.getDate() === today.getDate())) {
                 // 같은 날짜
                 setPointerAble1(true);
                 setPointerAble2(false);
@@ -155,8 +162,8 @@ export const LeaveReq = () => {
                 startFormat: startFormat,
                 endFormat: endFormat,
                 comment: comment,
-            },{
-                headers:{'Authorization':accessToken}
+            }, {
+                headers: {'Authorization': accessToken}
             })
             .then((response) => {
             })
@@ -252,7 +259,7 @@ export const LeaveReq = () => {
                     </SortContent>
                 </LeaveSort>
                 {/* ------------------------- */}
-                <LeaveTerm>
+                <LeaveTerm sortNum={sortNum}>
                     <TermTag>휴가기간</TermTag>
                     <TermContent>
                         <TermSelect>
