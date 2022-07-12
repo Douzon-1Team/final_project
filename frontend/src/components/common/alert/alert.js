@@ -226,3 +226,12 @@ export const LeaveReqSuccess = () => {
             confirmButtonColor: '#00AAFF',
         })
 }
+export const DeleteAttendanceList = () => {
+    MySwal.fire(
+        {
+            title: <p>삭제가 완료되었습니다.</p>,
+            html: <i>ALL IN ONE</i>,
+            icon: 'success',
+            confirmButtonColor: '#00AAFF',
+        })
+}
