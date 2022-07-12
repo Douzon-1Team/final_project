@@ -112,12 +112,14 @@ function Profile() {
             : updateInfo({ deptName, name, rankName, extensionNum, role, image, resigned});
     }
 
-    const deleteInfo = async () => {
-        if(DeleteConfirm(function (isConfirm){
-            const response = axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
-                {headers: {Authorization: accessToken}});
-            navigate("/admin/list");
-        }));
+    const deleteInfo = () => {
+        DeleteConfirm(function(isConfirm){
+            if(isConfirm) {
+                axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
+                    {headers: {Authorization: accessToken}});
+                navigate("/admin/list");
+            }
+        });
     }
 
     const resign = () => {
@@ -156,7 +158,7 @@ function Profile() {
                      <Tab><TabTitle>개인정보</TabTitle></Tab>
                      {!isNew && <Tab><TabTitle>비밀번호 변경</TabTitle></Tab>}
                      {!isNew &&<RedBtn type="button" {...register('resigned')} onClick={() => {resign()}}>퇴사자 등록</RedBtn> }
-                     {!isNew && <RedBtn onClick={deleteInfo}>사원 삭제</RedBtn>}
+                     {!isNew && <RedBtn type="button" onClick={() => deleteInfo}>사원 삭제</RedBtn>}
                  </TabList></TabBox>
 
                  <TabPanel><TableBox>
@@ -211,7 +213,7 @@ function Profile() {
             </ProfileBox></RightContainer>
             <BtnBox style={{marginTop:'1%', marginRight:'3%'}}>
                 <Button type="submit" ref={submit}>저장</Button>
-                <Button type="button" onClick={(e) => {navigate("/admin/list")}}>취소</Button>
+                <Button type="button" onClick={() => {navigate("/admin/list")}}>취소</Button>
             </BtnBox>
         </form></MainStyle>
     );
