@@ -14,6 +14,7 @@ import {MainStyle} from "../../styles/Globalstyle";
 import {useSelector} from "react-redux";
 
 function DeptVacation() {
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
     const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const navigate = useNavigate();

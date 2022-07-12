@@ -13,9 +13,10 @@ export const Title = styled.div`
 export const Container = styled.div`
   height: fit-content;
   float: left;
-  width: 800px;
-  margin-left: 1vw;
-  margin-top: 1vh;
+  width: 900px;
+  margin-left: 200px;
+  margin-top: 50px;
+  overflow:hidden;
 `;
 export const LeaveSort = styled.div`
   border-top: 2px solid black;
@@ -123,7 +124,7 @@ export const ButtonBox = styled.div`
 `;
 export const Button2_1 = styled.button`
   background-color: ${({avail}) => (avail === true ? "#00aaff" : "gray")};
-  margin-left: 300px;
+  margin-left: 350px;
   border: 0px;
   cursor: ${({avail}) => (avail === true ? "pointer" : "")};
   color: #ffffff;
@@ -269,7 +270,7 @@ export const UseInfo = styled.div`
   width:fit-content;
   float:left;
   margin-top:13px;
-  margin-left:${({avail}) => (avail === true ? "150px" : "100px")};
+  margin-left:${({avail}) => (avail === true ? "225px" : "220px")};
   color: ${({avail}) => (avail === true ? "black" : "red")};
   font-weight: ${({avail}) => (avail === true ? "" : "bolder")};
 `;
