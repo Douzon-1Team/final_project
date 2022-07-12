@@ -5,7 +5,7 @@ import {MainCalendarError} from "../components/common/alert/alert";
 export const getMain = async ( {empno, accessToken} ) => {
     try {
         return await axios.get(
-            `${process.env.REACT_APP_LOCAL_MAIN_HOST}`,
+            'http://localhost:8080/main',
             {
                 params: {empno},
                 headers: {'Authorization': accessToken}

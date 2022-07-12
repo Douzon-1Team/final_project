@@ -7,6 +7,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import {BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill} from "react-icons/bs";
 
 function EmpTable(props) {
     const data = props.data;
@@ -92,15 +93,16 @@ function EmpTable(props) {
                 </tbody>
             </Table>
 
-            <Pagination>
-                <ArrowBackIosIcon fontSize="medium"
+
+            <Pagination usePagination="10">
+                <BsFillArrowLeftSquareFill fontSize="medium" className="arrow"
                                   onClick={() => previousPage()}
                                   disabled={!canPreviousPage}/>
 
-                <button onClick={() => gotoPage(pageIndex)}>
+                <button className="pagebutton" onClick={() => gotoPage(pageIndex)}>
                     {pageIndex + 1}
                 </button>
-                <ArrowForwardIosIcon fontSize="medium"
+                <BsFillArrowRightSquareFill fontSize="medium" className="arrow"
                                      onClick={() => nextPage()}
                                      disabled={!canNextPage}/>
             </Pagination>

@@ -8,6 +8,7 @@ import {modalStyle} from "../common/Modal/ModalStyle"
 import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
 import {MainStyle} from "../../styles/Globalstyle"
+import {LeavelistStyle} from "../../styles/reqStyle";
 
 let grossHours = 0;
 
@@ -44,6 +45,8 @@ const LeaveList = () => {
         if (data[i].vacationstart >= todayFormat) {
             data[i].check = <input id={i} type="checkbox" name="checkbox"
                                    onClick={() => onClickChecked(data[i].reqid, data[i].vacationstart, data[i].vacationend, data[i].accept, data[i].req)}/>
+        } else {
+            data[i].check = <input type="checkbox" disabled="true" />
         }
     }
     const columns = React.useMemo(
@@ -156,6 +159,7 @@ const LeaveList = () => {
 
     return (
         <MainStyle>
+            <LeavelistStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -215,6 +219,7 @@ const LeaveList = () => {
                 </table>
                 <DeleteButton onClick={() => DeleteCheck()}>삭 제</DeleteButton>
             </Container>
+            </LeavelistStyle>
         </MainStyle>
     );
 };

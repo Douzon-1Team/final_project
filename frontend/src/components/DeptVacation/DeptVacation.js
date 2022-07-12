@@ -20,7 +20,6 @@ function DeptVacation() {
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
     const [schedules, setschedules] = useState([]);
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
 
 
     const calendars = [
@@ -47,7 +46,6 @@ function DeptVacation() {
     const getvacation = async () => {
         await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                console.log(empno);
                 if (vacation.length !== 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno) {

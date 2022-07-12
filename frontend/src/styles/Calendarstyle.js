@@ -103,7 +103,7 @@ const CalendarStyle = styled.div`
     border-radius: 8px;
     width: 12px;
     height: 12px;
-    margin: 1px;
+    margin: 5px 3px 0px 10px;
 }
 .dot2 {
     color: #FFA500;
@@ -111,7 +111,7 @@ const CalendarStyle = styled.div`
     border-radius: 8px;
     width: 12px;
     height: 12px;
-    margin: 1px;
+    margin: 5px 3px 0px 10px;
 }
 .dot3 {
     color: #FF0000;
@@ -119,7 +119,7 @@ const CalendarStyle = styled.div`
     border-radius: 8px;
     width: 12px;
     height: 12px;
-    margin: 1px;
+    margin: 5px 3px 0px 10px;
 }
 .dot4 {
     color: #00AAFF;
@@ -127,7 +127,7 @@ const CalendarStyle = styled.div`
     border-radius: 8px;
     width: 12px;
     height: 12px;
-    margin: 1px;
+    margin: 5px 3px 0px 5px;
 }
 `
 

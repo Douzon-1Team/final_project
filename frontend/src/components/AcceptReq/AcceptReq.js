@@ -5,6 +5,7 @@ import axios from "axios";
 import {style} from "./AcceptReqStyle"
 import {MainStyle} from "../../styles/Globalstyle"
 import {useLocation} from "react-router";
+import {AcceptreqStyle} from "../../styles/reqStyle";
 
 const AcceptReq = () => {
     const {state} = useLocation();
@@ -170,6 +171,7 @@ const AcceptReq = () => {
 
     return (
         <MainStyle>
+            <AcceptreqStyle>
             {modal && (
                 <Modal>
                     <ModalWindow>
@@ -226,6 +228,7 @@ const AcceptReq = () => {
                 })}
                 </tbody>
             </table>
+            </AcceptreqStyle>
         </MainStyle>
     )
 }

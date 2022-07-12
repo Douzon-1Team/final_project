@@ -1,8 +1,14 @@
 import styled from "styled-components";
 
 const DayWorkChartStyle = styled.div`
-    margin-top : 100px;
-    
+    margin-top : 80px;
+    h3 {
+        margin-left: 50px;
+        font-size: 30px;
+    }
+    .Ath3 {
+        margin-left: 150px;
+    }
     .dw{
         z-index: 10;
         position: relative;
@@ -13,14 +19,14 @@ const DayWorkChartStyle = styled.div`
     .ap{
         z-index: 10;
         position: relative;
-        left: 800px;
+        left: 1080px;
         top: -55px;
     }
     
     .vg{
         z-index: 10;
         position: relative;
-        left: 600px;
+        left: 1050px;
         top: -50px
     }
     
