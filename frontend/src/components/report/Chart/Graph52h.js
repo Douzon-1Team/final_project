@@ -39,12 +39,19 @@ const Graph52h = () => {
     }, []);
 
     const [options, setOptions] = useState({
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
         grid: {
             left: '3%',
             right: '4%',
             bottom: '3%',
             containLabel: true
         },
+        legend: {},
         yAxis: {
             type: 'value'
         },
@@ -85,12 +92,12 @@ const Graph52h = () => {
     options.series[0].data = [...attendanceWeek];
 
     return (
-        <DayWorkChartStyle style={{marginLeft: '17%'}}>
+        <DayWorkChartStyle style={{marginLeft: '7%'}}>
             <h3>주간 근무시간 현황</h3>
             {name.length !== 0 ?
                 <ECharts
                     option={options}
-                    style={{width: '700px', height: '500px'}}
+                    style={{width: '1200px', height: '700px'}}
                 />
             : <></> }
         </DayWorkChartStyle>

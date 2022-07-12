@@ -74,7 +74,7 @@ const LeaveList = () => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo},
-                headers:{'Authorization':accessToken}})
+                    headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);

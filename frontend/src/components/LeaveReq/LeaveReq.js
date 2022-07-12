@@ -10,7 +10,8 @@ import axios from "axios";
 import {useSelector} from "react-redux";
 import {useLocation} from "react-router";
 import {MainStyle} from "../../styles/Globalstyle";
-import {AiOutlineWarning} from "react-icons/ai";
+import { AiOutlineWarning } from "react-icons/ai";
+import {LeavereqStyle} from "../../styles/reqStyle";
 
 export const LeaveReq = () => {
 
@@ -194,6 +195,7 @@ export const LeaveReq = () => {
 
     return (
         <MainStyle>
+            <LeavereqStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -364,6 +366,7 @@ export const LeaveReq = () => {
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
+            </LeavereqStyle>
         </MainStyle>
     );
 };

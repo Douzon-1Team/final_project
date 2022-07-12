@@ -120,7 +120,7 @@ const LeaveList = () => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/vacation/list", {params: {'empno': empNo},
-                headers:{'Authorization':accessToken}})
+                    headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -196,19 +196,19 @@ const LeaveList = () => {
                         return (
                             <Row {...row.getRowProps()}>
                                 {row.cells.map(cell => {
-                                        return (
-                                            <td className="line "
-                                                style={{
-                                                    padding: '5px 20px 5px 20px',
-                                                }}
-                                                {...cell.getCellProps()}
-                                            >
-                                                {cell.column.id === "condition" ?
-                                                    <EtcButton className={cell.value}>{cell.render('Cell')}</EtcButton> :
-                                                    <>{cell.render('Cell')}</>
-                                                }
-                                            </td>
-                                        )
+                                    return (
+                                        <td className="line "
+                                            style={{
+                                                padding: '5px 20px 5px 20px',
+                                            }}
+                                            {...cell.getCellProps()}
+                                        >
+                                            {cell.column.id === "condition" ?
+                                                <EtcButton className={cell.value}>{cell.render('Cell')}</EtcButton> :
+                                                <>{cell.render('Cell')}</>
+                                            }
+                                        </td>
+                                    )
                                 })}
                             </Row>
                         )

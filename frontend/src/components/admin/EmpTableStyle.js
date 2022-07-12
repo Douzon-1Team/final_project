@@ -5,6 +5,15 @@ const Container = styled.div`
   margin: auto;
   padding-top: 120px;
   
+  .pagebutton {
+   border-radius: 20px;
+   border: black;
+   color: black;
+   width: 30px;
+   height: 30px;
+   font-size: 15px;
+  }
+  
   h3 {
     display : inline;
     padding-left: 30px
@@ -109,9 +118,12 @@ const Pagination = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  ArrowBackIosIcon, ArrowForwardIosIcon{
-      color: darkgray;
+  margin-right : 170px;
+  .arrow {
+      color: #00AAFF;
+      font-size: 30px;
+      margin : 20px;
+      cursor: pointer;
   }
 `;
 
