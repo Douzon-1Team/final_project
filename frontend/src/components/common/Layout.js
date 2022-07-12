@@ -24,7 +24,6 @@ const Layout = () => {
       setRole(0);
     }
   }, []);
-  console.log(role);
 
   return (
       <>

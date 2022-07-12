@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {FcComboChart, FcList} from "react-icons/fc";
 import {getSetting, settingGraph} from "../../apis/ApiServices";
 
-function EmpPageSetting() {
+function EmpPageSetting(props) {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const [empDept, setEmpDept] = useState(
     { empno: null, deptNo: null, graph: null }
@@ -24,6 +24,7 @@ function EmpPageSetting() {
   const onValidGraph = async ({ empno, deptNo, graph }) => {
     const response = await settingGraph({ empno, deptNo, graph, accessToken });
     if (response) {
+      props.close(false);
       SettingSuccess();
     } else { SettingError(); }
   };

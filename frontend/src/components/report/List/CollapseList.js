@@ -7,8 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import axios from 'axios';
-import ListStyle from '../../../styles/ListStyle';
-import {Header, Row, EtcButton} from '../../admin/EmpTableStyle';
+import {ListStyle, ListHeader} from '../../../styles/ListStyle';
+import {Row, EtcButton} from '../../admin/EmpTableStyle';
 
 function InnerRow({row, month}) {
     const [open, setOpen] = React.useState(false);
@@ -16,7 +16,7 @@ function InnerRow({row, month}) {
     return (
         <>
             <Row>
-                <TableCell>
+                <TableCell className="line">
                     <IconButton
                         aria-label="expand row"
                         size="small"
@@ -25,15 +25,15 @@ function InnerRow({row, month}) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell>{row.empno}</TableCell>
-                <TableCell>{row.empName}</TableCell>
+                <TableCell className="line">{row.empno}</TableCell>
+                <TableCell className="line">{row.empName}</TableCell>
                 {month === null ?
                     <>
-                        <TableCell>{15 - row.remainDay}</TableCell>
-                        <TableCell>{row.remainDay}</TableCell>
-                        <TableCell>{120 - row.remainHour}</TableCell>
-                        <TableCell>{row.remainHour}</TableCell>
-                    </> : <TableCell>{(row.count / month).toFixed(2)}</TableCell>
+                        <TableCell className="line">{15 - row.remainDay}</TableCell>
+                        <TableCell className="line">{row.remainDay}</TableCell>
+                        <TableCell className="line">{120 - row.remainHour}</TableCell>
+                        <TableCell className="line">{row.remainHour}</TableCell>
+                    </> : <TableCell className="line">{(row.count / month).toFixed(2)}</TableCell>
                 }
             </Row>
             <TableRow>
@@ -146,7 +146,7 @@ const CollapseList = (props) => {
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
-                    <Header>
+                    <ListHeader>
                         <TableCell style={{"width":"10%"}}/>
                         {state !== "attendanceProblem" ? <>
                             <TableCell>사번</TableCell>
@@ -161,7 +161,7 @@ const CollapseList = (props) => {
                             <TableCell style={{width:'30%'}}>평균</TableCell>
                         </>
                         }
-                    </Header>
+                    </ListHeader>
                 </TableHead>
                 <TableBody>
                     {rows2.map((row) => (

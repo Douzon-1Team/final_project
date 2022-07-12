@@ -17,7 +17,7 @@ import {
     LeftContainer,
     ProfileImg,
     IconBox,
-    RightContainer, TableBox, InfoBox, InfoBox2, Table, RedBtn, TableBox2, PwdBox, BtnBox, Button, ProfileBox
+    RightContainer, TableBox, InfoBox, InfoBox2, Table, RedBtn, PwdBox, BtnBox, Button, ProfileBox
 } from '../../styles/ProfileStyle';
 
 function Profile() {

@@ -51,8 +51,8 @@ function EmpPwd() {
             </tr>
           </Table>
           <BtnBox>
-            <Button type="submit">저 장</Button>&nbsp;&nbsp;
-            <Button type="reset">취 소</Button>
+            <Button type="submit">저 장</Button>
+            {/*<Button type="reset">취 소</Button>*/}
           </BtnBox>
         </TableBox>
       </form>

@@ -1,18 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTable} from 'react-table';
 import {useSelector} from "react-redux";
 import axios from "axios";
-import Layout from "../common/Layout";
 import {style} from "./ListStyle";
 import {modalStyle} from "../common/Modal/ModalStyle"
-import {useNavigate} from "react-router-dom";
 import dayjs from "dayjs";
 import {MainStyle} from "../../styles/Globalstyle"
-import {LeavelistStyle} from "../../styles/reqStyle";
+import {EtcButton, Row} from '../admin/EmpTableStyle';
+import {ListStyle, ListHeader, ListHead} from '../../styles/ListStyle';
 
 let grossHours = 0;
 
 const LeaveList = () => {
+    const {DeleteButton, Title} = style;
+    const {Modal, ModalWindow, ModalTitle, YesButton, NoButton} = modalStyle;
     const [loadingData, setLoadingData] = useState(true);
     const [data, setData] = useState([]);
     const [checkedReqId, setCheckedReqId] = useState([]);
@@ -22,7 +23,7 @@ const LeaveList = () => {
 
     function onClickChecked(reqid, start, end, accept, req) {
         let hours = 0;
-        if ((start >= todayFormat) && (accept == 1)) {
+        if ((start >= todayFormat) && (accept === 1)) {
             if ((req === '오전반차') || (req === '오후반차')) {
                 hours = 4;
             } else if (req === '휴가') {
@@ -49,6 +50,7 @@ const LeaveList = () => {
             data[i].check = <input type="checkbox" disabled="true" />
         }
     }
+
     const columns = React.useMemo(
         () => [
             {
@@ -100,23 +102,25 @@ const LeaveList = () => {
     for (let i = 0; i < data.length; i++) {
         if (data[i].reject === 1) data[i].condition = "반려됨";
         else if (data[i].accept === 1) data[i].condition = "승인";
-        else data[i].condition = "결제 대기중";
+        else data[i].condition = "대기중";
     }
     for (let i = 0; i < data.length; i++) {
         if (data[i].req === "휴가") {
             data[i].days = (Date.parse(data[i].vacationend) - Date.parse(data[i].vacationstart)) / (1000 * 60 * 60 * 24) + 1;
             data[i].days = Math.ceil(data[i].days);
             data[i].days = data[i].days + ' D';
+            data[i].hours = "ㅡ";
         } else {
             data[i].hours = (Date.parse(data[i].vacationend) - Date.parse(data[i].vacationstart)) / (1000 * 60 * 60);
             data[i].hours = data[i].hours + ' H';
+            data[i].days = "ㅡ";
         }
     }
     useEffect(() => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/vacation/list", {params: {'empno': empNo},
-                headers:{'Authorization':accessToken}})
+                    headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -135,7 +139,6 @@ const LeaveList = () => {
         rows,
         prepareRow,
     } = useTable({columns, data})
-    let navigate = useNavigate();
     const [modalSwitch, setModalSwitch] = useState(false);
 
     function DeleteCheck() {
@@ -150,6 +153,8 @@ const LeaveList = () => {
                     reqId: checkedReqId[i],
                     empNo: empNo,
                     grossHours: grossHours,
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((res) => {
                 })
@@ -159,7 +164,6 @@ const LeaveList = () => {
 
     return (
         <MainStyle>
-            <LeavelistStyle>
             {modalSwitch && (
                 <Modal>
                     <ModalWindow>
@@ -169,60 +173,51 @@ const LeaveList = () => {
                     </ModalWindow>
                 </Modal>
             )}
-            <Container>
+            <ListStyle>
                 <Title> 휴가 신청 목록 </Title>
-                <table {...getTableProps()}
-                       style={{
-                           textAlign: 'center',
-                       }}
+                <table className="MuiTable-root" aria-label="simple table"
+                       {...getTableProps()}
+                       style={{"marginTop":'10px'}}
                 >
                     <thead>
                     {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        <ListHeader {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th
-                                    {...column.getHeaderProps()}
-                                    style={{
-                                        padding: '5px 20px 5px 20px',
-                                        background: 'aliceblue',
-                                        color: 'black',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
+                                <ListHead {...column.getHeaderProps()}>
                                     {column.render('Header')}
-                                </th>
+                                </ListHead>
                             ))}
-                        </tr>
+                        </ListHeader>
                     ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
                     {rows.map(row => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <Row {...row.getRowProps()}>
                                 {row.cells.map(cell => {
                                     return (
-                                        <td
-                                            {...cell.getCellProps()}
+                                        <td className="line "
                                             style={{
                                                 padding: '5px 20px 5px 20px',
                                             }}
+                                            {...cell.getCellProps()}
                                         >
-                                            {cell.render('Cell')}
+                                            {cell.column.id === "condition" ?
+                                                <EtcButton className={cell.value}>{cell.render('Cell')}</EtcButton> :
+                                                <>{cell.render('Cell')}</>
+                                            }
                                         </td>
                                     )
                                 })}
-                            </tr>
+                            </Row>
                         )
                     })}
                     </tbody>
                 </table>
                 <DeleteButton onClick={() => DeleteCheck()}>삭 제</DeleteButton>
-            </Container>
-            </LeavelistStyle>
+            </ListStyle>
         </MainStyle>
     );
 };
-const {DeleteButton, Title, Container} = style;
-const {Modal, ModalWindow, ModalTitle, YesButton, NoButton} = modalStyle;
 export default LeaveList;

@@ -5,7 +5,8 @@ import axios from "axios";
 import {style} from "./AcceptReqStyle"
 import {MainStyle} from "../../styles/Globalstyle"
 import {useLocation} from "react-router";
-import {AcceptreqStyle} from "../../styles/reqStyle";
+import {Row, Cell} from '../admin/EmpTableStyle'
+import {ListHead, ListHeader, ListStyle} from "../../styles/ListStyle";
 
 const AcceptReq = () => {
     const {state} = useLocation();
@@ -26,7 +27,7 @@ const AcceptReq = () => {
         async function getEmpNo() {
             await axios
                 .get("http://localhost:8080/manager/deptno", {
-                     params: {'empno': empNo} ,
+                    params: {'empno': empNo} ,
                     headers :  {'Authorization' : accessToken}})
                 .then((res) => {
                     for (let i = 0; i < res.data.length; i++) {
@@ -62,15 +63,15 @@ const AcceptReq = () => {
         if (data[i].endFormat2 == null) data[i].endFormat2 = '';
         data[i].startFormat = data[i].startFormat1 + data[i].startFormat2;
         data[i].endFormat = data[i].endFormat1 + data[i].endFormat2;
-        data[i].accept = <input type='button' value='승인'
-                                style={{background: '#00aaff', color: 'white', border: '0px', cursor: 'pointer'}}
-                                onClick={() => acceptReq(data[i].reqid, data[i].startFormat, data[i].endFormat, data[i].req)}/>
-        data[i].reject = <input type='button' value='반려'
-                                style={{background: 'red', color: 'white', border: '0px', cursor: 'pointer'}}
-                                onClick={() => {
-                                    setModal(!modal);
-                                    setTargetReqId(data[i].reqid)
-                                }}/>
+        data[i].accept = <Button3 type='button' value='승인'
+                                  style={{background: '#00aaff', color: 'white', border: '0px', cursor: 'pointer'}}
+                                  onClick={() => acceptReq(data[i].reqid, data[i].startFormat, data[i].endFormat, data[i].req)}/>
+        data[i].reject = <Button3 type='button' value='반려'
+                                  style={{background: 'red', color: 'white', border: '0px', cursor: 'pointer'}}
+                                  onClick={() => {
+                                      setModal(!modal);
+                                      setTargetReqId(data[i].reqid)
+                                  }}/>
 
         if(data[i].rank==='STAFF')data[i].rank='사원';
         else if(data[i].rank==='SENIOR_STAFF')data[i].rank='주임';
@@ -138,7 +139,9 @@ const AcceptReq = () => {
                 .post("http://localhost:8080/accept/vacation", {
                     'reqid': reqid,
                     'empNo': empNo,
-                    'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8 * ((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24) + 1) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
+                    'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8*Math.ceil((Date.parse(end) - Date.parse(start))/(1000*60*60*24)) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -150,6 +153,8 @@ const AcceptReq = () => {
                     'start': start,
                     'end': end,
                     'temp': end.substring(0, 10),
+                },{
+                    headers:{'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -162,6 +167,8 @@ const AcceptReq = () => {
             .post("http://localhost:8080/attendance/rejectreq", {
                 'reqid': targetReqId,
                 'reason': reason,
+            },{
+                headers:{'Authorization': accessToken}
             })
             .then((response) => {
             })
@@ -171,7 +178,6 @@ const AcceptReq = () => {
 
     return (
         <MainStyle>
-            <AcceptreqStyle>
             {modal && (
                 <Modal>
                     <ModalWindow>
@@ -182,55 +188,50 @@ const AcceptReq = () => {
                     </ModalWindow>
                 </Modal>
             )}
-            <table {...getTableProps()}
-                   style={{
-                       textAlign: 'center',
-                   }}
-            >
-                <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
-                            <th
-                                {...column.getHeaderProps()}
-                                style={{
-                                    padding: '5px 20px 5px 20px',
-                                    background: 'aliceblue',
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                }}
-                            >
-                                {column.render('Header')}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
-                    prepareRow(row)
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map(cell => {
-                                return (
-                                    <td
-                                        {...cell.getCellProps()}
-                                        style={{
-                                            padding: '5px 20px 5px 20px',
-                                        }}
-                                    >
-                                        {cell.render('Cell')}
-                                    </td>
-                                )
-                            })}
-                        </tr>
-                    )
-                })}
-                </tbody>
-            </table>
-            </AcceptreqStyle>
+            <ListStyle>
+                <Title> 부서원 근태 관리 </Title>
+                <table
+                    {...getTableProps()}
+                    className="MuiTable-root" aria-label="simple table"
+                    style={{"marginTop":'10px'}}
+                >
+                    <thead>
+                    {headerGroups.map(headerGroup => (
+                        <ListHeader {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.map(column => (
+                                <ListHead {...column.getHeaderProps()}>
+                                    {column.render('Header')}
+                                </ListHead>
+                            ))}
+                        </ListHeader>
+                    ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                    {rows.map(row => {
+                        prepareRow(row)
+                        return (
+                            <Row {...row.getRowProps()}>
+                                {row.cells.map(cell => {
+                                    return (
+                                        <Cell
+                                            {...cell.getCellProps()}
+                                            className="line "
+                                            style={{
+                                                padding: '5px 20px 5px 20px',
+                                            }}
+                                        >
+                                            {cell.render('Cell')}
+                                        </Cell>
+                                    )
+                                })}
+                            </Row>
+                        )
+                    })}
+                    </tbody>
+                </table>
+            </ListStyle>
         </MainStyle>
     )
 }
-const {Modal, ModalWindow, Title, Reason, Button1, Button2} = style;
+const {Modal, ModalWindow, Title, Reason, Button1, Button2, Button3} = style;
 export default AcceptReq;
