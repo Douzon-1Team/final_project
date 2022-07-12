@@ -163,7 +163,7 @@ export const SettingSuccess = () => {
           html: <i>ALL IN ONE</i>,
           icon: 'success',
           confirmButtonColor: '#00AAFF',
-      })
+      });
 }
 
 export const SettingError = () => {
