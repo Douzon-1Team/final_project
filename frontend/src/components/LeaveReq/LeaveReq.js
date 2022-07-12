@@ -13,6 +13,7 @@ import {MainStyle} from "../../styles/Globalstyle";
 import {AiOutlineWarning} from "react-icons/ai";
 import {LeaveReqSuccess} from "../common/alert/alert";
 
+
 export const LeaveReq = () => {
 
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
@@ -308,6 +309,7 @@ export const LeaveReq = () => {
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
+            </LeavereqStyle>
         </MainStyle>
     );
 };

@@ -79,6 +79,7 @@ export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken})
                 response.data[i].body = response.data[i].context;
                 response.data[i].title = "결근";
             }
+            console.log(response.data[i]);
             _.merge(response.data[i], {isVisible: true, id: i+1,
               category: "time",
               start: new Date(response.data[i].date),

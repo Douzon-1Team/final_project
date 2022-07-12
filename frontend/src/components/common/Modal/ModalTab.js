@@ -32,15 +32,15 @@ function a11yProps(index) {
   return { d: `simple-tab-${index}`, 'aria-controls': `simple-tabpanel-${index}`, };
 }
 
-export default function ModalTab() {
+export default function ModalTab(props) {
   const empRole = useSelector( (state) => state.EMP_INFO.empInfo[2]);
-  const [time, setTime] = useState([]);
+  const [time, setTime] = useState(0);
   const handleChange = (event, newTime) => { setTime(newTime); };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={time} onChange={handleChange} variant="scrollable" scrollButtons="on" indicatorColor="primary" textColor="primary">
+        <Tabs value={time} onChange={handleChange} variant="scrollable" scrollButtons="auto" indicatorColor="primary" textColor="primary">
           <Tab label="근무시간 선택" icon={<FaUserClock/>} {...a11yProps(0)} />
           { empRole !== "ROLE_USER" ? <Tab label="부서 근무시간 설정" icon={<WiTime9/>} {...a11yProps(1)} /> : null }
           { empRole !== "ROLE_USER" ? <Tab label="페이지 보기 방식" icon={<GoGraph/>} {...a11yProps(2)} /> : null }
@@ -49,17 +49,17 @@ export default function ModalTab() {
 
       {/* 근무시간 선택 */}
       <TabPanel value={time} index={0}>
-        <EmpWorktimeChoice />
+        <EmpWorktimeChoice close={props.close}/>
       </TabPanel>
 
       {/* 근무시간 설정 */}
       <TabPanel value={time} index={1}>
-        <EmpWorktimeSetting />
+        <EmpWorktimeSetting close={props.close}/>
       </TabPanel>
 
       {/* 페이지 보기 방식 */}
       <TabPanel value={time} index={2}>
-        <EmpPageSetting />
+        <EmpPageSetting close={props.close}/>
       </TabPanel>
     </Box>
   );

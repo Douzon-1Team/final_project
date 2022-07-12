@@ -127,7 +127,7 @@ function VacationGraph() {
   options.series[3].data = [...remainhour];
 
   return (
-    <DayWorkChartStyle style={{marginLeft:'15%'}}>
+    <DayWorkChartStyle style={{marginLeft:'5%'}}>
       <h3>부서원 연차 사용 현황</h3>
       <Button className="vg" variant = "outlined"
               onClick={() => setStatus((prev) => !prev)}>
@@ -136,7 +136,7 @@ function VacationGraph() {
     {remainhour.length !== 0 && status ?
             <ECharts
               option={options}
-              style={{width: '700px', height: '500px'}}
+              style={{width: '1200px', height: '650px'}}
             />
       : <CollapseList state={response}/> }
     </DayWorkChartStyle>

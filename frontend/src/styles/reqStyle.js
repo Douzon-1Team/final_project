@@ -7,7 +7,6 @@ const LeavereqStyle = styled.div`
         margin-top: 50px;
     }
 `
-
 const AttendancereqStyle = styled.div`
     .gNsbHS {
         width: 900px;

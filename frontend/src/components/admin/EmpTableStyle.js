@@ -5,6 +5,15 @@ const Container = styled.div`
   margin: auto;
   padding-top: 120px;
   
+  .pagebutton {
+   border-radius: 20px;
+   border: black;
+   color: black;
+   width: 30px;
+   height: 30px;
+   font-size: 15px;
+  }
+  
   h3 {
     display : inline;
     padding-left: 30px
@@ -109,9 +118,12 @@ const Pagination = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  ArrowBackIosIcon, ArrowForwardIosIcon{
-      color: darkgray;
+  margin-right : 170px;
+  .arrow {
+      color: #00AAFF;
+      font-size: 30px;
+      margin : 20px;
+      cursor: pointer;
   }
 `;
 
@@ -129,9 +141,14 @@ const EtcButton = styled.button`
         color: white;
     }
     &.휴가{background: #86d3fb;}
+    
     &.오전반차{background: #Fbe086;}
     &.오후반차{background: #Fbc386;}
     &.시간연차{background: #Abea9b;}
+    
+    &.승인{background: #5dbb63; color: white;}
+    &.대기중{background: #f2d06b; color: white;}
+    &.반려{background: #ff7a7b; color: white;}
 `;
 
 export {Container, Table, Header, Button, Row, Cell, Order, Pagination, EtcButton};

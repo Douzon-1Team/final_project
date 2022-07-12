@@ -16,6 +16,7 @@ import {useSelector} from "react-redux";
 function DeptVacation() {
     const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const empno = useSelector((state) => state.EMP_INFO.empInfo[0]);
+    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
     const navigate = useNavigate();
     const start = new Date();
     const end = new Date(new Date().setMinutes(start.getMinutes() + 30));
@@ -46,7 +47,6 @@ function DeptVacation() {
     const getvacation = async () => {
         await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                console.log(empno);
                 if (vacation.length !== 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno) {

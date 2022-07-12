@@ -164,8 +164,8 @@ const AttendanceProblem = () => {
     }
 
     return (
-        <DayWorkChartStyle style={{marginLeft:'8%'}}>
-            <h3>부서별 이상근태 현황</h3>
+        <DayWorkChartStyle style={{marginLeft:'2%'}}>
+            <h3 className="Ath3">부서별 이상근태 현황</h3>
             <Button className="ap" variant = "outlined"
                     onClick={() => setStatus((prev) => !prev)}>
                 {status ? "목록형" : "차트형"}
@@ -191,14 +191,14 @@ const AttendanceProblem = () => {
                         {handleView === false ?
                             <ECharts
                                 option={options}
-                                style={{width: "900px", height:"720px"}}
+                                style={{width: "1300px", height:"720px"}}
                             />
                             :
                             <>
                                 {deptmem.length !== 0 ?
                                     <ECharts
                                         option={option}
-                                        style={{width: "900px", height:"720px"}}
+                                        style={{width: "1300px", height:"720px"}}
                                     />
                                     : <></> }
                             </>

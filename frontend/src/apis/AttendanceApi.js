@@ -10,7 +10,6 @@ export const getAttendance = async ( {empno, accessToken} ) => {
             }
         );
     } catch (error) {
-        // TODO : alert 에러처리
         // DeptVacationError();
     }
 };

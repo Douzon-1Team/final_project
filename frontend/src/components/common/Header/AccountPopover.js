@@ -14,22 +14,6 @@ import {TbLogout} from "react-icons/tb"
 import {AiFillSetting} from "react-icons/ai"
 import {getProfile} from "../../../apis/ApiServices";
 
-
-// ----------------------------------------------------------------------
-
-// const MENU_OPTIONS = [
-//   {
-//     label: '마이프로필',
-//     linkTo: '/profile',
-//   },
-//   {
-//     label: '환경설정',
-//     linkTo: '#',
-//   },
-// ];
-
-// ----------------------------------------------------------------------
-
 export default function AccountPopover() {
   const empInfo = useSelector( (state) => state.EMP_INFO.empInfo );
   const navigate = useNavigate();

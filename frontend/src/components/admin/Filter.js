@@ -23,7 +23,7 @@ const SelectFilter = ({column}) => {
 
     return (
         <span>
-            <select style={{height: "22px", width: "75%"}}
+            <select style={{height: "22px", width: "90%"}}
                     onChange={e => setFilter(e.target.value)}>
                 <option value="">전체 선택</option>
                 {options.map(op => (

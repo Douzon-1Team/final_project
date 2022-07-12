@@ -1,10 +1,13 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTable} from 'react-table';
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {style} from "./ListStyle"
 import {Modal, ModalTitle, ModalWindow, NoButton, YesButton} from "../common/Modal/ModalStyle";
-import {MainStyle} from "../../styles/Globalstyle"
+import {MainStyle} from "../../styles/Globalstyle";
+import {EtcButton, Row} from '../admin/EmpTableStyle';
+import {ListStyle, ListHeader, ListHead} from "../../styles/ListStyle";
+
 
 const LeaveList = () => {
     const [loadingData, setLoadingData] = useState(true);
@@ -20,6 +23,7 @@ const LeaveList = () => {
     for (let i = 0; i < data.length; i++) {
         data[i].check = <input id={i} type="checkbox" name="checkbox" onClick={() => onClickChecked(data[i].reqid)}/>
     }
+
     const columns = React.useMemo(
         () => [
             {
@@ -70,7 +74,7 @@ const LeaveList = () => {
         async function getData() {
             await axios
                 .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo},
-                headers:{'Authorization':accessToken}})
+                    headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);
                     setLoadingData(false);
@@ -123,59 +127,53 @@ const LeaveList = () => {
                     </ModalWindow>
                 </Modal>
             )}
-            <Container>
+            <ListStyle>
                 <Title> 근태조정 신청 목록 </Title>
                 <table {...getTableProps()}
-                       style={{
-                           textAlign: 'center',
-                       }}
+                       className="MuiTable-root" aria-label="simple table"
+                       style={{"marginTop":'10px'}}
                 >
                     <thead>
                     {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
+                        <ListHeader {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                                <th
-                                    {...column.getHeaderProps()}
-                                    style={{
-                                        padding: '5px 20px 5px 20px',
-                                        background: 'aliceblue',
-                                        color: 'black',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
+                                <ListHead {...column.getHeaderProps()}>
                                     {column.render('Header')}
-                                </th>
+                                </ListHead>
                             ))}
-                        </tr>
+                        </ListHeader>
                     ))}
                     </thead>
                     <tbody {...getTableBodyProps()}>
                     {rows.map(row => {
                         prepareRow(row)
                         return (
-                            <tr {...row.getRowProps()}>
+                            <Row {...row.getRowProps()}>
                                 {row.cells.map(cell => {
                                     return (
-                                        <td
-                                            {...cell.getCellProps()}
+                                        <td className="line "
                                             style={{
                                                 padding: '5px 20px 5px 20px',
                                             }}
+                                            {...cell.getCellProps()}
                                         >
-                                            {cell.render('Cell')}
+                                            {cell.column.id === "condition" ?
+                                                <EtcButton className={cell.value}>{cell.render('Cell')}</EtcButton> :
+                                                <>{cell.render('Cell')}</>
+                                            }
                                         </td>
                                     )
                                 })}
-                            </tr>
+                            </Row>
                         )
                     })}
                     </tbody>
                 </table>
                 <DeleteButton onClick={() => DeleteCheck()}>삭 제</DeleteButton>
-            </Container>
+            </ListStyle>
         </MainStyle>
     );
 };
 
-const {DeleteButton, Title, Container,} = style;
+const {DeleteButton, Title} = style;
 export default LeaveList;
