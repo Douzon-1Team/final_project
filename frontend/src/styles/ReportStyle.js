@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
-const ReportStyle = styled.p`
+const ReportStyle = styled.div`
         cursor: pointer;
+        display: flex;
+        
         .css-1t6e9jv-MuiCardActions-root {
             display: contents;
         }

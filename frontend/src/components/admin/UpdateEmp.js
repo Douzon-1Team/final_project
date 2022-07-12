@@ -158,7 +158,7 @@ function Profile() {
                      <Tab><TabTitle>개인정보</TabTitle></Tab>
                      {!isNew && <Tab><TabTitle>비밀번호 변경</TabTitle></Tab>}
                      {!isNew &&<RedBtn type="button" {...register('resigned')} onClick={() => {resign()}}>퇴사자 등록</RedBtn> }
-                     {!isNew && <RedBtn type="button" onClick={() => deleteInfo}>사원 삭제</RedBtn>}
+                     {!isNew && <RedBtn type="button" onClick={() => {deleteInfo()}}>사원 삭제</RedBtn>}
                  </TabList></TabBox>
 
                  <TabPanel><TableBox>
