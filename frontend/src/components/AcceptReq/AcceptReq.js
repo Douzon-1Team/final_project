@@ -185,8 +185,8 @@ const AcceptReq = () => {
                     <ModalWindow>
                         <Title>반려 사유</Title>
                         <Reason name="reason" onChange={handleChangeReason}/>
-                        <Button1 onClick={() => setModal(!modal)}>취소</Button1>
-                        <Button2 onClick={() => rejectReq()}>확인</Button2>
+                        <Button1 onClick={() => setModal(!modal)}>취 소</Button1>
+                        <Button2 onClick={() => rejectReq()}>확 인</Button2>
                     </ModalWindow>
                 </Modal>
             )}
