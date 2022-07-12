@@ -74,10 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/attendance/**", "/vacation/**", "/profile/**","/main/**", "/user/**", "/setting/**").hasAnyRole("USER", "MANAGER", "ADMIN")
                 .antMatchers("/**").permitAll()  // 그외 나머지 경로 요청은 누구나 접근 가능함
 
-                .and()
-                .requiresChannel()
-                .antMatchers("/")
-                .requiresSecure()
+//                .and()
+//                .requiresChannel()
+//                .antMatchers("/logout", "/")
+//                .requiresSecure()
 
                 .and()
                 .logout()
