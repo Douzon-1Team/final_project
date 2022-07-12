@@ -4,25 +4,17 @@ const ListStyle = styled.div`
     h2{
         margin-top: 110px;
         padding-left: 25px;
+        margin: auto;
     }
-
-    width: 70%;
-
+    
     .MuiTable-root[aria-label="collapsible table"], .MuiTable-root[aria-label="simple table"]{
-        margin-top: 10px;
+      margin: auto;
       table-layout: fixed;
       padding: 0 8px;
       border-collapse: separate;
       border-spacing: 0 8px;
       
-      tr:first-of-type{ width:5%; }
-      th{
-        background: #00AAFF;
-        color: white;
-        font-weight: bold;
-      }
-      
-      td{
+      .line{
           overflow: hidden;
           text-overflow: ellipsis;
           border-bottom: 0.5px solid #adb1b9;
@@ -72,4 +64,16 @@ const ListStyle = styled.div`
    
 `
 
-export default ListStyle;
+const ListHeader = styled.tr`
+    background: #00AAFF;
+    color: white;
+    font-weight: bold;
+`;
+
+const ListHead = styled.td`
+    height: 3rem;
+    min-width: 8rem;
+    :first-of-type{width: 30px;}
+`;
+
+export {ListStyle, ListHeader, ListHead};

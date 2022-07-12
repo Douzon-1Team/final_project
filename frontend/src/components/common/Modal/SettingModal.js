@@ -36,7 +36,7 @@ export default function SettingModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            <ModalTab />
+            <ModalTab close={setOpen}/>
           </Typography>
         </Box>
       </Modal>

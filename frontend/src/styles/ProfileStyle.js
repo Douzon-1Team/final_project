@@ -223,11 +223,12 @@ const IconBox = styled.div`
     align-items: center;
     float: left;
     margin-left: 22%;
+    margin-bottom: 41px;
     bottom: 17vh;
-    background: white; 
+    background: white;
     padding: 10px;
-    &:hover { cursor: pointer; } 
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);  
+    &:hover { cursor: pointer; }
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
 `;
 
 const QrBox = styled.div` 

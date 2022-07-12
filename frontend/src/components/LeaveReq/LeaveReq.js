@@ -13,6 +13,7 @@ import {MainStyle} from "../../styles/Globalstyle";
 import {AiOutlineWarning} from "react-icons/ai";
 import {LeaveReqSuccess} from "../common/alert/alert";
 
+
 export const LeaveReq = () => {
 
     const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터

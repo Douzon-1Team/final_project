@@ -1,20 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = "http://localhost:8080";
-const URL_LOGIN = `${BASE_URL}/login`;
-const URL_LOGOUT = `${BASE_URL}/logout`;
-const URL_PROFILE = `${BASE_URL}/profile/`;
-const URL_SETTING = `${BASE_URL}/setting/`;
-const URL_UPDATE_PWD = `${BASE_URL}/profile/updatePwd`;
-const URL_UPDATE_WORKTIME_CHOICE = `${BASE_URL}/setting`;
-const URL_UPDATE_WORKTIME_SETTING = `${BASE_URL}/setting/time`;
-const URL_UPDATE_GRAPH_SETTING = `${BASE_URL}/setting/graph`;
-const URL_DEPT_VACATION = `${BASE_URL}/report/dvacation-status`;
-
 // 회원 로그인
 export const loginUser = async ( {empno, password} ) => {
   return await axios.post(
-    URL_LOGIN,
+      `http://localhost:8080/login`,
     { empno: empno, password: password }
   ).then ((response) => {
     return response;
@@ -24,7 +13,7 @@ export const loginUser = async ( {empno, password} ) => {
 // 회원 로그아웃
 export const logoutUser = async () => {
   return await axios.post(
-    URL_LOGOUT,
+      `http://localhost:8080/logout`,
   ).then ((response) => {
     return response;
   }).catch(errors => { console.log(errors); });
@@ -33,7 +22,7 @@ export const logoutUser = async () => {
 // 사원의 정보 조회
 export const getProfile = async ( {empNo, accessToken} ) => {
   return await axios.get(
-      URL_PROFILE+`${empNo}`,
+      `http://localhost:8080/profile/`+`${empNo}`,
     {
       headers: {
         'Authorization': accessToken
@@ -46,7 +35,7 @@ export const getProfile = async ( {empNo, accessToken} ) => {
 // 부서 환경설정 세팅
 export const getSetting = async ({empNo, accessToken} ) => {
   return await axios.get(
-    URL_SETTING+`${empNo}`,
+      `http://localhost:8080/setting/`+`${empNo}`,
     {
       headers: {
         'Authorization': accessToken
@@ -59,7 +48,7 @@ export const getSetting = async ({empNo, accessToken} ) => {
 // 부서원 연차 현황
 export const getDvacation = async ( {empno, accessToken} ) => {
   return await axios.get(
-    URL_DEPT_VACATION,
+      `http://localhost:8080/report/dvacation-status`,
     {
         params: {empno},
       headers: {
@@ -73,7 +62,7 @@ export const getDvacation = async ( {empno, accessToken} ) => {
 // 비밀번호 변경
 export const updatePwd = async ( {empno, pwd, newPwd, chkPwd, accessToken} ) => {
   return await axios.post(
-    URL_UPDATE_PWD,
+      `http://localhost:8080/profile/updatePwd`,
     { empno: empno, pwd: pwd, newPwd: newPwd, chkPwd: chkPwd },
     {
       headers: {
@@ -87,7 +76,7 @@ export const updatePwd = async ( {empno, pwd, newPwd, chkPwd, accessToken} ) => 
 // 근무시간 선택
 export const settingTimeChoice = async ( { empno, deptNo, flexible, accessToken } ) => {
   return await axios.post(
-    URL_UPDATE_WORKTIME_CHOICE,
+      `http://localhost:8080/setting`,
     { empno: empno, deptNo: deptNo, flexible: flexible, },
     {
       headers: {
@@ -103,7 +92,7 @@ export const settingTimeChoice = async ( { empno, deptNo, flexible, accessToken 
 // 근무시간 설정
 export const settingTime = async ( {empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF, accessToken} ) => {
   return await axios.post(
-    URL_UPDATE_WORKTIME_SETTING,
+      `http://localhost:8080/setting/time`,
     { empno: empno, deptNo: deptNo,
             getToWorkTimeSet: getToWorkTimeSet, getOffWorkTimeSet: getOffWorkTimeSet,
             getToWorkTimeSetF: getToWorkTimeSetF, getOffWorkTimeSetF: getOffWorkTimeSetF },
@@ -121,7 +110,7 @@ export const settingTime = async ( {empno, deptNo, getToWorkTimeSet, getOffWorkT
 // 페이지보기 형식 설정
 export const settingGraph = async ( {empno, deptNo, graph, accessToken} ) => {
   return await axios.post(
-    URL_UPDATE_GRAPH_SETTING,
+      `http://localhost:8080/setting/graph`,
     { empno: empno, deptNo: deptNo, graph: graph },
     {
       headers: {

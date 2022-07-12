@@ -35,7 +35,7 @@ function Calendar() {
     // 정상출근
     {
       id: "1", // id로 schedules와 연동되므로 순차적으로 올리기
-      name: "출근",
+      name: "근무",
       color: "#ffffff",
       bgColor: "#03bd9e",
       dragBgColor: "#03bd9e",
@@ -93,7 +93,7 @@ function Calendar() {
     const { calendarId, id } = e.schedule;
     const el = cal.current.calendarInst.getElement(id, calendarId);
 
-    if (e.schedule.title !== "출근" && new Date() > e.schedule.start) {
+    if (e.schedule.title.includes("근무") === false && new Date() > e.schedule.start) {
       const areq = [];
       areq.push(e.schedule.title);
       areq.push(e.schedule.start);
@@ -108,7 +108,7 @@ function Calendar() {
         });
       }
     } else { // 신청한 휴가는 목록으로 이동
-      if (e.schedule.title !== "출근" && new Date() < e.schedule.start) {
+      if (e.schedule.title.includes("근무") === false && new Date() < e.schedule.start) {
         let check2 = e.schedule.title,substring = "결제완료";
         if (state === null && check2.includes(substring) !== true)
         navigate('/leavelist');
@@ -132,14 +132,20 @@ function Calendar() {
 
     if (new Date() > scheduleData.start) {
     } else {
+      let count = 0;
       // 금일 이후 달력 클릭시 휴가신청 페이지로 넘어감
-      if (state === null) {
+      for (let k = 0; k < schedules.length; k++) {
+        if (schedules[k].date === year+"-"+month+"-"+day) {
+          count += 1;
+        } else if (schedules[k].datestart === year+"-"+month+"-"+day) {
+          count += 1;
+        }
+      }
+      if (state === null & count === 0) {
         const start = scheduleData.start;
         navigate("/leavereq", {
           state: start,
         });
-      } else {
-        // 근태관리자가 사원꺼 클릭중인데 어칼지?
       }
     }
   };
@@ -285,7 +291,7 @@ function Calendar() {
                 </Button>
               </div>
               <div className="headerdot">
-              <BsDot className="dot1" />출근
+              <BsDot className="dot1" />근무
               <BsDot className="dot2" />지각
               <BsDot className="dot3" />결근
               <BsDot className="dot4" />연차

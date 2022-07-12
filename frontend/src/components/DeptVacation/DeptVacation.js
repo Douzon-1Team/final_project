@@ -46,7 +46,6 @@ function DeptVacation() {
     const getvacation = async () => {
         await getMain({empno, accessToken}).then((res) => {
                 const vacation = res.data;
-                console.log(empno);
                 if (vacation.length !== 0) {
                     for (let i = 0; i < vacation.length; i++) {
                         if (vacation[i].empno === empno) {
