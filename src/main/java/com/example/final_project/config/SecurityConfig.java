@@ -56,10 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity https) throws Exception {
 
-        http.httpBasic().disable()  // rest api 고려해서 기본 설정은 해제
-                .csrf().ignoringAntMatchers("/h2-console/**").disable()  // csrf 보안 토큰 해제 처리
+        https.httpBasic().disable()  // rest api 고려해서 기본 설정은 해제
+                .csrf().disable()  // csrf 보안 토큰 해제 처리
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이기에 세션 사용하지 않음 설정
 
                 .and()
@@ -73,6 +73,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/report/**", "/accept/**", "/manager/**").hasAnyRole("MANAGER", "ADMIN")
                 .antMatchers("/attendance/**", "/vacation/**", "/profile/**","/main/**", "/user/**", "/setting/**").hasAnyRole("USER", "MANAGER", "ADMIN")
                 .antMatchers("/**").permitAll()  // 그외 나머지 경로 요청은 누구나 접근 가능함
+
+                .and()
+                .requiresChannel()
+                .antMatchers("/logout", "/")
+                .requiresSecure()
 
                 .and()
                 .logout()
