@@ -309,7 +309,6 @@ export const LeaveReq = () => {
                     <Button2_2 onClick={() => navigate("/main")}>취 소</Button2_2>
                 </ButtonBox>
             </Container>
-            </LeavereqStyle>
         </MainStyle>
     );
 };
