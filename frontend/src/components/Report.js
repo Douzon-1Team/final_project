@@ -57,7 +57,7 @@ const Report = () => {
     return (
       <MainStyle>
         <ReportStyle>
-            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/52Gr")}>
+            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/52Gr")}>
                 <IoMdStats size={200} className="icon" />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
@@ -65,7 +65,7 @@ const Report = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/weekworkGr", {
+            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/weekworkGr", {
                 state: daywork,
             })}>
                 <StackedBarChartIcon sx={{ fontSize: 200, marginLeft: 8 }} />
@@ -75,7 +75,7 @@ const Report = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/vacationGr")}>
+            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/vacationGr")}>
                 <BsBarChartSteps size={200} className="icon" />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
@@ -83,7 +83,7 @@ const Report = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 400 }} onClick={() => navigate("/report/AttGr", {
+            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/AttGr", {
                 state: [emp, data, deptattendance],
             })}>
                 <EventBusyIcon sx={{ fontSize: 200, marginLeft: 8 }} />

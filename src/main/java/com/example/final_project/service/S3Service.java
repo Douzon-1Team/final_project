@@ -43,6 +43,7 @@ public class S3Service {
 
     @Transactional
     public String uploadFile(File file){
+        System.out.println(file.getName());
         String fileName = "qr/"+file.getName();
         String url = s3Uploader(file, fileName);
 

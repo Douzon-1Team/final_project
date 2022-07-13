@@ -10,7 +10,7 @@ import {ListHead, ListHeader, ListStyle} from "../../styles/ListStyle";
 
 const AcceptReq = () => {
     const {state} = useLocation();
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+    const accessToken = useSelector((state) => state.ACCESS_TOKEN.accessToken);
     const merge = (state == null) ? null : state._date;
     const reqdata = [];
     const [loadingData, setLoadingData] = useState(true);
@@ -27,14 +27,17 @@ const AcceptReq = () => {
         async function getEmpNo() {
             await axios
                 .get("http://localhost:8080/manager/deptno", {
-                    params: {'empno': empNo} ,
-                    headers :  {'Authorization' : accessToken}})
+                    params: {'empno': empNo},
+                    headers: {'Authorization': accessToken}
+                })
                 .then((res) => {
                     for (let i = 0; i < res.data.length; i++) {
                         axios
                             .get("http://localhost:8080/attendance/reqlist",
-                                {params: {'empno': res.data[i].coEmpNo},
-                                    headers :  {'Authorization' : accessToken}}
+                                {
+                                    params: {'empno': res.data[i].coEmpNo},
+                                    headers: {'Authorization': accessToken}
+                                }
                             )
                             .then((res2) => {
                                 if (res2.data.length != 0) {
@@ -73,13 +76,13 @@ const AcceptReq = () => {
                                       setTargetReqId(data[i].reqid)
                                   }}/>
 
-        if(data[i].rank==='STAFF')data[i].rank='사원';
-        else if(data[i].rank==='SENIOR_STAFF')data[i].rank='주임';
-        else if(data[i].rank==='ASSISTANT_MANAGER')data[i].rank='대리';
-        else if(data[i].rank==='GENERAL_MANAGER')data[i].rank='과장';
-        else if(data[i].rank==='DEPUTY_MANAGER')data[i].rank='차장';
-        else if(data[i].rank==='SUPERVISOR')data[i].rank='부임';
-        else if(data[i].rank==='EXECUTIVE')data[i].rank='임원';
+        if (data[i].rank === 'STAFF') data[i].rank = '사원';
+        else if (data[i].rank === 'SENIOR_STAFF') data[i].rank = '주임';
+        else if (data[i].rank === 'ASSISTANT_MANAGER') data[i].rank = '대리';
+        else if (data[i].rank === 'GENERAL_MANAGER') data[i].rank = '과장';
+        else if (data[i].rank === 'DEPUTY_MANAGER') data[i].rank = '차장';
+        else if (data[i].rank === 'SUPERVISOR') data[i].rank = '부임';
+        else if (data[i].rank === 'EXECUTIVE') data[i].rank = '임원';
     }
 
     const columns = React.useMemo(
@@ -134,14 +137,14 @@ const AcceptReq = () => {
     } = useTable({columns, data})
 
     async function acceptReq(reqid, start, end, req) {
-        if ((req == '오전반차') || (req == '오후반차') || (req == '휴가') || (req == '시간연차')) {
+        if ((req === '오전반차') || (req === '오후반차') || (req === '휴가') || (req === '시간연차')) {
             await axios
                 .post("http://localhost:8080/accept/vacation", {
                     'reqid': reqid,
                     'empNo': empNo,
-                    'minusHours': req == '오전반차' ? 4 : req == '오후반차' ? 4 : req == '휴가' ? 8*Math.ceil((Date.parse(end) - Date.parse(start))/(1000*60*60*24)) : req == '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
-                },{
-                    headers:{'Authorization': accessToken}
+                    'minusHours': req === '오전반차' ? 4 : req === '오후반차' ? 4 : req === '휴가' ? 8 * Math.ceil((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24)) : req === '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
+                }, {
+                    headers: {'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -153,8 +156,8 @@ const AcceptReq = () => {
                     'start': start,
                     'end': end,
                     'temp': end.substring(0, 10),
-                },{
-                    headers:{'Authorization': accessToken}
+                }, {
+                    headers: {'Authorization': accessToken}
                 })
                 .then((response) => {
                 })
@@ -167,13 +170,12 @@ const AcceptReq = () => {
             .post("http://localhost:8080/attendance/rejectreq", {
                 'reqid': targetReqId,
                 'reason': reason,
-            },{
-                headers:{'Authorization': accessToken}
+            }, {
+                headers: {'Authorization': accessToken}
             })
             .then((response) => {
             })
         window.location.reload();
-        setModal(!modal)
     }
 
     return (
@@ -183,8 +185,8 @@ const AcceptReq = () => {
                     <ModalWindow>
                         <Title>반려 사유</Title>
                         <Reason name="reason" onChange={handleChangeReason}/>
-                        <Button1 onClick={() => setModal(!modal)}>취소</Button1>
-                        <Button2 onClick={() => rejectReq()}>확인</Button2>
+                        <Button1 onClick={() => setModal(!modal)}>취 소</Button1>
+                        <Button2 onClick={() => rejectReq()}>확 인</Button2>
                     </ModalWindow>
                 </Modal>
             )}
@@ -193,7 +195,7 @@ const AcceptReq = () => {
                 <table
                     {...getTableProps()}
                     className="MuiTable-root" aria-label="simple table"
-                    style={{"marginTop":'10px'}}
+                    style={{"marginTop": '10px'}}
                 >
                     <thead>
                     {headerGroups.map(headerGroup => (

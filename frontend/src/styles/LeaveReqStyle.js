@@ -16,7 +16,6 @@ export const Container = styled.div`
   width: 900px;
   margin-left: 200px;
   margin-top: 50px;
-  overflow:hidden;
 `;
 export const LeaveSort = styled.div`
   border-top: 2px solid black;

@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import {MainStyle} from "../../styles/Globalstyle"
 import {EtcButton, Row} from '../admin/EmpTableStyle';
 import {ListStyle, ListHeader, ListHead} from '../../styles/ListStyle';
+import {DeleteAttendanceList} from "../common/alert/alert";
 
 let grossHours = 0;
 
@@ -96,7 +97,6 @@ const LeaveList = () => {
         ],
         []
     )
-    const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
 
     for (let i = 0; i < data.length; i++) {
@@ -139,15 +139,8 @@ const LeaveList = () => {
         rows,
         prepareRow,
     } = useTable({columns, data})
-    const [modalSwitch, setModalSwitch] = useState(false);
 
-    function DeleteCheck() {
-        setModalSwitch(!modalSwitch);
-    }
-
-    function DeleteEx(checkedReqId) {
-        console.log(checkedReqId)
-        setModalSwitch(false);
+    function DeleteEx() {
         for (let i = 0; i < checkedReqId.length; i++) {
             axios
                 .post("/vacation/delete", {
@@ -161,19 +154,11 @@ const LeaveList = () => {
                 })
         }
         window.location.reload();
+        DeleteAttendanceList();
     }
 
     return (
         <MainStyle>
-            {modalSwitch && (
-                <Modal>
-                    <ModalWindow>
-                        <ModalTitle> 선택된 신청서를 정말 삭제하시겠습니까?</ModalTitle>
-                        <YesButton modalSwitch={modalSwitch} onClick={() => DeleteEx(checkedReqId)}> 확인 </YesButton>
-                        <NoButton onClick={() => DeleteCheck()}> 취소 </NoButton>
-                    </ModalWindow>
-                </Modal>
-            )}
             <ListStyle>
                 <Title> 휴가 신청 목록 </Title>
                 <table className="MuiTable-root" aria-label="simple table"
@@ -216,7 +201,7 @@ const LeaveList = () => {
                     })}
                     </tbody>
                 </table>
-                <DeleteButton onClick={() => DeleteCheck()}>삭 제</DeleteButton>
+                <DeleteButton onClick={() => DeleteEx()}>삭 제</DeleteButton>
             </ListStyle>
         </MainStyle>
     );

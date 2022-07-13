@@ -140,6 +140,7 @@ export const LeaveReq = () => {
     endFormat = end.format("YYYY-MM-DD HH:mm:0");
 
     // ---------------------------------------------------------------------------------
+    let navigate = useNavigate();
     const f1 = async () => {
         await axios
             .post("/vacation/req", {
@@ -156,8 +157,7 @@ export const LeaveReq = () => {
                 navigate("/main");
             })
     };
-    // ---------------------------------------------------------------------------------
-    let navigate = useNavigate();
+    // --------------------------------------------------------------------------------
 
     const [useHour, setUseHour] = useState();
     useEffect(() => {
