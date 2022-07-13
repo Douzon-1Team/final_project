@@ -141,8 +141,6 @@ const CollapseList = (props) => {
         }
     }, [rows2]);
 
-    console.log(rows);
-
     return (
         <ListStyle>
         {rows2.length !== 0 ? <TableContainer component={Paper}>

@@ -24,17 +24,22 @@ function EmpWorktimeSetting(props) {
 
   const onValid = async ({ empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF }) => {
     if(getToWorkTimeSet >= getOffWorkTimeSet) {
-      TimeSettingError();
+      props.close(false);
+      SettingError();
       return false;
     } if(getToWorkTimeSetF >= getOffWorkTimeSetF){
-      TimeSettingError();
+      props.close(false);
+      SettingError();
       return false;
     }
     const response = await settingTime({ empno, deptNo, getToWorkTimeSet, getOffWorkTimeSet, getToWorkTimeSetF, getOffWorkTimeSetF, accessToken });
     if (response) {
       props.close(false);
       SettingSuccess();
-    } else { SettingError(); }
+    } else {
+      props.close(false);
+      SettingError();
+    }
   };
 
   return (

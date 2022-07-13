@@ -2,21 +2,15 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import React from "react";
 
-
 const MySwal = withReactContent(Swal);
 
-// TODO : icon 종류 -> success, error, info, warning
 export const LoginSuccess = () => {
 MySwal.fire({
     title: <p>로그인 성공!</p>,
     html: <i>ALL IN ONE</i>,
     icon: 'success',
     confirmButtonColor: '#00AAFF',
-    // didOpen: () => {
-    // `MySwal` is a subclass of `Swal` with all the same instance & static methods
-    // MySwal.showLoading()
-    // },
-})
+  })
 }
 
 export const LoginFail = () => {

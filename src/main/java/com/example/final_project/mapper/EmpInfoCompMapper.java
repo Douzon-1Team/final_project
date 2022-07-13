@@ -23,7 +23,6 @@ public interface EmpInfoCompMapper {
     @UpdateProvider(type=SqlProvider.class, method = "updateEmpInfoComp")
     int updateByEmpno(EmpInfoComp empInfoComp);
 
-
     @Select("UPDATE emp_info_comp SET flexible=#{flexible} WHERE empno=#{empno}")
     String updateFlexible(String empno, String flexible);
 

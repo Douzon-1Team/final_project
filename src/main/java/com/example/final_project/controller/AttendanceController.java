@@ -46,13 +46,11 @@ public class AttendanceController {
     @PostMapping("/attendance/req")
     public ResponseEntity vacation2(@RequestBody VacationRequestDto dto) {
         attendanceService.request(dto);
-
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/attendance/gettargetdate")
     public ResponseEntity<?> gettargetdate(@RequestParam String empNo, String date){
-        System.out.println(date);
         List<GetTargetDateDto> dto = attendanceService.getTargetDate(empNo, date);
         return ResponseEntity.ok().body(dto);
     }

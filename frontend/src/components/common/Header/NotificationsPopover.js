@@ -27,8 +27,8 @@ import {useSelector} from "react-redux";
 let NOTIFICATIONS = [];
 
 export default function NotificationsPopover() {
-    const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
-    const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
+  const accessToken = useSelector( (state) => state.ACCESS_TOKEN.accessToken);
+  const empno = useSelector( (state) => state.EMP_INFO.empInfo[0]);
   const anchorRef = useRef(null);
 
   const [notifications, setNotifications] = useState(NOTIFICATIONS);
@@ -39,7 +39,6 @@ export default function NotificationsPopover() {
 
   const getTardyList = async () => {
     await getNotificationTardyList({empno, accessToken}).then(res =>{
-        console.log(empno);
       NOTIFICATIONS =res.data;
       setNotifications(NOTIFICATIONS);
     }).catch()

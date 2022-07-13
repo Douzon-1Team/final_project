@@ -26,7 +26,10 @@ function EmpPageSetting(props) {
     if (response) {
       props.close(false);
       SettingSuccess();
-    } else { SettingError(); }
+    } else {
+      props.close(false);
+      SettingError();
+    }
   };
 
   return (
