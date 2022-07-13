@@ -70,9 +70,10 @@ public class ProfileService {
     }
 
     @Transactional
-    public void updateProfile(EmpUpdateDto empUpdateDto, MultipartFile profile){
-        employeeMapper.findByUserId(empUpdateDto.getEmpno())
+    public void updateProfile(String empno, MultipartFile profile){
+        employeeMapper.findByUserId(empno)
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-        s3Service.uploadProfile(profile, empUpdateDto.getEmpno());
+        String url = s3Service.uploadProfile(profile, empno);
+        employeeMapper.updateImg(url, empno);
     }
 }

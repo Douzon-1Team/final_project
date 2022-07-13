@@ -30,9 +30,9 @@ public class ProfileController {
 
     // 프로필 사진 변경
     @PatchMapping("/profile/updateImg")
-    public ResponseEntity updateProfile(@RequestPart(value = "EmpUpdateDto", required=false) EmpUpdateDto empUpdateDto,
+    public ResponseEntity updateProfile(@RequestPart(value = "empNo", required=false) String empno,
                                         @RequestPart(value = "file", required=false) MultipartFile profile){
-        profileService.updateProfile(empUpdateDto, profile);
+        profileService.updateProfile(empno, profile);
         return ResponseEntity.ok().build();
     }
 }

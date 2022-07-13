@@ -21,13 +21,11 @@ function EmpImg() {
   }, [avatar]);
 
   const onValid = async ({ empno, image }) => {
-    const data = {
-      empno : empno,
-    }
     const form = new FormData();
     form.append("file", image[0]);
-    form.append("EmpUpdateDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
+    form.append("empNo", new Blob([empno], {type: "application/json"}));
     const response = await updateImg({form, accessToken});
+
     if(response){
       ImgUploadSuccess();
       window.location.reload();

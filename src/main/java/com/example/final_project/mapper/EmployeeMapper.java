@@ -47,7 +47,7 @@ public interface EmployeeMapper {
     int updatePwd(Employee employee);
 
     @Update("UPDATE employee SET emp_profile = #{profile} where empno=#{empno}")
-    int updateImg(Employee employee);
+    int updateImg(String profile, String empno);
 
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
