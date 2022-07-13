@@ -6,6 +6,7 @@ import com.example.final_project.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,9 +29,10 @@ public class ProfileController {
     }
 
     // 프로필 사진 변경
-    @PostMapping("/profile/updateImg")
-    public ResponseEntity updateProfile(@RequestBody EmpUpdateDto empUpdateDto){
-        profileService.updateProfile(empUpdateDto);
+    @PatchMapping("/profile/updateImg")
+    public ResponseEntity updateProfile(@RequestPart(value = "EmpUpdateDto", required=false) EmpUpdateDto empUpdateDto,
+                                        @RequestPart(value = "file", required=false) MultipartFile profile){
+        profileService.updateProfile(empUpdateDto, profile);
         return ResponseEntity.ok().build();
     }
 }

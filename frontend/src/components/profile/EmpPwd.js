@@ -5,7 +5,6 @@ import {useForm} from "react-hook-form";
 import {useSelector} from "react-redux";
 import {updatePwd} from "../../apis/ApiServices";
 
-// 사원 비밀번호를 변경하는 component
 function EmpPwd() {
   const empNo = useSelector( (state) => state.EMP_INFO.empInfo[0] );
   const { register, handleSubmit, setValue } = useForm();
@@ -52,7 +51,6 @@ function EmpPwd() {
           </Table>
           <BtnBox>
             <Button type="submit">저 장</Button>
-            {/*<Button type="reset">취 소</Button>*/}
           </BtnBox>
         </TableBox>
       </form>

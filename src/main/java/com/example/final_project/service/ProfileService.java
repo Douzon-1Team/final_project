@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final EmpInfoCompMapper empInfoCompMapper;
     private final DeptMapper deptMapper;
+    private final S3Service s3Service;
 
     @Transactional
     public ProfileDto getProfile(String empno){
@@ -68,11 +70,9 @@ public class ProfileService {
     }
 
     @Transactional
-    public void updateProfile(EmpUpdateDto empUpdateDto){
+    public void updateProfile(EmpUpdateDto empUpdateDto, MultipartFile profile){
         employeeMapper.findByUserId(empUpdateDto.getEmpno())
                 .orElseThrow(() -> new EmpException(ErrorCode.EMP_NOTFOUND));
-
-        String profile = empUpdateDto.getProfile();
-        employeeMapper.updateImg(empUpdateDto.toEmployeeImg(empUpdateDto, profile));
+        s3Service.uploadProfile(profile, empUpdateDto.getEmpno());
     }
 }
