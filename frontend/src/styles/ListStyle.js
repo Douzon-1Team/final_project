@@ -8,7 +8,8 @@ const ListStyle = styled.div`
     }
     
     .MuiTable-root[aria-label="collapsible table"], .MuiTable-root[aria-label="simple table"]{
-      margin: auto;
+      // margin: auto;
+      width:80%;
       table-layout: fixed;
       padding: 0 8px;
       border-collapse: separate;

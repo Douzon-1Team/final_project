@@ -38,7 +38,7 @@ function InnerRow({row, month}) {
             </Row>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0, border: 0}} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit style={{paddingLeft: '20%'}}>
+                    <Collapse in={open} timeout="auto" unmountOnExit style={{paddingLeft: '15%', width:'70%'}}>
                         <Box sx={{ margin: 1 }}>
                             <h3 style={{"marginLeft":"10px", "textAlign":"initial"}}>
                                 상세 이력
@@ -141,13 +141,15 @@ const CollapseList = (props) => {
         }
     }, [rows2]);
 
+    console.log(rows);
+
     return (
         <ListStyle>
         {rows2.length !== 0 ? <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
                     <ListHeader>
-                        <TableCell style={{"width":"10%"}}/>
+                        <TableCell style={{width:"5%"}}/>
                         {state !== "attendanceProblem" ? <>
                             <TableCell>사번</TableCell>
                             <TableCell>이름</TableCell>
@@ -158,7 +160,7 @@ const CollapseList = (props) => {
                             </> : <>
                             <TableCell style={{width:'30%'}}>사번</TableCell>
                             <TableCell style={{width:'30%'}}>이름</TableCell>
-                            <TableCell style={{width:'30%'}}>평균</TableCell>
+                            <TableCell style={{width:'30%'}}>평균 (횟수/달)</TableCell>
                         </>
                         }
                     </ListHeader>

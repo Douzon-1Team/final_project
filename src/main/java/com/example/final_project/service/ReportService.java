@@ -40,7 +40,9 @@ public class ReportService {
     @Transactional
     public List<ChartListDto> attendanceProblemList(String empno){
         String deptNo = empno.substring(2,4);
-        return reportMapper.findAttendanceProblem(deptNo);
+        List<ChartListDto> dto = reportMapper.findAttendanceProblem(deptNo);
+
+        return dto;
     }
 
     @Transactional

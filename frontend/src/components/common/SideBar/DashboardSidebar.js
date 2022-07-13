@@ -96,10 +96,13 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
                     <AccountStyle>
                         <UserImg style={{height: '50px', width: '50px'}} src = {emp.profilePath} />
                         <Box sx={{ ml: 2 }}>
-                            <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                                {empInfo[1]}({empInfo[0]})
+                            <Typography variant="subtitle2" sx={{ color: 'text.primary', fontSize:"1.2rem", fontWeight:"bold", display:"inline"}}>
+                                {empInfo[1]}
                             </Typography>
-                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            <Typography variant="subtitle2" sx={{ color: 'text.primary', fontSize:"1.2rem", display:"inline"}}>
+                                ({empInfo[0]})
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: 'text.secondary', fontSize:"0.9rem" }}>
                                 {empRole}
                             </Typography>
                         </Box>
