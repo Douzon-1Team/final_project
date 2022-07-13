@@ -26,14 +26,14 @@ const AcceptReq = () => {
     useEffect(() => {
         async function getEmpNo() {
             await axios
-                .get("http://localhost:8080/manager/deptno", {
+                .get("https://allinone.kro.kr/manager/deptno", {
                     params: {'empno': empNo},
                     headers: {'Authorization': accessToken}
                 })
                 .then((res) => {
                     for (let i = 0; i < res.data.length; i++) {
                         axios
-                            .get("http://localhost:8080/attendance/reqlist",
+                            .get("https://allinone.kro.kr/attendance/reqlist",
                                 {
                                     params: {'empno': res.data[i].coEmpNo},
                                     headers: {'Authorization': accessToken}
@@ -139,7 +139,7 @@ const AcceptReq = () => {
     async function acceptReq(reqid, start, end, req) {
         if ((req === '오전반차') || (req === '오후반차') || (req === '휴가') || (req === '시간연차')) {
             await axios
-                .post("http://localhost:8080/accept/vacation", {
+                .post("https://allinone.kro.kr/accept/vacation", {
                     'reqid': reqid,
                     'empNo': empNo,
                     'minusHours': req === '오전반차' ? 4 : req === '오후반차' ? 4 : req === '휴가' ? 8 * Math.ceil((Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60 * 24)) : req === '시간연차' ? (Date.parse(end) - Date.parse(start)) / (1000 * 60 * 60) : null
@@ -150,7 +150,7 @@ const AcceptReq = () => {
                 })
         } else {
             await axios
-                .post("http://localhost:8080/accept/attendance", {
+                .post("https://allinone.kro.kr/accept/attendance", {
                     'reqid': reqid,
                     'empNo': empNo,
                     'start': start,
@@ -167,7 +167,7 @@ const AcceptReq = () => {
 
     async function rejectReq() {
         await axios
-            .post("http://localhost:8080/attendance/rejectreq", {
+            .post("https://allinone.kro.kr/attendance/rejectreq", {
                 'reqid': targetReqId,
                 'reason': reason,
             }, {

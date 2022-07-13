@@ -93,7 +93,7 @@ const CollapseList = (props) => {
     state !== "attendanceProblem" ? month = null : month = new Date().getMonth();
 
     async function attendanceProblem(){
-        const response = await axios.get("http://localhost:8080/report/list",
+        const response = await axios.get("https://allinone.kro.kr/report/list",
             {
                 params: {empno},
                 headers: {Authorization: accessToken}
@@ -118,7 +118,7 @@ const CollapseList = (props) => {
     }
 
     async function dVacationHistory () {
-        const response = await axios.get("http://localhost:8080/report/dvacation",
+        const response = await axios.get("https://allinone.kro.kr/report/dvacation",
             {
                 params: {empno},
                 headers: {Authorization: accessToken}

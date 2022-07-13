@@ -42,7 +42,7 @@ export const LeaveReq = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/vacation/data", {
+                .get("https://allinone.kro.kr/vacation/data", {
                     params: {'empNo': empNo},
                     headers: {'Authorization': accessToken}
                 })

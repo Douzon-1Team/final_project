@@ -77,7 +77,7 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpUpdateDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        const response = await axios.patch('http://localhost:8080/admin/update', form,
+        const response = await axios.patch('https://allinone.kro.kr/admin/update', form,
                 {headers: {ContentType: 'application/json; charset=UTF-8', Authorization: accessToken}});
 
         navigate("/admin/list");
@@ -101,7 +101,7 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpInfoDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        const response = await axios.post('http://localhost:8080/admin/register', form,
+        const response = await axios.post('https://allinone.kro.kr/admin/register', form,
             {headers: {ContentType: 'multipart/form-data', Authorization: accessToken}});
 
         navigate("/admin/list");
@@ -115,7 +115,7 @@ function Profile() {
     const deleteInfo = () => {
         DeleteConfirm(function(isConfirm){
             if(isConfirm) {
-                axios.delete(`http://localhost:8080/admin/remove/${empNo}`,
+                axios.delete(`https://allinone.kro.kr/admin/remove/${empNo}`,
                     {headers: {Authorization: accessToken}});
                 navigate("/admin/list");
             }

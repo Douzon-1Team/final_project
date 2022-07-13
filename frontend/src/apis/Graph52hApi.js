@@ -4,7 +4,7 @@ import {MainCalendarError} from "../components/common/alert/alert";
 export const getGraph52hData = async ( {empno, accessToken} ) => {
     try {
         return await axios.get(
-            "http://localhost:8080/main/graph52h",
+            "https://allinone.kro.kr/main/graph52h",
             {
                 params: {empno},
                 headers: {'Authorization': accessToken}

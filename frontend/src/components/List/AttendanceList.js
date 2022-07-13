@@ -73,7 +73,7 @@ const LeaveList = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/attendance/attendancelist", {params: {'empno': empNo},
+                .get("https://allinone.kro.kr/attendance/attendancelist", {params: {'empno': empNo},
                     headers:{'Authorization':accessToken}})
                 .then((res) => {
                     setData(res.data);

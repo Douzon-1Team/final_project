@@ -10,7 +10,7 @@ function EmpList() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await axios.get("http://localhost:8080/admin/list",
+            const res = await axios.get("https://allinone.kro.kr/admin/list",
                 {headers: {Authorization: accessToken}}).then((res) => {return res});
             setRowData(res.data);
             setLoading(false);

@@ -5,7 +5,7 @@ import {MainCalendarError} from "../components/common/alert/alert";
 export const getMain = async ( {empno, accessToken} ) => {
     try {
         return await axios.get(
-            'http://localhost:8080/main',
+            'https://allinone.kro.kr/main',
             {
                 params: {empno},
                 headers: {'Authorization': accessToken}

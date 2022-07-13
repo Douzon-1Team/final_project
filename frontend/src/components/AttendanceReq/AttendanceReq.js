@@ -31,7 +31,7 @@ export const AttendanceReq = () => {
     useEffect(() => {
         async function getData() {
             await axios
-                .get("http://localhost:8080/vacation/data", {
+                .get("https://allinone.kro.kr/vacation/data", {
                     params: {'empNo': empNo},
                     headers: {'Authorization': accessToken}
                 })
@@ -90,7 +90,7 @@ export const AttendanceReq = () => {
     useEffect(() => {
         async function getDate() {
             await axios
-                .get("http://localhost:8080/attendance/gettargetdate", {
+                .get("https://allinone.kro.kr/attendance/gettargetdate", {
                     params: {'empNo': empNo, 'date': startFormat},
                     headers: {'Authorization': accessToken}
                 })
@@ -119,7 +119,7 @@ export const AttendanceReq = () => {
 
     async function acceptAttendance() {
         await axios
-            .post("http://localhost:8080/attendance/acceptatt", {
+            .post("https://allinone.kro.kr/attendance/acceptatt", {
                 'attstatid': attstatid,
                 'empNo': empNo,
             }, {
