@@ -122,3 +122,20 @@ export const settingGraph = async ( {empno, deptNo, graph, accessToken} ) => {
     console.log(errors);
   });
 };
+
+// 사원 프로필 이미지 변경
+export const updateImg = async ( {form, accessToken} ) => {
+  return await axios.patch(
+    `http://localhost:8080/profile/updateImg`,
+    form,
+    {
+      headers: {
+        ContentType: 'multipart/form-data',
+        Authorization: accessToken
+      }
+    }).then ((response) => {
+    return response;
+  }).catch(errors => {
+    console.log(errors);
+  });
+};
