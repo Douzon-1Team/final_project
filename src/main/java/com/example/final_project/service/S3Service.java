@@ -29,7 +29,7 @@ public class S3Service {
     @Transactional
     public String uploadProfile(MultipartFile multipartFile, String empno){
         String filePath = "src/main/resources/";
-        String fileName = "profile/profile-"+empno;
+        String fileName = "profile/profile-"+empno+".png";
 
         File uploadImg = convert(multipartFile, filePath+fileName)  // 파일 변환 후 로컬에 저장
                 .orElseThrow(() -> new IllegalArgumentException("파일 변환에 실패하였습니다."));
@@ -62,10 +62,9 @@ public class S3Service {
     private Optional<File> convert(MultipartFile file, String fileName) {
         File convertFile = new File(fileName);
         try {
-            if (convertFile.createNewFile()) {
                 FileOutputStream fos = new FileOutputStream(convertFile);
                 fos.write(file.getBytes());
-            }
+
         }catch(IOException e){
             e.printStackTrace();
         }
