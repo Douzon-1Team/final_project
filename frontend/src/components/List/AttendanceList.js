@@ -3,10 +3,10 @@ import {useTable} from 'react-table';
 import {useSelector} from "react-redux";
 import axios from "axios";
 import {style} from "./ListStyle"
-import {Modal, ModalTitle, ModalWindow, NoButton, YesButton} from "../common/Modal/ModalStyle";
 import {MainStyle} from "../../styles/Globalstyle";
 import {EtcButton, Row} from '../admin/EmpTableStyle';
 import {ListStyle, ListHeader, ListHead} from "../../styles/ListStyle";
+import {DeleteAttendanceList} from "../common/alert/alert";
 
 
 const LeaveList = () => {
@@ -93,16 +93,10 @@ const LeaveList = () => {
         rows,
         prepareRow,
     } = useTable({columns, data})
-    const empName = useSelector((state) => state.EMP_INFO.empInfo[1]);
     const empNo = useSelector((state) => state.EMP_INFO.empInfo[0]);
-    const [modalSwitch, setModalSwitch] = useState(false);
-
-    function DeleteCheck() {
-        setModalSwitch(!modalSwitch);
-    }
 
     function DeleteEx() {
-        setModalSwitch(false);
+        DeleteAttendanceList();
         for (let i = 0; i < checkedReqId.length; i++) {
             axios
                 .post("/attendance/delattendancereq", {
@@ -118,15 +112,6 @@ const LeaveList = () => {
 
     return (
         <MainStyle>
-            {modalSwitch && (
-                <Modal>
-                    <ModalWindow>
-                        <ModalTitle> 선택된 신청서를 정말 삭제하시겠습니까?</ModalTitle>
-                        <YesButton modalSwitch={modalSwitch} onClick={() => DeleteEx()}> 확인 </YesButton>
-                        <NoButton onClick={() => DeleteCheck()}> 취소 </NoButton>
-                    </ModalWindow>
-                </Modal>
-            )}
             <ListStyle>
                 <Title> 근태조정 신청 목록 </Title>
                 <table {...getTableProps()}
@@ -169,7 +154,7 @@ const LeaveList = () => {
                     })}
                     </tbody>
                 </table>
-                <DeleteButton onClick={() => DeleteCheck()}>삭 제</DeleteButton>
+                <DeleteButton onClick={() => DeleteEx()}>삭 제</DeleteButton>
             </ListStyle>
         </MainStyle>
     );

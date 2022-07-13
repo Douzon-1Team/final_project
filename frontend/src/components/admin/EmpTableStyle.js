@@ -148,7 +148,7 @@ const EtcButton = styled.button`
     
     &.승인{background: #5dbb63; color: white;}
     &.대기중{background: #f2d06b; color: white;}
-    &.반려{background: #ff7a7b; color: white;}
+    &.반려됨{background: #ff7a7b; color: white;}
 `;
 
 export {Container, Table, Header, Button, Row, Cell, Order, Pagination, EtcButton};
