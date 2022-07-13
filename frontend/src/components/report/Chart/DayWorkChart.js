@@ -7,8 +7,6 @@ const DayWorkChart = () => {
     const {state} = useLocation();
     const [data, setdata] = useState([]);
 
-    // TODO : 분 단위로 표시
-
     const onwork = [];// 출근시간
     let offwork = [];  // 퇴근시간
     const offworks = [];

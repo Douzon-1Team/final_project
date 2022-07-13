@@ -39,7 +39,7 @@ function DeptMember() {
             }
             setdeptmember(MList);
 
-        }).catch(console.log('error'));
+        }).catch( error => console.log(error));
     }
 
         useEffect(() => {

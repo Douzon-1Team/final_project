@@ -30,7 +30,6 @@ function Calendar() {
     // schedules 일정 관리
   ];
 
-  // TODO : 얘는 따로 뺴줘야할듯
   const calendars = [
     // 정상출근
     {

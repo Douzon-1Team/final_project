@@ -6,7 +6,6 @@ import Calendar from "../common/Calendar";
 import _ from "lodash";
 
 const Chart = (props) => {
-    // TODO : 뒤로가기 버튼 누르면 달력으로 GO
     const [calendarview, setCalendarview] = useState(false);
     const nowork = [0,0,0,0,0,0,0,0,0,0,0,0];
     const works = [0,0,0,0,0,0,0,0,0,0,0,0];

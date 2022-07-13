@@ -16,7 +16,7 @@ import {LeaveReqSuccess} from "../common/alert/alert";
 
 export const LeaveReq = () => {
 
-    const {state} = useLocation(); // TODO : 달력으로부터 넘어온 날짜데이터
+    const {state} = useLocation();
     const accessToken = useSelector((state) => state.ACCESS_TOKEN.accessToken);
     const [req, setReq] = useState((state == null) ? null : "휴가");
     const selectedDate = (state == null) ? null : state._date;

@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-// TODO : ACCESS_TOKEN 만료 시간 설정
 export const TOKEN_TIME_OUT = 600 * 1000;
 
 export const tokenSlice = createSlice({

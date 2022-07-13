@@ -36,7 +36,7 @@ const Report = () => {
                     );
                 setemp(newArr);
                 const attendance = _.filter(res.data, 'etc'); // 얘에서 뽑은 이름들 제거하고 앞에서부터 순서대로 박아주기
-                const daydata = _.filter(res.data, 'onofftime'); // TODO : 막대그래프 데이터\
+                const daydata = _.filter(res.data, 'onofftime');
                 const deptatt = _.filter(res.data, 'deptName');
                 setdeptattendance(deptatt);
                 setdaywork(daydata);

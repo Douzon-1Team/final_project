@@ -95,7 +95,6 @@ export const AttendanceReq = () => {
                     headers: {'Authorization': accessToken}
                 })
                 .then((res) => {
-                    console.log("++", res.data);
                     setAttstatid(res.data[0].attstatid);
                     if (((res.data[0].etc === "지각") || (res.data[0].etc === "결근") || (res.data[0].etc === "출근미등록") || (res.data[0].etc === "퇴근미등록")) && (req === res.data[0].etc)) {
                         if (res.data[0].agree === 1) {

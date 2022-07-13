@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.StringTokenizer;
 
 @PropertySource("classpath:application.yml")
 @Component
@@ -43,7 +42,6 @@ public class S3Service {
 
     @Transactional
     public String uploadFile(File file){
-        System.out.println(file.getName());
         String fileName = "qr/"+file.getName();
         String url = s3Uploader(file, fileName);
 

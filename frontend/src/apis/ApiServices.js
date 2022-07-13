@@ -84,9 +84,7 @@ export const settingTimeChoice = async ( { empno, deptNo, flexible, accessToken 
       }
     }).then ((response) => {
     return response;
-  }).catch(errors => {
-    console.log(errors);
-  });
+  }).catch(errors => { console.log(errors) });
 };
 
 // 근무시간 설정
@@ -102,9 +100,7 @@ export const settingTime = async ( {empno, deptNo, getToWorkTimeSet, getOffWorkT
       }
     }).then ((response) => {
     return response;
-  }).catch(errors => {
-    console.log(errors);
-  });
+  }).catch(errors => { console.log(errors) });
 };
 
 // 페이지보기 형식 설정
@@ -118,9 +114,7 @@ export const settingGraph = async ( {empno, deptNo, graph, accessToken} ) => {
       }
     }).then ((response) => {
     return response;
-  }).catch(errors => {
-    console.log(errors);
-  });
+  }).catch(errors => { console.log(errors); });
 };
 
 // 사원 프로필 이미지 변경
@@ -135,7 +129,5 @@ export const updateImg = async ( {form, accessToken} ) => {
       }
     }).then ((response) => {
     return response;
-  }).catch(errors => {
-    console.log(errors);
-  });
+  }).catch(errors => { console.log(errors); });
 };

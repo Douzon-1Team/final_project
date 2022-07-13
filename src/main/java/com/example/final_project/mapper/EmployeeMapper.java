@@ -51,8 +51,4 @@ public interface EmployeeMapper {
 
     @Delete("DELETE FROM employee WHERE empno=#{empno}")
     int remove(String empno);
-
-    //유저의 권한 확인
-    @Select("SELECT role FROM employee WHERE empno=#{empno}")
-    String findByUserRole(String empno);
 }

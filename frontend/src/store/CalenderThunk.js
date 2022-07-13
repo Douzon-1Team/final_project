@@ -1,13 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import _ from "lodash";
 import { getMain } from "../apis/CalendarApi";
-import {MainCalendarError2} from "../components/common/alert/alert";
-import {useSelector} from "react-redux";
 
 export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken}) => {
   try {
     const response = await getMain({empno, accessToken});
-    console.log(response.data);
     for (var i = 1;  i < response.data.length; i++) {
       if (response.data[i].m != null || response.data[i].count != null || response.data[i].datediff != null) {
         continue; // 필요없는 데이터 제외
@@ -80,7 +77,6 @@ export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken})
                 response.data[i].body = response.data[i].context;
                 response.data[i].title = "결근";
             }
-            console.log(response.data[i]);
             _.merge(response.data[i], {isVisible: true, id: i+1,
               category: "time",
               start: new Date(response.data[i].date),
