@@ -43,7 +43,7 @@ public class EmployeeController {
         return ResponseEntity.ok().body(accessToken);
     }
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public void logoutSuccess(){
     }
 
