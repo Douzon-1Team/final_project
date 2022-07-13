@@ -1,8 +1,6 @@
 package com.example.final_project.dto;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +14,6 @@ public class ChartListDto {
     private String end;
     private LocalDate date;
 
-    @Builder
     public ChartListDto(String empno, String empName, String etc, LocalDate date, LocalDateTime start, LocalDateTime end){
         this.empno = empno;
         this.empName = empName;
@@ -32,8 +29,8 @@ public class ChartListDto {
 
         //오전반차, 오후반차, 휴가는 날짜만 필요함
         else if(etc.contains("반차") || etc.equals("휴가")){
-            this.start = start.toLocalDate().toString();
-            this.end = end.toLocalDate().toString();
+            this.start = start.toLocalTime().toString();
+            this.end = end.toLocalTime().toString();
         }
 
         //나머지는 시간만 필요함
@@ -41,6 +38,7 @@ public class ChartListDto {
             this.start = start.toLocalTime().toString();
             this.end = end.toLocalTime().toString();
         }
+
     }
 
 }
