@@ -90,8 +90,10 @@ const Button = styled.button`
     color: white;
     font-size: 1.3rem;
     float: right;
-    bottom: 50vh; 
-    width: 30.5%; 
+    bottom: 100vh;
+    width: 15%;
+    margin: 20px;
+    margin-left: 50px;
     box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.2);
     &:hover { 
       cursor: pointer; 

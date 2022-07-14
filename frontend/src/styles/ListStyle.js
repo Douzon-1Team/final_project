@@ -9,7 +9,7 @@ const ListStyle = styled.div`
     
     .MuiTable-root[aria-label="collapsible table"], .MuiTable-root[aria-label="simple table"]{
       // margin: auto;
-      width:80%;
+      width:98%;
       table-layout: fixed;
       padding: 0 8px;
       border-collapse: separate;
@@ -71,10 +71,38 @@ const ListHeader = styled.tr`
     font-weight: bold;
     
     td:not(:first-child){
-        min-width: 8rem;
+        min-width: 12rem;
     }
     td:first-child{
+        width: 12px;
         padding-left: 20px;
+    }
+    td:nth-child(2){
+        width: 80px;
+    }
+    td:nth-child(3){
+        width: 120px;
+    }
+    td:nth-child(4){
+        width: 170px;
+    }
+    td:nth-child(5){
+        width: 170px;
+    }
+    td:nth-child(6){
+        width: 250px;
+    }
+    td:nth-child(7){
+        width: 80px;
+    }
+    td:nth-child(7){
+        width: 80px;
+    }
+    td:nth-child(8){
+        width: 110px;
+    }
+    td:nth-child(9){
+        width: 120px;
     }
 `;
 

@@ -57,25 +57,25 @@ const Report = () => {
     return (
       <MainStyle>
         <ReportStyle>
-            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/52Gr")}>
+            <Card className="cards" sx={{ maxWidth: 400 }} onClick={() => navigate("/report/52Gr")}>
                 <IoMdStats size={200} className="icon" />
                 <CardContent>
-                    <Typography variant="h5" component="div" className="font">
+                    <Typography variant="h5" component="div" className="font1">
                         주간 근무시간 현황
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/weekworkGr", {
+            <Card className="cards" sx={{ maxWidth: 400 }} onClick={() => navigate("/report/weekworkGr", {
                 state: daywork,
             })}>
-                <StackedBarChartIcon sx={{ fontSize: 200, marginLeft: 8 }} />
+                <StackedBarChartIcon sx={{ fontSize: 200 }} />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
                         부서원 당일 근무 현황
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/vacationGr")}>
+            <Card className="cards" sx={{ maxWidth: 400 }} onClick={() => navigate("/report/vacationGr")}>
                 <BsBarChartSteps size={200} className="icon" />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
@@ -83,10 +83,10 @@ const Report = () => {
                     </Typography>
                 </CardContent>
             </Card>
-            <Card sx={{ maxWidth: 600 }} onClick={() => navigate("/report/AttGr", {
+            <Card className="cards" sx={{ maxWidth: 400 }} onClick={() => navigate("/report/AttGr", {
                 state: [emp, data, deptattendance],
             })}>
-                <EventBusyIcon sx={{ fontSize: 200, marginLeft: 8 }} />
+                <EventBusyIcon sx={{ fontSize: 200 }} />
                 <CardContent>
                     <Typography variant="h5" component="div" className="font">
                         부서별 이상근태 현황

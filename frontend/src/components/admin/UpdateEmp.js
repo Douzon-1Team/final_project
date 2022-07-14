@@ -209,12 +209,12 @@ function Profile() {
                  </TabPanel>
                  <input {...register('empno')} type="text" value={empNo} hidden />
 
+                 <BtnBox style={{marginTop:'1%', marginRight:'3%'}}>
+                     <Button type="submit" ref={submit}>저장</Button>
+                     <Button type="button" onClick={() => {navigate("/admin/list")}}>취소</Button>
+                 </BtnBox>
              </ContentBox></Tabs>
             </ProfileBox></RightContainer>
-            <BtnBox style={{marginTop:'1%', marginRight:'3%'}}>
-                <Button type="submit" ref={submit}>저장</Button>
-                <Button type="button" onClick={() => {navigate("/admin/list")}}>취소</Button>
-            </BtnBox>
         </form></MainStyle>
     );
 }

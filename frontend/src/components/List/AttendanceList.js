@@ -39,10 +39,6 @@ const LeaveList = () => {
                 accessor: 'name',
             },
             {
-                Header: '근태구분',
-                accessor: 'req',
-            },
-            {
                 Header: '신청기간 (시작)',
                 accessor: 'vacationstart',
             },
@@ -53,6 +49,10 @@ const LeaveList = () => {
             {
                 Header: '사유',
                 accessor: 'context',
+            },
+            {
+                Header: '근태구분',
+                accessor: 'req',
             },
             {
                 Header: '상태',
@@ -136,10 +136,7 @@ const LeaveList = () => {
                             <Row {...row.getRowProps()}>
                                 {row.cells.map(cell => {
                                     return (
-                                        <td className="line "
-                                            style={{
-                                                padding: '5px 20px 5px 20px',
-                                            }}
+                                        <td className="line"
                                             {...cell.getCellProps()}
                                         >
                                             {cell.column.id === "condition" ?

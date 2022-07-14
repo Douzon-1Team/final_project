@@ -75,16 +75,16 @@ const LeaveList = () => {
                 accessor: 'vacationend',
             },
             {
+                Header: '신청사유',
+                accessor: 'context',
+            },
+            {
                 Header: '시간',
                 accessor: 'hours',
             },
             {
                 Header: '일수',
                 accessor: 'days',
-            },
-            {
-                Header: '신청사유',
-                accessor: 'context',
             },
             {
                 Header: '상태',
@@ -184,9 +184,6 @@ const LeaveList = () => {
                                 {row.cells.map(cell => {
                                     return (
                                         <td className="line "
-                                            style={{
-                                                padding: '5px 20px 5px 20px',
-                                            }}
                                             {...cell.getCellProps()}
                                         >
                                             {cell.column.id === "condition" ?

@@ -24,7 +24,7 @@ public interface CalendarMapper {
 
     // 이상근태 데이터(req 이전)
     @Select("select dept_no deptno, date,  accept,reject, attendance, tardy, agree, etc, unregistered, DATE_FORMAT(date, '%Y-%m-%d') notreqdate from attendance_status at join attendance_req ar on at.empno = ar.empno\n" +
-            "where at.empno = #{empno} and etc REGEXP '결근|등록' and agree = 0 and accept = 0;")
+            "where at.empno = #{empno} and etc REGEXP '결근|등록' and accept = 0;")
     List<CalendarResponseDto> findUserNotWork(String empno);
 
 }

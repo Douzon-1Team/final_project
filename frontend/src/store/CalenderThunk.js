@@ -24,7 +24,7 @@ export const getList = createAsyncThunk("GET_TODO", async ({empno, accessToken})
             end: response.data[i].offwork}); // new Date() 없앰
       } else { // req && 결근(출/퇴근)
         // 반려&본인승인 제외
-        if (response.data[i].agree == true && response.data[i].reject == true) continue;
+        if (response.data[i].reject == true) continue;
         else { // 오직 휴가 && 결근(출/퇴근) 미등록 검증 -> 결근은 req 하던 말던 결제중 표시 X
           if (response.data[i].title != null) { // 휴가 data
             if (response.data[i].title == "오전반차" || response.data[i].title === "오후반차") {

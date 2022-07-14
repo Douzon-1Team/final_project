@@ -13,7 +13,7 @@ export const DeleteButton = styled.button`
   box-shadow: 3px 3px 3px gray;
   margin-top: 40px;
   float: right;
-  margin-right: 130px;
+  margin-right: 40px;
 `;
 
 export const Title = styled.div`
