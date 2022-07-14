@@ -101,7 +101,7 @@ function Profile() {
         form.append("file", image[0]);
         form.append("EmpInfoDto", new Blob([JSON.stringify(data)], {type: "application/json"}));
 
-        const response = await axios.post('http://localhost:8080/admin/register', form,
+        const response = await axios.post('https://allinone.kro.kr/admin/register', form,
             {headers: {ContentType: 'multipart/form-data', Authorization: accessToken}});
 
         navigate("/admin/list");

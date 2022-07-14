@@ -99,17 +99,25 @@ const CollapseList = (props) => {
                 headers: {Authorization: accessToken}
             });
         response.data.map((item) => {
+            let start = item.start;
+            if(start == null) start = "00:00:00";
+            else start = start.split("T")[1];
+
+            let end = item.end;
+            if(end == null) end = "00:00:00";
+            else end = end.split("T")[1];
+
             rows.map((i) => {
                 if (i.empno === item.empno) {
                     tmp = false;
                     i.count = i.count+1;
-                    i.history.push({date: item.date, etc: item.etc, start: item.start, end: item.end});
+                    i.history.push({date: item.date, etc: item.etc, start: start, end: end});
                 }
             })
             if(tmp) {
                 rows.push({
                     empno: item.empno, empName: item.empName, count:1,
-                    history: [{date: item.date, etc: item.etc, start: item.start, end: item.end}]
+                    history: [{date: item.date, etc: item.etc, start: start, end: end}]
                 });
             }
             tmp = true;
@@ -128,7 +136,15 @@ const CollapseList = (props) => {
             item.history = [];
             response.data.map((i) => {
                 if(i.empno === item.empno){
-                    item.history.push({etc: i.etc, start: i.start, end: i.end})
+                    let start = i.start;
+                    if(start === null) start = "00:00:00";
+                    else start = start.split("T")[0];
+
+                    let end = i.end;
+                    if(end === null) end = "00:00:00";
+                    else end = end.split("T")[0];
+
+                    item.history.push({etc: i.etc, start: start, end: end})
                 }
             })
         })

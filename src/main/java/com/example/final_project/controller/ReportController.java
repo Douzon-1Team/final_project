@@ -30,6 +30,9 @@ public class ReportController {
     @GetMapping("/report/list")
     public ResponseEntity<List<ChartListDto>> attendanceProblemList(@RequestParam String empno){
         List<ChartListDto> dto = reportService.attendanceProblemList(empno);
+        for (ChartListDto chartListDto : dto) {
+            System.out.println(chartListDto.getStart());
+        }
         return ResponseEntity.ok().body(dto);
     }
 
